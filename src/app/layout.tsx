@@ -1,9 +1,7 @@
 "use client";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+
 import "./globals.css";
-import Loader from "@/Components/common/Loader";
-import { useEffect, useState } from "react";
+import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,20 +12,12 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode; }>) {
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
-  }, []);
-
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <div>
-          {loading ? <Loader /> : children}
-        </div>
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }
