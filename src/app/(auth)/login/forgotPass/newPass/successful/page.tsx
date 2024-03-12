@@ -8,14 +8,14 @@ const page = () => {
     const [eye, setEye] = useState(false)
     return (
         <div>
-            <div className='container mx-auto h-screen'>
+            <div className='container mx-auto'>
                 <div className='flex justify-center py-20'>
                     <Image src={"/MainLogo.svg"} alt="MainLogo" width={334} height={56} />
                 </div>
 
                 <div className="bg-[url('/_Compound.svg')] ">
                     <div className='flex justify-center'>
-                        <div className='w-1/3 rounded-3xl border border-[#EFF4FF] p-10'>
+                        <div className='min-w-72 max-w-md bg-white w-10/12 rounded-3xl border border-[#EFF4FF] py-10 px-5 sm:px-10 mb-20'>
                             <div className='flex justify-center my-6'>
                                 <Image src={"/login/successful.svg"} alt="MainLogo" width={155.24} height={136} />
                             </div>

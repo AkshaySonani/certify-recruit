@@ -2,7 +2,11 @@
 import Image from "next/image";
 import React, { useState } from "react";
 
-const Select: React.FC = () => {
+interface SelectProps {
+  options: { label: string; value: string }[];
+}
+
+const Select: React.FC<SelectProps> = ({ options }) => {
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
 
@@ -12,18 +16,24 @@ const Select: React.FC = () => {
 
   return (
     <div className="mb-4.5">
-      <div className="relative z-20 bg-transparent dark:bg-form-input">
+      <div className="relative z-20 bg-transparent">
         <select
           value={selectedOption}
           onChange={(e) => {
             setSelectedOption(e.target.value);
             changeTextColor();
           }}
-          className={`relative z-20 w-full min-w-80 appearance-none rounded-lg border border-stroke bg-transparent px-5 py-2 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary ${
-            isOptionSelected ? "text-black dark:text-white" : ""
-          }`}
+          className={`relative z-20 w-full min-w-80 appearance-none rounded-lg border border-stroke bg-transparent px-5 py-2 outline-none transition focus:border-text/primary active:border-text/primary ${isOptionSelected ? "text-black" : ""
+            }`}
         >
-          <option value="" disabled className="text-text/secondary">
+          {options.map((item: any) => {
+            return (
+              <option value={item.value} className="text-text/secondary">
+                {item.label}
+              </option>
+            )
+          })}
+          {/* <option value="" disabled className="text-text/secondary">
             Select ...
           </option>
           <option value="Paused" className="text-text/secondary">
@@ -31,7 +41,7 @@ const Select: React.FC = () => {
           </option>
           <option value="Active" className="text-text/secondary">
             Active
-          </option>
+          </option> */}
         </select>
 
         <span className="absolute right-4 top-1/2 z-30 -translate-y-1/2">
@@ -48,3 +58,5 @@ const Select: React.FC = () => {
 };
 
 export default Select;
+
+

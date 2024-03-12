@@ -8,14 +8,14 @@ const page = () => {
     const [eye, setEye] = useState(false)
     return (
         <div>
-            <div className='container mx-auto h-screen'>
+            <div className='container mx-auto'>
                 <div className='flex justify-center py-20'>
                     <Image src={"/MainLogo.svg"} alt="MainLogo" width={334} height={56} />
                 </div>
 
                 <div className="bg-[url('/_Compound.svg')] ">
                     <div className='flex justify-center'>
-                        <div className='w-1/3 rounded-3xl border border-[#EFF4FF] p-10'>
+                        <div className='min-w-72 max-w-md bg-white w-10/12 rounded-3xl border border-[#EFF4FF] py-10 px-5 sm:px-10 mb-20'>
                             <h3 className='font-bold text-3xl text-text/secondary text-center mb-4'>Hi there!</h3>
                             <p className='text-text/paragraph font-medium text-sm text-center mb-10'>Welcome back to CertifyRecruit. </p>
                             <button className='rounded-xl w-full h-12 bg-white text-xl font-semibold text-[#49556F] border border-[#EFF4FF] mb-8'>
