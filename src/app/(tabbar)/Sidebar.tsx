@@ -24,14 +24,13 @@ const sideBarData = [
     icon: "/sidebarIcon/pricing.svg",
     title: "Pricing",
   },
-
   {
-    path: "users",
+    path: "search_CVs",
     icon: "/sidebarIcon/dashboard.svg",
     title: "Search CVs",
   },
   {
-    path: "search_CVs",
+    path: "users",
     icon: "/sidebarIcon/dashboard.svg",
     title: "Users",
   },

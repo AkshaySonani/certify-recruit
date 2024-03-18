@@ -1,9 +1,28 @@
 "use client"
+import { API_CONSTANT } from '@/constant/ApiConstant'
+import Api from '@/service/ApiService'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
+
+
 const page = () => {
+    const onLogin=()=>{
+        const data={
+            email:"test@gmail.com",
+            pass:"12345"
+        }
+      const formData = new FormData();
+      formData.append('data', JSON.stringify(data))
+        Api.post(API_CONSTANT.LOGIN, data).then((data)=>{
+            router.push("/dashboard")
+        }
+     
+        )
+    
+    }
+
     const router = useRouter()
     const [eye, setEye] = useState(false)
     return (
@@ -41,7 +60,7 @@ const page = () => {
                             <div className='flex justify-end items-center mb-8'>
                                 <span className='text-xs text-text/primary font-normal mx-2 cursor-pointer' onClick={() => router.push("/login/forgotPass")}>Forgot password?</span>
                             </div>
-                            <button className='rounded-xl w-full h-12 bg-button/primary border border-[#EFF4FF] mb-8'>
+                            <button className='rounded-xl w-full h-12 bg-button/primary border border-[#EFF4FF] mb-8' onClick={onLogin}>
                                 <span className='flex justify-center font-medium text-sm text-white'>
                                     Log In
                                 </span>

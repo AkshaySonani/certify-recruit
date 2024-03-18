@@ -12,7 +12,14 @@ const config: Config = {
         colors:{
           "text/primary":"#013BB7",
           "text/secondary":"#150936",
-          "text/paragraph":"#49556F"
+          "text/paragraph":"#49556F",
+          "Ellipse-1":"#DCE7FF",
+          "Ellipse-2":"#EFF4FF",
+          
+          
+          
+          
+
         },
         backgroundColor:{
           "button/primary":"#3751F2",
