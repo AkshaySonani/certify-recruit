@@ -23,15 +23,16 @@ const Select: React.FC<SelectProps> = ({ options }) => {
             setSelectedOption(e.target.value);
             changeTextColor();
           }}
-          className={`relative z-20 w-full min-w-80 appearance-none rounded-lg border border-stroke bg-transparent px-5 py-2 outline-none transition focus:border-text/primary active:border-text/primary ${isOptionSelected ? "text-black" : ""
-            }`}
+          className={`relative z-20 w-full min-w-80 appearance-none rounded-lg border border-stroke bg-transparent px-5 py-2 outline-none transition focus:border-text/primary active:border-text/primary ${
+            isOptionSelected ? "text-black" : ""
+          }`}
         >
           {options.map((item: any) => {
             return (
               <option value={item.value} className="text-text/secondary">
                 {item.label}
               </option>
-            )
+            );
           })}
           {/* <option value="" disabled className="text-text/secondary">
             Select ...
@@ -43,7 +44,6 @@ const Select: React.FC<SelectProps> = ({ options }) => {
             Active
           </option> */}
         </select>
-
         <span className="absolute right-4 top-1/2 z-30 -translate-y-1/2">
           <Image
             src={"/dashboard/SelectDown.svg"}
@@ -58,5 +58,3 @@ const Select: React.FC<SelectProps> = ({ options }) => {
 };
 
 export default Select;
-
-
