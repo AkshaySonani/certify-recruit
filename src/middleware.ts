@@ -1,29 +1,20 @@
-import { NextRequest, NextResponse } from 'next/server'
-
-
-const isAuthPaths = (path: string) => ['/login'].some((e) => path.includes(e))
-
-export async function middleware(request: NextRequest) {
-  if (!request.cookies.get('token')?.value) {
-    if (!isAuthPaths(request.nextUrl.pathname)) {
-      return NextResponse.redirect(new URL('/login', request.url))
+import { getToken } from 'next-auth/jwt';
+import { NextRequest, NextResponse } from 'next/server';
+const isAuthPaths = (path:any) => ['/login',"/signUp"].some((e) => path.includes(e));
+export default async function middleware(req:NextRequest) {
+    const token = await getToken({ req, secret: "nDapuAjbv5rDvbR7Grm6v3Dwsu/9MUwlxQRwo41cYTc=" });
+    const { pathname, origin } = req.nextUrl;
+    if (pathname.includes('api/auth') || token) {
+        if (pathname === '/login' || pathname === '/signUp' ){
+            return NextResponse.redirect(`${origin}`);
+        }
+        else{
+            return NextResponse.next();
+        }
     }
-  } else {
-    if (isAuthPaths(request.nextUrl.pathname)) {
-      return NextResponse.redirect(new URL('/dashboard', request.url))
+    if (!token && !isAuthPaths(pathname)) {
+        return NextResponse.redirect(`${origin}/login`);
     }
-
-    if (request.nextUrl.pathname === '/api/logout') {
-      const res = NextResponse.redirect(new URL('/login', request.url), {
-        status: 301,
-      })
-      res.cookies.delete('token')
-      return res
-    }
-  }
+    
 }
-
-// See "Matching Paths" below to learn more
-export const config = {
-  matcher: ['/', '/login',"/dashboard"],
-}
+export const config = { matcher: ["/","/login",'/signUp'] }

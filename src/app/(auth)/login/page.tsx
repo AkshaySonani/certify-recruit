@@ -1,30 +1,37 @@
 "use client"
-import { API_CONSTANT } from '@/constant/ApiConstant'
 import Api from '@/service/ApiService'
+import { signIn } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
-
-
+import { toast } from 'react-toastify'
 
 const page = () => {
-    const onLogin=()=>{
-        const data={
-            email:"test@gmail.com",
-            pass:"12345"
+const [values,setValues]=useState({
+    email:"",
+    password:""
+})
+const [error, setError] = useState("");
+const [eye, setEye] = useState(false)
+const router = useRouter()
+const handleSubmit = async (e:any) => {
+    try {
+        const res = await signIn("credentials", {
+            ...values,
+            redirect: false,
+        });
+        if (res?.error) {
+            toast.error("Invalid Credentials")
+            return;
         }
-      const formData = new FormData();
-      formData.append('data', JSON.stringify(data))
-        Api.post(API_CONSTANT.LOGIN, data).then((data)=>{
-            router.push("/dashboard")
-        }
-     
-        )
-    
+        router.replace("/");
+    } 
+    catch (error) {
+        console.log(error);
     }
+};
 
-    const router = useRouter()
-    const [eye, setEye] = useState(false)
+
     return (
         <div>
             <div className='container mx-auto'>
@@ -49,10 +56,14 @@ const page = () => {
                                 <div className='border-b border-[#EFF4FF] w-14'></div>
                             </div>
                             <div>
-                                <input type='text' className='rounded-xl w-full h-12 border border-[#EFF4FF] mb-4 pl-4' placeholder='Utsav Sava' />
+                                <input type='text' value={values?.email} 
+                                onChange={(e)=>setValues({...values,email:e?.target.value} )}className='rounded-xl w-full h-12 border border-[#EFF4FF] mb-4 pl-4' placeholder='Email' />
                             </div>
                             <div className='relative'>
-                                <input type={eye ? "text" : "password"} className='rounded-xl w-full h-12 border border-[#EFF4FF] mb-3 pl-4' placeholder='Password' />
+                                <input type={eye ? "text" : "password"} 
+                                value={values?.password} 
+                                onChange={(e)=>setValues({...values,password:e?.target.value} )}
+                                className='rounded-xl w-full h-12 border border-[#EFF4FF] mb-3 pl-4' placeholder='Password' />
                                 {!eye &&
                                     <Image src={"/login/Eye-close.svg"} className='absolute right-4 top-4' alt="eye" width={18} height={18} onClick={() => setEye(prev => !prev)} />}
                                 {eye && <Image src={"/login/Eye-open.svg"} className='absolute right-4 top-4' alt="eye" width={18} height={18} onClick={() => setEye(prev => !prev)} />}
@@ -60,11 +71,17 @@ const page = () => {
                             <div className='flex justify-end items-center mb-8'>
                                 <span className='text-xs text-text/primary font-normal mx-2 cursor-pointer' onClick={() => router.push("/login/forgotPass")}>Forgot password?</span>
                             </div>
-                            <button className='rounded-xl w-full h-12 bg-button/primary border border-[#EFF4FF] mb-8' onClick={onLogin}>
+                            <button className='rounded-xl w-full h-12 bg-button/primary border border-[#EFF4FF] mb-8' onClick={()=>handleSubmit()}>
                                 <span className='flex justify-center font-medium text-sm text-white'>
                                     Log In
                                 </span>
                             </button>
+                            {error && (
+                        <div className="bg-red-500 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">
+                            {error}
+                        </div>
+                    )}
+                   
                             <div className='flex justify-center items-center font-medium text-sm text-text/paragraph'>
                                 <span>Don’t have an account? <span className='text-text/primary cursor-pointer' onClick={() => router.push("/signUp")}>Sign up</span></span>
                             </div>

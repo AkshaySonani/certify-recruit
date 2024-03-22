@@ -56,7 +56,7 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`border-r border-[#DCE7FF] flex justify-between h-screen w-72 flex-col overflow-y-hidden bg-white duration-300 ease-linear dark:bg-boxdark `}
+      className={` border-r z-[9999] sticky top-0   border-[#DCE7FF] flex justify-between h-screen overflow-y-auto min-w-72 w-72 flex-col  bg-white duration-300 ease-linear dark:bg-boxdark `}
     >
       <div>
         <div className="flex items-center justify-center my-10 gap-2 px-6 py-5.5 lg:py-6.5">

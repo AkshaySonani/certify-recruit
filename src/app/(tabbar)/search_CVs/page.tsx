@@ -65,7 +65,9 @@ const page = () => {
     },
   ];
   const [enabled, setEnabled] = useState(false);
-
+  function classNames(...classes: any) {
+    return classes.filter(Boolean).join(" ");
+  }
   return (
     <div>
       <div className="text-text/secondary font-semibold text-2xl">Search CVs</div>
@@ -141,6 +143,90 @@ const page = () => {
             />
           </div>
         </div>
+        <Menu as="div" className="relative ml-10">
+                      <div>
+                        <Menu.Button className={`relative items-center flex z-20 justify-between w-full min-w-[161px] appearance-none rounded-lg border border-stroke px-5 py-3 outline-none transition bg-Ellipse-2 `}>
+                          <p>Available</p>
+                          <Image
+                                src={"/dashboard/SelectDown.svg"}
+                                alt="Icon"
+                                width={14}
+                                height={14}
+                              />
+                        </Menu.Button>
+                      </div>
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-100"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95">
+                        <Menu.Items className="absolute right-0 z-30 mt-2 min-w-[161px] origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <div>
+                            <Menu.Item>
+                              {({ active }) => (
+                                <a
+                                  className={classNames(
+                                    active
+                                      ? "bg-gray-100 text-gray-900"
+                                      : "text-gray-700",
+                                    "block px-4 py-2 text-base"
+                                  )}>
+                                  Edit
+                                </a>
+                              )}
+                            </Menu.Item>
+                          </div>
+                          <div>
+                            <Menu.Item>
+                              {({ active }) => (
+                                <a
+                                  className={classNames(
+                                    active
+                                      ? "bg-gray-100 text-gray-900"
+                                      : "text-gray-700",
+                                    "block px-4 py-2 text-base"
+                                  )}>
+                                  Delete
+                                </a>
+                              )}
+                            </Menu.Item>
+                          </div>
+                          <div>
+                            <Menu.Item>
+                              {({ active }) => (
+                                <a
+                                  className={classNames(
+                                    active
+                                      ? "bg-gray-100 text-gray-900"
+                                      : "text-gray-700",
+                                    "block px-4 py-2 text-base"
+                                  )}>
+                                  View
+                                </a>
+                              )}
+                            </Menu.Item>
+                          </div>
+                          <div>
+                            <Menu.Item>
+                              {({ active }) => (
+                                <a
+                                  className={classNames(
+                                    active
+                                      ? "bg-gray-100 text-gray-900"
+                                      : "text-gray-700",
+                                    "block px-4 py-2 text-base"
+                                  )}>
+                                  Job details
+                                </a>
+                              )}
+                            </Menu.Item>
+                          </div>
+                        </Menu.Items>
+                      </Transition>
+                    </Menu>
        
       </div>
 
