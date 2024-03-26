@@ -111,7 +111,7 @@ const Sidebar = () => {
           </ul>
         </nav>
       </div>
-      <div className="flex justify-center mb-8">
+      <Link href="/myProfile" className="flex justify-center mb-8">
         <div className="flex items-center">
           <div className="mr-4">
             <Image src={"/sidebarIcon/profile.svg"} alt="Icon" width={39} height={39} className="p-0.5 border border-[#013BB7] rounded-xl" />
@@ -120,7 +120,7 @@ const Sidebar = () => {
             <div>Dori Doreau</div>
           </div>
         </div>
-      </div>
+      </Link>
     </aside>
   );
 };

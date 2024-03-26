@@ -13,7 +13,7 @@ export default async function middleware(req:NextRequest) {
         }
     }
     if (!token && !isAuthPaths(pathname)) {
-        return NextResponse.redirect(`${origin}/login`);
+        return NextResponse.redirect(`${origin}/dashboard`);
     }
     
 }
