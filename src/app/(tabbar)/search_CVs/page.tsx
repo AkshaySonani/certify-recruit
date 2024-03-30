@@ -97,14 +97,14 @@ const page = () => {
         </div>
         <div className="flex gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-[14px] h-[14px] rounded-[2px] bg-green-500"/>
-            <p className="font-[500] text-meta-purple-1 text-[14px]">
+            <div className="w-[14px] h-[14px] rounded-sm bg-green-500"/>
+            <p className="font-medium text-meta-purple-1 text-base">
               Available
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-[14px] h-[14px] rounded-[2px] bg-red-500"/>
-            <p className="font-[500] text-meta-purple-1 text-[14px]">Hired</p>
+            <div className="w-[14px] h-[14px] rounded-sm bg-red-500"/>
+            <p className="font-medium text-meta-purple-1 text-base">Hired</p>
           </div>
         </div>
       </div>
@@ -122,7 +122,7 @@ const page = () => {
             <input
               type="text"
               placeholder="Job title"
-              className="w-full h-12 rounded-lg border-[1.5px] border-stroke bg-transparent px-12 py-3 text-black outline-none transition focus:border-primary active:border-primary"
+              className="w-full h-12 rounded-lg border-default-half border-stroke bg-transparent px-12 py-3 text-black outline-none transition focus:border-primary active:border-primary"
             />
 
             <Popover.Panel className="absolute w-full z-10 mt-2 bg-white rounded-xl shadow-xl border border-meta-light-blue-1 p-4">
@@ -190,7 +190,7 @@ const page = () => {
                 />
               </div>
               <div className="w-full flex flex-col lg:flex-row  mt-4 lg:gap-2">
-                <div className="lg:w-[50%] w-full">
+                <div className="lg:w-1/2 w-full">
                   <label className="text-base font-medium text-meta-purple-1">
                     Date Uploaded
                   </label>
@@ -200,7 +200,7 @@ const page = () => {
                     className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
                   />
                 </div>
-                <div className="lg:w-[50%] w-full">
+                <div className="lg:w-1/2 w-full">
                   <label className="text-base font-medium text-meta-purple-1">
                     Experience
                   </label>
@@ -251,10 +251,10 @@ const page = () => {
             <input
               type="text"
               placeholder="City pincode"
-              className="w-full h-12 rounded-lg border-[1.5px] border-stroke bg-transparent pl-[5px] py-3 text-black outline-none transition focus:border-primary active:border-primary"
+              className="w-full h-12 rounded-lg border-default-half border-stroke bg-transparent pl-[5px] py-3 text-black outline-none transition focus:border-primary active:border-primary"
             />
           </div>
-          <div className="bg-meta-light-blue-2 rounded-[8px] p-[9px] ml-[10px]">
+          <div className="bg-meta-light-blue-2 rounded-lg p-[9px] ml-[10px]">
             <Image
               alt="date"
               width={19}
@@ -352,16 +352,15 @@ const page = () => {
               return (
                 <tr>
                   <td>
-                    {" "}
-                    <div className="w-[14px] h-[14px] rounded-[2px] bg-green-500"/>
+                    <div className="w-[14px] h-[14px] rounded-sm bg-green-500"/>
                   </td>
                   <td className="px-6 py-4 text-gray-500">
                     <div className="flex items-center">
                       <Image
-                        src={"/dashboard/photo.svg"}
                         alt="Icon"
                         width={31}
                         height={31}
+                        src={"/dashboard/photo.svg"}
                       />
                       <div className="font-medium text-base text-meta-purple-1 pl-4">
                         {item.name}

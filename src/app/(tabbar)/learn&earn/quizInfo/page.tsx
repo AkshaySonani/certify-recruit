@@ -13,8 +13,8 @@ const page = () => {
       </div>
       <div className="bg-meta-gray-2 h-[200px] rounded-[14px] w-full py-[10px]">
         <div className="h-full w-[70%] m-auto ">
-          <div className="mb-[20px]">
-            <p className="text-[15px] font-[500] text-meta-purple-1 text-center my-[10px]">
+          <div className="mb-5">
+            <p className="text-[15px] font-medium text-meta-purple-1 text-center my-[10px]">
               Time remaining
             </p>
             <div className="flex gap-2 justify-center">
@@ -28,7 +28,7 @@ const page = () => {
                   0
                 </p>
               </div>
-              <div className="h-[54px] w-[20px] flex items-center justify-center">
+              <div className="h-[54px] w-5 flex items-center justify-center">
                 <p className="text-meta-light-blue-3 text-2xl font-semibold">
                   :
                 </p>
@@ -43,7 +43,7 @@ const page = () => {
                   0
                 </p>
               </div>
-              <div className="h-[54px] w-[20px] flex items-center justify-center">
+              <div className="h-[54px] w-5 flex items-center justify-center">
                 <p className="text-meta-light-blue-3 text-2xl font-semibold">
                   :
                 </p>
@@ -60,8 +60,8 @@ const page = () => {
               </div>
             </div>
           </div>
-          <p className="text-meta-purple-1 text-[16px] text-[500] text-center">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
+          <p className="text-meta-purple-1 text-base text-[500] text-center">
+            Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s
           </p>
@@ -72,7 +72,7 @@ const page = () => {
         <p className="text-xl text-meta-purple-1 font-semibold">Quiz info</p>
       </div>
       <div className="flex w-full mt-[10px] gap-3">
-        <div className="flex w-[50%] gap-3 pl-[15px] bg-meta-light-blue-2 rounded-[8px] items-center py-[10px]">
+        <div className="flex w-1/2 gap-3 pl-[15px] bg-meta-light-blue-2 rounded-lg items-center py-[10px]">
           <div className="w-[47px] h-[47px] rounded-full bg-white relative">
             <Image
               alt="Icon"
@@ -82,11 +82,11 @@ const page = () => {
               className="top-[12px] left-[11px] absolute"
             />
           </div>
-          <div className="text-meta-light-blue-3 text-[14px]">
+          <div className="text-meta-light-blue-3 text-sm">
             Refer this article Link
           </div>
         </div>
-        <div className="flex w-[50%] gap-3 pl-[15px] bg-meta-light-blue-2 rounded-[8px] items-center py-[10px]">
+        <div className="flex w-1/2 gap-3 pl-[15px] bg-meta-light-blue-2 rounded-lg items-center py-[10px]">
           <div className="w-[47px] h-[47px] rounded-full bg-white relative">
             <Image
               alt="Icon"
@@ -96,7 +96,7 @@ const page = () => {
               className="top-[12px] left-[11px] absolute"
             />
           </div>
-          <div className="text-meta-light-blue-3 text-[14px]">
+          <div className="text-meta-light-blue-3 text-sm">
             Quiz Joining Time 8:00 PM to 8:45 PM
           </div>
         </div>

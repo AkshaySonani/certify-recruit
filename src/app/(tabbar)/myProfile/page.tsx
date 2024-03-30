@@ -28,12 +28,12 @@ const MyProfile = () => {
           onClick={() => router?.push("/dashboard")}
         >
           <Image src={"/BackArrow.svg"} alt="date" width={20} height={20} />
-          <p className="text-[20px] font-semibold text-meta-purple-1 pl-[10px]">
+          <p className="text-5 font-semibold text-meta-purple-1 pl-[10px]">
             Dashboard
           </p>
         </div>
         <div>
-          <button className="text-white py-[10px] text-[14px] font-semibold w-[120px] rounded-[8px] bg-hiring-btn-gradient">
+          <button className="text-white py-[10px] text-sm font-semibold w-[120px] rounded-lg bg-hiring-btn-gradient">
             Hiring
           </button>
         </div>
@@ -48,14 +48,14 @@ const MyProfile = () => {
           />
           <div className="flex w-full gap-8">
             <div className="w-[90%]">
-              <p className="font-semibold text-meta-purple-1 text-[20px]">
+              <p className="font-semibold text-meta-purple-1 text-xl">
                 Webnova Infotech
               </p>
-              <p className="text-meta-light-blue-3 font-[500] text-[14px]">
+              <p className="text-meta-light-blue-3 font-medium text-sm">
                 Company Type
               </p>
-              <div className="border-b-[1px] border-meta-light-blue-1 my-[10px] w-full"/>
-              <div className="flex justify-between w-[50%]">
+              <div className="border-b-default-1 border-meta-light-blue-1 my-[10px] w-full"/>
+              <div className="flex justify-between w-1/2">
                 <div className="flex items-center gap-2 flex-wrap">
                   <Image
                     width={16}
@@ -63,7 +63,7 @@ const MyProfile = () => {
                     alt="MainLogo"
                     src={"/location.svg"}
                   />
-                  <p className="text-meta-light-blue-3 text-[12px]">
+                  <p className="text-meta-light-blue-3 text-xs">
                     New Your, USA
                   </p>
                 </div>
@@ -74,33 +74,33 @@ const MyProfile = () => {
                     alt="MainLogo"
                     src={"/call.svg"}
                   />
-                  <p className="text-meta-light-blue-3 text-[12px]">
+                  <p className="text-meta-light-blue-3 text-xs">
                     516-742-4006
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-2 mt-[12px]">
+              <div className="flex items-center gap-2 mt-3">
                 <Image
                   width={16}
                   height={16}
                   alt="MainLogo"
                   src={"/mail.svg"}
                 />
-                <p className="text-meta-light-blue-3 text-[12px]">
+                <p className="text-meta-light-blue-3 text-xs">
                   516-742-4006
                 </p>
               </div>
             </div>
-            <div className="text-meta-blue-1 text-[16px] font-[500]">Edit</div>
+            <div className="text-meta-blue-1 text-base font-medium">Edit</div>
           </div>
         </div>
       </div>
 
-      <div className="mt-[20px]">
-        <div className="flex w-[60%] justify-around">
+      <div className="mt-5">
+        <div className="flex w-3/5 justify-around">
           <div
               onClick={() => setActive(0)}
-            className={`text-[13px] font-[500]  cursor-pointer ${
+            className={`default-t-13 font-medium cursor-pointer ${
               active === 0 ? "text-meta-blue-1" : "text-meta-light-blue-3"
             }`}
           >
@@ -108,14 +108,14 @@ const MyProfile = () => {
           </div>
           <div
               onClick={() => setActive(1)}
-            className={`text-[13px] font-[500]  cursor-pointer ${
+            className={`default-t-13 font-medium cursor-pointer ${
               active === 1 ? "text-meta-blue-1" : "text-meta-light-blue-3"
             }`}
             >
             Company Detail
           </div>
           <div
-            className={`text-[13px] font-[500] cursor-pointer ${
+            className={`default-t-13 font-medium cursor-pointer ${
               active === 2 ? "text-meta-blue-1" : "text-meta-light-blue-3"
             } `}
             onClick={() => setActive(2)}
@@ -123,52 +123,52 @@ const MyProfile = () => {
             KYC Compliance Detail
           </div>
         </div>
-        <div className="w-full border-[1px] border-meta-light-blue-1 my-[10px]"/>
+        <div className="w-full border-default-1 border-meta-light-blue-1 my-[10px]"/>
 
         <div>
           {active === 0 && (
             <>
-              <div className="flex w-full gap-3 pl-[35px] mt-[20px]">
-                <div className="w-[50%]">
+              <div className="flex w-full gap-3 pl-[35px] mt-5">
+                <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
                     Username
                   </label>
                   <input
                     type="text"
                     placeholder="Lynn Tanner"
-                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-[8px] px-5 py-3"
+                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-2 px-5 py-3"
                   />
                 </div>
-                <div className="w-[50%]">
+                <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
                     Email
                   </label>
                   <input
                     type="text"
                     placeholder="Tannerlynntanner2001@gmail.com"
-                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-[8px] px-5 py-3"
+                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-2 px-5 py-3"
                   />
                 </div>
               </div>
               <div className="flex w-full gap-3 pl-[35px] mt-[10px]">
-                <div className="w-[50%]">
+                <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
                     Role
                   </label>
                   <input
                     type="text"
                     placeholder="Lynn Tanner"
-                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-[8px] px-5 py-3"
+                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-2 px-5 py-3"
                   />
                 </div>
-                <div className="w-[50%]">
+                <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
                     Phone Number
                   </label>
                   <input
                     type="text"
                     placeholder="Tannerlynntanner2001@gmail.com"
-                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-[8px] px-5 py-3"
+                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-2 px-5 py-3"
                   />
                 </div>
               </div>
@@ -176,13 +176,13 @@ const MyProfile = () => {
           )}
           {active === 1 && (
             <>
-              <div className="flex w-full gap-3 pl-[35px] mt-[20px]">
-                <Menu as="div" className="relative w-[50%]">
+              <div className="flex w-full gap-3 pl-[35px] mt-5">
+                <Menu as="div" className="relative w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
                     Company Type
                   </label>
                   <Menu.Button
-                    className="relative items-center mt-[8px] flex z-20 justify-between w-full appearance-none rounded-lg border border-stroke px-5 py-3 outline-none transition"
+                    className="relative items-center mt-2 flex z-20 justify-between w-full appearance-none rounded-lg border border-stroke px-5 py-3 outline-none transition"
                   >
                     <p>{company}</p>
                     <Image
@@ -227,36 +227,36 @@ const MyProfile = () => {
                     </Menu.Items>
                   </Transition>
                 </Menu>
-                <div className="w-[50%]">
+                <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
                     Company Name
                   </label>
                   <input
                     type="text"
                     placeholder="Webnova Infotech"
-                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-[8px] px-5 py-3"
+                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-2 px-5 py-3"
                   />
                 </div>
               </div>
               <div className="flex w-full gap-3 pl-[35px] mt-[10px]">
-                <div className="w-[50%]">
+                <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
                     Website URL
                   </label>
                   <input
                     type="text"
                     placeholder="https://webnovainfotech.in/"
-                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-[8px] px-5 py-3"
+                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-2 px-5 py-3"
                   />
                 </div>
-                <div className="w-[50%]">
+                <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
                     Owner
                   </label>
                   <input
                     type="text"
                     placeholder="Utsav Savaliya"
-                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-[8px] px-5 py-3"
+                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-2 px-5 py-3"
                   />
                 </div>
               </div>
@@ -267,38 +267,38 @@ const MyProfile = () => {
                 <input
                   type="text"
                   placeholder="Street address"
-                  className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-[8px] px-5 py-3"
+                  className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-2 px-5 py-3"
                 />
               </div>
               <div className="flex w-full gap-3 pl-[35px] mt-[10px]">
-                <div className="w-[50%]">
+                <div className="w-1/2">
                   <input
                     type="text"
                     placeholder="https://webnovainfotech.in/"
-                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3  px-5 py-3"
+                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 px-5 py-3"
                   />
                 </div>
-                <div className="w-[50%]">
+                <div className="w-1/2">
                   <input
                     type="text"
                     placeholder="Utsav Savaliya"
-                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3  px-5 py-3"
+                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 px-5 py-3"
                   />
                 </div>
               </div>
               <div className="flex w-full gap-3 pl-[35px] mt-[10px]">
-                <div className="w-[50%]">
+                <div className="w-1/2">
                   <input
                     type="text"
                     placeholder="Zip Code"
-                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3  px-5 py-3"
+                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 px-5 py-3"
                   />
                 </div>
-                <div className="w-[50%]">
+                <div className="w-1/2">
                   <input
                     type="text"
                     placeholder="Country"
-                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3  px-5 py-3"
+                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 px-5 py-3"
                   />
                 </div>
               </div>
@@ -306,32 +306,32 @@ const MyProfile = () => {
           )}
           {active === 2 && (
             <>
-              <div className="flex w-full gap-3 pl-[35px] mt-[20px]">
-                <div className="w-[50%]">
+              <div className="flex w-full gap-3 pl-[35px] mt-5">
+                <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
                     PAN Number
                   </label>
                   <input
                     type="text"
                     placeholder="NSLPQS2154"
-                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-[8px] px-5 py-3"
+                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-2 px-5 py-3"
                   />
                 </div>
-                <div className="w-[50%]">
+                <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
                     Name on PAN Card
                   </label>
                   <input
                     type="text"
                     placeholder="Webnova Infotech"
-                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-[8px] px-5 py-3"
+                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-2 px-5 py-3"
                   />
                 </div>
               </div>
             </>
           )}
           <div className="w-full flex justify-end mt-[30px]">
-            <button className="bg-meta-blue-1 text-white text-[14px] rounded-[8px] w-[150px] py-[8px] ">
+            <button className="bg-meta-blue-1 text-white text-base rounded-lg w-[150px] py-2">
               Save
             </button>
           </div>

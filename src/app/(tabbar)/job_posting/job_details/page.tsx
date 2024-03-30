@@ -47,7 +47,7 @@ const Page = () => {
   return (
     <div>
       <div className="flex items-center justify-between mb-10">
-        <p className="sm:text-[25px] text-lg font-semibold text-meta-purple-1">
+        <p className="sm:text-text-default-t-25 text-lg font-semibold text-meta-purple-1">
           Job posting
         </p>
         <div className="flex items-center cursor-pointer">
@@ -64,7 +64,7 @@ const Page = () => {
       </div>
 
       <div className="flex items-start justify-between w-full lg:flex-nowrap h-full flex-wrap">
-        <div className="lg:w-1/2 w-full lg:mr-[20px] text-start">
+        <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
             Job detail
           </p>
@@ -81,10 +81,10 @@ const Page = () => {
           />
         </div>
       </div>
-      <div className="border-meta-light-blue-1 border-[1px] my-6" />
+      <div className="border-meta-light-blue-1 border-default-1 my-6" />
 
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
-        <div className="lg:w-1/2 w-full lg:mr-[20px] text-start">
+        <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
             Skills
           </p>
@@ -98,7 +98,7 @@ const Page = () => {
           <div className="flex items-start w-full lg:mt-0 mt-3 flex-wrap">
             {SKILL_ARR?.map((ele: any) => {
               return (
-                <div className="flex items-center p-3 border-[1.5px] border-meta-light-blue-1 rounded-lg mr-[10px] mb-2">
+                <div className="flex items-center p-3 border-default-half border-meta-light-blue-1 rounded-lg mr-[10px] mb-2">
                   <p className="text-meta-light-blue-3 font-medium text-base whitespace-nowrap">
                     {ele?.name}
                   </p>
@@ -106,8 +106,8 @@ const Page = () => {
                     width={25}
                     height={25}
                     alt="Preview"
-                    src={"/job/Close.svg"}
                     className="ml-[10px]"
+                    src={"/job/Close.svg"}
                   />
                 </div>
               );
@@ -126,7 +126,7 @@ const Page = () => {
               onClick={() => setIsOpen(!isOpen)}
               className="w-full cursor-pointer"
             >
-              <div className="border-[1.5px] w-max border-meta-light-blue-1 rounded-lg flex items-start p-3">
+              <div className="border-default-half w-max border-meta-light-blue-1 rounded-lg flex items-start p-3">
                 <p>Add Skill</p>
                 <div>
                   <Image
@@ -142,7 +142,7 @@ const Page = () => {
           )}
         </div>
       </div>
-      <div className="border-meta-light-blue-1 border-[1px] my-6" />
+      <div className="border-meta-light-blue-1 border-default-1 my-6" />
 
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-[20px] text-start">
@@ -154,7 +154,7 @@ const Page = () => {
           </p>
         </div>
         <div className="flex items-start lg:w-1/2 w-full lg:mt-0 mt-3 flex-col">
-          <div className="border-[1.5px] border-meta-light-blue-1 rounded-lg w-[196px] min-h-[47px] flex justify-between">
+          <div className="border-default-half border-meta-light-blue-1 rounded-lg w-[196px] min-h-[47px] flex justify-between">
             <button className="px-3 w-1/3" onClick={handleIncrement}>
               <Image
                 width={25}
@@ -163,7 +163,7 @@ const Page = () => {
                 src={"/job/Plus.svg"}
               />
             </button>
-            <div className="border-x-[1.5px] border-x-meta-light-blue-1 w-[65%] flex items-center justify-center text-meta-light-blue-3 text-base font-medium">
+            <div className="border-x-default-half border-x-meta-light-blue-1 w-[65%] flex items-center justify-center text-meta-light-blue-3 text-base font-medium">
               <p>{formattedValue}</p>
             </div>
             <button className="px-3 w-1/3" onClick={handleDecrement}>
@@ -183,12 +183,12 @@ const Page = () => {
           </div>
         </div>
       </div>
-      <div className="border-meta-light-blue-1 border-[1px] my-6" />
+      <div className="border-meta-light-blue-1 border-default-1 my-6" />
 
       <div className="w-full flex justify-between sm:mt-16 mt-7 sm:flex-nowrap flex-wrap">
         <button
           onClick={() => handleBack()}
-          className="border-meta-light-blue-1 border-[1px] text-base text-meta-light-blue-3 font-medium py-[13px] rounded-lg sm:min-w-[200px] min-w-full sm:mb-0 mb-3"
+          className="border-meta-light-blue-1 border-default-1 text-base text-meta-light-blue-3 font-medium py-[13px] rounded-lg sm:min-w-[200px] min-w-full sm:mb-0 mb-3"
         >
           Back
         </button>

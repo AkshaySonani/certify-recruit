@@ -33,7 +33,7 @@ const page = () => {
                 height={22}
                 src={"/Individual.svg"}
               />
-              <p className="text-[18px] text-meta-blue-1 font-semibold">
+              <p className="text-lg text-meta-blue-1 font-semibold">
                 Individual
               </p>
             </div>
@@ -49,7 +49,7 @@ const page = () => {
             <div className="mt-[30px] flex flex-wrap gap-4">
               {individualArr?.map((list) => {
                 return (
-                  <div className="flex items-center justify-between w-[48%] border border-meta-light-blue-1 rounded-[10px] py-[12px] px-[12px]">
+                  <div className="flex items-center justify-between w-[48%] border border-meta-light-blue-1 rounded-[10px] py-3 px-3">
                     <div className="flex gap-3 ">
                       <Image
                         alt="icon"
@@ -57,7 +57,7 @@ const page = () => {
                         height={20}
                         src={"/Individual.svg"}
                       />
-                      <p className="text-[14px] font-[500] text-meta-light-blue-3">
+                      <p className="text-sm font-medium text-meta-light-blue-3">
                         {list}
                       </p>
                     </div>
@@ -77,9 +77,9 @@ const page = () => {
         </div>
         <div
           onClick={() => router?.push("/login")}
-          className="flex gap-4 mt-[20px] items-center justify-end  w-[70%] m-auto cursor-pointer"
+          className="flex gap-4 mt-5 items-center justify-end w-[70%] m-auto cursor-pointer"
         >
-          <p className="text-[18px] text-meta-blue-1 font-[500]">Next</p>
+          <p className="text-lg text-meta-blue-1 font-medium">Next</p>
           <Image
             width={22}
             height={22}

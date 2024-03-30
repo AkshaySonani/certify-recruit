@@ -82,7 +82,7 @@ const page = () => {
             <input
               type="text"
               placeholder="Job title"
-              className="w-full h-12 rounded-lg border-[1.5px] border-stroke bg-transparent px-12 py-3 text-black outline-none transition focus:border-primary active:border-primary"
+              className="w-full h-12 rounded-lg border-default-half border-stroke bg-transparent px-12 py-3 text-black outline-none transition focus:border-primary active:border-primary"
             />
 
             <Popover.Panel className="absolute w-full z-10 mt-2 bg-white rounded-xl shadow-xl border border-meta-light-blue-1 p-4">
@@ -126,7 +126,7 @@ const page = () => {
           </Popover>
         </div>
         <div className="flex lg:w-2/4 w-1/3 items-center">
-          <div className="bg-meta-light-blue-2 rounded-[8px] p-[9px]">
+          <div className="bg-meta-light-blue-2 rounded-lg p-[9px]">
             <Image
               alt="date"
               width={19}
@@ -278,13 +278,13 @@ const page = () => {
                   <Dialog.Panel className="w-full max-w-md transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
                     <Dialog.Title
                       as="h3"
-                      className=" p-6 relative border-b-[1px] mt-[] border-meta-light-blue-1 text-[20px] font-semibold leading-6 text-meta-purple-1 flex justify-center items-center"
+                      className=" p-6 relative border-b-default-1 border-meta-light-blue-1 text-xl font-semibold leading-6 text-meta-purple-1 flex justify-center items-center"
                     >
                       Add User
                     </Dialog.Title>
                     <div
                       onClick={() => setIsOpen(false)}
-                      className="absolute top-2 right-1 p-[8px] cursor-pointer"
+                      className="absolute top-2 right-1 p-2 cursor-pointer"
                     >
                       <Image
                         alt="date"

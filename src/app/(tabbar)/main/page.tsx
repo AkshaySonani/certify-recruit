@@ -12,7 +12,7 @@ const page = () => {
           <Image src={"/MainLogo.svg"} alt="MainLogo" width={334} height={56} />
         </div>
         <div className="bg-[url('/_Compound.svg')]">
-          <div className="flex justify-center mt-[40px]">
+          <div className="flex justify-center mt-10">
             <div className="flex w-2/4 justify-between">
               <div
                 onClick={() => router.push("/main/employee")}

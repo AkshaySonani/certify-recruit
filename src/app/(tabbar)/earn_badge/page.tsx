@@ -62,14 +62,14 @@ const page = () => {
                   height={50}
                   src={"/dashboard/photo.svg"}
                 />
-                <div className="pr-[12px]">
-                  <p className="text-meta-purple-1 font-[500] text-[16px]">
+                <div className="pr-3">
+                  <p className="text-meta-purple-1 font-medium text-base">
                     B.A. Baracus
                   </p>
-                  <p className="text-meta-light-blue-3 text-[12px] font-[500]">
+                  <p className="text-meta-light-blue-3 text-xs font-medium">
                     CEO
                   </p>
-                  <p className="text-meta-light-blue-3 text-[12px] font-[500]">
+                  <p className="text-meta-light-blue-3 text-xs font-medium">
                     UK-London{" "}
                   </p>
                 </div>

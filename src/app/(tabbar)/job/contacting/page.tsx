@@ -87,7 +87,7 @@ const page = () => {
               <input
                 type="text"
                 placeholder="Search..."
-                className="w-full h-12 rounded-lg border-[1.5px] border-stroke bg-transparent px-12 py-3 text-black outline-none transition focus:border-primary active:border-primary"
+                className="w-full h-12 rounded-lg border-default-half border-stroke bg-transparent px-12 py-3 text-black outline-none transition focus:border-primary active:border-primary"
               />
               <div className="absolute right-3 top-4">
                 <Image

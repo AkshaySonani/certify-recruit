@@ -25,13 +25,13 @@ const page = () => {
         </div>
         <div className="bg-meta-gray-2 h-[200px] rounded-[14px]">
           <div className="flex flex-col justify-center h-full items-center">
-            <p className="text-meta-purple-1 text-[16px] text-[500]">
+            <p className="text-meta-purple-1 text-base text-[500]">
               Only when you have the certification can you do learn and earn
               use.
             </p>
             <button
-              className="bg-meta-blue-1 rounded-[10px] mt-[20px] text-white text-[16px] px-[20px] py-[13px]"
               onClick={() => router?.push("/learn&earn/registrationInfo")}
+              className="bg-meta-blue-1 rounded-[10px] mt-5 text-white text-base px-5 py-[13px]"
             >
               Go to Certification
             </button>

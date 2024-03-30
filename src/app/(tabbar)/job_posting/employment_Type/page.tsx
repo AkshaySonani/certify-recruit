@@ -28,7 +28,7 @@ const Page = () => {
   return (
     <div>
       <div className="flex items-center justify-between mb-10">
-        <p className="sm:text-[25px] text-lg font-semibold text-meta-purple-1">
+        <p className="sm:text-default-t-25 text-lg font-semibold text-meta-purple-1">
           Job posting
         </p>
         <div className="flex items-center cursor-pointer">
@@ -45,7 +45,7 @@ const Page = () => {
       </div>
 
       <div className="flex justify-between w-full lg:flex-nowrap flex-wrap">
-        <div className="lg:w-1/2 w-full lg:mr-[20px] text-start">
+        <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
             Employment Type
           </p>
@@ -55,35 +55,35 @@ const Page = () => {
         </div>
         <div className="grid grid-cols-1 lg:w-1/2 w-full lg:mt-0 mt-2">
           <div className="flex items-center sm:flex-nowrap flex-wrap w-full">
-            <div className="border-meta-light-blue-1 border-[1px] rounded-lg p-[13px] mr-[13px] sm:w-1/2 w-full">
+            <div className="border-meta-light-blue-1 border-default-1 rounded-lg p-[13px] mr-[13px] sm:w-1/2 w-full">
               <Checkbox label={"Full-time"} />
             </div>
-            <div className="border-meta-light-blue-1 border-[1px] rounded-lg p-[13px] mr-[13px] sm:w-1/2 w-full sm:mt-0 mt-2">
+            <div className="border-meta-light-blue-1 border-default-1 rounded-lg p-[13px] mr-[13px] sm:w-1/2 w-full sm:mt-0 mt-2">
               <Checkbox label={"Part-time"} />
             </div>
           </div>
           <div className="flex items-center sm:flex-nowrap flex-wrap w-full my-3">
-            <div className="border-meta-light-blue-1 border-[1px] rounded-lg p-[13px] mr-[13px] sm:w-1/2 w-full">
+            <div className="border-meta-light-blue-1 border-default-1 rounded-lg p-[13px] mr-[13px] sm:w-1/2 w-full">
               <Checkbox label={"On demand"} />
             </div>
-            <div className="border-meta-light-blue-1 border-[1px] rounded-lg p-[13px] mr-[13px] sm:w-1/2 w-full sm:mt-0 mt-2">
+            <div className="border-meta-light-blue-1 border-default-1 rounded-lg p-[13px] mr-[13px] sm:w-1/2 w-full sm:mt-0 mt-2">
               <Checkbox label={"Temporary"} />
             </div>
           </div>
           <div className="flex items-center sm:flex-nowrap flex-wrap w-full">
-            <div className="border-meta-light-blue-1 border-[1px] rounded-lg p-[13px] mr-[13px] sm:w-1/2 w-full">
+            <div className="border-meta-light-blue-1 border-default-1 rounded-lg p-[13px] mr-[13px] sm:w-1/2 w-full">
               <Checkbox label={"Volunteer"} />
             </div>
-            <div className="border-meta-light-blue-1 border-[1px] rounded-lg p-[13px] mr-[13px] sm:w-1/2 w-full sm:mt-0 mt-2">
+            <div className="border-meta-light-blue-1 border-default-1 rounded-lg p-[13px] mr-[13px] sm:w-1/2 w-full sm:mt-0 mt-2">
               <Checkbox label={"Internship"} />
             </div>
           </div>
         </div>
       </div>
-      <div className="border-meta-light-blue-1 border-[1px] my-6" />
+      <div className="border-meta-light-blue-1 border-default-1 my-6" />
 
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
-        <div className="lg:w-1/2 w-full lg:mr-[20px] text-start">
+        <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
             Working Schedule
           </p>
@@ -126,10 +126,10 @@ const Page = () => {
           </div>
         </div>
       </div>
-      <div className="border-meta-light-blue-1 border-[1px] my-6" />
+      <div className="border-meta-light-blue-1 border-default-1 my-6" />
 
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
-        <div className="lg:w-1/2 w-full lg:mr-[20px] text-start">
+        <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
             Salary
           </p>
@@ -139,7 +139,7 @@ const Page = () => {
         </div>
         <div className="flex flex-col items-center lg:w-1/2 w-full lg:mt-0 mt-3">
           <div className="flex items-center justify-between w-full mb-3">
-            <div className="border-[1px] border-meta-light-blue-1 rounded-[10px] min-w-[269px] w-full mr-[10px] cursor-pointer">
+            <div className="border-default-1 border-meta-light-blue-1 rounded-[10px] min-w-[269px] w-full mr-[10px] cursor-pointer">
               <input
                 id="hour"
                 type="radio"
@@ -148,15 +148,15 @@ const Page = () => {
               />
               <label className="flex items-center flex-col mb-6" htmlFor="hour">
                 <Image
-                  src={"/job/Clock.svg"}
-                  alt="clock-icon"
                   width={20}
                   height={20}
+                  alt="clock-icon"
+                  src={"/job/Clock.svg"}
                 />
                 <p>Hourly</p>
               </label>
             </div>
-            <div className="border-[1px] border-meta-light-blue-1 rounded-[10px] min-w-[269px] w-full cursor-pointer">
+            <div className="border-default-1 border-meta-light-blue-1 rounded-[10px] min-w-[269px] w-full cursor-pointer">
               <input
                 id="month"
                 type="radio"
@@ -164,14 +164,14 @@ const Page = () => {
                 className="ml-2 mt-2"
               />
               <label
-                className="flex items-center flex-col mb-6"
                 htmlFor="month"
+                className="flex items-center flex-col mb-6"
               >
                 <Image
-                  src={"/job/Clock.svg"}
-                  alt="clock-icon"
                   width={20}
                   height={20}
+                  alt="clock-icon"
+                  src={"/job/Clock.svg"}
                 />
                 <p>Monthly</p>
               </label>
@@ -186,7 +186,7 @@ const Page = () => {
               type="text"
               className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
             />
-            <div className="border-meta-light-blue-1 border-[1px] my-4" />
+            <div className="border-meta-light-blue-1 border-default-1 my-4" />
 
             <div className="mr-[13px] sm:w-1/2 w-full">
               <Checkbox label={"Salary is negotiable"} />
@@ -194,10 +194,10 @@ const Page = () => {
           </div>
         </div>
       </div>
-      <div className="border-meta-light-blue-1 border-[1px] my-6" />
+      <div className="border-meta-light-blue-1 border-default-1 my-6" />
 
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
-        <div className="w-full lg:mr-[20px] text-start">
+        <div className="w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
             Interview Time
           </p>
@@ -210,7 +210,7 @@ const Page = () => {
       <div className="w-full flex justify-between sm:mt-16 mt-7 sm:flex-nowrap flex-wrap">
         <button
           onClick={() => handleBack()}
-          className="border-meta-light-blue-1 border-[1px] text-base text-meta-light-blue-3 font-medium py-[13px] rounded-lg sm:min-w-[200px] min-w-full sm:mb-0 mb-3"
+          className="border-meta-light-blue-1 border-default-1 text-base text-meta-light-blue-3 font-medium py-[13px] rounded-lg sm:min-w-[200px] min-w-full sm:mb-0 mb-3"
         >
           Back
         </button>

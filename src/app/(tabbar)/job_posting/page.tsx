@@ -20,7 +20,7 @@ const Page = () => {
   return (
     <div>
       <div className="flex items-center justify-between mb-10">
-        <p className="sm:text-[25px] text-lg font-semibold text-meta-purple-1">
+        <p className="sm:text-default-t-25 text-lg font-semibold text-meta-purple-1">
           Job posting
         </p>
         <div className="flex items-center cursor-pointer">
@@ -37,7 +37,7 @@ const Page = () => {
       </div>
 
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
-        <div className="lg:w-1/2 w-full lg:mr-[20px] text-start">
+        <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
             Are you a hiring manager?
           </p>
@@ -46,18 +46,18 @@ const Page = () => {
           </p>
         </div>
         <div className="flex items-center lg:w-1/2 w-full lg:mt-0 mt-3">
-          <div className="border-meta-light-blue-1 border-[1px] rounded-lg p-[13px] mr-[13px] w-1/2">
+          <div className="border-meta-light-blue-1 border-default-1 rounded-lg p-[13px] mr-[13px] w-1/2">
             <Checkbox label={"Yes"} />
           </div>
-          <div className="border-meta-light-blue-1 border-[1px] rounded-lg p-[13px] w-1/2">
+          <div className="border-meta-light-blue-1 border-default-1 rounded-lg p-[13px] w-1/2">
             <Checkbox label={"No"} />
           </div>
         </div>
       </div>
-      <div className="border-meta-light-blue-1 border-[1px] my-6" />
+      <div className="border-meta-light-blue-1 border-default-1 my-6" />
 
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
-        <div className="lg:w-1/2 w-full lg:mr-[20px] text-start">
+        <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
             Company <span className="text-red-600">*</span>
           </p>
@@ -73,10 +73,10 @@ const Page = () => {
           />
         </div>
       </div>
-      <div className="border-meta-light-blue-1 border-[1px] my-6" />
+      <div className="border-meta-light-blue-1 border-default-1 my-6" />
 
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
-        <div className="lg:w-1/2 w-full lg:mr-[20px] text-start">
+        <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
             Job title <span className="text-red-600">*</span>
           </p>
@@ -92,10 +92,10 @@ const Page = () => {
           />
         </div>
       </div>
-      <div className="border-meta-light-blue-1 border-[1px] my-6" />
+      <div className="border-meta-light-blue-1 border-default-1 my-6" />
 
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
-        <div className="lg:w-1/2 w-full lg:mr-[20px] text-start">
+        <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
             Workplace type <span className="text-red-600">*</span>
           </p>
@@ -104,21 +104,21 @@ const Page = () => {
           </p>
         </div>
         <div className="flex items-center lg:w-1/2 w-full lg:mt-0 mt-3 md:flex-nowrap flex-wrap">
-          <div className="border-meta-light-blue-1 border-[1px] rounded-lg p-[13px] w-1/3 md:min-w-[126px] min-w-full">
+          <div className="border-meta-light-blue-1 border-default-1 rounded-lg p-[13px] w-1/3 md:min-w-[126px] min-w-full">
             <Checkbox label={"On-site"} />
           </div>
-          <div className="border-meta-light-blue-1 border-[1px] rounded-lg p-[13px] w-1/3 md:mx-[13px] md:min-w-[126px] min-w-full md:my-0 my-2">
+          <div className="border-meta-light-blue-1 border-default-1 rounded-lg p-[13px] w-1/3 md:mx-[13px] md:min-w-[126px] min-w-full md:my-0 my-2">
             <Checkbox label={"Hybrid"} />
           </div>
-          <div className="border-meta-light-blue-1 border-[1px] rounded-lg p-[13px] w-1/3 md:min-w-[126px] min-w-full">
+          <div className="border-meta-light-blue-1 border-default-1 rounded-lg p-[13px] w-1/3 md:min-w-[126px] min-w-full">
             <Checkbox label={"Remote"} />
           </div>
         </div>
       </div>
-      <div className="border-meta-light-blue-1 border-[1px] my-6" />
+      <div className="border-meta-light-blue-1 border-default-1 my-6" />
 
       <div className="flex justify-between w-full lg:flex-nowrap flex-wrap">
-        <div className="lg:w-1/2 w-full lg:mr-[20px] text-start">
+        <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
             Job posting location
           </p>
