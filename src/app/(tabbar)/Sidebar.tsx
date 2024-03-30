@@ -44,6 +44,11 @@ const sideBarData = [
     icon: "/sidebarIcon/dashboard.svg",
     title: "Earn Badge",
   },
+  {
+    path: "learn&earn",
+    icon: "/sidebarIcon/dashboard.svg",
+    title: "Learn & Earn",
+  },
 ];
 
 const Sidebar = () => {
