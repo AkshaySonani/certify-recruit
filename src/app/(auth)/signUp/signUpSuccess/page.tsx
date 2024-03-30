@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const router = useRouter();
@@ -13,28 +13,28 @@ const page = () => {
           <Image src={"/MainLogo.svg"} alt="MainLogo" width={334} height={56} />
         </div>
 
-        <div className="bg-[url('/_Compound.svg')] ">
+        <div className="bg-[url('/_Compound.svg')]">
           <div className="flex justify-center">
-            <div className="min-w-72 max-w-xl rounded-3xl border border-[#EFF4FF] p-10">
+            <div className="min-w-72 max-w-xl rounded-3xl border border-meta-light-blue-2 p-10">
               <div className="flex justify-center h-40 my-4">
                 <Image
-                  src={"/login/ClockMan.svg"}
-                  alt="MainLogo"
                   width={99.32}
+                  alt="MainLogo"
                   height={159.52}
+                  src={"/login/ClockMan.svg"}
                 />
               </div>
-              <h3 className="font-bold text-3xl text-text/secondary text-center mb-4">
+              <h3 className="font-bold text-3xl text-meta-purple-1 text-center mb-4">
                 Thank you for sign up!
               </h3>
-              <p className="text-text/paragraph font-medium text-sm text-center mb-4">
+              <p className="text-meta-light-blue-3 font-medium text-sm text-center mb-4">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry's standard dummy
                 text ever since the 1500s
               </p>
 
-              {/* <div className='flex justify-center items-center font-medium text-lg text-text/paragraph'>
-                                <span className='mr-2 text-[#3751F2] cursor-pointer' onClick={() => router.push("/login")}>Go to login</span><Image src={"/LeftArrow.svg"} className='rotate-180' alt="LeftArrow" width={17} height={7} />
+              {/* <div className='flex justify-center items-center font-medium text-lg text-meta-light-blue-3'>
+                                <span className='mr-2 text-meta-blue-2 cursor-pointer' onClick={() => router.push("/login")}>Go to login</span><Image src={"/LeftArrow.svg"} className='rotate-180' alt="LeftArrow" width={17} height={7} />
                             </div> */}
             </div>
           </div>

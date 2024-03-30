@@ -12,59 +12,59 @@ const page = () => {
   return (
     <div>
       <div>
-        <div className="text-text/secondary font-semibold text-2xl">
+        <div className="text-meta-purple-1 font-semibold text-2xl">
           Dashboard
         </div>
         <div className="flex gap-4 mt-4">
           {menu.map((item) => {
             return (
-              <div className="relative p-5 border border-[#DCE7FF] rounded-2xl w-1/4 ">
-                <div className="bg-[#DCE7FF] rounded-lg h-9 w-9 flex justify-center items-center mb-2">
+              <div className="relative p-5 border border-meta-light-blue-1 rounded-2xl w-1/4">
+                <div className="bg-meta-light-blue-1 rounded-lg h-9 w-9 flex justify-center items-center mb-2">
                   <Image
-                    src={"/sidebarIcon/jobPosting.svg"}
                     alt="Icon"
                     width={19}
                     height={19}
+                    src={"/sidebarIcon/jobPosting.svg"}
                   />
                 </div>
-                <p className="font-bold text-text/secondary text-2xl">50</p>
-                <p className="text-text/paragraph font-medium text-base">
+                <p className="font-bold text-meta-purple-1 text-2xl">50</p>
+                <p className="text-meta-light-blue-3 font-medium text-base">
                   {item.title}
                 </p>
                 <Image
-                  src={"/dashboard/MaskGroup.svg"}
-                  className="absolute right-0 top-6"
                   alt="Icon"
                   width={61}
                   height={93}
+                  src={"/dashboard/MaskGroup.svg"}
+                  className="absolute right-0 top-6"
                 />
               </div>
             );
           })}
         </div>
-        <div className="text-text/secondary font-semibold text-xl mt-8">
+        <div className="text-meta-purple-1 font-semibold text-xl mt-8">
           Recently Job post
         </div>
 
         <div className="mt-4">
-          <div className="p-5 bg-bg/primary rounded-2xl">
+          <div className="p-5 bg-meta-gray-2 rounded-2xl">
             <div className="flex justify-between">
               <div className="flex">
-                <div className="mt-1">{/* <Checkbox /> */}</div>
-                <div className="">
-                  <p className="text-text/secondary font-semibold text-xl">
+                {/* <div className="mt-1"><Checkbox /></div> */}
+                <div>
+                  <p className="text-meta-purple-1 font-semibold text-xl">
                     User Interface Expert (WFH)
                   </p>
-                  <p className="text-text/paragraph font-medium text-base">
+                  <p className="text-meta-light-blue-3 font-medium text-base">
                     Surat, Gujrat, India.
                   </p>
                 </div>
-                <p className="text-text/paragraph font-medium text-base ml-2 mt-1">
+                <p className="text-meta-light-blue-3 font-medium text-base ml-2 mt-1">
                   2 weeks ago
                 </p>
               </div>
 
-              <div>{/* <Select /> */}</div>
+              {/* <div><Select /></div> */}
             </div>
           </div>
         </div>

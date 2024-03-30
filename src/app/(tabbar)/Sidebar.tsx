@@ -1,7 +1,7 @@
 import React from "react";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const sideBarData = [
   {
@@ -56,22 +56,22 @@ const Sidebar = () => {
 
   const activeTabCss = (path: string) =>
     pathname.split("/")[1] === path
-      ? " bg-button/primary text-white dark:bg-meta-4 "
-      : " ";
+      ? "bg-meta-blue-2 text-white dark:bg-meta-4"
+      : "";
 
   return (
     <aside
-      className={` border-r z-[9999] sticky top-0   border-[#DCE7FF] flex justify-between h-screen overflow-y-auto min-w-72 w-72 flex-col  bg-white duration-300 ease-linear dark:bg-boxdark `}
+      className="border-r z-[9999] sticky top-0   border-meta-light-blue-1 flex justify-between h-screen overflow-y-auto min-w-72 w-72 flex-col  bg-white duration-300 ease-linear dark:bg-boxdark"
     >
       <div>
         <div className="flex items-center justify-center my-10 gap-2 px-6 py-5.5 lg:py-6.5">
           <Link href="/">
             <Image
+              priority
+              alt="Logo"
               width={199}
               height={33}
               src={"/MainLogo.svg"}
-              alt="Logo"
-              priority
             />
           </Link>
 
@@ -100,7 +100,7 @@ const Sidebar = () => {
                   href={"/" + e.path}
                   className={
                     activeTabCss(e.path) +
-                    " group relative flex items-center gap-2.5 rounded-sm px-4 py-2.5 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 "
+                    "group relative flex items-center gap-2.5 rounded-sm px-4 py-2.5 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                   }
                 >
                   <Image
@@ -119,7 +119,13 @@ const Sidebar = () => {
       <Link href="/myProfile" className="flex justify-center mb-8">
         <div className="flex items-center">
           <div className="mr-4">
-            <Image src={"/sidebarIcon/profile.svg"} alt="Icon" width={39} height={39} className="p-0.5 border border-[#013BB7] rounded-xl" />
+            <Image
+              alt="Icon"
+              width={39}
+              height={39}
+              src={"/sidebarIcon/profile.svg"}
+              className="p-0.5 border border-meta-blue-1 rounded-xl"
+            />
           </div>
           <div>
             <div>Dori Doreau</div>

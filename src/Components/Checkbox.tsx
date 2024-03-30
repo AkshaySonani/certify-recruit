@@ -20,12 +20,14 @@ const Checkbox = ({ label, className }: any) => {
             }}
           />
           <div
-            className={`mr-3 flex h-5 w-5 items-center justify-center rounded border ${isChecked && "border-[#013BB7] bg-gray dark:bg-transparent"
-              }`}
+            className={`mr-3 flex h-5 w-5 items-center justify-center rounded border ${
+              isChecked && "border-meta-blue-1 bg-gray dark:bg-transparent"
+            }`}
           >
             <span
-              className={`h-2.5 w-2.5 rounded-sm ${isChecked && "bg-[#013BB7]"
-                }`}
+              className={`h-2.5 w-2.5 rounded-sm ${
+                isChecked && "bg-meta-blue-1"
+              }`}
             ></span>
           </div>
         </div>

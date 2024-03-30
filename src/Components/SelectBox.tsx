@@ -30,7 +30,7 @@ const SelectBox = ({
             key={option?.id}
             value={option?.name}
             className={({ active }) =>
-              `${active ? "text-white bg-text/primary" : "text-gray-900"}
+              `${active ? "text-white bg-meta-blue-1" : "text-gray-900"}
                           cursor-default select-none relative py-2 pl-3 pr-9`
             }
             onClick={() => {

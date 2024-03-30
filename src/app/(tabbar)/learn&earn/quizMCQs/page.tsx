@@ -1,22 +1,12 @@
-"use client"
+"use client";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import React, { Fragment } from "react";
+import { useRouter } from "next/navigation";
 
 const page = () => {
-  const router = useRouter()
+  const router = useRouter();
 
-  return (
-   
-      <div>
-
-       
-
-
-
-      </div>
-
-  );
+  return <div></div>;
 };
 
 export default page;

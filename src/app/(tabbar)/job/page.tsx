@@ -1,60 +1,60 @@
-"use client"
-import Checkbox from "@/Components/Checkbox";
-import Select from "@/Components/Select";
-import { Menu, Popover, Transition } from "@headlessui/react";
+"use client";
 import Image from "next/image";
+import Select from "@/Components/Select";
 import { useRouter } from "next/navigation";
-import React, { Fragment, useState } from "react";
+import Checkbox from "@/Components/Checkbox";
 import DatePicker from "react-multi-date-picker";
+import React, { Fragment, useState } from "react";
+import { Menu, Popover, Transition } from "@headlessui/react";
 
 const jobs = [
   { title: "Applicants", count: 50 },
   { title: "Awaiting", count: 10 },
   { title: "Contacting", count: 20 },
-  { title: "Hired", count: 10 }
-]
+  { title: "Hired", count: 10 },
+];
 
 const SelectOption = [
   { label: "Select ...", value: "" },
   { label: "Open", value: "Open" },
   { label: "Paused", value: "Paused" },
   { label: "Closed", value: "Closed" },
-]
+];
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
 const page = () => {
-  const router = useRouter()
-  const [dateRange, setDateRange] = useState([
-    "2024-01-01",
-    "2024-12-31",
-  ]);
+  const router = useRouter();
+  const [dateRange, setDateRange] = useState(["2024-01-01", "2024-12-31"]);
 
   const jobHandler = (title: string) => {
     if (title === "Applicants") {
-      router.push("/job/applicants")
+      router.push("/job/applicants");
     } else if (title === "Awaiting") {
-      router.push("/job/awaiting")
+      router.push("/job/awaiting");
     } else if (title === "Contacting") {
-      router.push("/job/contacting")
+      router.push("/job/contacting");
     } else if (title === "Hired") {
-      router.push("/job/hired")
+      router.push("/job/hired");
     }
-  }
+  };
 
   return (
     <div>
       <div>
-        <div className="text-text/secondary font-semibold text-2xl">
-          Jobs
-        </div>
+        <div className="text-meta-purple-1 font-semibold text-2xl">Jobs</div>
         <div className="flex gap-6 mt-5 mb-10 justify-center items-center">
           <div className="w-2/4">
             <Popover className="relative">
               <Popover.Button className="absolute left-3 top-4">
-                <Image src={"/dashboard/filter.svg"} alt="date" width={19} height={15} />
+                <Image
+                  alt="date"
+                  width={19}
+                  height={15}
+                  src={"/dashboard/filter.svg"}
+                />
               </Popover.Button>
               <input
                 type="text"
@@ -62,39 +62,45 @@ const page = () => {
                 className="w-full h-12 rounded-lg border-[1.5px] border-stroke bg-transparent px-12 py-3 text-black outline-none transition focus:border-primary active:border-primary"
               />
               <div className="absolute right-3 top-4">
-                <Image src={"/dashboard/search.svg"} alt="date" width={19} height={19} />
+                <Image
+                  alt="date"
+                  width={19}
+                  height={19}
+                  src={"/dashboard/search.svg"}
+                />
               </div>
-              <Popover.Panel className="absolute w-full z-10 mt-2 bg-white rounded-xl shadow-xl border border-[#DCE7FF] p-4">
+              <Popover.Panel className="absolute w-full z-10 mt-2 bg-white rounded-xl shadow-xl border border-meta-light-blue-1 p-4">
                 <div className="w-full">
-                  <label className="text-base font-medium text-text/secondary">
+                  <label className="text-base font-medium text-meta-purple-1">
                     Job title
                   </label>
                   <input
                     type="text"
                     placeholder="Job title search here..."
-                    className="w-full rounded-lg border border-[#DCE7FF] focus:border-text/paragraph mt-1 px-5 py-3"
+                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
                   />
                 </div>
                 <div className="w-full mt-4">
-                  <label className="text-base font-medium text-text/secondary">
+                  <label className="text-base font-medium text-meta-purple-1">
                     Location
                   </label>
                   <input
                     type="text"
                     placeholder="Type location here..."
-                    className="w-full rounded-lg border border-[#DCE7FF] focus:border-text/paragraph mt-1 px-5 py-3"
+                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
                   />
                 </div>
                 <div className="w-full mt-4">
-                  <label className="text-base font-medium text-text/secondary">
+                  <label className="text-base font-medium text-meta-purple-1">
                     Date posted
                   </label>
                   <DatePicker
                     range
                     format="YYYY-MM-DD"
-                    placeholder="YYYY-MM-DD - YYYY-MM-DD"
                     minDate={new Date("01-01-2014")}
                     maxDate={new Date("12-31-2024")}
+                    placeholder="YYYY-MM-DD - YYYY-MM-DD"
+                    containerStyle={{ width: "100%" }}
                     onChange={(dateObjects: any) => {
                       if (dateObjects?.[1]?.toString()) {
                         setDateRange((e) => [
@@ -103,7 +109,6 @@ const page = () => {
                         ]);
                       }
                     }}
-                    containerStyle={{ width: "100%" }}
                     style={{
                       height: 48,
                       width: "100%",
@@ -115,11 +120,14 @@ const page = () => {
                 </div>
                 <div className="flex justify-between items-center w-full mt-4">
                   <div>
-                    <Checkbox label={"Set as default"} className={"text-text/paragraph text-base font-medium"} />
+                    <Checkbox
+                      label={"Set as default"}
+                      className="text-meta-light-blue-3 text-base font-medium"
+                    />
                   </div>
                   <div>
-                    <button className='rounded-xl w-28 h-12 bg-[#DCE7FF] border border-[#EFF4FF] ml-5'>
-                      <span className='flex justify-center font-medium text-sm text-text/paragraph'>
+                    <button className="rounded-xl w-28 h-12 bg-meta-light-blue-1 border border-meta-light-blue-2 ml-5">
+                      <span className="flex justify-center font-medium text-sm text-meta-light-blue-3">
                         Done
                       </span>
                     </button>
@@ -129,7 +137,6 @@ const page = () => {
             </Popover>
           </div>
           <div className="flex w-2/4 items-center">
-
             <div className="relative w-full">
               <DatePicker
                 range
@@ -137,6 +144,7 @@ const page = () => {
                 placeholder="Select Dates"
                 minDate={new Date("01-01-2014")}
                 maxDate={new Date("12-31-2024")}
+                containerStyle={{ width: "100%" }}
                 onChange={(dateObjects: any) => {
                   if (dateObjects?.[1]?.toString()) {
                     setDateRange((e) => [
@@ -145,7 +153,6 @@ const page = () => {
                     ]);
                   }
                 }}
-                containerStyle={{ width: "100%" }}
                 style={{
                   height: 48,
                   fontSize: 14,
@@ -154,11 +161,16 @@ const page = () => {
                 }}
               />
               <div className="absolute right-2 top-3">
-                <Image src={"/dashboard/date.svg"} alt="date" width={24} height={24} />
+                <Image
+                  alt="date"
+                  width={24}
+                  height={24}
+                  src={"/dashboard/date.svg"}
+                />
               </div>
             </div>
-            <button className='rounded-xl w-full max-w-64 min-w-36  h-12 bg-[#013BB7] border border-[#EFF4FF] ml-5'>
-              <span className='flex justify-center font-medium text-sm text-white'>
+            <button className="rounded-xl w-full max-w-64 min-w-36 h-12 bg-meta-blue-1 border border-meta-light-blue-2 ml-5">
+              <span className="flex justify-center font-medium text-sm text-white">
                 Job Post
               </span>
             </button>
@@ -168,19 +180,23 @@ const page = () => {
         {Array.from({ length: 3 }).map((_, index) => {
           return (
             <div className="mt-5">
-              <div className="p-5 bg-bg/primary rounded-2xl">
+              <div className="p-5 bg-meta-gray-2 rounded-2xl">
                 <div className="flex justify-between">
                   <div className="flex">
                     <div className="mt-1">
                       <Checkbox />
                     </div>
                     <div className="">
-                      <div className="text-text/secondary font-semibold text-xl">
+                      <div className="text-meta-purple-1 font-semibold text-xl">
                         User Interface Expert (WFH)
-                        <div className="text-text/paragraph font-medium text-base">Surat, Gujrat, India.</div>
+                        <div className="text-meta-light-blue-3 font-medium text-base">
+                          Surat, Gujrat, India.
+                        </div>
                       </div>
                     </div>
-                    <p className="text-text/paragraph font-medium text-base ml-2 mt-1">2 weeks ago</p>
+                    <p className="text-meta-light-blue-3 font-medium text-base ml-2 mt-1">
+                      2 weeks ago
+                    </p>
                   </div>
                   <div className="flex items-center">
                     <Select options={SelectOption} />
@@ -190,17 +206,23 @@ const page = () => {
                     <Menu as="div" className="relative ml-10">
                       <div>
                         <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-base focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2">
-                          <Image src={"/dashboard/threeDot.svg"} alt="Icon" width={4} height={20} />
+                          <Image
+                            width={4}
+                            alt="Icon"
+                            height={20}
+                            src={"/dashboard/threeDot.svg"}
+                          />
                         </Menu.Button>
                       </div>
                       <Transition
                         as={Fragment}
+                        leave="transition ease-in duration-75"
+                        leaveTo="transform opacity-0 scale-95"
                         enter="transition ease-out duration-100"
                         enterFrom="transform opacity-0 scale-95"
                         enterTo="transform opacity-100 scale-100"
-                        leave="transition ease-in duration-75"
                         leaveFrom="transform opacity-100 scale-100"
-                        leaveTo="transform opacity-0 scale-95">
+                      >
                         <Menu.Items className="absolute right-0 z-30 mt-2 w-48 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                           <div>
                             <Menu.Item>
@@ -211,7 +233,8 @@ const page = () => {
                                       ? "bg-gray-100 text-gray-900"
                                       : "text-gray-700",
                                     "block px-4 py-2 text-base"
-                                  )}>
+                                  )}
+                                >
                                   Edit
                                 </a>
                               )}
@@ -226,7 +249,8 @@ const page = () => {
                                       ? "bg-gray-100 text-gray-900"
                                       : "text-gray-700",
                                     "block px-4 py-2 text-base"
-                                  )}>
+                                  )}
+                                >
                                   Delete
                                 </a>
                               )}
@@ -241,7 +265,8 @@ const page = () => {
                                       ? "bg-gray-100 text-gray-900"
                                       : "text-gray-700",
                                     "block px-4 py-2 text-base"
-                                  )}>
+                                  )}
+                                >
                                   View
                                 </a>
                               )}
@@ -256,7 +281,8 @@ const page = () => {
                                       ? "bg-gray-100 text-gray-900"
                                       : "text-gray-700",
                                     "block px-4 py-2 text-base"
-                                  )}>
+                                  )}
+                                >
                                   Job details
                                 </a>
                               )}
@@ -271,28 +297,29 @@ const page = () => {
                 <div className="flex gap-4 mt-8">
                   {jobs.map((item) => {
                     return (
-                      <div className=" p-5 bg-white rounded-2xl w-1/4 cursor-pointer" onClick={() => jobHandler(item.title)}>
+                      <div
+                        onClick={() => jobHandler(item.title)}
+                        className=" p-5 bg-white rounded-2xl w-1/4 cursor-pointer"
+                      >
                         <div className="flex flex-col justify-center items-center">
-                          <p className="font-semibold text-text/primary text-xl mb-2">{item.count}</p>
-                          <p className="text-text/paragraph font-medium text-base">{item.title}</p>
+                          <p className="font-semibold text-meta-blue-1 text-xl mb-2">
+                            {item.count}
+                          </p>
+                          <p className="text-meta-light-blue-3 font-medium text-base">
+                            {item.title}
+                          </p>
                         </div>
                       </div>
-                    )
+                    );
                   })}
                 </div>
               </div>
             </div>
-          )
+          );
         })}
-
-
-
-
-
       </div>
     </div>
   );
 };
 
 export default page;
-

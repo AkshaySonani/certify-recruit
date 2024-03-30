@@ -47,7 +47,7 @@ const Page = () => {
   return (
     <div>
       <div className="flex items-center justify-between mb-10">
-        <p className="sm:text-[25px] text-lg font-semibold text-text/secondary">
+        <p className="sm:text-[25px] text-lg font-semibold text-meta-purple-1">
           Job posting
         </p>
         <div className="flex items-center cursor-pointer">
@@ -57,7 +57,7 @@ const Page = () => {
             alt="Preview"
             src={"/job/Eye_fill.svg"}
           />
-          <p className="ml-2 sm:text-xl text-lg font-semibold text-text/primary sm:block hidden">
+          <p className="ml-2 sm:text-xl text-lg font-semibold text-meta-blue-1 sm:block hidden">
             Preview
           </p>
         </div>
@@ -65,10 +65,10 @@ const Page = () => {
 
       <div className="flex items-start justify-between w-full lg:flex-nowrap h-full flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-[20px] text-start">
-          <p className="sm:text-2xl text-xl font-semibold text-text/secondary">
+          <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
             Job detail
           </p>
-          <p className="sm:text-base text-sm font-medium text-text/paragraph">
+          <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
             Tell us about the role
           </p>
         </div>
@@ -81,14 +81,14 @@ const Page = () => {
           />
         </div>
       </div>
-      <div className="border-stroke/secondary border-[1px] my-6" />
+      <div className="border-meta-light-blue-1 border-[1px] my-6" />
 
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-[20px] text-start">
-          <p className="sm:text-2xl text-xl font-semibold text-text/secondary">
+          <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
             Skills
           </p>
-          <p className="sm:text-base text-sm font-medium text-text/paragraph">
+          <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
             Add skill keywords (max 10) to make your job more visible to the
             right candidates.
           </p>
@@ -98,8 +98,8 @@ const Page = () => {
           <div className="flex items-start w-full lg:mt-0 mt-3 flex-wrap">
             {SKILL_ARR?.map((ele: any) => {
               return (
-                <div className="flex items-center p-3 border-[1.5px] border-stroke/secondary rounded-lg mr-[10px] mb-2">
-                  <p className="text-text/paragraph font-medium text-base whitespace-nowrap">
+                <div className="flex items-center p-3 border-[1.5px] border-meta-light-blue-1 rounded-lg mr-[10px] mb-2">
+                  <p className="text-meta-light-blue-3 font-medium text-base whitespace-nowrap">
                     {ele?.name}
                   </p>
                   <Image
@@ -126,7 +126,7 @@ const Page = () => {
               onClick={() => setIsOpen(!isOpen)}
               className="w-full cursor-pointer"
             >
-              <div className="border-[1.5px] w-max border-stroke/secondary rounded-lg flex items-start p-3">
+              <div className="border-[1.5px] w-max border-meta-light-blue-1 rounded-lg flex items-start p-3">
                 <p>Add Skill</p>
                 <div>
                   <Image
@@ -142,19 +142,19 @@ const Page = () => {
           )}
         </div>
       </div>
-      <div className="border-stroke/secondary border-[1px] my-6" />
+      <div className="border-meta-light-blue-1 border-[1px] my-6" />
 
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-[20px] text-start">
-          <p className="sm:text-2xl text-xl font-semibold text-text/secondary">
+          <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
             Hiring multiple candidates?
           </p>
-          <p className="sm:text-base text-sm font-medium text-text/paragraph">
+          <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
             This will be displayed on job page for candidates to see.
           </p>
         </div>
         <div className="flex items-start lg:w-1/2 w-full lg:mt-0 mt-3 flex-col">
-          <div className="border-[1.5px] border-stroke/secondary rounded-lg w-[196px] min-h-[47px] flex justify-between">
+          <div className="border-[1.5px] border-meta-light-blue-1 rounded-lg w-[196px] min-h-[47px] flex justify-between">
             <button className="px-3 w-1/3" onClick={handleIncrement}>
               <Image
                 width={25}
@@ -163,7 +163,7 @@ const Page = () => {
                 src={"/job/Plus.svg"}
               />
             </button>
-            <div className="border-x-[1.5px] border-x-stroke/secondary w-[65%] flex items-center justify-center text-text/paragraph text-base font-medium">
+            <div className="border-x-[1.5px] border-x-meta-light-blue-1 w-[65%] flex items-center justify-center text-meta-light-blue-3 text-base font-medium">
               <p>{formattedValue}</p>
             </div>
             <button className="px-3 w-1/3" onClick={handleDecrement}>
@@ -177,24 +177,24 @@ const Page = () => {
           </div>
           <div className="flex items-center mt-5">
             <Checkbox />
-            <p className="sm:text-base text-sm font-medium text-text/paragraph">
+            <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
               I am hiring multiple candidates
             </p>
           </div>
         </div>
       </div>
-      <div className="border-stroke/secondary border-[1px] my-6" />
+      <div className="border-meta-light-blue-1 border-[1px] my-6" />
 
       <div className="w-full flex justify-between sm:mt-16 mt-7 sm:flex-nowrap flex-wrap">
         <button
           onClick={() => handleBack()}
-          className="border-stroke/secondary border-[1px] text-base text-text/paragraph font-medium py-[13px] rounded-lg sm:min-w-[200px] min-w-full sm:mb-0 mb-3"
+          className="border-meta-light-blue-1 border-[1px] text-base text-meta-light-blue-3 font-medium py-[13px] rounded-lg sm:min-w-[200px] min-w-full sm:mb-0 mb-3"
         >
           Back
         </button>
         <button
           onClick={() => handleNext()}
-          className="bg-stroke/secondary text-base text-text/paragraph font-medium py-[13px] rounded-lg sm:min-w-[200px] min-w-full"
+          className="bg-meta-light-blue-1 text-base text-meta-light-blue-3 font-medium py-[13px] rounded-lg sm:min-w-[200px] min-w-full"
         >
           Next
         </button>
