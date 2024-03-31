@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { TEXT } from "@/service/Helper";
 
 const page = () => {
   const menu = [
@@ -20,7 +21,7 @@ const page = () => {
     <div>
       <div>
         <div className="text-meta-purple-1 font-semibold text-2xl mb-4">
-          Earn Badge
+        {TEXT?.EARN_BADGE}
         </div>
 
         <div className="flex gap-4 mt-4 w-full flex-wrap lg:flex-nowrap">
@@ -64,13 +65,13 @@ const page = () => {
                 />
                 <div className="pr-3">
                   <p className="text-meta-purple-1 font-medium text-base">
-                    B.A. Baracus
+                    {list?.name}
                   </p>
                   <p className="text-meta-light-blue-3 text-xs font-medium">
-                    CEO
+                  {list?.post}
                   </p>
                   <p className="text-meta-light-blue-3 text-xs font-medium">
-                    UK-London{" "}
+                    {list?.location}
                   </p>
                 </div>
               </div>

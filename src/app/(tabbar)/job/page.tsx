@@ -6,6 +6,7 @@ import Checkbox from "@/Components/Checkbox";
 import DatePicker from "react-multi-date-picker";
 import React, { Fragment, useState } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
+import { TEXT } from "@/service/Helper";
 
 const jobs = [
   { title: "Applicants", count: 50 },
@@ -44,7 +45,7 @@ const page = () => {
   return (
     <div>
       <div>
-        <div className="text-meta-purple-1 font-semibold text-2xl">Jobs</div>
+        <div className="text-meta-purple-1 font-semibold text-2xl">{TEXT?.JOBS}</div>
         <div className="flex gap-6 mt-5 mb-10 justify-center items-center">
           <div className="w-2/4">
             <Popover className="relative">
@@ -72,7 +73,7 @@ const page = () => {
               <Popover.Panel className="absolute w-full z-10 mt-2 bg-white rounded-xl shadow-xl border border-meta-light-blue-1 p-4">
                 <div className="w-full">
                   <label className="text-base font-medium text-meta-purple-1">
-                    Job title
+                    {TEXT?.JOB_TITLE}
                   </label>
                   <input
                     type="text"
@@ -82,7 +83,7 @@ const page = () => {
                 </div>
                 <div className="w-full mt-4">
                   <label className="text-base font-medium text-meta-purple-1">
-                    Location
+                    {TEXT?.LOCATION}
                   </label>
                   <input
                     type="text"
@@ -92,7 +93,7 @@ const page = () => {
                 </div>
                 <div className="w-full mt-4">
                   <label className="text-base font-medium text-meta-purple-1">
-                    Date posted
+                   {TEXT?.DATE_POSTED}
                   </label>
                   <DatePicker
                     range
@@ -128,7 +129,7 @@ const page = () => {
                   <div>
                     <button className="rounded-xl w-28 h-12 bg-meta-light-blue-1 border border-meta-light-blue-2 ml-5">
                       <span className="flex justify-center font-medium text-sm text-meta-light-blue-3">
-                        Done
+                        {TEXT?.DONE}
                       </span>
                     </button>
                   </div>
@@ -171,7 +172,7 @@ const page = () => {
             </div>
             <button className="rounded-xl w-full max-w-64 min-w-36 h-12 bg-meta-blue-1 border border-meta-light-blue-2 ml-5">
               <span className="flex justify-center font-medium text-sm text-white">
-                Job Post
+              {TEXT?.JOB_POST}
               </span>
             </button>
           </div>
@@ -188,14 +189,14 @@ const page = () => {
                     </div>
                     <div className="">
                       <div className="text-meta-purple-1 font-semibold text-xl">
-                        User Interface Expert (WFH)
+                        {TEXT?.USER_INTERFACE_EXPERT}
                         <div className="text-meta-light-blue-3 font-medium text-base">
-                          Surat, Gujrat, India.
+                          {TEXT?.CITY_NAMES}
                         </div>
                       </div>
                     </div>
                     <p className="text-meta-light-blue-3 font-medium text-base ml-2 mt-1">
-                      2 weeks ago
+                      {TEXT?.TWO_WEEKS_AGO}
                     </p>
                   </div>
                   <div className="flex items-center">
@@ -235,7 +236,7 @@ const page = () => {
                                     "block px-4 py-2 text-base"
                                   )}
                                 >
-                                  Edit
+                                  {TEXT?.EDIT}
                                 </a>
                               )}
                             </Menu.Item>
@@ -251,7 +252,7 @@ const page = () => {
                                     "block px-4 py-2 text-base"
                                   )}
                                 >
-                                  Delete
+                                  {TEXT?.DELETE}
                                 </a>
                               )}
                             </Menu.Item>
@@ -267,7 +268,7 @@ const page = () => {
                                     "block px-4 py-2 text-base"
                                   )}
                                 >
-                                  View
+                                  {TEXT?.VIEW}
                                 </a>
                               )}
                             </Menu.Item>
@@ -283,7 +284,7 @@ const page = () => {
                                     "block px-4 py-2 text-base"
                                   )}
                                 >
-                                  Job details
+                                  {TEXT?.JOB_DETAILS}
                                 </a>
                               )}
                             </Menu.Item>

@@ -5,6 +5,7 @@ import Select from "@/Components/Select";
 import { useRouter } from "next/navigation";
 import Checkbox from "@/Components/Checkbox";
 import { Menu, Transition } from "@headlessui/react";
+import { ROUTE, TEXT } from "@/service/Helper";
 
 const menu = [
   { title: "Candidates Hired" },
@@ -36,9 +37,9 @@ const page = () => {
 
   const navigateHandler = (title: string) => {
     if (title === "Active Jobs") {
-      router.push("/dashboard/active_job");
+      router.push(ROUTE?.ACTIVE_JOB);
     } else if (title === "Candidates Hired") {
-      router.push("/dashboard/hired");
+      router.push(ROUTE?.HIRED);
     }
   };
 
@@ -46,29 +47,29 @@ const page = () => {
     <div>
       <div>
         <div className="text-meta-purple-1 font-semibold text-2xl mb-4">
-          Dashboard
+          {TEXT?.DASHBOARD}
         </div>
         <div className="bg-[url('/dashboard/sertificateBG.svg')] bg-no-repeat bg-cover rounded-3xl p-4">
           <div>
             <div className="text-white font-medium text-xl">
-              Congratulations Your Certification is Complete.
+              {TEXT?.CONGRATULATIONS_YOUR_CERTIFICATION_IS_COMPLETE}
             </div>
           </div>
           <div className="flex justify-end">
             <div className="text-white font-medium text-sm underline underline-offset-2 mb-2.5">
-              View certificate
+             {TEXT?.VIEW_CERTIFICATE}
             </div>
           </div>
           <div>
             <div className="flex justify-between">
               <div className="flex items-center">
                 <div className="text-white font-medium text-sm">
-                  *Certification validation is 1 year only
+                 {TEXT?.CERTIFICATION_VALIDATION_IS_YEAR_ONLY}
                 </div>
               </div>
               <div className="flex items-center">
                 <div className="text-white font-medium text-sm mr-4">
-                  Share:
+                {TEXT?.SHARE}
                 </div>
                 <div className="mr-4">
                   <Image
@@ -88,7 +89,7 @@ const page = () => {
                 </div>
                 <div>
                   <button className="text-white bg-meta-blue-2 w-48 h-10 rounded-lg">
-                    Download
+                    {TEXT?.DOWNLOAD}
                   </button>
                 </div>
               </div>
@@ -126,7 +127,7 @@ const page = () => {
           })}
         </div>
         <div className="text-meta-purple-1 font-semibold text-xl mt-8">
-          Recently Job post
+         {TEXT?.RECENTLY_JOB_POST}
         </div>
 
         {Array.from({ length: 3 }).map((_, index) => {
@@ -140,14 +141,14 @@ const page = () => {
                     </div>
                     <div className="">
                       <div className="text-meta-purple-1 font-semibold text-xl">
-                        User Interface Expert (WFH)
+                        {TEXT?.USER_INTERFACE_EXPERT}
                         <div className="text-meta-light-blue-3 font-medium text-base">
-                          Surat, Gujrat, India.
+                        {TEXT?.CITY_NAMES}
                         </div>
                       </div>
                     </div>
                     <p className="text-meta-light-blue-3 font-medium text-base ml-2 mt-1">
-                      2 weeks ago
+                    {TEXT?.TWO_WEEKS_AGO}
                     </p>
                   </div>
                   <div className="flex items-center">
@@ -187,7 +188,7 @@ const page = () => {
                                     "block px-4 py-2 text-base"
                                   )}
                                 >
-                                  Edit
+                                  {TEXT?.EDIT}
                                 </a>
                               )}
                             </Menu.Item>
@@ -203,7 +204,7 @@ const page = () => {
                                     "block px-4 py-2 text-base"
                                   )}
                                 >
-                                  Delete
+                                  {TEXT?.DELETE}
                                 </a>
                               )}
                             </Menu.Item>
@@ -219,7 +220,7 @@ const page = () => {
                                     "block px-4 py-2 text-base"
                                   )}
                                 >
-                                  View
+                                  {TEXT?.VIEW}
                                 </a>
                               )}
                             </Menu.Item>
@@ -235,7 +236,7 @@ const page = () => {
                                     "block px-4 py-2 text-base"
                                   )}
                                 >
-                                  Job details
+                                  {TEXT?.JOB_DETAILS}
                                 </a>
                               )}
                             </Menu.Item>

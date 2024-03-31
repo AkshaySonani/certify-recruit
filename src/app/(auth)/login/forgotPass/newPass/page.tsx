@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { ROUTE, TEXT } from "@/service/Helper";
 
 const page = () => {
   const router = useRouter();
@@ -20,15 +21,15 @@ const page = () => {
           <div className="flex justify-center">
             <div className="min-w-72 max-w-md bg-white w-10/12 rounded-3xl border border-meta-light-blue-2 py-10 px-5 sm:px-10 mb-20">
               <h3 className="font-bold text-3xl text-meta-purple-1 text-center mb-4">
-                Set new password
+              {TEXT?.SET_NEW_PASSWORD}
               </h3>
               <p className="text-meta-light-blue-3 font-medium text-sm text-center mb-10">
-                Must be at least 8 characters
+              {TEXT?.MUST_BE_AT_LEAST_CHARACTERS}
               </p>
 
               <div className="relative mb-6">
                 <input
-                  placeholder="Password"
+                  placeholder={TEXT?.PASSWORD}
                   type={eye.pass ? "text" : "password"}
                   className="rounded-xl w-full h-12 border border-meta-light-blue-2 pl-4"
                 />
@@ -59,7 +60,7 @@ const page = () => {
               </div>
               <div className="relative mb-8">
                 <input
-                  placeholder="Confirm password"
+                  placeholder={TEXT?.CONFIRM_PASSWORD}
                   type={eye.confirmPass ? "text" : "password"}
                   className="rounded-xl w-full h-12 border border-meta-light-blue-2 pl-4"
                 />
@@ -98,16 +99,16 @@ const page = () => {
               <button
                 className="rounded-xl w-full h-12 bg-meta-light-blue-1 hover:bg-meta-blue-2 text-meta-purple-1 hover:text-white border border-meta-light-blue-2 mb-8"
                 onClick={() =>
-                  router.push("/login/forgotPass/newPass/successful")
+                  router.push(ROUTE?.SUCCESSFULL_FORGOT_PASSWORD)
                 }
               >
                 <span className="flex justify-center font-medium text-sm">
-                  Reset Password
+                 {TEXT?.RESET_PASSWORD}
                 </span>
               </button>
               <div className="flex justify-center items-center font-medium text-sm text-meta-light-blue-3 mb-3">
                 <span className="cursor-pointer" onClick={() => router.back()}>
-                  Cancel
+                 {TEXT?.CANCEL}
                 </span>
               </div>
             </div>

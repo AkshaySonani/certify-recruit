@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { ROUTE, TEXT } from "@/service/Helper";
 
 const page = () => {
   const router = useRouter();
@@ -43,10 +44,10 @@ const page = () => {
           <div className="flex justify-center">
             <div className="min-w-72 max-w-md bg-white w-10/12 rounded-3xl border border-meta-light-blue-2 py-10 px-5 sm:px-10 mb-20">
               <h3 className="font-bold text-3xl text-meta-purple-1 text-center mb-4">
-                Hi there!
+                {TEXT?.HI_THERE}
               </h3>
               <p className="text-meta-light-blue-3 font-medium text-sm text-center mb-10">
-                Welcome back to CertifyRecruit.{" "}
+                {TEXT?.WELCOME_BACK_TO_CERTIFY}
               </p>
               <button className="rounded-xl w-full h-12 bg-white text-xl font-semibold text-meta-light-blue-3 border border-meta-light-blue-2 mb-8">
                 <span className="flex justify-center">
@@ -57,19 +58,19 @@ const page = () => {
                     src={"/login/GoogleIcon.svg"}
                   />
                   <span className="ml-5 font-medium text-sm text-meta-blue-1">
-                    Log in with Google
+                   {TEXT?.LOG_IN_WITH_GOOGLE}
                   </span>
                 </span>
               </button>
               <div className="flex justify-center items-center mb-8">
                 <div className="border-b border-meta-light-blue-2 w-14" />
-                <span className="text-xs font-normal mx-2">Or</span>
+                <span className="text-xs font-normal mx-2">{TEXT?.OR}</span>
                 <div className="border-b border-meta-light-blue-2 w-14" />
               </div>
               <div>
                 <input
                   type="text"
-                  placeholder="Email"
+                  placeholder={TEXT?.EMAIL}
                   value={values?.email}
                   onChange={(e) =>
                     setValues({ ...values, email: e?.target.value })
@@ -79,7 +80,7 @@ const page = () => {
               </div>
               <div className="relative">
                 <input
-                  placeholder="Password"
+                  placeholder={TEXT?.PASSWORD}
                   value={values?.password}
                   type={eye ? "text" : "password"}
                   className="rounded-xl w-full h-12 border border-meta-light-blue-2 mb-3 pl-4"
@@ -113,7 +114,7 @@ const page = () => {
                   className="text-xs text-meta-blue-1 font-normal mx-2 cursor-pointer"
                   onClick={() => router.push("/login/forgotPass")}
                 >
-                  Forgot password?
+                  {TEXT?.FORGOT_PASSWORD}
                 </span>
               </div>
               <button
@@ -121,7 +122,7 @@ const page = () => {
                 className="rounded-xl w-full h-12 bg-meta-blue-2 border border-meta-light-blue-2 mb-8"
               >
                 <span className="flex justify-center font-medium text-sm text-white">
-                  Log In
+                 {TEXT?.LOG_IN}
                 </span>
               </button>
               {error && (
@@ -132,12 +133,12 @@ const page = () => {
 
               <div className="flex justify-center items-center font-medium text-sm text-meta-light-blue-3">
                 <span>
-                  Don’t have an account?{" "}
+                {TEXT?.DONT_HAVE_AN_ACCOUNT}
                   <span
-                    onClick={() => router.push("/signUp")}
+                    onClick={() => router.push(ROUTE?.SIGN_UP)}
                     className="text-meta-blue-1 cursor-pointer"
                   >
-                    Sign up
+                   {TEXT?.SIGN_UP}
                   </span>
                 </span>
               </div>

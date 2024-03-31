@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React, { Fragment } from "react";
 import { useRouter } from "next/navigation";
+import { TEXT } from "@/service/Helper";
 
 const page = () => {
   const router = useRouter();
@@ -10,25 +11,25 @@ const page = () => {
     <div>
       <div>
         <div className="text-meta-purple-1 font-semibold text-2xl mb-4">
-          Learn & Earn
+         {TEXT?.LEARN_AND_EARN}
         </div>
         <div className="bg-meta-gray-2 h-[200px] rounded-[14px] w-full py-[40px]">
           <div className="h-full w-[70%] m-auto ">
             <p className="text-meta-purple-1 text-base text-[500] text-center">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
+              Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s
             </p>
             <div className="w-full flex justify-center">
               <button className="bg-meta-blue-1 rounded-[10px] mt-5 text-white text-base px-5 py-[10px]">
-                Registration
+              {TEXT?.REGISTRATION}
               </button>
             </div>
           </div>
         </div>
         <div className="mt-[30px]">
           <p className="text-xl text-meta-purple-1 font-semibold">
-            Registration info
+            {TEXT?.REGISTRATION_INFO}
           </p>
         </div>
         <div className="flex w-full mt-[10px] gap-3">
@@ -43,7 +44,7 @@ const page = () => {
               />
             </div>
             <div className="text-meta-light-blue-3 text-sm">
-              Registration Time 8:00 AM to 12:00 PM
+            {TEXT?.REGISTRATION_TIME}
             </div>
           </div>
           <div className="flex w-1/2 gap-3 pl-[15px] bg-meta-light-blue-2 rounded-lg items-center py-[10px]">
@@ -57,7 +58,7 @@ const page = () => {
               />
             </div>
             <div className="text-meta-light-blue-3 text-sm">
-              Quiz Joining Time 8:00 PM to 8:45 PM
+            {TEXT?.QUIZ_JOINING_TIME}
             </div>
           </div>
         </div>
@@ -73,7 +74,7 @@ const page = () => {
               />
             </div>
             <div className="text-meta-light-blue-3 text-sm">
-              Result annulment 9:15 PM
+            {TEXT?.RESULT_ANNULMENT_TIME}
             </div>
           </div>
           <div className="flex w-1/2 gap-3 pl-[15px] bg-meta-light-blue-2 rounded-lg items-center py-[10px]">
@@ -87,7 +88,7 @@ const page = () => {
               />
             </div>
             <div className="text-meta-light-blue-3 text-sm">
-              Winning Prize redeem with in 24 Hours after test complete
+            {TEXT?.WINNING_PRIZE_REDEEM_WITH_HOURS_AFTER_TEST_COMPLETE}
             </div>
           </div>
         </div>

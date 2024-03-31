@@ -2,6 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { TEXT } from "@/service/Helper";
 
 const page = () => {
   const router = useRouter();
@@ -34,7 +35,7 @@ const page = () => {
                 src={"/Individual.svg"}
               />
               <p className="text-lg text-meta-blue-1 font-semibold">
-                Individual
+              {TEXT?.INDIVIDUAL}
               </p>
             </div>
             <div className="absolute top-[39px]" onClick={() => router?.back()}>
@@ -79,7 +80,7 @@ const page = () => {
           onClick={() => router?.push("/login")}
           className="flex gap-4 mt-5 items-center justify-end w-[70%] m-auto cursor-pointer"
         >
-          <p className="text-lg text-meta-blue-1 font-medium">Next</p>
+          <p className="text-lg text-meta-blue-1 font-medium">{TEXT?.NEXT}</p>
           <Image
             width={22}
             height={22}

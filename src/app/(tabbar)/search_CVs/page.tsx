@@ -4,6 +4,7 @@ import Select from "@/Components/Select";
 import Checkbox from "@/Components/Checkbox";
 import React, { useState, Fragment } from "react";
 import { Dialog, Menu, Popover, Switch, Transition } from "@headlessui/react";
+import { TEXT } from "@/service/Helper";
 
 let statusArr = [
   {
@@ -93,13 +94,13 @@ const page = () => {
     <div>
       <div className="flex justify-between">
         <div className="text-meta-purple-1 font-semibold text-2xl">
-          Search CVs
+         {TEXT?.SEARCH_CVS}
         </div>
         <div className="flex gap-4">
           <div className="flex items-center gap-2">
             <div className="w-[14px] h-[14px] rounded-sm bg-green-500"/>
             <p className="font-medium text-meta-purple-1 text-base">
-              Available
+              {TEXT?.AVAILABLE}
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -128,7 +129,7 @@ const page = () => {
             <Popover.Panel className="absolute w-full z-10 mt-2 bg-white rounded-xl shadow-xl border border-meta-light-blue-1 p-4">
               <div className="w-full">
                 <label className="text-base font-medium text-meta-purple-1">
-                  Job title
+                 {TEXT?.JOB_TITLE}
                 </label>
                 <input
                   type="text"
@@ -138,11 +139,11 @@ const page = () => {
               </div>
               <div className="w-full mt-4">
                 <label className="text-base font-medium text-meta-purple-1">
-                  Keyword
+                  {TEXT?.KEYWORD}
                 </label>
                 <div className="flex gap-2 items-center w-full flex-wrap">
                   <div className="flex justify-between rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-3 gap-1 py-3">
-                    <p>Server Side</p>
+                    <p>{TEXT?.SERVER_SIDE}</p>
                     <Image
                       alt="date"
                       width={13}
@@ -151,7 +152,7 @@ const page = () => {
                     />
                   </div>
                   <div className="flex justify-between rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-3 gap-1 py-3">
-                    <p>Java</p>
+                    <p>{TEXT?.JAVA}</p>
                     <Image
                       alt="date"
                       width={13}
@@ -160,7 +161,7 @@ const page = () => {
                     />
                   </div>
                   <div className="flex justify-between rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-3 gap-1 py-3">
-                    <p>Css</p>
+                    <p>{TEXT?.CSS}</p>
                     <Image
                       alt="date"
                       width={13}
@@ -169,7 +170,7 @@ const page = () => {
                     />
                   </div>
                   <div className="flex justify-between rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-3 gap-1 py-3">
-                    <p>Add keyword</p>
+                    <p>{TEXT?.ADD_KEYWORD}</p>
                     <Image
                       alt="date"
                       width={15}
@@ -181,7 +182,7 @@ const page = () => {
               </div>
               <div className="w-full mt-4">
                 <label className="text-base font-medium text-meta-purple-1">
-                  Location
+                  {TEXT?.LOCATION}
                 </label>
                 <input
                   type="text"
@@ -192,7 +193,7 @@ const page = () => {
               <div className="w-full flex flex-col lg:flex-row  mt-4 lg:gap-2">
                 <div className="lg:w-1/2 w-full">
                   <label className="text-base font-medium text-meta-purple-1">
-                    Date Uploaded
+                   {TEXT?.DATE_UPLOADED}
                   </label>
                   <input
                     type="text"
@@ -202,7 +203,7 @@ const page = () => {
                 </div>
                 <div className="lg:w-1/2 w-full">
                   <label className="text-base font-medium text-meta-purple-1">
-                    Experience
+                    {TEXT?.EXPERIENCE}
                   </label>
                   <input
                     type="text"
@@ -213,7 +214,7 @@ const page = () => {
               </div>
               <div className="w-full mt-4 ">
                 <label className="text-base font-medium text-meta-purple-1">
-                  Status
+                  {TEXT?.STATUS}
                 </label>
                 <div className="flex justify-between items-center w-full flex-wrap">
                   <div className=" rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3">
@@ -238,7 +239,7 @@ const page = () => {
                 <div className="w-full flex justify-end mt-2">
                   <button className="rounded-xl w-28 h-12 bg-meta-light-blue-1 border border-meta-light-blue-2 ml-5">
                     <span className="flex justify-center font-medium text-sm text-meta-light-blue-3">
-                      Done
+                      {TEXT?.DONE}
                     </span>
                   </button>
                 </div>
@@ -320,28 +321,28 @@ const page = () => {
               <th></th>
               <th className="px-6 py-4 w-1/4">
                 <div className="font-medium text-base text-meta-light-blue-3">
-                  Name
+                  {TEXT?.NAME}
                 </div>
               </th>
               <th className="px-6 py-4">
                 <div className="font-medium text-base text-meta-light-blue-3">
-                  Designation
+                  {TEXT?.DESIGNATION}
                 </div>
               </th>
               <th className="px-6 py-4">
                 <div className="font-medium text-base text-meta-light-blue-3">
-                  Experience
+                  {TEXT?.EXPERIENCE}
                 </div>
               </th>
 
               <th className="px-6 py-4">
                 <div className="font-medium text-base text-meta-light-blue-3">
-                  Date
+                  {TEXT?.DATE}
                 </div>
               </th>
               <th className="px-6 py-4">
                 <div className="font-medium text-base text-meta-light-blue-3">
-                  Matching
+                  {TEXT?.MATCHING}
                 </div>
               </th>
               <th className="px-6 w-1/12"/>

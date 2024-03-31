@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { TEXT } from "@/service/Helper";
 
 const page = () => {
   const router = useRouter();
@@ -16,10 +17,10 @@ const page = () => {
           <div className="flex justify-center">
             <div className="min-w-72 max-w-md bg-white w-10/12 rounded-3xl border border-meta-light-blue-2 py-10 px-5 sm:px-10 mb-20">
               <h3 className="font-bold text-3xl text-meta-purple-1 text-center mb-4">
-                Forgot password
+               {TEXT?.FORGOT_PASSWORD}
               </h3>
               <p className="text-meta-light-blue-3 font-medium text-sm text-center mb-10">
-                Please select option to receive password reset link.
+                {TEXT?.PLEASE_SELECT_OPTION_TO_RECEIVE_PASSWORD_RESET_LINK}
               </p>
 
               <div className="flex items-center justify-between rounded-xl w-full h-28 sm:h-20 bg-white border border-meta-blue-1 px-4 mb-8">
@@ -35,11 +36,10 @@ const page = () => {
                   </div>
                   <div>
                     <p className="font-medium text-sm text-meta-blue-1">
-                      Reset via Email
+                   {TEXT?.RESET_VIA_EMAIL}
                     </p>
                     <p className="text-xs font-normal">
-                      You will be provide a unique password reset link to your
-                      registered email address.
+                    {TEXT?.YOU_WILL_BE_PROVIDE_A_UNIQUE}
                     </p>
                   </div>
                 </div>
@@ -54,7 +54,7 @@ const page = () => {
                   onClick={() => router.push("/login/forgotPass/newPass")}
                   className="flex justify-center font-medium text-sm text-white"
                 >
-                  Send
+                  {TEXT?.SEND}
                 </span>
               </button>
             </div>

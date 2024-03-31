@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { Switch } from "@headlessui/react";
+import { TEXT } from "@/service/Helper";
 
 const page = () => {
   const [enabled, setEnabled] = useState(false);
@@ -10,7 +11,7 @@ const page = () => {
     <section>
       <div className="text-center">
         <div className="text-meta-purple-1 font-semibold text-3xl">
-          Choose your plan
+      {TEXT?.CHOOSE_YOUR_PLAN}
         </div>
         <div className="text-meta-light-blue-3 font-medium text-base mt-2">
           Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -19,7 +20,7 @@ const page = () => {
       </div>
       <div className="flex justify-center items-center my-14">
         <div className="text-meta-purple-1 font-medium text-xl mx-3">
-          Monthly
+          {TEXT?.MONTHLY}
         </div>
         <div className="mx-2">
           <Switch
@@ -38,7 +39,7 @@ const page = () => {
           </Switch>
         </div>
         <div className="text-meta-light-blue-3 font-medium text-xl mx-2">
-          Yearly
+          {TEXT?.YEARLY}
         </div>
         <div className="text-meta-blue-1 font-medium text-sm">20%off</div>
       </div>
@@ -47,13 +48,13 @@ const page = () => {
         <div className="bg-meta-gray-2 flex flex-col justify-between rounded-3xl px-8 py-10 max-w-96 min-w-64 h-[520px]">
           <div>
             <div className="text-meta-purple-1 font-medium text-base text-center">
-              Basic Plane
+             {TEXT?.BASIC_PLAN}
             </div>
 
             <div className="flex justify-center items-end my-6">
               <div className="text-meta-purple-1 font-medium text-4xl">$20</div>
               <div className="text-meta-light-blue-3 font-medium text-xs mb-1">
-                /Month
+              {TEXT?.Month}
               </div>
             </div>
 
@@ -77,7 +78,7 @@ const page = () => {
           <div>
             <button className="rounded-xl w-full h-12 bg-meta-blue-2">
               <span className="flex justify-center font-medium text-sm text-white">
-                Get Started
+            {TEXT?.GET_STARTED}
               </span>
             </button>
           </div>
@@ -85,12 +86,12 @@ const page = () => {
 
         <div className="rounded-3xl max-w-96 min-w-64">
           <div className="text-white bg-meta-purple-1 font-medium text-base text-center py-2">
-            Most Popular
+           {TEXT?.MOST_POPULAR}
           </div>
           <div className="bg-meta-gray-2 flex flex-col justify-between h-[520px] px-8 pb-10 pt-10">
             <div>
               <div className="text-meta-purple-1 font-medium text-base text-center">
-                Standard Plan
+                {TEXT?.STANDARD_PLAN}
               </div>
 
               <div className="flex justify-center items-end my-6">
@@ -98,7 +99,7 @@ const page = () => {
                   $70
                 </div>
                 <div className="text-meta-light-blue-3 font-medium text-xs mb-1">
-                  /Month
+                 {TEXT?.Month}
                 </div>
               </div>
 
@@ -125,7 +126,7 @@ const page = () => {
             <div>
               <button className="rounded-xl w-full h-12 bg-meta-blue-2">
                 <span className="flex justify-center font-medium text-sm text-white">
-                  Get Started
+                  {TEXT?.GET_STARTED}
                 </span>
               </button>
             </div>
@@ -135,13 +136,13 @@ const page = () => {
         <div className="bg-meta-gray-2 flex flex-col justify-between rounded-3xl px-8 py-10 max-w-96 min-w-64 h-[520px]">
           <div>
             <div className="text-meta-purple-1 font-medium text-base text-center">
-              Business Plan
+             {TEXT?.BUSINESS_PLAN}
             </div>
 
             <div className="flex justify-center items-end my-6">
               <div className="text-meta-purple-1 font-medium text-4xl">$99</div>
               <div className="text-meta-light-blue-3 font-medium text-xs mb-1">
-                /Month
+               {TEXT?.Month}
               </div>
             </div>
 
@@ -165,7 +166,7 @@ const page = () => {
           <div>
             <button className="rounded-xl w-full h-12 bg-meta-blue-2">
               <span className="flex justify-center font-medium text-sm text-white">
-                Get Started
+                {TEXT?.GET_STARTED}
               </span>
             </button>
           </div>

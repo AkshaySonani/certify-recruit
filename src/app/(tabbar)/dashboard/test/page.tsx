@@ -1,3 +1,4 @@
+import { TEXT } from "@/service/Helper";
 import Image from "next/image";
 import React from "react";
 
@@ -13,7 +14,7 @@ const page = () => {
     <div>
       <div>
         <div className="text-meta-purple-1 font-semibold text-2xl">
-          Dashboard
+          {TEXT?.DASHBOARD}
         </div>
         <div className="flex gap-4 mt-4">
           {menu.map((item) => {
@@ -43,7 +44,7 @@ const page = () => {
           })}
         </div>
         <div className="text-meta-purple-1 font-semibold text-xl mt-8">
-          Recently Job post
+        {TEXT?.RECENTLY_JOB_POST}
         </div>
 
         <div className="mt-4">
@@ -53,14 +54,14 @@ const page = () => {
                 {/* <div className="mt-1"><Checkbox /></div> */}
                 <div>
                   <p className="text-meta-purple-1 font-semibold text-xl">
-                    User Interface Expert (WFH)
+                    {TEXT?.USER_INTERFACE_EXPERT}
                   </p>
                   <p className="text-meta-light-blue-3 font-medium text-base">
-                    Surat, Gujrat, India.
+                   {TEXT?.CITY_NAMES}
                   </p>
                 </div>
                 <p className="text-meta-light-blue-3 font-medium text-base ml-2 mt-1">
-                  2 weeks ago
+                 {TEXT?.TWO_WEEKS_AGO}
                 </p>
               </div>
 

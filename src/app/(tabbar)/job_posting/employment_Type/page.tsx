@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Checkbox from "@/Components/Checkbox";
+import { TEXT } from "@/service/Helper";
 
 const WORK_ARR = [
   {
@@ -29,7 +30,7 @@ const Page = () => {
     <div>
       <div className="flex items-center justify-between mb-10">
         <p className="sm:text-default-t-25 text-lg font-semibold text-meta-purple-1">
-          Job posting
+        {TEXT?.JOB_POSTING}
         </p>
         <div className="flex items-center cursor-pointer">
           <Image
@@ -39,7 +40,7 @@ const Page = () => {
             src={"/job/Eye_fill.svg"}
           />
           <p className="ml-2 sm:text-xl text-lg font-semibold text-meta-blue-1 sm:block hidden">
-            Preview
+            {TEXT?.PREVIEW}
           </p>
         </div>
       </div>
@@ -47,10 +48,10 @@ const Page = () => {
       <div className="flex justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
-            Employment Type
+          {TEXT?.EMPLOYMENT_TYPE}
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-            Pick one or multiple option
+            {TEXT?.PICK_ONE_OR_MULTIPLE_OPTION}
           </p>
         </div>
         <div className="grid grid-cols-1 lg:w-1/2 w-full lg:mt-0 mt-2">
@@ -85,10 +86,10 @@ const Page = () => {
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
-            Working Schedule
+            {TEXT?.WORKING_SCHEDULE}
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-            You can pick multiple work schedules.
+           {TEXT?.YOU_CAN_PICK_MULTIPLE_WORK_SCHEDULES}
           </p>
         </div>
         <div className="flex flex-col lg:w-1/2 w-full lg:mt-0 mt-3">
@@ -131,10 +132,10 @@ const Page = () => {
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
-            Salary
+            {TEXT?.SALARY}
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-            Choose how you prefer to pay for this job.
+         {TEXT?.CHOOSE_HOW_YOU_PREFER_TO_PAY_FOR_THIS_JOB}
           </p>
         </div>
         <div className="flex flex-col items-center lg:w-1/2 w-full lg:mt-0 mt-3">
@@ -153,7 +154,7 @@ const Page = () => {
                   alt="clock-icon"
                   src={"/job/Clock.svg"}
                 />
-                <p>Hourly</p>
+                <p>{TEXT?.HOURLY}</p>
               </label>
             </div>
             <div className="border-default-1 border-meta-light-blue-1 rounded-[10px] min-w-[269px] w-full cursor-pointer">
@@ -173,14 +174,14 @@ const Page = () => {
                   alt="clock-icon"
                   src={"/job/Clock.svg"}
                 />
-                <p>Monthly</p>
+                <p>{TEXT?.MONTHLY}</p>
               </label>
             </div>
           </div>
 
           <div className="w-full">
             <label className="text-base font-medium text-meta-purple-1">
-              Hourly rate
+              {TEXT?.HOURLY_RATE}
             </label>
             <input
               type="text"
@@ -199,10 +200,10 @@ const Page = () => {
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
-            Interview Time
+           {TEXT?.INTERVIEW_TIME}
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-            Choose your interview time slot
+           {TEXT?.CHOOSE_YOUR_INTERVIEW_TIME_SLOT}
           </p>
         </div>
       </div>
@@ -212,13 +213,13 @@ const Page = () => {
           onClick={() => handleBack()}
           className="border-meta-light-blue-1 border-default-1 text-base text-meta-light-blue-3 font-medium py-[13px] rounded-lg sm:min-w-[200px] min-w-full sm:mb-0 mb-3"
         >
-          Back
+          {TEXT?.BACK}
         </button>
         <button
           onClick={() => handleNext()}
           className="bg-meta-light-blue-1 text-base text-meta-light-blue-3 font-medium py-[13px] rounded-lg sm:min-w-[200px] min-w-full"
         >
-          Next
+          {TEXT?.NEXT}
         </button>
       </div>
     </div>

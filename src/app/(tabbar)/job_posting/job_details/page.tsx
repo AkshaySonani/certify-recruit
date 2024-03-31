@@ -6,6 +6,7 @@ import "react-quill/dist/quill.snow.css";
 import { useRouter } from "next/navigation";
 import Checkbox from "@/Components/Checkbox";
 import SelectBox from "@/Components/SelectBox";
+import { TEXT } from "@/service/Helper";
 
 const SKILL_ARR = [
   {
@@ -48,7 +49,7 @@ const Page = () => {
     <div>
       <div className="flex items-center justify-between mb-10">
         <p className="sm:text-text-default-t-25 text-lg font-semibold text-meta-purple-1">
-          Job posting
+          {TEXT?.JOB_POSTING}
         </p>
         <div className="flex items-center cursor-pointer">
           <Image
@@ -58,7 +59,7 @@ const Page = () => {
             src={"/job/Eye_fill.svg"}
           />
           <p className="ml-2 sm:text-xl text-lg font-semibold text-meta-blue-1 sm:block hidden">
-            Preview
+            {TEXT?.PREVIEW}
           </p>
         </div>
       </div>
@@ -66,17 +67,17 @@ const Page = () => {
       <div className="flex items-start justify-between w-full lg:flex-nowrap h-full flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
-            Job detail
+           {TEXT?.JOB_DETAILS}
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-            Tell us about the role
+           {TEXT?.TELL_US_ABOUT_THE_ROLE}
           </p>
         </div>
         <div className="flex items-center lg:w-1/2 w-full lg:mt-0 mt-3 mb-10">
           <ReactQuill
             theme="snow"
             value={content}
-            onChange={(e) => setContent(e)}
+            onChange={(e:any) => setContent(e)}
             className="!h-[300px] !rounded-lg !w-full"
           />
         </div>
@@ -86,11 +87,10 @@ const Page = () => {
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
-            Skills
+            {TEXT?.SKILLS}
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-            Add skill keywords (max 10) to make your job more visible to the
-            right candidates.
+            {TEXT?.ADD_SKILL_KEYWORDS_TO_MAKE_YOUR_JOB}
           </p>
         </div>
 
@@ -127,7 +127,7 @@ const Page = () => {
               className="w-full cursor-pointer"
             >
               <div className="border-default-half w-max border-meta-light-blue-1 rounded-lg flex items-start p-3">
-                <p>Add Skill</p>
+                <p>{TEXT?.ADD_SKILL}</p>
                 <div>
                   <Image
                     width={25}
@@ -147,10 +147,10 @@ const Page = () => {
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-[20px] text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
-            Hiring multiple candidates?
+           {TEXT?.HIRING_MULTIPLE_CANDIDATES}
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-            This will be displayed on job page for candidates to see.
+           {TEXT?.THIS_WILL_BE_DISPLAYED_ON_JOB_PAGE_FOR_CANDIDATES_SEE}
           </p>
         </div>
         <div className="flex items-start lg:w-1/2 w-full lg:mt-0 mt-3 flex-col">
@@ -178,7 +178,7 @@ const Page = () => {
           <div className="flex items-center mt-5">
             <Checkbox />
             <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-              I am hiring multiple candidates
+              {TEXT?.I_AM_HIRING_MULTIPLE_CANDIDATES}
             </p>
           </div>
         </div>
@@ -190,13 +190,13 @@ const Page = () => {
           onClick={() => handleBack()}
           className="border-meta-light-blue-1 border-default-1 text-base text-meta-light-blue-3 font-medium py-[13px] rounded-lg sm:min-w-[200px] min-w-full sm:mb-0 mb-3"
         >
-          Back
+          {TEXT?.BACK}
         </button>
         <button
           onClick={() => handleNext()}
           className="bg-meta-light-blue-1 text-base text-meta-light-blue-3 font-medium py-[13px] rounded-lg sm:min-w-[200px] min-w-full"
         >
-          Next
+          {TEXT?.NEXT}
         </button>
       </div>
     </div>

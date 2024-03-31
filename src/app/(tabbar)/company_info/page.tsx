@@ -4,6 +4,7 @@ import Select from "@/Components/Select";
 import Checkbox from "@/Components/Checkbox";
 import React, { useState, Fragment } from "react";
 import { Dialog, Menu, Popover, Switch, Transition } from "@headlessui/react";
+import { TEXT } from "@/service/Helper";
 
 const page = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -86,7 +87,7 @@ const page = () => {
   return (
     <div>
       <div className="text-meta-purple-1 font-semibold text-2xl">
-        Company Info
+       {TEXT?.COMPANY_INFO}
       </div>
       <div className="flex gap-6 mt-5 mb-10 justify-center items-center">
         <div className="w-2/4">
@@ -108,7 +109,7 @@ const page = () => {
             <Popover.Panel className="absolute w-full z-10 mt-2 bg-white rounded-xl shadow-xl border border-meta-light-blue-1 p-4">
               <div className="w-full">
                 <label className="text-base font-medium text-meta-purple-1">
-                  Job title
+                 {TEXT?.JOB_TITLE}
                 </label>
                 <input
                   type="text"
@@ -118,7 +119,7 @@ const page = () => {
               </div>
               <div className="w-full mt-4">
                 <label className="text-base font-medium text-meta-purple-1">
-                  Location
+                {TEXT?.LOCATION}
                 </label>
                 <input
                   type="text"
@@ -137,7 +138,7 @@ const page = () => {
                 <div>
                   <button className="rounded-xl w-28 h-12 bg-meta-light-blue-1 border border-meta-light-blue-2 ml-5">
                     <span className="flex justify-center font-medium text-sm text-meta-light-blue-3">
-                      Done
+                    {TEXT?.DONE}
                     </span>
                   </button>
                 </div>
@@ -160,7 +161,7 @@ const page = () => {
           className="rounded-xl w-full max-w-64 min-w-50  h-12 bg-meta-blue-1 border border-meta-light-blue-2 ml-5"
         >
           <span className="flex justify-center font-medium text-sm text-white">
-            Add Employee
+           {TEXT?.ADD_EMPLOYEE}
           </span>
         </button>
       </div>
@@ -171,28 +172,28 @@ const page = () => {
             <tr>
               <th className="px-6 py-4 w-1/4">
                 <div className="font-medium text-base text-meta-light-blue-3">
-                  Name
+                  {TEXT?.NAME}
                 </div>
               </th>
               <th className="px-6 py-4">
                 <div className="font-medium text-base text-meta-light-blue-3">
-                  Department
+                 {TEXT?.DEPARTMENT}
                 </div>
               </th>
               <th className="px-6 py-4">
                 <div className="font-medium text-base text-meta-light-blue-3">
-                  Experience
+                  {TEXT?.EXPERIENCE}
                 </div>
               </th>
 
               <th className="px-6 py-4">
                 <div className="font-medium text-base text-meta-light-blue-3">
-                  Email
+                  {TEXT?.EMAIL}
                 </div>
               </th>
               <th className="px-6 w-1/12">
                 <div className="font-medium text-base text-meta-light-blue-3">
-                  Score
+                  {TEXT?.SCORE}
                 </div>
               </th>
               <th className="px-6 w-1/12" />
@@ -284,7 +285,7 @@ const page = () => {
                       as="h3"
                       className=" p-6 relative border-b-default-1 border-meta-light-blue-1 text-xl font-semibold leading-6 text-meta-purple-1 flex justify-center items-center"
                     >
-                      Add Employee
+                      {TEXT?.ADD_EMPLOYEE}
                     </Dialog.Title>
                     <div
                       onClick={() => setIsOpen(false)}
@@ -312,7 +313,7 @@ const page = () => {
                           className="relative z-[1] inline-block text-left w-full"
                         >
                           <Menu.Button className="inline-flex w-full justify-between items-center rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3">
-                            Department
+                        {TEXT?.DEPARTMENT}
                             <div>
                               <Image
                                 alt="Icon"
@@ -382,7 +383,7 @@ const page = () => {
                         className="rounded-xl w-full mt-[14px] h-12 bg-meta-blue-1 border border-meta-light-blue-2"
                       >
                         <span className="flex justify-center font-medium text-sm text-white">
-                          Add Employee
+                  {TEXT?.ADD_EMPLOYEE}
                         </span>
                       </button>
                     </div>

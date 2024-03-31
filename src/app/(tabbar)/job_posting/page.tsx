@@ -4,6 +4,7 @@ import Image from "next/image";
 import Checkbox from "@/Components/Checkbox";
 import Select from "@/Components/Select";
 import { useRouter } from "next/navigation";
+import { ROUTE, TEXT } from "@/service/Helper";
 
 const SelectOption = [
   { label: "Type here....", value: "" },
@@ -15,13 +16,13 @@ const SelectOption = [
 const Page = () => {
   const router = useRouter();
 
-  const handleNext = () => router.push("/job_posting/employment_Type");
+  const handleNext = () => router.push(ROUTE?.EMPLOYMENT_TYPE);
 
   return (
     <div>
       <div className="flex items-center justify-between mb-10">
         <p className="sm:text-default-t-25 text-lg font-semibold text-meta-purple-1">
-          Job posting
+          {TEXT?.JOB_POSTING}
         </p>
         <div className="flex items-center cursor-pointer">
           <Image
@@ -31,7 +32,7 @@ const Page = () => {
             src={"/job/Eye_fill.svg"}
           />
           <p className="ml-2 sm:text-xl text-lg font-semibold text-meta-blue-1 sm:block hidden">
-            Preview
+          {TEXT?.PREVIEW}
           </p>
         </div>
       </div>
@@ -39,10 +40,10 @@ const Page = () => {
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
-            Are you a hiring manager?
+            {TEXT?.ARE_YOU_HIRING_MANAGER}
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-            The hired candidate will work in your reporting chain.
+           {TEXT?.THE_HIRED_CANDIDATE_WILL_WORK_IN_REPORTING_CHAIN}
           </p>
         </div>
         <div className="flex items-center lg:w-1/2 w-full lg:mt-0 mt-3">
@@ -59,10 +60,10 @@ const Page = () => {
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
-            Company <span className="text-red-600">*</span>
+            {TEXT?.COMPANY} <span className="text-red-600">*</span>
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-            Your Company name
+          {TEXT?.YOUR_COMPANY_NAME} 
           </p>
         </div>
         <div className="flex items-center lg:w-1/2 w-full lg:mt-0 mt-3">
@@ -78,10 +79,10 @@ const Page = () => {
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
-            Job title <span className="text-red-600">*</span>
+          {TEXT?.JOB_TITLE}  <span className="text-red-600">*</span>
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-            You can pick multiple work schedules.
+            {TEXT?.YOU_CAN_PICK_MULTIPLE_WORK_SCHEDULES}
           </p>
         </div>
         <div className="flex items-center lg:w-1/2 w-full lg:mt-0 mt-3">
@@ -97,10 +98,10 @@ const Page = () => {
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
-            Workplace type <span className="text-red-600">*</span>
+            {TEXT?.WORKPLACE_TYPE}<span className="text-red-600">*</span>
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-            You can pick multiple work schedules.
+           {TEXT?.YOU_CAN_PICK_MULTIPLE_WORK_SCHEDULES}
           </p>
         </div>
         <div className="flex items-center lg:w-1/2 w-full lg:mt-0 mt-3 md:flex-nowrap flex-wrap">
@@ -120,16 +121,16 @@ const Page = () => {
       <div className="flex justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
-            Job posting location
+            {TEXT?.JOB_POSTING_LOCATION}
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-            Which option best describe this job’s location?
+          {TEXT?.WHICH_OPTION_BEST_DESCRIBE_THIS_JOBS_LOCATION}
           </p>
         </div>
         <div className="lg:w-1/2 w-full">
           <div className="lg:mt-0 mt-2">
             <label className="text-base font-medium text-meta-purple-1">
-              City <span className="text-red-600">*</span>
+              {TEXT?.CITY} <span className="text-red-600">*</span>
             </label>
             <div className="mt-1">
               <Select options={SelectOption} />
@@ -137,7 +138,7 @@ const Page = () => {
             <div className="flex items-center my-3">
               <div className="mr-[10px]">
                 <label className="text-base font-medium text-meta-purple-1">
-                  Area
+                  {TEXT?.AREA}
                 </label>
                 <input
                   type="text"
@@ -147,7 +148,7 @@ const Page = () => {
               </div>
               <div>
                 <label className="text-base font-medium text-meta-purple-1">
-                  Pincode
+                  {TEXT?.PINCODE}
                 </label>
                 <input
                   type="text"
@@ -158,7 +159,7 @@ const Page = () => {
             </div>
             <div>
               <label className="text-base font-medium text-meta-purple-1">
-                Street address
+                {TEXT?.STREET_ADDRESS}
               </label>
               <input
                 type="text"
@@ -175,7 +176,7 @@ const Page = () => {
         className="w-full flex justify-end mt-16"
       >
         <button className="bg-meta-light-blue-1 text-base text-meta-light-blue-3 font-medium py-[13px] rounded-lg min-w-[200px]">
-          Next
+          {TEXT?.NEXT}
         </button>
       </div>
     </div>

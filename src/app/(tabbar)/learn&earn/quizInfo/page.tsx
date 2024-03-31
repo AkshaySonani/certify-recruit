@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React, { Fragment } from "react";
 import { useRouter } from "next/navigation";
+import { TEXT } from "@/service/Helper";
 
 const page = () => {
   const router = useRouter();
@@ -9,13 +10,13 @@ const page = () => {
   return (
     <div>
       <div className="text-meta-purple-1 font-semibold text-2xl mb-4">
-        Learn & Earn
+       {TEXT?.LEARN_AND_EARN}
       </div>
       <div className="bg-meta-gray-2 h-[200px] rounded-[14px] w-full py-[10px]">
         <div className="h-full w-[70%] m-auto ">
           <div className="mb-5">
             <p className="text-[15px] font-medium text-meta-purple-1 text-center my-[10px]">
-              Time remaining
+            {TEXT?.TIME_REMAINING}
             </p>
             <div className="flex gap-2 justify-center">
               <div className="h-[54px] w-[34px] bg-meta-light-blue-2 rounded-[7px] flex items-center justify-center">
@@ -69,7 +70,7 @@ const page = () => {
         </div>
       </div>
       <div className="mt-[30px]">
-        <p className="text-xl text-meta-purple-1 font-semibold">Quiz info</p>
+        <p className="text-xl text-meta-purple-1 font-semibold">{TEXT?.QUIZ_INFO}</p>
       </div>
       <div className="flex w-full mt-[10px] gap-3">
         <div className="flex w-1/2 gap-3 pl-[15px] bg-meta-light-blue-2 rounded-lg items-center py-[10px]">
@@ -83,7 +84,7 @@ const page = () => {
             />
           </div>
           <div className="text-meta-light-blue-3 text-sm">
-            Refer this article Link
+          {TEXT?.REFER_THIS_ARTICLE_LINK}
           </div>
         </div>
         <div className="flex w-1/2 gap-3 pl-[15px] bg-meta-light-blue-2 rounded-lg items-center py-[10px]">
@@ -97,7 +98,7 @@ const page = () => {
             />
           </div>
           <div className="text-meta-light-blue-3 text-sm">
-            Quiz Joining Time 8:00 PM to 8:45 PM
+          {TEXT?.QUIZ_JOINING_TIME}
           </div>
         </div>
       </div>
@@ -106,7 +107,7 @@ const page = () => {
           onClick={() => router.push("/learn&earn/quizMCQs")}
           className="bg-meta-light-blue-1 rounded-[10px] text-meta-light-blue-3 py-[7px] px-[30px]"
         >
-          Join Now
+         {TEXT?.Join_Now}
         </button>
       </div>
     </div>

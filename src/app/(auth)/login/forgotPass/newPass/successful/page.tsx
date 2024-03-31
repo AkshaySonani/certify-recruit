@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { TEXT } from "@/service/Helper";
 
 const page = () => {
   const router = useRouter();
@@ -25,10 +26,10 @@ const page = () => {
                 />
               </div>
               <p className="text-meta-light-blue-3 font-medium text-sm text-center mb-2">
-                your password has been reset
+               {TEXT?.RESET_PASSWORD}
               </p>
               <h3 className="font-semibold text-2xl text-meta-purple-1 text-center mb-10">
-                Successfully
+               {TEXT?.SUCCESSFULLY}
               </h3>
 
               <div className="flex justify-center items-center font-medium text-lg text-meta-light-blue-3">
@@ -36,7 +37,7 @@ const page = () => {
                   onClick={() => router.push("/login")}
                   className="mr-2 text-meta-blue-2 cursor-pointer"
                 >
-                  Go to login
+                 {TEXT?.GO_TO_LOGIN}
                 </span>
                 <Image
                   width={17}

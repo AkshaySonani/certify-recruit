@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Fragment, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Menu, Transition } from "@headlessui/react";
+import { TEXT } from "@/service/Helper";
 
 const COMPANY_ARR = [
   { id: 1, name: "Corporate Company" },
@@ -29,12 +30,12 @@ const MyProfile = () => {
         >
           <Image src={"/BackArrow.svg"} alt="date" width={20} height={20} />
           <p className="text-5 font-semibold text-meta-purple-1 pl-[10px]">
-            Dashboard
+            {TEXT?.DASHBOARD}
           </p>
         </div>
         <div>
           <button className="text-white py-[10px] text-sm font-semibold w-[120px] rounded-lg bg-hiring-btn-gradient">
-            Hiring
+            {TEXT?.Hiring}
           </button>
         </div>
       </div>
@@ -49,11 +50,14 @@ const MyProfile = () => {
           <div className="flex w-full gap-8">
             <div className="w-[90%]">
               <p className="font-semibold text-meta-purple-1 text-xl">
-                Webnova Infotech
+              {TEXT?.WEBNOVA_INFOTECH}
               </p>
               <p className="text-meta-light-blue-3 font-medium text-sm">
-                Company Type
+              {TEXT?.COMPANY_TYPE}
+             
               </p>
+             
+            
               <div className="border-b-default-1 border-meta-light-blue-1 my-[10px] w-full"/>
               <div className="flex justify-between w-1/2">
                 <div className="flex items-center gap-2 flex-wrap">
@@ -64,7 +68,7 @@ const MyProfile = () => {
                     src={"/location.svg"}
                   />
                   <p className="text-meta-light-blue-3 text-xs">
-                    New Your, USA
+                  {TEXT?.NEW_YOUR_USA}
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -91,7 +95,7 @@ const MyProfile = () => {
                 </p>
               </div>
             </div>
-            <div className="text-meta-blue-1 text-base font-medium">Edit</div>
+            <div className="text-meta-blue-1 text-base font-medium">{TEXT?.EDIT}</div>
           </div>
         </div>
       </div>
@@ -104,7 +108,7 @@ const MyProfile = () => {
               active === 0 ? "text-meta-blue-1" : "text-meta-light-blue-3"
             }`}
           >
-            Basic Detail
+            {TEXT?.BASIC_DETAIL}
           </div>
           <div
               onClick={() => setActive(1)}
@@ -112,7 +116,7 @@ const MyProfile = () => {
               active === 1 ? "text-meta-blue-1" : "text-meta-light-blue-3"
             }`}
             >
-            Company Detail
+            {TEXT?.Company_Detail}
           </div>
           <div
             className={`default-t-13 font-medium cursor-pointer ${
@@ -120,7 +124,7 @@ const MyProfile = () => {
             } `}
             onClick={() => setActive(2)}
           >
-            KYC Compliance Detail
+         {TEXT?.KYC_Compliance_Detail}
           </div>
         </div>
         <div className="w-full border-default-1 border-meta-light-blue-1 my-[10px]"/>
@@ -131,7 +135,7 @@ const MyProfile = () => {
               <div className="flex w-full gap-3 pl-[35px] mt-5">
                 <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
-                    Username
+                    {TEXT?.USERNAME}
                   </label>
                   <input
                     type="text"
@@ -141,7 +145,7 @@ const MyProfile = () => {
                 </div>
                 <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
-                    Email
+                    {TEXT?.EMAIL}
                   </label>
                   <input
                     type="text"
@@ -153,7 +157,7 @@ const MyProfile = () => {
               <div className="flex w-full gap-3 pl-[35px] mt-[10px]">
                 <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
-                    Role
+                    {TEXT?.ROLE}
                   </label>
                   <input
                     type="text"
@@ -163,7 +167,7 @@ const MyProfile = () => {
                 </div>
                 <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
-                    Phone Number
+                    {TEXT?.PHONE_NUMBER}
                   </label>
                   <input
                     type="text"
@@ -179,7 +183,7 @@ const MyProfile = () => {
               <div className="flex w-full gap-3 pl-[35px] mt-5">
                 <Menu as="div" className="relative w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
-                    Company Type
+                    {TEXT?.COMPANY_TYPE}
                   </label>
                   <Menu.Button
                     className="relative items-center mt-2 flex z-20 justify-between w-full appearance-none rounded-lg border border-stroke px-5 py-3 outline-none transition"
@@ -229,7 +233,7 @@ const MyProfile = () => {
                 </Menu>
                 <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
-                    Company Name
+                    {TEXT?.COMPANY_NAME}
                   </label>
                   <input
                     type="text"
@@ -241,7 +245,7 @@ const MyProfile = () => {
               <div className="flex w-full gap-3 pl-[35px] mt-[10px]">
                 <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
-                    Website URL
+                    {TEXT?.WEBSITE_URL}
                   </label>
                   <input
                     type="text"
@@ -251,7 +255,7 @@ const MyProfile = () => {
                 </div>
                 <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
-                    Owner
+                    {TEXT?.OWNER}
                   </label>
                   <input
                     type="text"
@@ -262,7 +266,7 @@ const MyProfile = () => {
               </div>
               <div className="w-full pl-[35px] mt-[10px]">
                 <label className="text-base font-medium text-meta-purple-1">
-                  Company mailing address
+                 {TEXT?.COMPANY_MAILING_ADDRESS}
                 </label>
                 <input
                   type="text"
@@ -309,7 +313,7 @@ const MyProfile = () => {
               <div className="flex w-full gap-3 pl-[35px] mt-5">
                 <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
-                    PAN Number
+                   {TEXT?.PAN_NUMBER}
                   </label>
                   <input
                     type="text"
@@ -319,7 +323,7 @@ const MyProfile = () => {
                 </div>
                 <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
-                    Name on PAN Card
+                    {TEXT?.NAME_ON_PAN_CARD}
                   </label>
                   <input
                     type="text"
@@ -332,7 +336,7 @@ const MyProfile = () => {
           )}
           <div className="w-full flex justify-end mt-[30px]">
             <button className="bg-meta-blue-1 text-white text-base rounded-lg w-[150px] py-2">
-              Save
+              {TEXT?.SAVE}
             </button>
           </div>
         </div>

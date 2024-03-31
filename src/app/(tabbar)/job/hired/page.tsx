@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Select from "@/Components/Select";
 import Checkbox from "@/Components/Checkbox";
 import DatePicker from "react-multi-date-picker";
+import { TEXT } from "@/service/Helper";
 
 const tableData = [
   {
@@ -70,7 +71,7 @@ const page = () => {
   return (
     <div>
       <div>
-        <div className="text-meta-purple-1 font-semibold text-2xl">Hired</div>
+        <div className="text-meta-purple-1 font-semibold text-2xl">{TEXT.HIRED}</div>
         <div className="flex gap-6 mt-5 mb-10 justify-center items-center">
           <div className="w-2/4">
             <div className="relative">
@@ -139,32 +140,32 @@ const page = () => {
             <tr>
               <th className="px-6 py-4 w-1/4">
                 <div className="font-medium text-base text-meta-light-blue-3">
-                  Name
+                  {TEXT?.NAME}
                 </div>
               </th>
               <th className="px-6 py-4">
                 <div className="font-medium text-base text-meta-light-blue-3">
-                  Designation
+                {TEXT?.DESIGNATION}
                 </div>
               </th>
               <th className="px-6 py-4">
                 <div className="font-medium text-base text-meta-light-blue-3">
-                  Experience
+                  {TEXT?.EXPERIENCE}
                 </div>
               </th>
               <th className="px-6 py-4">
                 <div className="font-medium text-base text-meta-light-blue-3">
-                  Date
+                  {TEXT?.DATE}
                 </div>
               </th>
               <th className="px-6 py-4">
                 <div className="font-medium text-base text-meta-light-blue-3">
-                  Status
+                  {TEXT?.STATUS}
                 </div>
               </th>
               <th className="px-6 w-1/12">
                 <span className="flex font-medium text-base text-meta-light-blue-3 bg-meta-light-blue-2 p-2 rounded-lg">
-                  <div>Downloads</div>
+                  <div>{TEXT?.DOWNLOADS}</div>
                   <div className="ml-5">5/5</div>
                 </span>
               </th>

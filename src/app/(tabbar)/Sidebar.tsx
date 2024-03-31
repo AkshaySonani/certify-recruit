@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { ROUTE } from "@/service/Helper";
 
 const sideBarData = [
   {
@@ -116,7 +117,7 @@ const Sidebar = () => {
           </ul>
         </nav>
       </div>
-      <Link href="/myProfile" className="flex justify-center mb-8">
+      <Link href={ROUTE?.MYPROFILE} className="flex justify-center mb-8">
         <div className="flex items-center">
           <div className="mr-4">
             <Image

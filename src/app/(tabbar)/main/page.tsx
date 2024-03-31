@@ -2,6 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { TEXT } from "@/service/Helper";
 
 const page = () => {
   const router = useRouter();
@@ -28,7 +29,7 @@ const page = () => {
                     />
                   </div>
                   <div className="text-center mt-4 text-xl font-semibold text-meta-blue-1">
-                    Employee
+                    {TEXT?.EMPLOYEE}
                   </div>
                 </div>
               </div>
@@ -46,7 +47,7 @@ const page = () => {
                     />
                   </div>
                   <div className="text-center mt-4 text-xl font-semibold text-meta-blue-1">
-                    Individual
+                    {TEXT?.INDIVIDUAL}
                   </div>
                 </div>
               </div>
