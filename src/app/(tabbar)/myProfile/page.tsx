@@ -22,25 +22,25 @@ const MyProfile = () => {
   }
 
   return (
-    <div className="w-[80%] m-auto">
+    <div className="w-4/5 m-auto">
       <div className="flex justify-between items-center">
         <div
           className="flex cursor-pointer"
           onClick={() => router?.push("/dashboard")}
         >
           <Image src={"/BackArrow.svg"} alt="date" width={20} height={20} />
-          <p className="text-5 font-semibold text-meta-purple-1 pl-[10px]">
+          <p className="text-5 font-semibold text-meta-purple-1 pl-2">
             {TEXT?.DASHBOARD}
           </p>
         </div>
         <div>
-          <button className="text-white py-[10px] text-sm font-semibold w-[120px] rounded-lg bg-hiring-btn-gradient">
+          <button className="text-white py-3 text-sm font-semibold w-32 rounded-lg bg-hiring-btn-gradient">
             {TEXT?.Hiring}
           </button>
         </div>
       </div>
-      <div className="w-full p-10 bg-meta-light-blue-2 rounded-[20px] mt-[15px]">
-        <div className="flex items-cente gap-8 w-full">
+      <div className="w-full p-10 bg-meta-light-blue-2 rounded-2xl mt-4">
+        <div className="flex items-center gap-8 w-full">
           <Image
             width={109}
             height={135}
@@ -48,7 +48,7 @@ const MyProfile = () => {
             src={"/ProfileLogo.svg"}
           />
           <div className="flex w-full gap-8">
-            <div className="w-[90%]">
+            <div className="w-11/12">
               <p className="font-semibold text-meta-purple-1 text-xl">
               {TEXT?.WEBNOVA_INFOTECH}
               </p>
@@ -58,7 +58,7 @@ const MyProfile = () => {
               </p>
              
             
-              <div className="border-b-default-1 border-meta-light-blue-1 my-[10px] w-full"/>
+              <div className="border-b-default-1 border-meta-light-blue-1 my-3 w-full"/>
               <div className="flex justify-between w-1/2">
                 <div className="flex items-center gap-2 flex-wrap">
                   <Image
@@ -104,7 +104,7 @@ const MyProfile = () => {
         <div className="flex w-3/5 justify-around">
           <div
               onClick={() => setActive(0)}
-            className={`default-t-13 font-medium cursor-pointer ${
+            className={`text-sm font-medium cursor-pointer ${
               active === 0 ? "text-meta-blue-1" : "text-meta-light-blue-3"
             }`}
           >
@@ -112,14 +112,14 @@ const MyProfile = () => {
           </div>
           <div
               onClick={() => setActive(1)}
-            className={`default-t-13 font-medium cursor-pointer ${
+            className={`text-sm font-medium cursor-pointer ${
               active === 1 ? "text-meta-blue-1" : "text-meta-light-blue-3"
             }`}
             >
             {TEXT?.Company_Detail}
           </div>
           <div
-            className={`default-t-13 font-medium cursor-pointer ${
+            className={`text-sm font-medium cursor-pointer ${
               active === 2 ? "text-meta-blue-1" : "text-meta-light-blue-3"
             } `}
             onClick={() => setActive(2)}
@@ -127,12 +127,12 @@ const MyProfile = () => {
          {TEXT?.KYC_Compliance_Detail}
           </div>
         </div>
-        <div className="w-full border-default-1 border-meta-light-blue-1 my-[10px]"/>
+        <div className="w-full border border-meta-light-blue-1 my-3"/>
 
         <div>
           {active === 0 && (
             <>
-              <div className="flex w-full gap-3 pl-[35px] mt-5">
+              <div className="flex w-full gap-3 pl-9 mt-5">
                 <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
                     {TEXT?.USERNAME}
@@ -154,7 +154,7 @@ const MyProfile = () => {
                   />
                 </div>
               </div>
-              <div className="flex w-full gap-3 pl-[35px] mt-[10px]">
+              <div className="flex w-full gap-3 pl-9 mt-3">
                 <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
                     {TEXT?.ROLE}
@@ -180,7 +180,7 @@ const MyProfile = () => {
           )}
           {active === 1 && (
             <>
-              <div className="flex w-full gap-3 pl-[35px] mt-5">
+              <div className="flex w-full gap-3 pl-9 mt-5">
                 <Menu as="div" className="relative w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
                     {TEXT?.COMPANY_TYPE}
@@ -242,7 +242,7 @@ const MyProfile = () => {
                   />
                 </div>
               </div>
-              <div className="flex w-full gap-3 pl-[35px] mt-[10px]">
+              <div className="flex w-full gap-3 pl-9 mt-3">
                 <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
                     {TEXT?.WEBSITE_URL}
@@ -264,7 +264,7 @@ const MyProfile = () => {
                   />
                 </div>
               </div>
-              <div className="w-full pl-[35px] mt-[10px]">
+              <div className="w-full pl-9 mt-3">
                 <label className="text-base font-medium text-meta-purple-1">
                  {TEXT?.COMPANY_MAILING_ADDRESS}
                 </label>
@@ -274,7 +274,7 @@ const MyProfile = () => {
                   className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-2 px-5 py-3"
                 />
               </div>
-              <div className="flex w-full gap-3 pl-[35px] mt-[10px]">
+              <div className="flex w-full gap-3 pl-9 mt-3">
                 <div className="w-1/2">
                   <input
                     type="text"
@@ -290,7 +290,7 @@ const MyProfile = () => {
                   />
                 </div>
               </div>
-              <div className="flex w-full gap-3 pl-[35px] mt-[10px]">
+              <div className="flex w-full gap-3 pl-9 mt-3">
                 <div className="w-1/2">
                   <input
                     type="text"
@@ -310,7 +310,7 @@ const MyProfile = () => {
           )}
           {active === 2 && (
             <>
-              <div className="flex w-full gap-3 pl-[35px] mt-5">
+              <div className="flex w-full gap-3 pl-9 mt-5">
                 <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
                    {TEXT?.PAN_NUMBER}
@@ -334,8 +334,8 @@ const MyProfile = () => {
               </div>
             </>
           )}
-          <div className="w-full flex justify-end mt-[30px]">
-            <button className="bg-meta-blue-1 text-white text-base rounded-lg w-[150px] py-2">
+          <div className="w-full flex justify-end mt-8">
+            <button className="bg-meta-blue-1 text-white text-base rounded-lg w-36 py-2">
               {TEXT?.SAVE}
             </button>
           </div>

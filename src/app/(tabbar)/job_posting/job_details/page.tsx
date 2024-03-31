@@ -48,7 +48,7 @@ const Page = () => {
   return (
     <div>
       <div className="flex items-center justify-between mb-10">
-        <p className="sm:text-text-default-t-25 text-lg font-semibold text-meta-purple-1">
+        <p className="sm:text-text-text-2xl text-lg font-semibold text-meta-purple-1">
           {TEXT?.JOB_POSTING}
         </p>
         <div className="flex items-center cursor-pointer">
@@ -78,11 +78,11 @@ const Page = () => {
             theme="snow"
             value={content}
             onChange={(e:any) => setContent(e)}
-            className="!h-[300px] !rounded-lg !w-full"
+            className="!h-78 !rounded-lg !w-full"
           />
         </div>
       </div>
-      <div className="border-meta-light-blue-1 border-default-1 my-6" />
+      <div className="border-meta-light-blue-1 border my-6" />
 
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-5 text-start">
@@ -98,7 +98,7 @@ const Page = () => {
           <div className="flex items-start w-full lg:mt-0 mt-3 flex-wrap">
             {SKILL_ARR?.map((ele: any) => {
               return (
-                <div className="flex items-center p-3 border-default-half border-meta-light-blue-1 rounded-lg mr-[10px] mb-2">
+                <div className="flex items-center p-3 border-2 border-meta-light-blue-1 rounded-lg mr-3 mb-2">
                   <p className="text-meta-light-blue-3 font-medium text-base whitespace-nowrap">
                     {ele?.name}
                   </p>
@@ -106,7 +106,7 @@ const Page = () => {
                     width={25}
                     height={25}
                     alt="Preview"
-                    className="ml-[10px]"
+                    className="ml-3"
                     src={"/job/Close.svg"}
                   />
                 </div>
@@ -116,8 +116,8 @@ const Page = () => {
           {isOpen ? (
             <SelectBox
               options={options}
-              optionStyle="w-[38%]"
-              buttonStyle="h-[47px]"
+              buttonStyle="h-12"
+              optionStyle="w-2/5"
               selectedOption={selectedOption}
               setSelectedOption={setSelectedOption}
             />
@@ -126,15 +126,15 @@ const Page = () => {
               onClick={() => setIsOpen(!isOpen)}
               className="w-full cursor-pointer"
             >
-              <div className="border-default-half w-max border-meta-light-blue-1 rounded-lg flex items-start p-3">
+              <div className="border-2 w-max border-meta-light-blue-1 rounded-lg flex items-start p-3">
                 <p>{TEXT?.ADD_SKILL}</p>
                 <div>
                   <Image
                     width={25}
                     height={25}
                     alt="Preview"
+                    className="ml-3"
                     src={"/job/Add.svg"}
-                    className="ml-[10px]"
                   />
                 </div>
               </div>
@@ -142,10 +142,10 @@ const Page = () => {
           )}
         </div>
       </div>
-      <div className="border-meta-light-blue-1 border-default-1 my-6" />
+      <div className="border-meta-light-blue-1 border my-6" />
 
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
-        <div className="lg:w-1/2 w-full lg:mr-[20px] text-start">
+        <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
            {TEXT?.HIRING_MULTIPLE_CANDIDATES}
           </p>
@@ -154,7 +154,7 @@ const Page = () => {
           </p>
         </div>
         <div className="flex items-start lg:w-1/2 w-full lg:mt-0 mt-3 flex-col">
-          <div className="border-default-half border-meta-light-blue-1 rounded-lg w-[196px] min-h-[47px] flex justify-between">
+          <div className="border-2 border-meta-light-blue-1 rounded-lg w-48 min-h-12 flex justify-between">
             <button className="px-3 w-1/3" onClick={handleIncrement}>
               <Image
                 width={25}
@@ -163,7 +163,7 @@ const Page = () => {
                 src={"/job/Plus.svg"}
               />
             </button>
-            <div className="border-x-default-half border-x-meta-light-blue-1 w-[65%] flex items-center justify-center text-meta-light-blue-3 text-base font-medium">
+            <div className="border-x-2 border-x-meta-light-blue-1 w-2/3 flex items-center justify-center text-meta-light-blue-3 text-base font-medium">
               <p>{formattedValue}</p>
             </div>
             <button className="px-3 w-1/3" onClick={handleDecrement}>
@@ -183,18 +183,18 @@ const Page = () => {
           </div>
         </div>
       </div>
-      <div className="border-meta-light-blue-1 border-default-1 my-6" />
+      <div className="border-meta-light-blue-1 border my-6" />
 
       <div className="w-full flex justify-between sm:mt-16 mt-7 sm:flex-nowrap flex-wrap">
         <button
           onClick={() => handleBack()}
-          className="border-meta-light-blue-1 border-default-1 text-base text-meta-light-blue-3 font-medium py-[13px] rounded-lg sm:min-w-[200px] min-w-full sm:mb-0 mb-3"
+          className="border-meta-light-blue-1 border text-base text-meta-light-blue-3 font-medium py-3 rounded-lg sm:min-w-48 min-w-full sm:mb-0 mb-3"
         >
           {TEXT?.BACK}
         </button>
         <button
           onClick={() => handleNext()}
-          className="bg-meta-light-blue-1 text-base text-meta-light-blue-3 font-medium py-[13px] rounded-lg sm:min-w-[200px] min-w-full"
+          className="bg-meta-light-blue-1 text-base text-meta-light-blue-3 font-medium py-3 rounded-lg sm:min-w-48 min-w-full"
         >
           {TEXT?.NEXT}
         </button>

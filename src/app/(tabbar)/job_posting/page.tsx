@@ -21,7 +21,7 @@ const Page = () => {
   return (
     <div>
       <div className="flex items-center justify-between mb-10">
-        <p className="sm:text-default-t-25 text-lg font-semibold text-meta-purple-1">
+        <p className="sm:text-2xl text-lg font-semibold text-meta-purple-1">
           {TEXT?.JOB_POSTING}
         </p>
         <div className="flex items-center cursor-pointer">
@@ -47,15 +47,15 @@ const Page = () => {
           </p>
         </div>
         <div className="flex items-center lg:w-1/2 w-full lg:mt-0 mt-3">
-          <div className="border-meta-light-blue-1 border-default-1 rounded-lg p-[13px] mr-[13px] w-1/2">
+          <div className="border-meta-light-blue-1 border rounded-lg p-3 mr-3 w-1/2">
             <Checkbox label={"Yes"} />
           </div>
-          <div className="border-meta-light-blue-1 border-default-1 rounded-lg p-[13px] w-1/2">
+          <div className="border-meta-light-blue-1 border rounded-lg p-3 w-1/2">
             <Checkbox label={"No"} />
           </div>
         </div>
       </div>
-      <div className="border-meta-light-blue-1 border-default-1 my-6" />
+      <div className="border-meta-light-blue-1 border my-6" />
 
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-5 text-start">
@@ -74,7 +74,7 @@ const Page = () => {
           />
         </div>
       </div>
-      <div className="border-meta-light-blue-1 border-default-1 my-6" />
+      <div className="border-meta-light-blue-1 border my-6" />
 
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-5 text-start">
@@ -93,7 +93,7 @@ const Page = () => {
           />
         </div>
       </div>
-      <div className="border-meta-light-blue-1 border-default-1 my-6" />
+      <div className="border-meta-light-blue-1 border my-6" />
 
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-5 text-start">
@@ -105,18 +105,18 @@ const Page = () => {
           </p>
         </div>
         <div className="flex items-center lg:w-1/2 w-full lg:mt-0 mt-3 md:flex-nowrap flex-wrap">
-          <div className="border-meta-light-blue-1 border-default-1 rounded-lg p-[13px] w-1/3 md:min-w-[126px] min-w-full">
+          <div className="border-meta-light-blue-1 border rounded-lg -3 w-1/3 md:min-32 min-w-full">
             <Checkbox label={"On-site"} />
           </div>
-          <div className="border-meta-light-blue-1 border-default-1 rounded-lg p-[13px] w-1/3 md:mx-[13px] md:min-w-[126px] min-w-full md:my-0 my-2">
+          <div className="border-meta-light-blue-1 border rounded-lg -3 w-1/3 md:mx-3 md:min-32 min-w-full md:my-0 my-2">
             <Checkbox label={"Hybrid"} />
           </div>
-          <div className="border-meta-light-blue-1 border-default-1 rounded-lg p-[13px] w-1/3 md:min-w-[126px] min-w-full">
+          <div className="border-meta-light-blue-1 border rounded-lg -3 w-1/3 md:min-32 min-w-full">
             <Checkbox label={"Remote"} />
           </div>
         </div>
       </div>
-      <div className="border-meta-light-blue-1 border-default-1 my-6" />
+      <div className="border-meta-light-blue-1 border my-6" />
 
       <div className="flex justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-5 text-start">
@@ -136,7 +136,7 @@ const Page = () => {
               <Select options={SelectOption} />
             </div>
             <div className="flex items-center my-3">
-              <div className="mr-[10px]">
+              <div className="mr-3">
                 <label className="text-base font-medium text-meta-purple-1">
                   {TEXT?.AREA}
                 </label>
@@ -175,7 +175,7 @@ const Page = () => {
         onClick={() => handleNext()}
         className="w-full flex justify-end mt-16"
       >
-        <button className="bg-meta-light-blue-1 text-base text-meta-light-blue-3 font-medium py-[13px] rounded-lg min-w-[200px]">
+        <button className="bg-meta-light-blue-1 text-base text-meta-light-blue-3 font-medium py-3 rounded-lg min-w-48">
           {TEXT?.NEXT}
         </button>
       </div>

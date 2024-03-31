@@ -98,13 +98,13 @@ const page = () => {
         </div>
         <div className="flex gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-[14px] h-[14px] rounded-sm bg-green-500"/>
+            <div className="w-3.5 h-3.5 rounded-sm bg-green-500"/>
             <p className="font-medium text-meta-purple-1 text-base">
               {TEXT?.AVAILABLE}
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-[14px] h-[14px] rounded-sm bg-red-500"/>
+            <div className="w-3.5 h-3.5 rounded-sm bg-red-500"/>
             <p className="font-medium text-meta-purple-1 text-base">Hired</p>
           </div>
         </div>
@@ -123,7 +123,7 @@ const page = () => {
             <input
               type="text"
               placeholder="Job title"
-              className="w-full h-12 rounded-lg border-default-half border-stroke bg-transparent px-12 py-3 text-black outline-none transition focus:border-primary active:border-primary"
+              className="w-full h-12 rounded-lg border-2 border-stroke bg-transparent px-12 py-3 text-black outline-none transition focus:border-primary active:border-primary"
             />
 
             <Popover.Panel className="absolute w-full z-10 mt-2 bg-white rounded-xl shadow-xl border border-meta-light-blue-1 p-4">
@@ -252,10 +252,10 @@ const page = () => {
             <input
               type="text"
               placeholder="City pincode"
-              className="w-full h-12 rounded-lg border-default-half border-stroke bg-transparent pl-[5px] py-3 text-black outline-none transition focus:border-primary active:border-primary"
+              className="w-full h-12 rounded-lg border-2 border-stroke bg-transparent pl-1 py-3 text-black outline-none transition focus:border-primary active:border-primary"
             />
           </div>
-          <div className="bg-meta-light-blue-2 rounded-lg p-[9px] ml-[10px]">
+          <div className="bg-meta-light-blue-2 rounded-lg p-2 ml-3">
             <Image
               alt="date"
               width={19}
@@ -267,7 +267,7 @@ const page = () => {
         <Menu as="div" className="relative ml-10">
           <div>
             <Menu.Button
-              className="relative items-center flex z-20 justify-between w-full min-w-[161px] appearance-none rounded-lg border border-stroke px-5 py-3 outline-none transition bg-meta-light-blue-2"
+              className="relative items-center flex z-20 justify-between w-full min-w-40 appearance-none rounded-lg border border-stroke px-5 py-3 outline-none transition bg-meta-light-blue-2"
             >
               <p>{active}</p>
               <Image
@@ -287,7 +287,7 @@ const page = () => {
             enterTo="transform opacity-100 scale-100"
             leaveFrom="transform opacity-100 scale-100"
           >
-            <Menu.Items className="absolute right-0 z-30 mt-2 min-w-[161px] origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Menu.Items className="absolute right-0 z-30 mt-2 min-w-40 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div>
                 {statusArr?.map((list) => {
                   return (
@@ -353,7 +353,7 @@ const page = () => {
               return (
                 <tr>
                   <td>
-                    <div className="w-[14px] h-[14px] rounded-sm bg-green-500"/>
+                    <div className="w-3.5 h-3.5 rounded-sm bg-green-500"/>
                   </td>
                   <td className="px-6 py-4 text-gray-500">
                     <div className="flex items-center">

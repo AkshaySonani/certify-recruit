@@ -24,8 +24,7 @@ const page = () => {
 
         <div className="bg-[url('/_Compound.svg')] w-full">
           <div
-            className="bg-white shadow-[0px_2px_10px_0px_#00000006]
-] w-[70%] m-auto border border-meta-light-blue-2 p-[30px] rounded-[26px] relative"
+            className="bg-white shadow-[0px_2px_10px_0px_#00000006] w-[70%] m-auto border border-meta-light-blue-2 p-8 rounded-3xl relative"
           >
             <div className="w-full flex justify-center gap-1">
               <Image
@@ -38,7 +37,7 @@ const page = () => {
               {TEXT?.INDIVIDUAL}
               </p>
             </div>
-            <div className="absolute top-[39px]" onClick={() => router?.back()}>
+            <div className="absolute top-10" onClick={() => router?.back()}>
               <Image
                 width={22}
                 height={22}
@@ -47,10 +46,10 @@ const page = () => {
               />
             </div>
 
-            <div className="mt-[30px] flex flex-wrap gap-4">
+            <div className="mt-8 flex flex-wrap gap-4">
               {individualArr?.map((list) => {
                 return (
-                  <div className="flex items-center justify-between w-[48%] border border-meta-light-blue-1 rounded-[10px] py-3 px-3">
+                  <div className="flex items-center justify-between w-3/6 border border-meta-light-blue-1 rounded-xl py-3 px-3">
                     <div className="flex gap-3 ">
                       <Image
                         alt="icon"
@@ -68,7 +67,7 @@ const page = () => {
                       type="radio"
                       id="inline-2-radio"
                       name="inline-radio-group"
-                      className="w-[18px] h-[18px] text-meta-blue-1 bg-meta-blue-1 border-meta-light-blue-1"
+                      className="w-5 h-5 text-meta-blue-1 bg-meta-blue-1 border-meta-light-blue-1"
                     />
                   </div>
                 );

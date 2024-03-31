@@ -12,56 +12,56 @@ const page = () => {
       <div className="text-meta-purple-1 font-semibold text-2xl mb-4">
        {TEXT?.LEARN_AND_EARN}
       </div>
-      <div className="bg-meta-gray-2 h-[200px] rounded-[14px] w-full py-[10px]">
-        <div className="h-full w-[70%] m-auto ">
+      <div className="bg-meta-gray-2 h-52 rounded-xl w-full py-3">
+        <div className="h-full w-[70%] m-auto">
           <div className="mb-5">
-            <p className="text-[15px] font-medium text-meta-purple-1 text-center my-[10px]">
+            <p className="text-base font-medium text-meta-purple-1 text-center my-3">
             {TEXT?.TIME_REMAINING}
             </p>
             <div className="flex gap-2 justify-center">
-              <div className="h-[54px] w-[34px] bg-meta-light-blue-2 rounded-[7px] flex items-center justify-center">
+              <div className="h-14 w-9 bg-meta-light-blue-2 rounded-md flex items-center justify-center">
                 <p className="text-meta-light-blue-3 text-2xl font-semibold">
                   0
                 </p>
               </div>
-              <div className="h-[54px] w-[34px] bg-meta-light-blue-2 rounded-[7px] flex items-center justify-center">
+              <div className="h-14 w-9 bg-meta-light-blue-2 rounded-md flex items-center justify-center">
                 <p className="text-meta-light-blue-3 text-2xl font-semibold">
                   0
                 </p>
               </div>
-              <div className="h-[54px] w-5 flex items-center justify-center">
+              <div className="h-14 w-5 flex items-center justify-center">
                 <p className="text-meta-light-blue-3 text-2xl font-semibold">
                   :
                 </p>
               </div>
-              <div className="h-[54px] w-[34px] bg-meta-light-blue-2 rounded-[7px] flex items-center justify-center">
+              <div className="h-14 w-9 bg-meta-light-blue-2 rounded-md flex items-center justify-center">
                 <p className="text-meta-light-blue-3 text-2xl font-semibold">
                   0
                 </p>
               </div>
-              <div className="h-[54px] w-[34px] bg-meta-light-blue-2 rounded-[7px] flex items-center justify-center">
+              <div className="h-14 w-9 bg-meta-light-blue-2 rounded-md flex items-center justify-center">
                 <p className="text-meta-light-blue-3 text-2xl font-semibold">
                   0
                 </p>
               </div>
-              <div className="h-[54px] w-5 flex items-center justify-center">
+              <div className="h-14 w-5 flex items-center justify-center">
                 <p className="text-meta-light-blue-3 text-2xl font-semibold">
                   :
                 </p>
               </div>
-              <div className="h-[54px] w-[34px] bg-meta-light-blue-2 rounded-[7px] flex items-center justify-center">
+              <div className="h-14 w-9 bg-meta-light-blue-2 rounded-md flex items-center justify-center">
                 <p className="text-meta-light-blue-3 text-2xl font-semibold">
                   10
                 </p>
               </div>
-              <div className="h-[54px] w-[34px] bg-meta-light-blue-2 rounded-[7px] flex items-center justify-center">
+              <div className="h-14 w-9 bg-meta-light-blue-2 rounded-md flex items-center justify-center">
                 <p className="text-meta-light-blue-3 text-2xl font-semibold">
                   12
                 </p>
               </div>
             </div>
           </div>
-          <p className="text-meta-purple-1 text-base text-[500] text-center">
+          <p className="text-meta-purple-1 text-base text-center">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s
@@ -69,32 +69,32 @@ const page = () => {
           <div className="w-full flex justify-center" />
         </div>
       </div>
-      <div className="mt-[30px]">
+      <div className="mt-8">
         <p className="text-xl text-meta-purple-1 font-semibold">{TEXT?.QUIZ_INFO}</p>
       </div>
-      <div className="flex w-full mt-[10px] gap-3">
-        <div className="flex w-1/2 gap-3 pl-[15px] bg-meta-light-blue-2 rounded-lg items-center py-[10px]">
-          <div className="w-[47px] h-[47px] rounded-full bg-white relative">
+      <div className="flex w-full mt-3 gap-3">
+        <div className="flex w-1/2 gap-3 pl-4 bg-meta-light-blue-2 rounded-lg items-center py-3">
+          <div className="w-12 h-12 rounded-full bg-white relative">
             <Image
               alt="Icon"
               width={23}
               height={23}
               src={"/individual/linkPin.svg"}
-              className="top-[12px] left-[11px] absolute"
+              className="top-3 left-3 absolute"
             />
           </div>
           <div className="text-meta-light-blue-3 text-sm">
           {TEXT?.REFER_THIS_ARTICLE_LINK}
           </div>
         </div>
-        <div className="flex w-1/2 gap-3 pl-[15px] bg-meta-light-blue-2 rounded-lg items-center py-[10px]">
-          <div className="w-[47px] h-[47px] rounded-full bg-white relative">
+        <div className="flex w-1/2 gap-3 pl-4 bg-meta-light-blue-2 rounded-lg items-center py-3">
+          <div className="w-12 h-12 rounded-full bg-white relative">
             <Image
               alt="Icon"
               width={23}
               height={23}
+              className="top-3 left-3 absolute"
               src={"/individual/testExamClock.svg"}
-              className="top-[12px] left-[11px] absolute"
             />
           </div>
           <div className="text-meta-light-blue-3 text-sm">
@@ -102,10 +102,10 @@ const page = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-end items-center mt-[30px]">
+      <div className="flex justify-end items-center mt-8">
         <button
           onClick={() => router.push("/learn&earn/quizMCQs")}
-          className="bg-meta-light-blue-1 rounded-[10px] text-meta-light-blue-3 py-[7px] px-[30px]"
+          className="bg-meta-light-blue-1 rounded-xl text-meta-light-blue-3 py-2 px-8"
         >
          {TEXT?.Join_Now}
         </button>

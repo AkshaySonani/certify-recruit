@@ -53,7 +53,7 @@ const page = () => {
             );
           })}
         </div>
-        <div className="flex justify-center flex-wrap items-center w-full mt-[20px] gap-3">
+        <div className="flex justify-center flex-wrap items-center w-full mt-5 gap-3">
           {data?.map((list) => {
             return (
               <div className="flex p-5 border border-meta-light-blue-1 rounded-2xl gap-2">

@@ -83,7 +83,7 @@ const page = () => {
             <input
               type="text"
               placeholder="Job title"
-              className="w-full h-12 rounded-lg border-default-half border-stroke bg-transparent px-12 py-3 text-black outline-none transition focus:border-primary active:border-primary"
+              className="w-full h-12 rounded-lg border-2 border-stroke bg-transparent px-12 py-3 text-black outline-none transition focus:border-primary active:border-primary"
             />
 
             <Popover.Panel className="absolute w-full z-10 mt-2 bg-white rounded-xl shadow-xl border border-meta-light-blue-1 p-4">
@@ -127,7 +127,7 @@ const page = () => {
           </Popover>
         </div>
         <div className="flex lg:w-2/4 w-1/3 items-center">
-          <div className="bg-meta-light-blue-2 rounded-lg p-[9px]">
+          <div className="bg-meta-light-blue-2 rounded-lg p-2">
             <Image
               alt="date"
               width={19}
@@ -226,7 +226,7 @@ const page = () => {
                         onChange={setEnabled}
                         className={`${
                           enabled ? "bg-gray-100" : "bg-green-100"
-                        } relative inline-flex h-6 w-[48px] items-center rounded-full`}
+                        } relative inline-flex h-6 w-12 items-center rounded-full`}
                       >
                         <span className="sr-only">Enable notifications</span>
                         <span
@@ -302,14 +302,14 @@ const page = () => {
                           className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
                         />
                       </div>
-                      <div className="mt-[10px]">
+                      <div className="mt-3">
                         <input
                           type="text"
                           placeholder="Email"
                           className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
                         />
                       </div>
-                      <div className="w-full mt-[10px]">
+                      <div className="w-full mt-3">
                         <Menu
                           as="div"
                           className="relative z-[1] inline-block text-left w-full"
@@ -370,7 +370,7 @@ const page = () => {
                       </div>
                       <button
                         onClick={() => setIsOpen(false)}
-                        className="rounded-xl w-full mt-[14px] h-12 bg-meta-blue-1 border border-meta-light-blue-2"
+                        className="rounded-xl w-full mt-4 h-12 bg-meta-blue-1 border border-meta-light-blue-2"
                       >
                         <span className="flex justify-center font-medium text-sm text-white">
                          {TEXT?.ADD_USER}
