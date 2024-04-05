@@ -7,10 +7,16 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const pathname=usePathname()
+const isFullScreenRoute = (path:any) => [ROUTE?.MYPROFILE,ROUTE?.QUIZMCQS].some((e) => path.includes(e));
   return (
-    <div className={`${pathname!==ROUTE?.MYPROFILE ? "flex" : ""}  relative w-full`}>
-      {pathname!==ROUTE?.MYPROFILE &&   <Sidebar />}
-      <main className={`${pathname!==ROUTE?.MYPROFILE ? "lg:w-[calc(100%-288px)] overflow-x-auto" :"" } p-10 `}>{children}</main>
-    </div>
+    <>
+   {!isFullScreenRoute(pathname) ? 
+     <div className="flex relative w-full">
+       <Sidebar />
+       <main className="lg:w-[calc(100%-288px)] overflow-x-auto p-10">{children}</main>
+    </div> : <main className="w-full overflow-x-auto p-10">{children}</main> }
+   
+    </>
+   
   );
 }

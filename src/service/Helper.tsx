@@ -150,11 +150,17 @@ const TEXT={
     JAVA:"Java",
     CSS:"Css",
     MATCHING:"Matching",
-    ADD_USER:"Add User"
-
-
-
-
+    ADD_USER:"Add User",
+    HOURS:"Hours",
+    MINS:"Mins",
+    SECS:"Secs",
+    QUIZ_DETAIL:"Quiz Detail",
+    START_DATE_TIME:"Start Date Time",
+    MARKS_PER_QUESTION:"Marks Per Question",
+    MAX_TAB_SWITCH_ALLOW:"Max Tab Switch Allow",
+    DURATION:"Duration",
+    NEGATIVE_MARKS_PER_QUESTION:"Negative Marks Per Question",
+    QUESTION_PALETTE:"Question Palette"
 }
 
 const ROUTE={
@@ -165,7 +171,9 @@ const ROUTE={
     HIRED:"/dashboard/hired",
     APPLICANTS:"/job/applicants",
     EMPLOYMENT_TYPE:"/job_posting/employment_Type",
-    MYPROFILE:"/myProfile"
+    MYPROFILE:"/myProfile",
+    QUIZINFO:"/learn&earn/quizInfo",
+    QUIZMCQS:"/learn&earn/quizMCQs",
 
     
 }
