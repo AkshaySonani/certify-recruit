@@ -174,9 +174,10 @@ const ROUTE={
     MYPROFILE:"/myProfile",
     QUIZINFO:"/learn&earn/quizInfo",
     QUIZMCQS:"/learn&earn/quizMCQs",
+    MAIN:"/main"
 
     
 }
+const EMAIlREGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
-
-export {TEXT,ROUTE}
+export {TEXT,ROUTE,EMAIlREGEX}

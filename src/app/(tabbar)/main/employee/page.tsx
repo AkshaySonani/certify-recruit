@@ -14,7 +14,7 @@ const page = () => {
         </div>
 
         <div className="bg-[url('/_Compound.svg')] ">
-          <div className="flex justify-center mt-36">
+          <div className="flex justify-center mt-5">
             <div className="w-2/4">
               <h3 className="font-bold text-3xl text-meta-purple-1 text-center mb-7">
                 {TEXT?.HI_THERE}

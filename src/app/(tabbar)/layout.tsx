@@ -7,7 +7,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const pathname=usePathname()
-const isFullScreenRoute = (path:any) => [ROUTE?.MYPROFILE,ROUTE?.QUIZMCQS].some((e) => path.includes(e));
+const isFullScreenRoute = (path:any) => [ROUTE?.MYPROFILE,ROUTE?.QUIZMCQS,ROUTE?.MAIN].some((e) => path.includes(e));
   return (
     <>
    {!isFullScreenRoute(pathname) ? 
