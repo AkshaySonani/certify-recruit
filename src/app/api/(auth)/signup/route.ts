@@ -34,7 +34,7 @@ const handler = async (req: NextRequest) => {
       status: 201,
       data: newUser,
       message: "User registered successfully",
-      token: await helpers.generateToken(newUser),
+      access_token: await helpers.generateToken(newUser),
     });
   } catch (error) {
     return NextResponse.json(
