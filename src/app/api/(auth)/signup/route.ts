@@ -5,9 +5,8 @@ import { connect } from "@/db/mongodb";
 import Helpers from "@/service/helpers";
 import { NextRequest, NextResponse } from "next/server";
 
-const helpers = new Helpers();
-
 const handler = async (req: NextRequest) => {
+  const helpers = new Helpers();
   try {
     await connect();
     const { role, email, password } = await req.json();
@@ -34,7 +33,7 @@ const handler = async (req: NextRequest) => {
       status: 201,
       data: newUser,
       message: "User registered successfully",
-      access_token: await helpers.generateToken(newUser),
+      access_token: await helpers.generateToken(newUser._id),
     });
   } catch (error) {
     return NextResponse.json(

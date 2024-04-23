@@ -2,23 +2,22 @@
 import bcrypt from "bcryptjs";
 import User from "@/models/user";
 import { connect } from "@/db/mongodb";
+import Helpers from "@/service/helpers";
 import { NextRequest, NextResponse } from "next/server";
 
 const handler = async (req: NextRequest) => {
+  const helpers = new Helpers();
   try {
     await connect();
     const { email, password } = await req.json();
-
     // Find user by email
     const user = await User.findOne({ email: email }).select("+password");
-
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
     // Check password
     const passwordsMatch = await bcrypt.compare(password, user.password);
-
     if (!passwordsMatch) {
       return NextResponse.json(
         { message: "Invalid credentials" },
@@ -26,20 +25,19 @@ const handler = async (req: NextRequest) => {
       );
     }
 
-    return NextResponse.json(
-      {
-        message: "User successfully logged in",
-        user: {
-          _id: user._id,
-          role: user.role,
-          email: user.email,
-          phone: user.phone,
-          status: user.status,
-          profile_picture: user.profile_picture,
-        },
+    return NextResponse.json({
+      status: 201,
+      data: {
+        _id: user._id,
+        role: user.role,
+        email: user.email,
+        phone: user.phone,
+        status: user.status,
+        profile_picture: user.profile_picture,
       },
-      { status: 404 }
-    );
+      message: "User successfully logged in",
+      access_token: await helpers.generateToken(user._id),
+    });
   } catch (error) {
     return NextResponse.json(
       {
