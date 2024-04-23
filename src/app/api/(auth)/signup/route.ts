@@ -2,7 +2,7 @@
 import bcrypt from "bcryptjs";
 import User from "@/models/user";
 import { connect } from "@/db/mongodb";
-import Helpers from "@/service/helpers";
+import Helpers from "@/service/api-helpers";
 import { NextRequest, NextResponse } from "next/server";
 
 const handler = async (req: NextRequest) => {

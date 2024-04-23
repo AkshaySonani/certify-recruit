@@ -1,11 +1,10 @@
 "use client";
 import Image from "next/image";
-import Api from "@/service/ApiService";
 import { toast } from "react-toastify";
+import API from "@/service/ApiService";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ROUTE, TEXT } from "@/service/Helper";
-import { signIn } from "next-auth/react";
 
 const page = () => {
   const router = useRouter();
@@ -15,6 +14,8 @@ const page = () => {
     password: "",
   });
 
+  console.log("values", values);
+
   const handleSubmit = async (e: any) => {
     // e.preventDefault();
     if (!values?.email || !values?.password) {
@@ -22,14 +23,14 @@ const page = () => {
       return;
     }
     try {
-      const resUserExists = await Api.post("/userExists", {
+      const resUserExists = await API.post("/userExists", {
         email: values.email,
       });
       if (resUserExists?.data?.user) {
         toast.error("User already exists");
         return;
       }
-      const res = await Api.post("/register", {
+      const res = await API.post("/register", {
         ...values,
       });
       if (res.status === 201) {
@@ -62,13 +63,7 @@ const page = () => {
               <p className="text-meta-light-blue-3 font-medium text-sm text-center mb-10">
                 {TEXT?.YOUR_NEW_JOURNEY_BEGINS_NOW}
               </p>
-              <button
-                onClick={() => {
-                  console.log("click---->");
-                  signIn("google");
-                }}
-                className="rounded-xl w-full h-12 bg-white text-xl font-semibold text-meta-light-blue-3 border border-meta-light-blue-2 mb-8"
-              >
+              <button className="rounded-xl w-full h-12 bg-white text-xl font-semibold text-meta-light-blue-3 border border-meta-light-blue-2 mb-8">
                 <span className="flex justify-center items-center">
                   <Image
                     width={20}
