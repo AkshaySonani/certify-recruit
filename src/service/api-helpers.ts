@@ -10,8 +10,6 @@ class Helpers {
   }
 
   async generateToken(id: string) {
-    console.log("id------>", id);
-
     const JWT_SECRET = this.getEnvVariable("JWT_SECRET");
     return jwt.sign({ id }, JWT_SECRET);
   }
