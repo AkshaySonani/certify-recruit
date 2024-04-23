@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ROUTE, TEXT } from "@/service/Helper";
+import { signIn } from "next-auth/react";
 
 const page = () => {
   const router = useRouter();
@@ -56,12 +57,18 @@ const page = () => {
           <div className="flex justify-center">
             <div className="min-w-72 max-w-md bg-white w-10/12 rounded-3xl border border-meta-light-blue-2 py-10 px-5 sm:px-10 mb-20">
               <h3 className="font-bold text-3xl text-meta-purple-1 text-center mb-4">
-             {TEXT?.Get_Started}
+                {TEXT?.Get_Started}
               </h3>
               <p className="text-meta-light-blue-3 font-medium text-sm text-center mb-10">
                 {TEXT?.YOUR_NEW_JOURNEY_BEGINS_NOW}
               </p>
-              <button className="rounded-xl w-full h-12 bg-white text-xl font-semibold text-meta-light-blue-3 border border-meta-light-blue-2 mb-8">
+              <button
+                onClick={() => {
+                  console.log("click---->");
+                  signIn("google");
+                }}
+                className="rounded-xl w-full h-12 bg-white text-xl font-semibold text-meta-light-blue-3 border border-meta-light-blue-2 mb-8"
+              >
                 <span className="flex justify-center items-center">
                   <Image
                     width={20}
@@ -70,7 +77,7 @@ const page = () => {
                     src={"/login/GoogleIcon.svg"}
                   />
                   <span className="ml-5 font-medium text-sm text-meta-blue-1">
-                  {TEXT?.SIGN_UP_WITH_GOOGLE}
+                    {TEXT?.SIGN_UP_WITH_GOOGLE}
                   </span>
                 </span>
               </button>
@@ -127,7 +134,7 @@ const page = () => {
                   onClick={(e) => handleSubmit(eye)}
                   className="flex justify-center font-medium text-sm text-white"
                 >
-                 {TEXT?.SIGN_UP}
+                  {TEXT?.SIGN_UP}
                 </span>
               </button>
               <div className="flex justify-center items-center font-medium text-sm text-meta-light-blue-3">
