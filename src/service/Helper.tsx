@@ -1,6 +1,3 @@
-const API_CONSTANT = {
-  LOGIN: "/signin",
-};
 
 const ROUTE = {
   LOGIN: "/login",
@@ -192,4 +189,4 @@ const TEXT = {
     " CertifyRecruit streamlines your entire recruiting process, so you can find the best people for your team, quickly and easily",
 };
 
-export { TEXT, ROUTE, API_CONSTANT };
+export { TEXT, ROUTE };
