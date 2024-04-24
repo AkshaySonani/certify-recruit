@@ -25,7 +25,7 @@ const handler = async (req: NextRequest) => {
       );
     }
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       status: 201,
       data: {
         _id: user._id,
@@ -38,6 +38,9 @@ const handler = async (req: NextRequest) => {
       message: "User successfully logged in",
       access_token: await helpers.generateToken(user._id),
     });
+
+    response.cookies.set("token", await helpers.generateToken(user._id));
+    return response;
   } catch (error) {
     return NextResponse.json(
       {

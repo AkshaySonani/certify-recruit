@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Checkbox from "@/Components/Checkbox";
 import { Menu, Transition } from "@headlessui/react";
 import { ROUTE, TEXT } from "@/service/Helper";
+import Button from "@/Components/Button";
 
 const menu = [
   { title: "Candidates Hired" },
@@ -57,19 +58,19 @@ const page = () => {
           </div>
           <div className="flex justify-end">
             <div className="text-white font-medium text-sm underline underline-offset-2 mb-2.5">
-             {TEXT?.VIEW_CERTIFICATE}
+              {TEXT?.VIEW_CERTIFICATE}
             </div>
           </div>
           <div>
             <div className="flex justify-between">
               <div className="flex items-center">
                 <div className="text-white font-medium text-sm">
-                 {TEXT?.CERTIFICATION_VALIDATION_IS_YEAR_ONLY}
+                  {TEXT?.CERTIFICATION_VALIDATION_IS_YEAR_ONLY}
                 </div>
               </div>
               <div className="flex items-center">
                 <div className="text-white font-medium text-sm mr-4">
-                {TEXT?.SHARE}
+                  {TEXT?.SHARE}
                 </div>
                 <div className="mr-4">
                   <Image
@@ -127,7 +128,7 @@ const page = () => {
           })}
         </div>
         <div className="text-meta-purple-1 font-semibold text-xl mt-8">
-         {TEXT?.RECENTLY_JOB_POST}
+          {TEXT?.RECENTLY_JOB_POST}
         </div>
 
         {Array.from({ length: 3 }).map((_, index) => {
@@ -143,12 +144,12 @@ const page = () => {
                       <div className="text-meta-purple-1 font-semibold text-xl">
                         {TEXT?.USER_INTERFACE_EXPERT}
                         <div className="text-meta-light-blue-3 font-medium text-base">
-                        {TEXT?.CITY_NAMES}
+                          {TEXT?.CITY_NAMES}
                         </div>
                       </div>
                     </div>
                     <p className="text-meta-light-blue-3 font-medium text-base ml-2 mt-1">
-                    {TEXT?.TWO_WEEKS_AGO}
+                      {TEXT?.TWO_WEEKS_AGO}
                     </p>
                   </div>
                   <div className="flex items-center">
