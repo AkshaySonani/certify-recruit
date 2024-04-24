@@ -1,13 +1,15 @@
 "use client";
+import * as Yup from "yup";
 import Image from "next/image";
+import { useFormik } from "formik";
 import Api from "@/service/ApiService";
 import { toast } from "react-toastify";
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { EMAIlREGEX, ROUTE, TEXT } from "@/service/Helper";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import Button from "@/Components/Button";
+
 const page = () => {
   const router = useRouter();
 
@@ -20,35 +22,50 @@ const page = () => {
     password: Yup.string()
       .required("Password is required.")
       .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/,
+        // /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
         "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
       ),
   });
+
   const handleSubmit = async (values: any) => {
     try {
       const res = await signIn("credentials", {
         ...values,
+        isLogin: true,
         redirect: false,
+        // callbackUrl: "/dashboard",
       });
-      if (res?.error) {
-        toast.error("Invalid Credentials");
-        return;
+      if (!res?.error) {
+        router.push("/dashboard");
       }
-      console.log("res", res);
-      toast.success("User Login successfully");
-      router.push("/dashboard");
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      toast.error(error?.response?.data?.message || "Internal server error");
     }
   };
+  // const handleSubmit = async (values: any) => {
+  //   try {
+  //     await signIn("credentials", {
+  //       ...values,
+  //       isLogin: true,
+  //       redirect: true,
+  //       callbackUrl: "/dashboard",
+  //     });
+  //   } catch (error: any) {
+  //     console.log(error);
+  //     toast.error(error?.response?.data?.message || "Internal server error");
+  //   }
+  // };
+
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
-    enableReinitialize: true,
     validationSchema,
     onSubmit: handleSubmit,
+    enableReinitialize: true,
   });
   return (
     <div>
@@ -67,7 +84,7 @@ const page = () => {
                 <p className="text-meta-light-blue-3 font-medium text-sm text-center mb-10">
                   {TEXT?.WELCOME_BACK_TO_CERTIFY}
                 </p>
-                <button className="rounded-xl w-full h-12 bg-white text-xl font-semibold text-meta-light-blue-3 border border-meta-light-blue-2 mb-8">
+                <button className="rounded-xl w-full h-12 bg-white text-xl font-semibold text-meta-light-blue-3 border border-meta-light-blue-2 hover:bg-meta-gray-2 mb-8">
                   <span className="flex justify-center">
                     <Image
                       width={20}
@@ -93,7 +110,7 @@ const page = () => {
                     name="email"
                     type="text"
                     placeholder={TEXT?.EMAIL}
-                    className="rounded-xl w-full h-12 border border-meta-light-blue-2  pl-4"
+                    className="rounded-xl w-full h-12 border focus:outline-meta-light-blue-1 border-meta-light-blue-2  pl-4"
                   />
                   {formik.touched.email && formik.errors.email && (
                     <div className="error">{formik.errors.email}</div>
@@ -106,7 +123,7 @@ const page = () => {
                     name="password"
                     placeholder={TEXT?.PASSWORD}
                     type={eye ? "text" : "password"}
-                    className="rounded-xl w-full h-12 border border-meta-light-blue-2  pl-4"
+                    className="rounded-xl w-full h-12 border focus:outline-meta-light-blue-1 border-meta-light-blue-2  pl-4"
                   />
                   {!eye && (
                     <Image
@@ -132,7 +149,7 @@ const page = () => {
                     <div className="error">{formik.errors.password}</div>
                   )}
                 </div>
-                <div className="flex justify-end items-center mb-8">
+                <div className="flex justify-end items-center mb-3">
                   <span
                     className="text-xs text-meta-blue-1 font-normal mx-2 cursor-pointer"
                     onClick={() => router.push("/login/forgotPass")}
@@ -140,21 +157,25 @@ const page = () => {
                     {TEXT?.FORGOT_PASSWORD}
                   </span>
                 </div>
-                <button
+                <Button
+                  title={TEXT?.LOG_IN}
+                  handleClick={() => console.log("click")}
+                />
+                {/* <button
                   // onClick={() => handleSubmit()}
                   className="rounded-xl w-full h-12 bg-meta-blue-2 border border-meta-light-blue-2 mb-8"
                 >
                   <span className="flex justify-center font-medium text-sm text-white">
                     {TEXT?.LOG_IN}
                   </span>
-                </button>
+                </button> */}
 
                 <div className="flex justify-center items-center font-medium text-sm text-meta-light-blue-3">
                   <span>
                     {TEXT?.DONT_HAVE_AN_ACCOUNT}
                     <span
                       onClick={() => router.push(ROUTE?.SIGN_UP)}
-                      className="text-meta-blue-1 cursor-pointer"
+                      className="text-meta-blue-1 hover:text-meta-blue-2 cursor-pointer"
                     >
                       {TEXT?.SIGN_UP}
                     </span>

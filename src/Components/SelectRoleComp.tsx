@@ -1,17 +1,18 @@
 "use client";
-import React, { useContext, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { TEXT, USER_ROLE } from "@/service/Helper";
-import AppContext from "@/context/AppProvider";
 import EmployeeComp from "./EmployeeComp";
+import { useRouter } from "next/navigation";
 import IndividualComp from "./IndividualComp";
+import AppContext from "@/context/AppProvider";
+import { TEXT, USER_ROLE } from "@/service/Helper";
+import React, { useContext, useState } from "react";
 
 const SelectRoleComp = () => {
   const router = useRouter();
   const context = useContext(AppContext);
   const [employee, setEmployee] = useState(false);
   const [individual, setIndividual] = useState(false);
+
   return (
     <div>
       <div className="container mx-auto h-screen">
@@ -26,7 +27,7 @@ const SelectRoleComp = () => {
                   setEmployee(true);
                   context?.setCurrentRole(USER_ROLE?.EMPLOYEE);
                 }}
-                className="w-64 h-44 border border-meta-light-blue-2 rounded-lg flex justify-center items-center"
+                className="w-64 h-44 border cursor-pointer border-meta-light-blue-2 rounded-lg flex justify-center items-center"
               >
                 <div className="w-24">
                   <div className="flex justify-center">
@@ -47,7 +48,7 @@ const SelectRoleComp = () => {
                   setIndividual(true);
                   context?.setCurrentRole(USER_ROLE?.INDIVIDUAL);
                 }}
-                className="w-64 h-44 border border-meta-light-blue-2 rounded-lg flex justify-center items-center"
+                className="w-64 h-44 border cursor-pointer border-meta-light-blue-2 rounded-lg flex justify-center items-center"
               >
                 <div className="w-24">
                   <div className="flex justify-center">

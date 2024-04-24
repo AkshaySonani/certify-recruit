@@ -12,6 +12,7 @@ import { signIn } from "next-auth/react";
 import AppContext from "@/context/AppProvider";
 import SignupSuccess from "./SignupSuccess";
 import { API_CONSTANT } from "@/constant/ApiConstant";
+import Button from "./Button";
 type formValues = {
   email: string;
   password: string;
@@ -21,7 +22,6 @@ const SignupForm = () => {
   const context = useContext(AppContext);
   const [eye, setEye] = useState(false);
   const [successMsg, setSuccessMsg] = useState(false);
-  console.log("context", context);
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -35,26 +35,43 @@ const SignupForm = () => {
         "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
       ),
   });
+
   const handleSubmit = async (values: any) => {
     try {
-      const res = await API.post(API_CONSTANT?.SIGN_UP, {
+      await signIn("credentials", {
         ...values,
-        role: context?.currentRole,
-      });
-      if (res.data) {
-        const res = await signIn("credentials", {
-          ...values,
-          redirect: false,
-        });
-        toast.success("User registration successfully");
-        setSuccessMsg(true);
-      } else {
-        console.log("User registration failed.");
-      }
-    } catch (error) {
-      console.log("Error during registration:", error);
+        role: context.currentRole,
+        isLogin: false,
+        redirect: false,
+        // callbackUrl: "/dashboard",
+      }).then(() => router.push("/dashboard"));
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || "Internal server error");
     }
   };
+
+  // const handleSubmit = async (values: any) => {
+  //   try {
+  //     const res = await API.post(API_CONSTANT?.SIGN_UP, {
+  //       ...values,
+  //       role: context?.currentRole,
+  //     });
+  //     if (res.data) {
+  //       const res = await signIn("credentials", {
+  //         ...values,
+  //         redirect: false,
+  //       });
+  //       toast.success("User registration successfully");
+  //       setSuccessMsg(true);
+  //     } else {
+  //       console.log("User registration failed.");
+  //     }
+  //   } catch (err: any) {
+  //     console.log("Error during registration:", err);
+  //     toast.error(err.response.data.message);
+  //   }
+  // };
 
   const formik = useFormik({
     initialValues: {
@@ -90,7 +107,7 @@ const SignupForm = () => {
                   <p className="text-meta-light-blue-3 font-medium text-sm text-center mb-10">
                     {TEXT?.YOUR_NEW_JOURNEY_BEGINS_NOW}
                   </p>
-                  <button className="rounded-xl w-full h-12 bg-white text-xl font-semibold text-meta-light-blue-3 border border-meta-light-blue-2 mb-8">
+                  <button className="rounded-xl w-full h-12 bg-white text-xl font-semibold text-meta-light-blue-3 border border-meta-light-blue-2 hover:bg-meta-gray-2 mb-8">
                     <span className="flex justify-center items-center">
                       <Image
                         width={20}
@@ -116,7 +133,7 @@ const SignupForm = () => {
                       name="email"
                       type="text"
                       placeholder={TEXT?.EMAIL}
-                      className="rounded-xl w-full h-12 border border-meta-light-blue-2  pl-4"
+                      className="rounded-xl w-full h-12 border border-meta-light-blue-2 focus:outline-meta-light-blue-1 pl-4"
                     />
                     {formik.touched.email && formik.errors.email && (
                       <div className="error">{formik.errors.email}</div>
@@ -129,7 +146,7 @@ const SignupForm = () => {
                       name="password"
                       placeholder={TEXT?.PASSWORD}
                       type={eye ? "text" : "password"}
-                      className="rounded-xl w-full h-12 border border-meta-light-blue-2  pl-4"
+                      className="rounded-xl w-full h-12 border border-meta-light-blue-2 focus:outline-meta-light-blue-1 pl-4"
                     />
                     {!eye && (
                       <Image
@@ -156,20 +173,22 @@ const SignupForm = () => {
                     )}
                   </div>
 
-                  <button className="rounded-xl w-full h-12 bg-meta-blue-2 border border-meta-light-blue-2 mb-8">
+                  <Button title={TEXT?.SIGN_UP} />
+
+                  {/* <button className="rounded-xl w-full h-12 bg-meta-blue-2 border border-meta-light-blue-2 mb-8">
                     <span
                       // onClick={(e) => handleSubmit(eye)}
                       className="flex justify-center font-medium text-sm text-white"
                     >
                       {TEXT?.SIGN_UP}
                     </span>
-                  </button>
+                  </button> */}
                   <div className="flex justify-center items-center font-medium text-sm text-meta-light-blue-3">
                     <span>
                       {TEXT?.ALREADY_HAVE_AN_ACCOUNT}
                       <span
                         onClick={() => router.push(ROUTE?.LOGIN)}
-                        className="text-meta-blue-1 cursor-pointer"
+                        className="text-meta-blue-1 hover:text-meta-blue-2 cursor-pointer"
                       >
                         {TEXT?.LOG_IN}
                       </span>

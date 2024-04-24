@@ -1,3 +1,8 @@
+const EMAIlREGEX =
+  /^[a-zA-Z0-9]+([._-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-]?[a-zA-Z0-9]+)*\.[a-zA-Z]{2,}$/g;
+// const EMAIlREGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+// const EMAIlREGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+
 const ROUTE = {
   SIGN_UP: "/signUp",
   LOGIN: "/login",
@@ -11,7 +16,6 @@ const ROUTE = {
   QUIZMCQS: "/learn&earn/quizMCQs",
   MAIN: "/main",
 };
-const EMAIlREGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
 const TEXT = {
   OR: "or",
@@ -140,7 +144,7 @@ const TEXT = {
   START_NOW_ITS_FREE: " Start now - it's free",
   REDIRECT_TO_CALENDLY: "Redirect to Calendly",
   MAX_TAB_SWITCH_ALLOW: "Max Tab Switch Allow",
-  DONT_HAVE_AN_ACCOUNT: "Don’t have an account?",
+  DONT_HAVE_AN_ACCOUNT: "Don’t have an account? ",
   PICK_WORKING_SCHEDULE: "Pick working schedule",
   KYC_Compliance_Detail: "KYC Compliance Detail",
   THANK_YOU_FOR_SIGN_UP: "Thank you for sign up!",
@@ -148,7 +152,7 @@ const TEXT = {
   RESULT_ANNULMENT_TIME: "Result annulment 9:15 PM",
   COMPANY_MAILING_ADDRESS: "Company mailing address",
   REFER_THIS_ARTICLE_LINK: "Refer this article Link",
-  ALREADY_HAVE_AN_ACCOUNT: "Already have an account?",
+  ALREADY_HAVE_AN_ACCOUNT: "Already have an account? ",
   USER_INTERFACE_EXPERT: "User Interface Expert (WFH)",
   HIRING_MULTIPLE_CANDIDATES: "Hiring multiple candidates?",
   QUIZ_JOINING_TIME: "Quiz Joining Time 8:00 PM to 8:45 PM",
