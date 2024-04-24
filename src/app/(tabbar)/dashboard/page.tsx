@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import Checkbox from "@/Components/Checkbox";
 import { Menu, Transition } from "@headlessui/react";
 import { ROUTE, TEXT } from "@/service/Helper";
-import Button from "@/Components/Button";
 
 const menu = [
   { title: "Candidates Hired" },

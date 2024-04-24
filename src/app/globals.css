@@ -22,3 +22,9 @@
     text-wrap: balance;
   }
 }
+.error{
+  color: red;
+  font-size: 13px;
+  padding-top: 1px;
+  padding-left: 2px;
+}

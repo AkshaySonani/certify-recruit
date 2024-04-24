@@ -1,21 +1,17 @@
-
-const ROUTE={
-    SIGN_UP:"/signUp",
-    LOGIN:"/login",
-    SUCCESSFULL_FORGOT_PASSWORD:"/login/forgotPass/newPass/successful",
-    ACTIVE_JOB:"/dashboard/active_job",
-    HIRED:"/dashboard/hired",
-    APPLICANTS:"/job/applicants",
-    EMPLOYMENT_TYPE:"/job_posting/employment_Type",
-    MYPROFILE:"/myProfile",
-    QUIZINFO:"/learn&earn/quizInfo",
-    QUIZMCQS:"/learn&earn/quizMCQs",
-    MAIN:"/main"
-
-    
-}
+const ROUTE = {
+  SIGN_UP: "/signUp",
+  LOGIN: "/login",
+  SUCCESSFULL_FORGOT_PASSWORD: "/login/forgotPass/newPass/successful",
+  ACTIVE_JOB: "/dashboard/active_job",
+  HIRED: "/dashboard/hired",
+  APPLICANTS: "/job/applicants",
+  EMPLOYMENT_TYPE: "/job_posting/employment_Type",
+  MYPROFILE: "/myProfile",
+  QUIZINFO: "/learn&earn/quizInfo",
+  QUIZMCQS: "/learn&earn/quizMCQs",
+  MAIN: "/main",
+};
 const EMAIlREGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-
 
 const TEXT = {
   OR: "or",
@@ -194,4 +190,9 @@ const TEXT = {
     " CertifyRecruit streamlines your entire recruiting process, so you can find the best people for your team, quickly and easily",
 };
 
-export { TEXT, ROUTE,EMAIlREGEX };
+const USER_ROLE = {
+  EMPLOYEE: "employee",
+  INDIVIDUAL: "individual",
+};
+
+export { TEXT, ROUTE, EMAIlREGEX, USER_ROLE };

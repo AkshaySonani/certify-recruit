@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { TEXT } from "@/service/Helper";
 import SignupForm from "@/Components/SignupForm";
 
-const page = () => {
+const IndividualComp = () => {
   const router = useRouter();
   const [showForms, setShowForms] = useState(false);
   const individualArr = [
@@ -45,14 +45,14 @@ const page = () => {
                   {TEXT?.INDIVIDUAL}
                 </p>
               </div>
-              <div className="absolute top-10" onClick={() => router?.back()}>
+              {/* <div className="absolute top-10" onClick={() => router?.back()}>
                 <Image
                   width={22}
                   height={22}
                   alt="LeftArrow"
                   src={"/LeftArrow.svg"}
                 />
-              </div>
+              </div> */}
 
               <div className="mt-8 flex flex-wrap gap-4">
                 {individualArr?.map((list) => {
@@ -84,7 +84,9 @@ const page = () => {
             </div>
           </div>
           <div
-            onClick={() => setShowForms(true)}
+            onClick={() => {
+              setShowForms(true);
+            }}
             className="flex gap-4 mt-5 items-center justify-end w-[70%] m-auto cursor-pointer"
           >
             <p className="text-lg text-meta-blue-1 font-medium">{TEXT?.NEXT}</p>
@@ -101,4 +103,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default IndividualComp;
