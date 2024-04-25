@@ -3,17 +3,18 @@ import mongoose from "mongoose";
 const categorySchema = new mongoose.Schema({
   category: {
     type: String,
+    select: true,
     required: true,
-    unique: true,
   },
   subcategory: {
     type: String,
-    required: true,
     unique: true,
+    select: true,
+    required: true,
   },
 });
 
 const Category =
   mongoose.models.Category || mongoose.model("Category", categorySchema);
 
-module.exports = Category;
+export default Category;

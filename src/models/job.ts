@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { boolean } from "yup";
 
 const jobSchema = new mongoose.Schema({
   title: {
@@ -7,67 +8,95 @@ const jobSchema = new mongoose.Schema({
   },
   company_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Company",
+    ref: "User",
+    required: true,
+  },
+  company_name: {
+    type: String,
     required: true,
   },
   description: {
     type: String,
     required: true,
   },
-  requirements: {
+  // requirements: {
+  //   type: String,
+  //   required: false, // change false to true when create category schema
+  // },
+  workplace: {
     type: String,
-    required: true,
-  },
-  location: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Location",
-    required: true,
-  },
-  salary_started: {
-    type: Number,
-    required: true,
-  },
-  salary_upto: {
-    type: Number,
-    required: true,
+    require: true,
+    enum: ["ONSITE", "HYBRID", "REMOTE"],
   },
   status: {
     type: String,
-    enum: ["pending", "active"],
-    default: "pending",
+    enum: ["PENDING", "ACTIVE"],
   },
   job_types: {
     type: String,
-    required: true,
+    enum: [
+      "FULLTIME",
+      "PARTTIME",
+      "ONDEMAND",
+      "TEMPORARY",
+      "VOLUNTEER",
+      "INTERNSHIP",
+    ],
   },
-  experience_required: {
-    type: String,
-    required: true,
-  },
-  skills_required: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
-    },
-  ],
   salary_pay: {
     type: String,
-    enum: ["Hourly", "Monthly"],
+    enum: ["HOURLY", "MONTHLY"],
   },
-  multiple_hire: {
+  hourly_rate: {
     type: Number,
-    required: true,
   },
-  working_schedule: {
-    type: String,
-    required: true,
+  is_hiring_manager: {
+    type: Boolean,
   },
   salary_negotiable: {
     type: Boolean,
     default: false,
   },
+  // experience_required: {
+  //   type: String,
+  //   required: false, // change false to true when use job info for
+  // },
+  skills: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+    },
+  ],
+  multiple_hire: {
+    type: Number,
+  },
+  working_schedule: {
+    type: String,
+  },
+  city: {
+    type: Object,
+    required: true,
+  },
+  area: {
+    type: String,
+    required: true,
+  },
+  pincode: {
+    type: String,
+    required: true,
+  },
+  street_address: {
+    type: String,
+    required: true,
+  },
+  salary_started: {
+    type: Number,
+  },
+  salary_upto: {
+    type: Number,
+  },
 });
 
 const Job = mongoose.models.Job || mongoose.model("Job", jobSchema);
 
-module.exports = Job;
+export default Job;
