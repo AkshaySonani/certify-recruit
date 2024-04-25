@@ -1,18 +1,17 @@
 "use client";
+import * as Yup from "yup";
+import Button from "./Button";
 import Image from "next/image";
+import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import API from "@/service/ApiService";
-import React, { useContext, useState } from "react";
-import { useRouter } from "next/navigation";
-import { EMAIlREGEX, ROUTE, TEXT } from "@/service/Helper";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import { signIn } from "next-auth/react";
-
-import AppContext from "@/context/AppProvider";
+import { useRouter } from "next/navigation";
 import SignupSuccess from "./SignupSuccess";
-import { API_CONSTANT } from "@/constant/ApiConstant";
-import Button from "./Button";
+import AppContext from "@/context/AppProvider";
+import React, { useContext, useState } from "react";
+import { EMAIlREGEX, ROUTE, TEXT } from "@/service/Helper";
+
 type formValues = {
   email: string;
   password: string;
@@ -36,20 +35,39 @@ const SignupForm = () => {
       ),
   });
 
-  const handleSubmit = async (values: any) => {
+  const signUpWithEmailAndPassword = async (values: any) => {
     try {
-      await signIn("credentials", {
+      const signUpResponse = await signIn("signup", {
         ...values,
-        role: context.currentRole,
-        isLogin: false,
         redirect: false,
-        // callbackUrl: "/dashboard",
-      }).then(() => router.push("/dashboard"));
-    } catch (error: any) {
-      console.log(error);
-      toast.error(error?.response?.data?.message || "Internal server error");
+        role: context.currentRole,
+      });
+      console.log("signInResponse", signUpResponse);
+      if (!signUpResponse?.ok) {
+        toast.error(signUpResponse?.error);
+      } else {
+        setSuccessMsg(true);
+        toast.success("User successfully register");
+      }
+    } catch (error) {
+      toast.error("Error signing in with email and password. Try again later.");
     }
   };
+
+  // const handleSubmit = async (values: any) => {
+  //   try {
+  //     await signIn("credentials", {
+  //       ...values,
+  //       role: context.currentRole,
+  //       isLogin: false,
+  //       redirect: false,
+  //       // callbackUrl: "/dashboard",
+  //     }).then(() => router.push("/dashboard"));
+  //   } catch (error: any) {
+  //     console.log(error);
+  //     toast.error(error?.response?.data?.message || "Internal server error");
+  //   }
+  // };
 
   // const handleSubmit = async (values: any) => {
   //   try {
@@ -78,9 +96,9 @@ const SignupForm = () => {
       email: "",
       password: "",
     },
-    enableReinitialize: true,
     validationSchema,
-    onSubmit: handleSubmit,
+    enableReinitialize: true,
+    onSubmit: signUpWithEmailAndPassword,
   });
 
   return (

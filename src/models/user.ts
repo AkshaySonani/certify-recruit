@@ -26,8 +26,9 @@ const userSchema = new mongoose.Schema({
     default: "",
   },
   phone: {
+    default: "", // Whenever we change this field to required remove this default option
     type: String,
-    unique: true,
+    unique: false, // Whenever we change this field to required change unique false to true
     required: false,
   },
 });

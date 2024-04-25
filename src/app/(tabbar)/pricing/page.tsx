@@ -4,14 +4,14 @@ import React, { useState } from "react";
 import { Switch } from "@headlessui/react";
 import { TEXT } from "@/service/Helper";
 
-const page = () => {
+const Page = () => {
   const [enabled, setEnabled] = useState(false);
 
   return (
     <section>
       <div className="text-center">
         <div className="text-meta-purple-1 font-semibold text-3xl">
-      {TEXT?.CHOOSE_YOUR_PLAN}
+          {TEXT?.CHOOSE_YOUR_PLAN}
         </div>
         <div className="text-meta-light-blue-3 font-medium text-base mt-2">
           Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -48,13 +48,13 @@ const page = () => {
         <div className="bg-meta-gray-2 flex flex-col justify-between rounded-3xl px-8 py-10 max-w-96 min-w-64 h-[520px]">
           <div>
             <div className="text-meta-purple-1 font-medium text-base text-center">
-             {TEXT?.BASIC_PLAN}
+              {TEXT?.BASIC_PLAN}
             </div>
 
             <div className="flex justify-center items-end my-6">
               <div className="text-meta-purple-1 font-medium text-4xl">$20</div>
               <div className="text-meta-light-blue-3 font-medium text-xs mb-1">
-              {TEXT?.Month}
+                {TEXT?.Month}
               </div>
             </div>
 
@@ -78,7 +78,7 @@ const page = () => {
           <div>
             <button className="rounded-xl w-full h-12 bg-meta-blue-2">
               <span className="flex justify-center font-medium text-sm text-white">
-            {TEXT?.GET_STARTED}
+                {TEXT?.GET_STARTED}
               </span>
             </button>
           </div>
@@ -86,7 +86,7 @@ const page = () => {
 
         <div className="rounded-3xl max-w-96 min-w-64">
           <div className="text-white bg-meta-purple-1 font-medium text-base text-center py-2">
-           {TEXT?.MOST_POPULAR}
+            {TEXT?.MOST_POPULAR}
           </div>
           <div className="bg-meta-gray-2 flex flex-col justify-between h-[520px] px-8 pb-10 pt-10">
             <div>
@@ -99,7 +99,7 @@ const page = () => {
                   $70
                 </div>
                 <div className="text-meta-light-blue-3 font-medium text-xs mb-1">
-                 {TEXT?.Month}
+                  {TEXT?.Month}
                 </div>
               </div>
 
@@ -136,13 +136,13 @@ const page = () => {
         <div className="bg-meta-gray-2 flex flex-col justify-between rounded-3xl px-8 py-10 max-w-96 min-w-64 h-[520px]">
           <div>
             <div className="text-meta-purple-1 font-medium text-base text-center">
-             {TEXT?.BUSINESS_PLAN}
+              {TEXT?.BUSINESS_PLAN}
             </div>
 
             <div className="flex justify-center items-end my-6">
               <div className="text-meta-purple-1 font-medium text-4xl">$99</div>
               <div className="text-meta-light-blue-3 font-medium text-xs mb-1">
-               {TEXT?.Month}
+                {TEXT?.Month}
               </div>
             </div>
 
@@ -176,4 +176,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { TEXT } from "@/service/Helper";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const [eye, setEye] = useState(false);
   return (
@@ -26,7 +26,7 @@ const page = () => {
                 />
               </div>
               <h3 className="font-bold text-3xl text-meta-purple-1 text-center mb-4">
-               {TEXT?.THANK_YOU_FOR_SIGN_UP}
+                {TEXT?.THANK_YOU_FOR_SIGN_UP}
               </h3>
               <p className="text-meta-light-blue-3 font-medium text-sm text-center mb-4">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -45,4 +45,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

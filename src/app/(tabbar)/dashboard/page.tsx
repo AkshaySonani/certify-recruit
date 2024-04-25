@@ -4,8 +4,8 @@ import React, { Fragment } from "react";
 import Select from "@/Components/Select";
 import { useRouter } from "next/navigation";
 import Checkbox from "@/Components/Checkbox";
-import { Menu, Transition } from "@headlessui/react";
 import { ROUTE, TEXT } from "@/service/Helper";
+import { Menu, Transition } from "@headlessui/react";
 
 const menu = [
   { title: "Candidates Hired" },
@@ -32,7 +32,7 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
-const page = () => {
+const Page = (data: any) => {
   const router = useRouter();
 
   const navigateHandler = (title: string) => {
@@ -272,4 +272,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

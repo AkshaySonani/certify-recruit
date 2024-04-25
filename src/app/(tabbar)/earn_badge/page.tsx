@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { TEXT } from "@/service/Helper";
 
-const page = () => {
+const Page = () => {
   const menu = [
     { title: "Employee", value: "50" },
     { title: "Industry", value: "10" },
@@ -21,7 +21,7 @@ const page = () => {
     <div>
       <div>
         <div className="text-meta-purple-1 font-semibold text-2xl mb-4">
-        {TEXT?.EARN_BADGE}
+          {TEXT?.EARN_BADGE}
         </div>
 
         <div className="flex gap-4 mt-4 w-full flex-wrap lg:flex-nowrap">
@@ -68,7 +68,7 @@ const page = () => {
                     {list?.name}
                   </p>
                   <p className="text-meta-light-blue-3 text-xs font-medium">
-                  {list?.post}
+                    {list?.post}
                   </p>
                   <p className="text-meta-light-blue-3 text-xs font-medium">
                     {list?.location}
@@ -83,4 +83,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

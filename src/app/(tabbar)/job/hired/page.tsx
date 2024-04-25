@@ -65,13 +65,15 @@ const tableData = [
   },
 ];
 
-const page = () => {
+const Page = () => {
   const [dateRange, setDateRange] = useState(["2024-01-01", "2024-12-31"]);
 
   return (
     <div>
       <div>
-        <div className="text-meta-purple-1 font-semibold text-2xl">{TEXT.HIRED}</div>
+        <div className="text-meta-purple-1 font-semibold text-2xl">
+          {TEXT.HIRED}
+        </div>
         <div className="flex gap-6 mt-5 mb-10 justify-center items-center">
           <div className="w-2/4">
             <div className="relative">
@@ -145,7 +147,7 @@ const page = () => {
               </th>
               <th className="px-6 py-4">
                 <div className="font-medium text-base text-meta-light-blue-3">
-                {TEXT?.DESIGNATION}
+                  {TEXT?.DESIGNATION}
                 </div>
               </th>
               <th className="px-6 py-4">
@@ -250,4 +252,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

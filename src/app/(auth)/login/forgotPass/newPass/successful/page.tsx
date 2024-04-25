@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { TEXT } from "@/service/Helper";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const [eye, setEye] = useState(false);
   return (
@@ -26,10 +26,10 @@ const page = () => {
                 />
               </div>
               <p className="text-meta-light-blue-3 font-medium text-sm text-center mb-2">
-               {TEXT?.RESET_PASSWORD}
+                {TEXT?.RESET_PASSWORD}
               </p>
               <h3 className="font-semibold text-2xl text-meta-purple-1 text-center mb-10">
-               {TEXT?.SUCCESSFULLY}
+                {TEXT?.SUCCESSFULLY}
               </h3>
 
               <div className="flex justify-center items-center font-medium text-lg text-meta-light-blue-3">
@@ -37,7 +37,7 @@ const page = () => {
                   onClick={() => router.push("/login")}
                   className="mr-2 text-meta-blue-2 cursor-pointer"
                 >
-                 {TEXT?.GO_TO_LOGIN}
+                  {TEXT?.GO_TO_LOGIN}
                 </span>
                 <Image
                   width={17}
@@ -55,4 +55,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

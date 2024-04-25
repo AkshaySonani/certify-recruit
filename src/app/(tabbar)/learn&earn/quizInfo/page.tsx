@@ -4,19 +4,19 @@ import React, { Fragment } from "react";
 import { useRouter } from "next/navigation";
 import { TEXT } from "@/service/Helper";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
 
   return (
     <div>
       <div className="text-meta-purple-1 font-semibold text-2xl mb-4">
-       {TEXT?.LEARN_AND_EARN}
+        {TEXT?.LEARN_AND_EARN}
       </div>
       <div className="bg-meta-gray-2 h-52 rounded-xl w-full py-3">
         <div className="h-full w-[70%] m-auto">
           <div className="mb-5">
             <p className="text-base font-medium text-meta-purple-1 text-center my-3">
-            {TEXT?.TIME_REMAINING}
+              {TEXT?.TIME_REMAINING}
             </p>
             <div className="flex gap-2 justify-center">
               <div className="h-14 w-9 bg-meta-light-blue-2 rounded-md flex items-center justify-center">
@@ -70,7 +70,9 @@ const page = () => {
         </div>
       </div>
       <div className="mt-8">
-        <p className="text-xl text-meta-purple-1 font-semibold">{TEXT?.QUIZ_INFO}</p>
+        <p className="text-xl text-meta-purple-1 font-semibold">
+          {TEXT?.QUIZ_INFO}
+        </p>
       </div>
       <div className="flex w-full mt-3 gap-3">
         <div className="flex w-1/2 gap-3 pl-4 bg-meta-light-blue-2 rounded-lg items-center py-3">
@@ -84,7 +86,7 @@ const page = () => {
             />
           </div>
           <div className="text-meta-light-blue-3 text-sm">
-          {TEXT?.REFER_THIS_ARTICLE_LINK}
+            {TEXT?.REFER_THIS_ARTICLE_LINK}
           </div>
         </div>
         <div className="flex w-1/2 gap-3 pl-4 bg-meta-light-blue-2 rounded-lg items-center py-3">
@@ -98,7 +100,7 @@ const page = () => {
             />
           </div>
           <div className="text-meta-light-blue-3 text-sm">
-          {TEXT?.QUIZ_JOINING_TIME}
+            {TEXT?.QUIZ_JOINING_TIME}
           </div>
         </div>
       </div>
@@ -107,11 +109,11 @@ const page = () => {
           onClick={() => router.push("/learn&earn/quizMCQs")}
           className="bg-meta-light-blue-1 rounded-xl text-meta-light-blue-3 py-2 px-8"
         >
-         {TEXT?.Join_Now}
+          {TEXT?.Join_Now}
         </button>
       </div>
     </div>
   );
 };
 
-export default page;
+export default Page;

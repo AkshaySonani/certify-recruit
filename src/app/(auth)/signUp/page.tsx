@@ -5,7 +5,7 @@ import SelectRoleComp from "@/Components/SelectRoleComp";
 import EmployeeComp from "@/Components/EmployeeComp";
 import IndividualComp from "@/Components/IndividualComp";
 import AppContext from "@/context/AppProvider";
-const page = () => {
+const Page = () => {
   const context = useContext(AppContext);
   useEffect(() => {
     context?.setCurrentRole("");
@@ -26,4 +26,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

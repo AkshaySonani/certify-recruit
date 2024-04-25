@@ -32,7 +32,7 @@ const Page = () => {
             src={"/job/Eye_fill.svg"}
           />
           <p className="ml-2 sm:text-xl text-lg font-semibold text-meta-blue-1 sm:block hidden">
-          {TEXT?.PREVIEW}
+            {TEXT?.PREVIEW}
           </p>
         </div>
       </div>
@@ -43,7 +43,7 @@ const Page = () => {
             {TEXT?.ARE_YOU_HIRING_MANAGER}
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-           {TEXT?.THE_HIRED_CANDIDATE_WILL_WORK_IN_REPORTING_CHAIN}
+            {TEXT?.THE_HIRED_CANDIDATE_WILL_WORK_IN_REPORTING_CHAIN}
           </p>
         </div>
         <div className="flex items-center lg:w-1/2 w-full lg:mt-0 mt-3">
@@ -63,7 +63,7 @@ const Page = () => {
             {TEXT?.COMPANY} <span className="text-red-600">*</span>
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-          {TEXT?.YOUR_COMPANY_NAME} 
+            {TEXT?.YOUR_COMPANY_NAME}
           </p>
         </div>
         <div className="flex items-center lg:w-1/2 w-full lg:mt-0 mt-3">
@@ -79,7 +79,7 @@ const Page = () => {
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
-          {TEXT?.JOB_TITLE}  <span className="text-red-600">*</span>
+            {TEXT?.JOB_TITLE} <span className="text-red-600">*</span>
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
             {TEXT?.YOU_CAN_PICK_MULTIPLE_WORK_SCHEDULES}
@@ -98,10 +98,11 @@ const Page = () => {
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
-            {TEXT?.WORKPLACE_TYPE}<span className="text-red-600">*</span>
+            {TEXT?.WORKPLACE_TYPE}
+            <span className="text-red-600">*</span>
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-           {TEXT?.YOU_CAN_PICK_MULTIPLE_WORK_SCHEDULES}
+            {TEXT?.YOU_CAN_PICK_MULTIPLE_WORK_SCHEDULES}
           </p>
         </div>
         <div className="flex items-center lg:w-1/2 w-full lg:mt-0 mt-3 md:flex-nowrap flex-wrap">
@@ -124,7 +125,7 @@ const Page = () => {
             {TEXT?.JOB_POSTING_LOCATION}
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-          {TEXT?.WHICH_OPTION_BEST_DESCRIBE_THIS_JOBS_LOCATION}
+            {TEXT?.WHICH_OPTION_BEST_DESCRIBE_THIS_JOBS_LOCATION}
           </p>
         </div>
         <div className="lg:w-1/2 w-full">

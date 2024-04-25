@@ -27,7 +27,7 @@ const SelectRoleComp = () => {
                   setEmployee(true);
                   context?.setCurrentRole(USER_ROLE?.EMPLOYEE);
                 }}
-                className="w-64 h-44 border cursor-pointer border-meta-light-blue-2 rounded-lg flex justify-center items-center"
+                className="w-64 h-44 border cursor-pointer border-meta-light-blue-2 rounded-lg flex justify-center items-center shadow-lg hover:shadow-md hover:shadow-blue-700"
               >
                 <div className="w-24">
                   <div className="flex justify-center">
@@ -48,7 +48,7 @@ const SelectRoleComp = () => {
                   setIndividual(true);
                   context?.setCurrentRole(USER_ROLE?.INDIVIDUAL);
                 }}
-                className="w-64 h-44 border cursor-pointer border-meta-light-blue-2 rounded-lg flex justify-center items-center"
+                className="w-64 h-44 border cursor-pointer border-meta-light-blue-2 rounded-lg flex justify-center items-center shadow-lg hover:shadow-md hover:shadow-blue-700"
               >
                 <div className="w-24">
                   <div className="flex justify-center">

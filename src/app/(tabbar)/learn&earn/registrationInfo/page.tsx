@@ -4,14 +4,14 @@ import React, { Fragment } from "react";
 import { useRouter } from "next/navigation";
 import { TEXT } from "@/service/Helper";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
 
   return (
     <div>
       <div>
         <div className="text-meta-purple-1 font-semibold text-2xl mb-4">
-         {TEXT?.LEARN_AND_EARN}
+          {TEXT?.LEARN_AND_EARN}
         </div>
         <div className="bg-meta-gray-2 h-52 rounded-xl w-full py-10">
           <div className="h-full w-[70%] m-auto ">
@@ -22,7 +22,7 @@ const page = () => {
             </p>
             <div className="w-full flex justify-center">
               <button className="bg-meta-blue-1 rounded-xl mt-5 text-white text-base px-5 py-3">
-              {TEXT?.REGISTRATION}
+                {TEXT?.REGISTRATION}
               </button>
             </div>
           </div>
@@ -44,7 +44,7 @@ const page = () => {
               />
             </div>
             <div className="text-meta-light-blue-3 text-sm">
-            {TEXT?.REGISTRATION_TIME}
+              {TEXT?.REGISTRATION_TIME}
             </div>
           </div>
           <div className="flex w-1/2 gap-3 pl-4 bg-meta-light-blue-2 rounded-lg items-center py-3">
@@ -58,7 +58,7 @@ const page = () => {
               />
             </div>
             <div className="text-meta-light-blue-3 text-sm">
-            {TEXT?.QUIZ_JOINING_TIME}
+              {TEXT?.QUIZ_JOINING_TIME}
             </div>
           </div>
         </div>
@@ -74,7 +74,7 @@ const page = () => {
               />
             </div>
             <div className="text-meta-light-blue-3 text-sm">
-            {TEXT?.RESULT_ANNULMENT_TIME}
+              {TEXT?.RESULT_ANNULMENT_TIME}
             </div>
           </div>
           <div className="flex w-1/2 gap-3 pl-4 bg-meta-light-blue-2 rounded-lg items-center py-3">
@@ -88,7 +88,7 @@ const page = () => {
               />
             </div>
             <div className="text-meta-light-blue-3 text-sm">
-            {TEXT?.WINNING_PRIZE_REDEEM_WITH_HOURS_AFTER_TEST_COMPLETE}
+              {TEXT?.WINNING_PRIZE_REDEEM_WITH_HOURS_AFTER_TEST_COMPLETE}
             </div>
           </div>
         </div>
@@ -97,4 +97,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

@@ -26,7 +26,7 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const [dateRange, setDateRange] = useState(["2024-01-01", "2024-12-31"]);
 
@@ -45,7 +45,9 @@ const page = () => {
   return (
     <div>
       <div>
-        <div className="text-meta-purple-1 font-semibold text-2xl">{TEXT?.JOBS}</div>
+        <div className="text-meta-purple-1 font-semibold text-2xl">
+          {TEXT?.JOBS}
+        </div>
         <div className="flex gap-6 mt-5 mb-10 justify-center items-center">
           <div className="w-2/4">
             <Popover className="relative">
@@ -93,7 +95,7 @@ const page = () => {
                 </div>
                 <div className="w-full mt-4">
                   <label className="text-base font-medium text-meta-purple-1">
-                   {TEXT?.DATE_POSTED}
+                    {TEXT?.DATE_POSTED}
                   </label>
                   <DatePicker
                     range
@@ -172,7 +174,7 @@ const page = () => {
             </div>
             <button className="rounded-xl w-full max-w-64 min-w-36 h-12 bg-meta-blue-1 border border-meta-light-blue-2 ml-5">
               <span className="flex justify-center font-medium text-sm text-white">
-              {TEXT?.JOB_POST}
+                {TEXT?.JOB_POST}
               </span>
             </button>
           </div>
@@ -323,4 +325,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

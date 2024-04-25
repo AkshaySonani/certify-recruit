@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { TEXT } from "@/service/Helper";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   return (
     <div>
@@ -17,7 +17,7 @@ const page = () => {
           <div className="flex justify-center">
             <div className="min-w-72 max-w-md bg-white w-10/12 rounded-3xl border border-meta-light-blue-2 py-10 px-5 sm:px-10 mb-20">
               <h3 className="font-bold text-3xl text-meta-purple-1 text-center mb-4">
-               {TEXT?.FORGOT_PASSWORD}
+                {TEXT?.FORGOT_PASSWORD}
               </h3>
               <p className="text-meta-light-blue-3 font-medium text-sm text-center mb-10">
                 {TEXT?.PLEASE_SELECT_OPTION_TO_RECEIVE_PASSWORD_RESET_LINK}
@@ -36,10 +36,10 @@ const page = () => {
                   </div>
                   <div>
                     <p className="font-medium text-sm text-meta-blue-1">
-                   {TEXT?.RESET_VIA_EMAIL}
+                      {TEXT?.RESET_VIA_EMAIL}
                     </p>
                     <p className="text-xs font-normal">
-                    {TEXT?.YOU_WILL_BE_PROVIDE_A_UNIQUE}
+                      {TEXT?.YOU_WILL_BE_PROVIDE_A_UNIQUE}
                     </p>
                   </div>
                 </div>
@@ -65,4 +65,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

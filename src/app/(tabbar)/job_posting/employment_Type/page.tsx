@@ -30,7 +30,7 @@ const Page = () => {
     <div>
       <div className="flex items-center justify-between mb-10">
         <p className="sm:text-text-2xl text-lg font-semibold text-meta-purple-1">
-        {TEXT?.JOB_POSTING}
+          {TEXT?.JOB_POSTING}
         </p>
         <div className="flex items-center cursor-pointer">
           <Image
@@ -48,7 +48,7 @@ const Page = () => {
       <div className="flex justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
-          {TEXT?.EMPLOYMENT_TYPE}
+            {TEXT?.EMPLOYMENT_TYPE}
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
             {TEXT?.PICK_ONE_OR_MULTIPLE_OPTION}
@@ -89,7 +89,7 @@ const Page = () => {
             {TEXT?.WORKING_SCHEDULE}
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-           {TEXT?.YOU_CAN_PICK_MULTIPLE_WORK_SCHEDULES}
+            {TEXT?.YOU_CAN_PICK_MULTIPLE_WORK_SCHEDULES}
           </p>
         </div>
         <div className="flex flex-col lg:w-1/2 w-full lg:mt-0 mt-3">
@@ -135,7 +135,7 @@ const Page = () => {
             {TEXT?.SALARY}
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-         {TEXT?.CHOOSE_HOW_YOU_PREFER_TO_PAY_FOR_THIS_JOB}
+            {TEXT?.CHOOSE_HOW_YOU_PREFER_TO_PAY_FOR_THIS_JOB}
           </p>
         </div>
         <div className="flex flex-col items-center lg:w-1/2 w-full lg:mt-0 mt-3">
@@ -200,10 +200,10 @@ const Page = () => {
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
-           {TEXT?.INTERVIEW_TIME}
+            {TEXT?.INTERVIEW_TIME}
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-           {TEXT?.CHOOSE_YOUR_INTERVIEW_TIME_SLOT}
+            {TEXT?.CHOOSE_YOUR_INTERVIEW_TIME_SLOT}
           </p>
         </div>
       </div>

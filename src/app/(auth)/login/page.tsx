@@ -6,11 +6,11 @@ import Api from "@/service/ApiService";
 import { toast } from "react-toastify";
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
+import Button from "@/Components/Button";
 import { useRouter } from "next/navigation";
 import { EMAIlREGEX, ROUTE, TEXT } from "@/service/Helper";
-import Button from "@/Components/Button";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
 
   const [eye, setEye] = useState(false);
@@ -28,22 +28,41 @@ const page = () => {
       ),
   });
 
-  const handleSubmit = async (values: any) => {
+  const signInWithEmailAndPassword = async (values: any) => {
     try {
-      const res = await signIn("credentials", {
+      const signInResponse = await signIn("signin", {
         ...values,
-        isLogin: true,
         redirect: false,
-        // callbackUrl: "/dashboard",
       });
-      if (!res?.error) {
+      console.log("signInResponse", signInResponse);
+      if (!signInResponse?.ok) {
+        toast.error(signInResponse?.error);
+      } else {
         router.push("/dashboard");
+        toast.success("User successfully logged in");
       }
-    } catch (error: any) {
-      console.log(error);
-      toast.error(error?.response?.data?.message || "Internal server error");
+    } catch (error) {
+      console.log("🚀 ~ signInWithEmailAndPassword ~ error:", error);
+      toast.error("Error signing in with email and password. Try again later.");
     }
   };
+
+  // const handleSubmit = async (values: any) => {
+  //   try {
+  //     const res = await signIn("credentials", {
+  //       ...values,
+  //       isLogin: true,
+  //       redirect: false,
+  //       // callbackUrl: "/dashboard",
+  //     });
+  //     if (!res?.error) {
+  //       router.push("/dashboard");
+  //     }
+  //   } catch (error: any) {
+  //     console.log(error);
+  //     toast.error(error?.response?.data?.message || "Internal server error");
+  //   }
+  // };
   // const handleSubmit = async (values: any) => {
   //   try {
   //     await signIn("credentials", {
@@ -64,8 +83,8 @@ const page = () => {
       password: "",
     },
     validationSchema,
-    onSubmit: handleSubmit,
     enableReinitialize: true,
+    onSubmit: signInWithEmailAndPassword,
   });
   return (
     <div>
@@ -190,4 +209,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

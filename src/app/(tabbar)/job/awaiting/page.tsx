@@ -65,7 +65,7 @@ const tableData = [
   },
 ];
 
-const page = () => {
+const Page = () => {
   const [dateRange, setDateRange] = useState(["2024-01-01", "2024-12-31"]);
 
   return (
@@ -252,4 +252,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

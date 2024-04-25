@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { TEXT } from "@/service/Helper";
 import SignupForm from "@/Components/SignupForm";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const [showForms, setShowForms] = useState(false);
   const individualArr = [
@@ -101,4 +101,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

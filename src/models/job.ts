@@ -53,7 +53,6 @@ const jobSchema = new mongoose.Schema({
   salary_pay: {
     type: String,
     enum: ["Hourly", "Monthly"],
-    default: "Monthly",
   },
   multiple_hire: {
     type: Number,

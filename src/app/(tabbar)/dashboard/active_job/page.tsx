@@ -25,14 +25,14 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
-const page = () => {
+const Page = () => {
   const [dateRange, setDateRange] = useState(["2024-01-01", "2024-12-31"]);
 
   return (
     <div>
       <div>
         <div className="text-meta-purple-1 font-semibold text-2xl">
-         {TEXT?.ACTIVE_JOB}
+          {TEXT?.ACTIVE_JOB}
         </div>
 
         <div className="flex gap-6 mt-5 mb-10 justify-center items-center">
@@ -96,7 +96,7 @@ const page = () => {
             </div>
             <button className="rounded-xl w-full max-w-64 min-w-36  h-12 bg-meta-blue-1 border border-meta-light-blue-2 ml-5">
               <span className="flex justify-center font-medium text-sm text-white">
-              {TEXT?.JOB_POST}
+                {TEXT?.JOB_POST}
               </span>
             </button>
           </div>
@@ -113,14 +113,14 @@ const page = () => {
                     </div>
                     <div className="">
                       <div className="text-meta-purple-1 font-semibold text-xl">
-                       {TEXT?.USER_INTERFACE_EXPERT}
+                        {TEXT?.USER_INTERFACE_EXPERT}
                         <div className="text-meta-light-blue-3 font-medium text-base">
-                         {TEXT?.CITY_NAMES}
+                          {TEXT?.CITY_NAMES}
                         </div>
                       </div>
                     </div>
                     <p className="text-meta-light-blue-3 font-medium text-base ml-2 mt-1">
-                    {TEXT?.TWO_WEEKS_AGO}
+                      {TEXT?.TWO_WEEKS_AGO}
                     </p>
                   </div>
                   <div className="flex items-center">
@@ -160,7 +160,7 @@ const page = () => {
                                     "block px-4 py-2 text-base"
                                   )}
                                 >
-                              {TEXT?.EDIT}
+                                  {TEXT?.EDIT}
                                 </a>
                               )}
                             </Menu.Item>
@@ -176,7 +176,7 @@ const page = () => {
                                     "block px-4 py-2 text-base"
                                   )}
                                 >
-                                 {TEXT?.DELETE}
+                                  {TEXT?.DELETE}
                                 </a>
                               )}
                             </Menu.Item>
@@ -244,4 +244,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

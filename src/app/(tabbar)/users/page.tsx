@@ -6,7 +6,7 @@ import React, { useState, Fragment } from "react";
 import { Dialog, Menu, Popover, Switch, Transition } from "@headlessui/react";
 import { TEXT } from "@/service/Helper";
 
-const page = () => {
+const Page = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const SelectOption = [
@@ -89,7 +89,7 @@ const page = () => {
             <Popover.Panel className="absolute w-full z-10 mt-2 bg-white rounded-xl shadow-xl border border-meta-light-blue-1 p-4">
               <div className="w-full">
                 <label className="text-base font-medium text-meta-purple-1">
-                 {TEXT?.JOB_TITLE}
+                  {TEXT?.JOB_TITLE}
                 </label>
                 <input
                   type="text"
@@ -99,7 +99,7 @@ const page = () => {
               </div>
               <div className="w-full mt-4">
                 <label className="text-base font-medium text-meta-purple-1">
-                 {TEXT?.LOCATION}
+                  {TEXT?.LOCATION}
                 </label>
                 <input
                   type="text"
@@ -141,7 +141,7 @@ const page = () => {
           className="rounded-xl w-full max-w-64 min-w-50  h-12 bg-meta-blue-1 border border-meta-light-blue-2 ml-5"
         >
           <span className="flex justify-center font-medium text-sm text-white">
-           {TEXT?.ADD_USER}
+            {TEXT?.ADD_USER}
           </span>
         </button>
       </div>
@@ -171,7 +171,7 @@ const page = () => {
                   {TEXT?.STATUS}
                 </div>
               </th>
-              <th className="px-6 w-1/12"/>
+              <th className="px-6 w-1/12" />
             </tr>
           </thead>
           <tbody>
@@ -373,7 +373,7 @@ const page = () => {
                         className="rounded-xl w-full mt-4 h-12 bg-meta-blue-1 border border-meta-light-blue-2"
                       >
                         <span className="flex justify-center font-medium text-sm text-white">
-                         {TEXT?.ADD_USER}
+                          {TEXT?.ADD_USER}
                         </span>
                       </button>
                     </div>
@@ -388,4 +388,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

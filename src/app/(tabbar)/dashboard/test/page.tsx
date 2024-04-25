@@ -9,7 +9,7 @@ const menu = [
   { title: "Active Jobs" },
 ];
 
-const page = () => {
+const Page = () => {
   return (
     <div>
       <div>
@@ -44,7 +44,7 @@ const page = () => {
           })}
         </div>
         <div className="text-meta-purple-1 font-semibold text-xl mt-8">
-        {TEXT?.RECENTLY_JOB_POST}
+          {TEXT?.RECENTLY_JOB_POST}
         </div>
 
         <div className="mt-4">
@@ -57,11 +57,11 @@ const page = () => {
                     {TEXT?.USER_INTERFACE_EXPERT}
                   </p>
                   <p className="text-meta-light-blue-3 font-medium text-base">
-                   {TEXT?.CITY_NAMES}
+                    {TEXT?.CITY_NAMES}
                   </p>
                 </div>
                 <p className="text-meta-light-blue-3 font-medium text-base ml-2 mt-1">
-                 {TEXT?.TWO_WEEKS_AGO}
+                  {TEXT?.TWO_WEEKS_AGO}
                 </p>
               </div>
 
@@ -74,4 +74,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { TEXT } from "@/service/Helper";
 import SignupForm from "./SignupForm";
 import DemoLinkComp from "./DemoLinkComp";
+import Button from "./Button";
 
 const EmployeeComp = () => {
   const router = useRouter();
@@ -40,15 +41,16 @@ const EmployeeComp = () => {
                 </p>
                 <div className="flex justify-center">
                   <div className="flex">
-                    <button
-                      onClick={() => setShowForms(true)}
-                      className="rounded-2xl w-64 h-16 bg-meta-blue-2 text-xl font-semibold text-white mr-10"
-                    >
-                      {TEXT?.START_NOW_ITS_FREE}
-                    </button>
+                    <Button
+                      title={TEXT?.START_NOW_ITS_FREE}
+                      handleClick={() => setShowForms(true)}
+                      titleClass="text-xl font-semibold text-white"
+                      btnClass="rounded-2xl !w-64 !h-16 bg-meta-blue-2 mr-10"
+                    />
+
                     <button
                       onClick={() => setShowDemoLink(true)}
-                      className="rounded-2xl w-64 h-16 bg-white text-xl font-semibold text-meta-light-blue-3 border border-meta-light-blue-2"
+                      className="rounded-2xl w-64 h-16 bg-white text-xl font-semibold text-meta-light-blue-3 border border-meta-light-blue-2 hover:bg-meta-gray-2 hover:border-meta-light-blue-1"
                     >
                       {TEXT?.SCHEDULE_A_DEMO}
                     </button>

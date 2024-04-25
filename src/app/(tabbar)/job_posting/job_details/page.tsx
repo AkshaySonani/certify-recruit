@@ -67,17 +67,17 @@ const Page = () => {
       <div className="flex items-start justify-between w-full lg:flex-nowrap h-full flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
-           {TEXT?.JOB_DETAILS}
+            {TEXT?.JOB_DETAILS}
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-           {TEXT?.TELL_US_ABOUT_THE_ROLE}
+            {TEXT?.TELL_US_ABOUT_THE_ROLE}
           </p>
         </div>
         <div className="flex items-center lg:w-1/2 w-full lg:mt-0 mt-3 mb-10">
           <ReactQuill
             theme="snow"
             value={content}
-            onChange={(e:any) => setContent(e)}
+            onChange={(e: any) => setContent(e)}
             className="!h-78 !rounded-lg !w-full"
           />
         </div>
@@ -147,10 +147,10 @@ const Page = () => {
       <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 w-full lg:mr-5 text-start">
           <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
-           {TEXT?.HIRING_MULTIPLE_CANDIDATES}
+            {TEXT?.HIRING_MULTIPLE_CANDIDATES}
           </p>
           <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
-           {TEXT?.THIS_WILL_BE_DISPLAYED_ON_JOB_PAGE_FOR_CANDIDATES_SEE}
+            {TEXT?.THIS_WILL_BE_DISPLAYED_ON_JOB_PAGE_FOR_CANDIDATES_SEE}
           </p>
         </div>
         <div className="flex items-start lg:w-1/2 w-full lg:mt-0 mt-3 flex-col">

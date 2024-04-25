@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { TEXT } from "@/service/Helper";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   return (
     <div>
@@ -17,7 +17,7 @@ const page = () => {
           <div className="flex justify-center mt-36">
             <div className="w-2/4">
               <h3 className="font-bold text-3xl text-meta-purple-1 text-center mb-6">
-               {TEXT?.REDIRECT_TO_CALENDLY}
+                {TEXT?.REDIRECT_TO_CALENDLY}
               </h3>
               <p className="text-meta-light-blue-3 font-semibold text-xl text-center mb-10 underline underline-offset-2">
                 https://calendly.com/event_types/user/me
@@ -44,4 +44,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

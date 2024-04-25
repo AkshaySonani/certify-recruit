@@ -15,10 +15,10 @@ let statusArr = [
   { id: 3, status: "Admin" },
 ];
 
-const page = () => {
+const Page = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [active, setActive] = useState(statusArr[0]?.status);
-  
+
   const tableData = [
     {
       name: "Kate Tanner",
@@ -94,17 +94,17 @@ const page = () => {
     <div>
       <div className="flex justify-between">
         <div className="text-meta-purple-1 font-semibold text-2xl">
-         {TEXT?.SEARCH_CVS}
+          {TEXT?.SEARCH_CVS}
         </div>
         <div className="flex gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-3.5 h-3.5 rounded-sm bg-green-500"/>
+            <div className="w-3.5 h-3.5 rounded-sm bg-green-500" />
             <p className="font-medium text-meta-purple-1 text-base">
               {TEXT?.AVAILABLE}
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3.5 h-3.5 rounded-sm bg-red-500"/>
+            <div className="w-3.5 h-3.5 rounded-sm bg-red-500" />
             <p className="font-medium text-meta-purple-1 text-base">Hired</p>
           </div>
         </div>
@@ -129,7 +129,7 @@ const page = () => {
             <Popover.Panel className="absolute w-full z-10 mt-2 bg-white rounded-xl shadow-xl border border-meta-light-blue-1 p-4">
               <div className="w-full">
                 <label className="text-base font-medium text-meta-purple-1">
-                 {TEXT?.JOB_TITLE}
+                  {TEXT?.JOB_TITLE}
                 </label>
                 <input
                   type="text"
@@ -193,7 +193,7 @@ const page = () => {
               <div className="w-full flex flex-col lg:flex-row  mt-4 lg:gap-2">
                 <div className="lg:w-1/2 w-full">
                   <label className="text-base font-medium text-meta-purple-1">
-                   {TEXT?.DATE_UPLOADED}
+                    {TEXT?.DATE_UPLOADED}
                   </label>
                   <input
                     type="text"
@@ -266,9 +266,7 @@ const page = () => {
         </div>
         <Menu as="div" className="relative ml-10">
           <div>
-            <Menu.Button
-              className="relative items-center flex z-20 justify-between w-full min-w-40 appearance-none rounded-lg border border-stroke px-5 py-3 outline-none transition bg-meta-light-blue-2"
-            >
+            <Menu.Button className="relative items-center flex z-20 justify-between w-full min-w-40 appearance-none rounded-lg border border-stroke px-5 py-3 outline-none transition bg-meta-light-blue-2">
               <p>{active}</p>
               <Image
                 alt="Icon"
@@ -345,7 +343,7 @@ const page = () => {
                   {TEXT?.MATCHING}
                 </div>
               </th>
-              <th className="px-6 w-1/12"/>
+              <th className="px-6 w-1/12" />
             </tr>
           </thead>
           <tbody>
@@ -353,7 +351,7 @@ const page = () => {
               return (
                 <tr>
                   <td>
-                    <div className="w-3.5 h-3.5 rounded-sm bg-green-500"/>
+                    <div className="w-3.5 h-3.5 rounded-sm bg-green-500" />
                   </td>
                   <td className="px-6 py-4 text-gray-500">
                     <div className="flex items-center">
@@ -423,4 +421,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

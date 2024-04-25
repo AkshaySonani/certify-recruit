@@ -3,71 +3,98 @@ import User from "@/models/user";
 import NextAuth from "next-auth/next";
 import { connect } from "@/db/mongodb";
 import { AuthOptions } from "next-auth";
-import { NextResponse } from "next/server";
+import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { use } from "react";
 
 export const authOptions: AuthOptions = {
   providers: [
+    // SignUp
     CredentialsProvider({
+      id: "signup",
+      name: "credentials",
+      credentials: {
+        isLogin: { type: "boolean" },
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        const { role, email, password }: any = credentials;
+        try {
+          await connect();
+          // check if the user exists
+          const user = await User.findOne({ email }).select("+password");
+          if (user) {
+            throw new Error("User with email already exists!");
+          } else {
+            // hash password, create user
+            const salt = await bcrypt.genSalt(Number(process.env.NEXT_SLAT));
+            const hashedPassword = await bcrypt.hash(password, salt);
+
+            const newUser = await User.create({
+              role: role,
+              email: email,
+              password: hashedPassword,
+            });
+            return newUser;
+          }
+        } catch (error) {
+          console.log("register error", error);
+          throw new Error(`${error}`);
+        }
+      },
+    }),
+    // SignIn
+    CredentialsProvider({
+      id: "signin",
       name: "credentials",
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
-        isLogin: { type: "boolean" },
       },
-      //@ts-ignore
       async authorize(credentials) {
-        //@ts-ignore
-        const { role, email, password, isLogin } = credentials;
+        const { email, password }: any = credentials;
         try {
           await connect();
-
-          const res = await User.findOne({ email }).select("+password");
-          if (isLogin) {
-            let passwordsMatch = false;
-            if (res) {
-              passwordsMatch = await bcrypt.compareSync(password, res.password);
-            }
-            return { ...res, passwordsMatch };
+          // check if the user exists
+          // Find user by email
+          const user = await User.findOne({ email: email }).select("+password");
+          if (!user) {
+            throw new Error("User not found.");
           } else {
-            if (!res) {
-              // Hash the password
-              const salt = await bcrypt.genSalt(Number(process.env.NEXT_SLAT));
-              const hashedPassword = await bcrypt.hash(password, salt);
-
-              const newUser = await User.create({
-                role: role,
-                email: email,
-                password: hashedPassword,
-              });
-
-              return { ...newUser };
-
-              // return NextResponse.json({
-              //   status: 201,
-              //   data: newUser,
-              //   message: "User registered successfully",
-              // });
+            // Check password
+            const passwordsMatch = await bcrypt.compare(
+              password,
+              user.password
+            );
+            if (!passwordsMatch) {
+              throw new Error("Incorrect credentials provided.");
+            } else {
+              return user;
             }
           }
         } catch (error) {
-          return error;
+          console.log("login error", error);
+          throw new Error(`${error}`);
         }
       },
     }),
-    // GoogleProvider({
-    //   clientId:
-    //     "63394263542-bb6ippbgo6jtkd4hnv9g5s14ra65rbu0.apps.googleusercontent.com",
-    //   clientSecret: "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",
-    // }),
+    // Google auth
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+    }),
   ],
   session: {
     strategy: "jwt",
-    maxAge: 1 * 24 * 60 * 60, // 1 day
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+    updateAge: 24 * 60 * 60, // 24 hours
   },
   callbacks: {
-    async signIn({ user, account }) {
+    async signIn({ user, account }: any) {
+      if (account.provider === "signin" || account.provider === "signup") {
+        return true;
+      }
+
       // if (account.provider === "google") {
       //   try {
       //     const { name, email } = user;
@@ -89,47 +116,26 @@ export const authOptions: AuthOptions = {
       //     console.log(err);
       //   }
       // }
-
-      return user?.passwordsMatch ? user : false;
-      // if (user.passwordsMatch) {
-      //   return NextResponse.json({
-      //     status: 201,
-      //     data: {
-      //       _id: user._id,
-      //       role: user.role,
-      //       email: user.email,
-      //       phone: user.phone,
-      //       status: user.status,
-      //       profile_picture: user.profile_picture,
-      //     },
-      //     message: "User successfully logged in",
-      //   });
-      // } else {
-      //   console.log("error--->");
-
-      //   return NextResponse.json(
-      //     { message: "Invalid credentials" },
-      //     { status: 402 }
-      //   );
-      // }
     },
-    // async redirect({ url, baseUrl }) {
-    //   console.log("url, baseUrl", url, baseUrl);
-
-    //   if (url.startsWith("/")) return `${baseUrl}${url}`;
-    //   else if (new URL(url).origin === baseUrl) return url;
-    //   return baseUrl;
-    // },
     async jwt({ token, user }: any) {
-      if (user) {
+      if (user?._id) {
+        token._id = user._id;
+        token.role = user.role;
         token.email = user.email;
-        token.name = user.name;
+        token.phone = user.phone;
+        token.status = user.status;
+        token.profile_picture = user.profile_picture;
       }
       return token;
     },
     async session({ session, token }: any) {
-      if (session.user) {
+      if (token?._id) {
+        session.user._id = token._id;
+        session.user.role = token.role;
         session.user.email = token.email;
+        session.user.phone = token.phone;
+        session.user.status = token.status;
+        session.user.profile_picture = token.profile_picture;
       }
       return session;
     },
@@ -137,7 +143,6 @@ export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/login",
-    newUser: null,
   },
 };
 

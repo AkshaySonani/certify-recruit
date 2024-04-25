@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ROUTE, TEXT } from "@/service/Helper";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const [eye, setEye] = useState<Record<string, boolean>>({
     pass: false,
@@ -21,10 +21,10 @@ const page = () => {
           <div className="flex justify-center">
             <div className="min-w-72 max-w-md bg-white w-10/12 rounded-3xl border border-meta-light-blue-2 py-10 px-5 sm:px-10 mb-20">
               <h3 className="font-bold text-3xl text-meta-purple-1 text-center mb-4">
-              {TEXT?.SET_NEW_PASSWORD}
+                {TEXT?.SET_NEW_PASSWORD}
               </h3>
               <p className="text-meta-light-blue-3 font-medium text-sm text-center mb-10">
-              {TEXT?.MUST_BE_AT_LEAST_CHARACTERS}
+                {TEXT?.MUST_BE_AT_LEAST_CHARACTERS}
               </p>
 
               <div className="relative mb-6">
@@ -98,17 +98,15 @@ const page = () => {
 
               <button
                 className="rounded-xl w-full h-12 bg-meta-light-blue-1 hover:bg-meta-blue-2 text-meta-purple-1 hover:text-white border border-meta-light-blue-2 mb-8"
-                onClick={() =>
-                  router.push(ROUTE?.SUCCESSFULL_FORGOT_PASSWORD)
-                }
+                onClick={() => router.push(ROUTE?.SUCCESSFULL_FORGOT_PASSWORD)}
               >
                 <span className="flex justify-center font-medium text-sm">
-                 {TEXT?.RESET_PASSWORD}
+                  {TEXT?.RESET_PASSWORD}
                 </span>
               </button>
               <div className="flex justify-center items-center font-medium text-sm text-meta-light-blue-3 mb-3">
                 <span className="cursor-pointer" onClick={() => router.back()}>
-                 {TEXT?.CANCEL}
+                  {TEXT?.CANCEL}
                 </span>
               </div>
             </div>
@@ -119,4 +117,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
