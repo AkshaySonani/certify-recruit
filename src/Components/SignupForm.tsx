@@ -106,7 +106,7 @@ const SignupForm = () => {
       {successMsg ? (
         <SignupSuccess />
       ) : (
-        <div className="container mx-auto">
+        <div className="container mx-auto max-w-6xl">
           <div className="flex justify-center py-20">
             <Image
               src={"/MainLogo.svg"}

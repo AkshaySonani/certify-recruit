@@ -18,7 +18,7 @@ const EmployeeComp = () => {
       ) : showDemoLink ? (
         <DemoLinkComp setShowDemoLink={setShowDemoLink} />
       ) : (
-        <div className="container mx-auto h-screen">
+        <div className="container mx-auto h-screen max-w-6xl">
           <div className="flex justify-center py-20">
             <Image
               src={"/MainLogo.svg"}

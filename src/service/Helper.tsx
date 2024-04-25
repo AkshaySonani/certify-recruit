@@ -4,7 +4,7 @@ const EMAIlREGEX =
 // const EMAIlREGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
 const ROUTE = {
-  SIGN_UP: "/signup",
+  SIGN_UP: "/signUp",
   LOGIN: "/login",
   SUCCESSFULL_FORGOT_PASSWORD: "/login/forgotPass/newPass/successful",
   ACTIVE_JOB: "/dashboard/active_job",

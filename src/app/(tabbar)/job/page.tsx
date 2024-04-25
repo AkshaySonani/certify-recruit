@@ -62,9 +62,9 @@ const Page = () => {
               <input
                 type="text"
                 placeholder="Search..."
-                className="w-full h-12 rounded-lg border-2 border-stroke bg-transparent px-12 py-3 text-black outline-none transition focus:border-primary active:border-primary"
+                className="w-full h-12 rounded-lg border border-meta-light-blue-1 bg-transparent px-12  text-black outline-none transition focus:border-primary active:border-primary"
               />
-              <div className="absolute right-3 top-4">
+              <div className="absolute right-3 top-[9px]">
                 <Image
                   alt="date"
                   width={19}
@@ -157,13 +157,14 @@ const Page = () => {
                   }
                 }}
                 style={{
-                  height: 48,
-                  fontSize: 14,
+                  height: 35,
+                  fontSize: 12,
                   width: "100%",
                   borderRadius: 8,
+                  borderColor: "#DCE7FF",
                 }}
               />
-              <div className="absolute right-2 top-3">
+              <div className="absolute right-2 top-2">
                 <Image
                   alt="date"
                   width={24}

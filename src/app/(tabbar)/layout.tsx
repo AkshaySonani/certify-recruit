@@ -6,17 +6,21 @@ import { usePathname } from "next/navigation";
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const pathname=usePathname()
-const isFullScreenRoute = (path:any) => [ROUTE?.MYPROFILE,ROUTE?.QUIZMCQS,ROUTE?.MAIN].some((e) => path.includes(e));
+  const pathname = usePathname();
+  const isFullScreenRoute = (path: any) =>
+    [ROUTE?.MYPROFILE, ROUTE?.QUIZMCQS, ROUTE?.MAIN].some((e) =>
+      path.includes(e)
+    );
   return (
     <>
-   {!isFullScreenRoute(pathname) ? 
-     <div className="flex relative w-full">
-       <Sidebar />
-       <main className="lg:w-[calc(100%-288px)] overflow-x-auto p-10">{children}</main>
-    </div> : <main className="w-full overflow-x-auto p-10">{children}</main> }
-   
+      {!isFullScreenRoute(pathname) ? (
+        <div className="flex relative w-full ">
+          <Sidebar />
+          <main className="w-full overflow-x-auto p-10 ">{children}</main>
+        </div>
+      ) : (
+        <main className="w-full overflow-x-auto p-10">{children}</main>
+      )}
     </>
-   
   );
 }

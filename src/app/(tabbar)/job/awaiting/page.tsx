@@ -5,7 +5,7 @@ import Select from "@/Components/Select";
 import Checkbox from "@/Components/Checkbox";
 import DatePicker from "react-multi-date-picker";
 import { TEXT } from "@/service/Helper";
-
+import { Menu, Popover, Transition } from "@headlessui/react";
 const tableData = [
   {
     name: "Kate Tanner",
@@ -76,21 +76,21 @@ const Page = () => {
         </div>
         <div className="flex gap-6 mt-5 mb-10 justify-center items-center">
           <div className="w-2/4">
-            <div className="relative">
-              <div className="absolute left-3 top-4">
+            <Popover className="relative">
+              <Popover.Button className="absolute left-3 top-4">
                 <Image
                   alt="date"
                   width={19}
                   height={15}
                   src={"/dashboard/filter.svg"}
                 />
-              </div>
+              </Popover.Button>
               <input
                 type="text"
                 placeholder="Search..."
-                className="w-full h-12 rounded-lg border-2 border-stroke bg-transparent px-12 py-3 text-black outline-none transition focus:border-primary active:border-primary"
+                className="w-full h-12 rounded-lg border border-meta-light-blue-1 bg-transparent px-12  text-black outline-none transition focus:border-primary active:border-primary"
               />
-              <div className="absolute right-3 top-4">
+              <div className="absolute right-3 top-[9px]">
                 <Image
                   alt="date"
                   width={19}
@@ -98,7 +98,72 @@ const Page = () => {
                   src={"/dashboard/search.svg"}
                 />
               </div>
-            </div>
+              <Popover.Panel className="absolute w-full z-10 mt-2 bg-white rounded-xl shadow-xl border border-meta-light-blue-1 p-4">
+                <div className="w-full">
+                  <label className="text-base font-medium text-meta-purple-1">
+                    {TEXT?.JOB_TITLE}
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Job title search here..."
+                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
+                  />
+                </div>
+                <div className="w-full mt-4">
+                  <label className="text-base font-medium text-meta-purple-1">
+                    {TEXT?.LOCATION}
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Type location here..."
+                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
+                  />
+                </div>
+                <div className="w-full mt-4">
+                  <label className="text-base font-medium text-meta-purple-1">
+                    {TEXT?.DATE_POSTED}
+                  </label>
+                  <DatePicker
+                    range
+                    format="YYYY-MM-DD"
+                    minDate={new Date("01-01-2014")}
+                    maxDate={new Date("12-31-2024")}
+                    placeholder="YYYY-MM-DD - YYYY-MM-DD"
+                    containerStyle={{ width: "100%" }}
+                    onChange={(dateObjects: any) => {
+                      if (dateObjects?.[1]?.toString()) {
+                        setDateRange((e) => [
+                          dateObjects?.[0]?.toString(),
+                          dateObjects?.[1]?.toString(),
+                        ]);
+                      }
+                    }}
+                    style={{
+                      height: 48,
+                      width: "100%",
+                      borderRadius: 8,
+                      paddingLeft: 20,
+                      marginTop: 4,
+                    }}
+                  />
+                </div>
+                <div className="flex justify-between items-center w-full mt-4">
+                  <div>
+                    <Checkbox
+                      label={"Set as default"}
+                      className="text-meta-light-blue-3 text-base font-medium"
+                    />
+                  </div>
+                  <div>
+                    <button className="rounded-xl w-28 h-12 bg-meta-light-blue-1 border border-meta-light-blue-2 ml-5">
+                      <span className="flex justify-center font-medium text-sm text-meta-light-blue-3">
+                        {TEXT?.DONE}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </Popover.Panel>
+            </Popover>
           </div>
           <div className="flex w-2/4 items-center">
             <div className="relative w-full">
@@ -118,13 +183,14 @@ const Page = () => {
                   }
                 }}
                 style={{
-                  height: 48,
-                  fontSize: 14,
+                  height: 35,
+                  fontSize: 12,
                   width: "100%",
                   borderRadius: 8,
+                  borderColor: "#DCE7FF",
                 }}
               />
-              <div className="absolute right-2 top-3">
+              <div className="absolute right-2 top-2">
                 <Image
                   alt="date"
                   width={24}

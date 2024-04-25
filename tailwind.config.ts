@@ -30,6 +30,7 @@ const config: Config = {
         "hiring-btn-gradient":
           "linear-gradient(270deg, #3751F2 0%, #2687F5 26.68%, #17B3F8 73.61%, #08E2FB 100%)",
       },
+      
     },
   },
   plugins: [],

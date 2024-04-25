@@ -15,19 +15,19 @@ const SelectRoleComp = () => {
 
   return (
     <div>
-      <div className="container mx-auto h-screen">
+      <div className="container mx-auto h-screen max-w-6xl">
         <div className="flex justify-center py-20">
           <Image src={"/MainLogo.svg"} alt="MainLogo" width={334} height={56} />
         </div>
         <div className="bg-[url('/_Compound.svg')]">
-          <div className="flex justify-center mt-10">
+          <div className="flex justify-center mt-10 gap-2">
             <div className="flex w-2/4 justify-between">
               <div
                 onClick={() => {
                   setEmployee(true);
                   context?.setCurrentRole(USER_ROLE?.EMPLOYEE);
                 }}
-                className="w-64 h-44 border cursor-pointer border-meta-light-blue-2 rounded-lg flex justify-center items-center shadow-lg hover:shadow-md hover:shadow-blue-700"
+                className="w-64 h-44  shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] bg-white border cursor-pointer border-meta-light-blue-2 rounded-[24px] flex justify-center items-center  hover:shadow-md hover:shadow-blue-700"
               >
                 <div className="w-24">
                   <div className="flex justify-center">
@@ -48,7 +48,7 @@ const SelectRoleComp = () => {
                   setIndividual(true);
                   context?.setCurrentRole(USER_ROLE?.INDIVIDUAL);
                 }}
-                className="w-64 h-44 border cursor-pointer border-meta-light-blue-2 rounded-lg flex justify-center items-center shadow-lg hover:shadow-md hover:shadow-blue-700"
+                className="w-64 h-44 shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] bg-white border cursor-pointer border-meta-light-blue-2 rounded-[24px] flex justify-center items-center  hover:shadow-md hover:shadow-blue-700"
               >
                 <div className="w-24">
                   <div className="flex justify-center">
