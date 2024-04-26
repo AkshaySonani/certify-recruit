@@ -1,11 +1,11 @@
-"use client";
-import React, { useState } from "react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { TEXT } from "@/service/Helper";
-import SignupForm from "./SignupForm";
-import DemoLinkComp from "./DemoLinkComp";
-import Button from "./Button";
+'use client';
+import React, { useState } from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { TEXT } from '@/service/Helper';
+import SignupForm from './SignupForm';
+import DemoLinkComp from './DemoLinkComp';
+import Button from './Button';
 
 const EmployeeComp = () => {
   const router = useRouter();
@@ -21,7 +21,7 @@ const EmployeeComp = () => {
         <div className="container mx-auto h-screen max-w-6xl">
           <div className="flex justify-center py-20">
             <Image
-              src={"/MainLogo.svg"}
+              src={'/MainLogo.svg'}
               alt="MainLogo"
               width={334}
               height={56}
@@ -29,12 +29,12 @@ const EmployeeComp = () => {
           </div>
 
           <div className="bg-[url('/_Compound.svg')] ">
-            <div className="flex justify-center mt-36">
+            <div className="mt-36 flex justify-center">
               <div className="w-2/4">
-                <h3 className="font-bold text-3xl text-meta-purple-1 text-center mb-7">
+                <h3 className="mb-7 text-center text-3xl font-bold text-meta-purple-1">
                   {TEXT?.HI_THERE}
                 </h3>
-                <p className="text-meta-light-blue-3 font-semibold text-xl text-center mb-14">
+                <p className="mb-14 text-center text-xl font-semibold text-meta-light-blue-3">
                   {
                     TEXT?.CERTIFYRECRUIT_STREAMLINES_YOUR_ENTIRE_RECRUITING_PROCESS
                   }
@@ -50,7 +50,7 @@ const EmployeeComp = () => {
 
                     <button
                       onClick={() => setShowDemoLink(true)}
-                      className="rounded-2xl w-64 h-16 bg-white text-xl font-semibold text-meta-light-blue-3 border border-meta-light-blue-2 hover:bg-meta-gray-2 hover:border-meta-light-blue-1"
+                      className="h-16 w-64 rounded-2xl border border-meta-light-blue-2 bg-white text-xl font-semibold text-meta-light-blue-3 hover:border-meta-light-blue-1 hover:bg-meta-gray-2"
                     >
                       {TEXT?.SCHEDULE_A_DEMO}
                     </button>

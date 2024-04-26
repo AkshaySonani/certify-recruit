@@ -1,9 +1,9 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const companySchema = new mongoose.Schema({
   company_type: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Category",
+    ref: 'Category',
     required: true,
   },
   company_name: {
@@ -31,7 +31,7 @@ const companySchema = new mongoose.Schema({
   },
   logo: {
     type: String, // Assuming storing image URL
-    default: "",
+    default: '',
   },
   pan_number: {
     type: String,
@@ -43,12 +43,12 @@ const companySchema = new mongoose.Schema({
   },
   location: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Location",
+    ref: 'Location',
     required: true,
   },
 });
 
 const Company =
-  mongoose.models.Company || mongoose.model("Company", companySchema);
+  mongoose.models.Company || mongoose.model('Company', companySchema);
 
 module.exports = Company;

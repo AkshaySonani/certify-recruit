@@ -1,7 +1,7 @@
-"use server";
-import { connect } from "@/db/mongodb";
-import Category from "@/models/category";
-import { NextRequest, NextResponse } from "next/server";
+'use server';
+import { connect } from '@/db/mongodb';
+import Category from '@/models/category';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async (req: NextRequest) => {
   try {
@@ -14,10 +14,10 @@ export const GET = async (req: NextRequest) => {
   } catch (error) {
     return NextResponse.json(
       {
-        message: "An error occurred while fetching category.",
+        message: 'An error occurred while fetching category.',
         error: error,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
@@ -37,10 +37,10 @@ export const POST = async (req: NextRequest) => {
   } catch (error) {
     return NextResponse.json(
       {
-        message: "An error occurred while creating category.",
+        message: 'An error occurred while creating category.',
         error: error,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

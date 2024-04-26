@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -8,8 +8,8 @@ const userSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: "active",
-    enum: ["active", "inactive"],
+    default: 'active',
+    enum: ['active', 'inactive'],
   },
   password: {
     type: String,
@@ -19,20 +19,20 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     required: true,
-    enum: ["employee", "individual", "admin", "superadmin"],
+    enum: ['employee', 'individual', 'admin', 'superadmin'],
   },
   profile_picture: {
     type: String, // Assuming storing image URL
-    default: "",
+    default: '',
   },
   phone: {
-    default: "", // Whenever we change this field to required remove this default option
+    default: '', // Whenever we change this field to required remove this default option
     type: String,
     unique: false, // Whenever we change this field to required change unique false to true
     required: false,
   },
 });
 
-const User = mongoose.models.User || mongoose.model("User", userSchema);
+const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 export default User;

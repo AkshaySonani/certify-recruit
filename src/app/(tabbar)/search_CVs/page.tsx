@@ -1,18 +1,18 @@
-"use client";
-import Image from "next/image";
-import Select from "@/Components/Select";
-import Checkbox from "@/Components/Checkbox";
-import React, { useState, Fragment } from "react";
-import { Dialog, Menu, Popover, Switch, Transition } from "@headlessui/react";
-import { TEXT } from "@/service/Helper";
+'use client';
+import Image from 'next/image';
+import Select from '@/Components/Select';
+import Checkbox from '@/Components/Checkbox';
+import React, { useState, Fragment } from 'react';
+import { Dialog, Menu, Popover, Switch, Transition } from '@headlessui/react';
+import { TEXT } from '@/service/Helper';
 
 let statusArr = [
   {
     id: 1,
-    status: "Available",
+    status: 'Available',
   },
-  { id: 2, status: "Hired" },
-  { id: 3, status: "Admin" },
+  { id: 2, status: 'Hired' },
+  { id: 3, status: 'Admin' },
 ];
 
 const Page = () => {
@@ -21,95 +21,95 @@ const Page = () => {
 
   const tableData = [
     {
-      name: "Kate Tanner",
-      Designation: "UI/UX Designer",
-      Experience: "5.5+ years",
-      Role: "6+ years",
-      Date: "Available",
-      Matching: "50%",
+      name: 'Kate Tanner',
+      Designation: 'UI/UX Designer',
+      Experience: '5.5+ years',
+      Role: '6+ years',
+      Date: 'Available',
+      Matching: '50%',
     },
     {
-      name: "April Curtis",
-      Designation: "UI/UX Designer",
-      Experience: "5.5+ years",
-      Role: "6+ years",
-      Date: "Available",
-      Matching: "50%",
+      name: 'April Curtis',
+      Designation: 'UI/UX Designer',
+      Experience: '5.5+ years',
+      Role: '6+ years',
+      Date: 'Available',
+      Matching: '50%',
     },
     {
-      name: "Sledge Hammer",
-      Designation: "UI/UX Designer",
-      Experience: "5.5+ years",
-      Role: "6+ years",
-      Date: "Available",
-      Matching: "50%",
+      name: 'Sledge Hammer',
+      Designation: 'UI/UX Designer',
+      Experience: '5.5+ years',
+      Role: '6+ years',
+      Date: 'Available',
+      Matching: '50%',
     },
     {
-      name: "B.A. Baracus",
-      Designation: "UI/UX Designer",
-      Experience: "5.5+ years",
-      Role: "6+ years",
-      Date: "Available",
-      Matching: "50%",
+      name: 'B.A. Baracus',
+      Designation: 'UI/UX Designer',
+      Experience: '5.5+ years',
+      Role: '6+ years',
+      Date: 'Available',
+      Matching: '50%',
     },
     {
-      name: "Mike Torello",
-      Designation: "UI/UX Designer",
-      Experience: "5.5+ years",
-      Role: "6+ years",
-      Date: "Available",
-      Matching: "50%",
+      name: 'Mike Torello',
+      Designation: 'UI/UX Designer',
+      Experience: '5.5+ years',
+      Role: '6+ years',
+      Date: 'Available',
+      Matching: '50%',
     },
     {
-      name: "Dori Doreau",
-      Designation: "UI/UX Designer",
-      Experience: "5.5+ years",
-      Role: "6+ years",
-      Date: "Available",
-      Matching: "50%",
+      name: 'Dori Doreau',
+      Designation: 'UI/UX Designer',
+      Experience: '5.5+ years',
+      Role: '6+ years',
+      Date: 'Available',
+      Matching: '50%',
     },
     {
-      name: "Murdock",
-      Designation: "UI/UX Designer",
-      Experience: "5.5+ years",
-      Role: "6+ years",
-      Date: "Available",
-      Matching: "50%",
+      name: 'Murdock',
+      Designation: 'UI/UX Designer',
+      Experience: '5.5+ years',
+      Role: '6+ years',
+      Date: 'Available',
+      Matching: '50%',
     },
     {
-      name: "Lynn Tanner",
-      Designation: "UI/UX Designer",
-      Experience: "5.5+ years",
-      Role: "6+ years",
-      Date: "Available",
-      Matching: "50%",
+      name: 'Lynn Tanner',
+      Designation: 'UI/UX Designer',
+      Experience: '5.5+ years',
+      Role: '6+ years',
+      Date: 'Available',
+      Matching: '50%',
     },
   ];
 
   const [enabled, setEnabled] = useState(false);
   function classNames(...classes: any) {
-    return classes.filter(Boolean).join(" ");
+    return classes.filter(Boolean).join(' ');
   }
   return (
     <div>
       <div className="flex justify-between">
-        <div className="text-meta-purple-1 font-semibold text-2xl">
+        <div className="text-2xl font-semibold text-meta-purple-1">
           {TEXT?.SEARCH_CVS}
         </div>
         <div className="flex gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-3.5 h-3.5 rounded-sm bg-green-500" />
-            <p className="font-medium text-meta-purple-1 text-base">
+            <div className="h-3.5 w-3.5 rounded-sm bg-green-500" />
+            <p className="text-base font-medium text-meta-purple-1">
               {TEXT?.AVAILABLE}
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3.5 h-3.5 rounded-sm bg-red-500" />
-            <p className="font-medium text-meta-purple-1 text-base">Hired</p>
+            <div className="h-3.5 w-3.5 rounded-sm bg-red-500" />
+            <p className="text-base font-medium text-meta-purple-1">Hired</p>
           </div>
         </div>
       </div>
-      <div className="flex gap-6 mt-5 mb-10 justify-start items-center w-full">
+      <div className="mb-10 mt-5 flex w-full items-center justify-start gap-6">
         <div className="w-2/4">
           <Popover className="relative">
             <Popover.Button className="absolute left-3 top-4">
@@ -117,16 +117,16 @@ const Page = () => {
                 alt="date"
                 width={19}
                 height={15}
-                src={"/dashboard/filter.svg"}
+                src={'/dashboard/filter.svg'}
               />
             </Popover.Button>
             <input
               type="text"
               placeholder="Job title"
-              className="w-full h-12 rounded-lg border-2 border-stroke bg-transparent px-12 py-3 text-black outline-none transition focus:border-primary active:border-primary"
+              className="border-stroke focus:border-primary active:border-primary h-12 w-full rounded-lg border-2 bg-transparent px-12 py-3 text-black outline-none transition"
             />
 
-            <Popover.Panel className="absolute w-full z-10 mt-2 bg-white rounded-xl shadow-xl border border-meta-light-blue-1 p-4">
+            <Popover.Panel className="absolute z-10 mt-2 w-full rounded-xl border border-meta-light-blue-1 bg-white p-4 shadow-xl">
               <div className="w-full">
                 <label className="text-base font-medium text-meta-purple-1">
                   {TEXT?.JOB_TITLE}
@@ -134,111 +134,111 @@ const Page = () => {
                 <input
                   type="text"
                   placeholder="Job title search here..."
-                  className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
+                  className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                 />
               </div>
-              <div className="w-full mt-4">
+              <div className="mt-4 w-full">
                 <label className="text-base font-medium text-meta-purple-1">
                   {TEXT?.KEYWORD}
                 </label>
-                <div className="flex gap-2 items-center w-full flex-wrap">
-                  <div className="flex justify-between rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-3 gap-1 py-3">
+                <div className="flex w-full flex-wrap items-center gap-2">
+                  <div className="mt-1 flex justify-between gap-1 rounded-lg border border-meta-light-blue-1 px-3 py-3 focus:border-meta-light-blue-3">
                     <p>{TEXT?.SERVER_SIDE}</p>
                     <Image
                       alt="date"
                       width={13}
                       height={15}
-                      src={"/job/close.svg"}
+                      src={'/job/close.svg'}
                     />
                   </div>
-                  <div className="flex justify-between rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-3 gap-1 py-3">
+                  <div className="mt-1 flex justify-between gap-1 rounded-lg border border-meta-light-blue-1 px-3 py-3 focus:border-meta-light-blue-3">
                     <p>{TEXT?.JAVA}</p>
                     <Image
                       alt="date"
                       width={13}
                       height={15}
-                      src={"/job/close.svg"}
+                      src={'/job/close.svg'}
                     />
                   </div>
-                  <div className="flex justify-between rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-3 gap-1 py-3">
+                  <div className="mt-1 flex justify-between gap-1 rounded-lg border border-meta-light-blue-1 px-3 py-3 focus:border-meta-light-blue-3">
                     <p>{TEXT?.CSS}</p>
                     <Image
                       alt="date"
                       width={13}
                       height={15}
-                      src={"/job/close.svg"}
+                      src={'/job/close.svg'}
                     />
                   </div>
-                  <div className="flex justify-between rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-3 gap-1 py-3">
+                  <div className="mt-1 flex justify-between gap-1 rounded-lg border border-meta-light-blue-1 px-3 py-3 focus:border-meta-light-blue-3">
                     <p>{TEXT?.ADD_KEYWORD}</p>
                     <Image
                       alt="date"
                       width={15}
                       height={15}
-                      src={"/job/Plus.svg"}
+                      src={'/job/Plus.svg'}
                     />
                   </div>
                 </div>
               </div>
-              <div className="w-full mt-4">
+              <div className="mt-4 w-full">
                 <label className="text-base font-medium text-meta-purple-1">
                   {TEXT?.LOCATION}
                 </label>
                 <input
                   type="text"
                   placeholder="Type location here..."
-                  className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
+                  className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                 />
               </div>
-              <div className="w-full flex flex-col lg:flex-row  mt-4 lg:gap-2">
-                <div className="lg:w-1/2 w-full">
+              <div className="mt-4 flex w-full flex-col  lg:flex-row lg:gap-2">
+                <div className="w-full lg:w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
                     {TEXT?.DATE_UPLOADED}
                   </label>
                   <input
                     type="text"
                     placeholder="DD/MM/YYYY"
-                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
+                    className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                   />
                 </div>
-                <div className="lg:w-1/2 w-full">
+                <div className="w-full lg:w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
                     {TEXT?.EXPERIENCE}
                   </label>
                   <input
                     type="text"
                     placeholder="Type here..."
-                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
+                    className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                   />
                 </div>
               </div>
-              <div className="w-full mt-4 ">
+              <div className="mt-4 w-full ">
                 <label className="text-base font-medium text-meta-purple-1">
                   {TEXT?.STATUS}
                 </label>
-                <div className="flex justify-between items-center w-full flex-wrap">
-                  <div className=" rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3">
+                <div className="flex w-full flex-wrap items-center justify-between">
+                  <div className=" mt-1 rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3">
                     <Checkbox
-                      label={"All"}
-                      className="text-meta-light-blue-3 text-base font-medium"
+                      label={'All'}
+                      className="text-base font-medium text-meta-light-blue-3"
                     />
                   </div>
-                  <div className=" rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3">
+                  <div className=" mt-1 rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3">
                     <Checkbox
-                      label={"Available"}
-                      className="text-meta-light-blue-3 text-base font-medium"
+                      label={'Available'}
+                      className="text-base font-medium text-meta-light-blue-3"
                     />
                   </div>
-                  <div className=" rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3">
+                  <div className=" mt-1 rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3">
                     <Checkbox
-                      label={"Hired"}
-                      className="text-meta-light-blue-3 text-base font-medium"
+                      label={'Hired'}
+                      className="text-base font-medium text-meta-light-blue-3"
                     />
                   </div>
                 </div>
-                <div className="w-full flex justify-end mt-2">
-                  <button className="rounded-xl w-28 h-12 bg-meta-light-blue-1 border border-meta-light-blue-2 ml-5">
-                    <span className="flex justify-center font-medium text-sm text-meta-light-blue-3">
+                <div className="mt-2 flex w-full justify-end">
+                  <button className="ml-5 h-12 w-28 rounded-xl border border-meta-light-blue-2 bg-meta-light-blue-1">
+                    <span className="flex justify-center text-sm font-medium text-meta-light-blue-3">
                       {TEXT?.DONE}
                     </span>
                   </button>
@@ -252,27 +252,27 @@ const Page = () => {
             <input
               type="text"
               placeholder="City pincode"
-              className="w-full h-12 rounded-lg border-2 border-stroke bg-transparent pl-1 py-3 text-black outline-none transition focus:border-primary active:border-primary"
+              className="border-stroke focus:border-primary active:border-primary h-12 w-full rounded-lg border-2 bg-transparent py-3 pl-1 text-black outline-none transition"
             />
           </div>
-          <div className="bg-meta-light-blue-2 rounded-lg p-2 ml-3">
+          <div className="ml-3 rounded-lg bg-meta-light-blue-2 p-2">
             <Image
               alt="date"
               width={19}
               height={19}
-              src={"/dashboard/search.svg"}
+              src={'/dashboard/search.svg'}
             />
           </div>
         </div>
         <Menu as="div" className="relative ml-10">
           <div>
-            <Menu.Button className="relative items-center flex z-20 justify-between w-full min-w-40 appearance-none rounded-lg border border-stroke px-5 py-3 outline-none transition bg-meta-light-blue-2">
+            <Menu.Button className="border-stroke relative z-20 flex w-full min-w-40 appearance-none items-center justify-between rounded-lg border bg-meta-light-blue-2 px-5 py-3 outline-none transition">
               <p>{active}</p>
               <Image
                 alt="Icon"
                 width={14}
                 height={14}
-                src={"/dashboard/SelectDown.svg"}
+                src={'/dashboard/SelectDown.svg'}
               />
             </Menu.Button>
           </div>
@@ -295,9 +295,9 @@ const Page = () => {
                           onClick={() => setActive(list?.status)}
                           className={classNames(
                             active
-                              ? "bg-gray-100 text-gray-900"
-                              : "text-gray-700",
-                            "block px-4 py-2 text-base"
+                              ? 'bg-gray-100 text-gray-900'
+                              : 'text-gray-700',
+                            'block px-4 py-2 text-base',
                           )}
                         >
                           {list?.status}
@@ -313,37 +313,37 @@ const Page = () => {
       </div>
 
       <div>
-        <table className="w-full min-w-[600px] overflow-y-auto overflow-x-auto text-sm text-left">
-          <thead className="shadow-inner border-b border-meta-light-blue-1">
+        <table className="w-full min-w-[600px] overflow-x-auto overflow-y-auto text-left text-sm">
+          <thead className="border-b border-meta-light-blue-1 shadow-inner">
             <tr>
               <th></th>
-              <th className="px-6 py-4 w-1/4">
-                <div className="font-medium text-base text-meta-light-blue-3">
+              <th className="w-1/4 px-6 py-4">
+                <div className="text-base font-medium text-meta-light-blue-3">
                   {TEXT?.NAME}
                 </div>
               </th>
               <th className="px-6 py-4">
-                <div className="font-medium text-base text-meta-light-blue-3">
+                <div className="text-base font-medium text-meta-light-blue-3">
                   {TEXT?.DESIGNATION}
                 </div>
               </th>
               <th className="px-6 py-4">
-                <div className="font-medium text-base text-meta-light-blue-3">
+                <div className="text-base font-medium text-meta-light-blue-3">
                   {TEXT?.EXPERIENCE}
                 </div>
               </th>
 
               <th className="px-6 py-4">
-                <div className="font-medium text-base text-meta-light-blue-3">
+                <div className="text-base font-medium text-meta-light-blue-3">
                   {TEXT?.DATE}
                 </div>
               </th>
               <th className="px-6 py-4">
-                <div className="font-medium text-base text-meta-light-blue-3">
+                <div className="text-base font-medium text-meta-light-blue-3">
                   {TEXT?.MATCHING}
                 </div>
               </th>
-              <th className="px-6 w-1/12" />
+              <th className="w-1/12 px-6" />
             </tr>
           </thead>
           <tbody>
@@ -351,7 +351,7 @@ const Page = () => {
               return (
                 <tr>
                   <td>
-                    <div className="w-3.5 h-3.5 rounded-sm bg-green-500" />
+                    <div className="h-3.5 w-3.5 rounded-sm bg-green-500" />
                   </td>
                   <td className="px-6 py-4 text-gray-500">
                     <div className="flex items-center">
@@ -359,23 +359,23 @@ const Page = () => {
                         alt="Icon"
                         width={31}
                         height={31}
-                        src={"/dashboard/photo.svg"}
+                        src={'/dashboard/photo.svg'}
                       />
-                      <div className="font-medium text-base text-meta-purple-1 pl-4">
+                      <div className="pl-4 text-base font-medium text-meta-purple-1">
                         {item.name}
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 text-gray-500">
                     <div>
-                      <div className="font-medium text-base text-meta-purple-1">
+                      <div className="text-base font-medium text-meta-purple-1">
                         {item.Designation}
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 text-gray-500">
                     <div>
-                      <div className="font-medium text-base text-meta-purple-1">
+                      <div className="text-base font-medium text-meta-purple-1">
                         {item.Experience}
                       </div>
                     </div>
@@ -383,7 +383,7 @@ const Page = () => {
 
                   <td className="px-6 py-4 text-gray-500">
                     <div>
-                      <div className="font-medium text">{item.Date}</div>
+                      <div className="text font-medium">{item.Date}</div>
                     </div>
                   </td>
                   <td className="px-6 py-4 text-gray-500">
@@ -400,14 +400,14 @@ const Page = () => {
                         width={21}
                         height={21}
                         className="mx-4"
-                        src={"/TextContent.svg"}
+                        src={'/TextContent.svg'}
                       />
                       <Image
                         alt="Icon"
                         width={21}
                         height={21}
                         className="mx-4"
-                        src={"/dashboard/EditIcon.svg"}
+                        src={'/dashboard/EditIcon.svg'}
                       />
                     </div>
                   </td>

@@ -1,14 +1,14 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const userAttemptSchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
     required: true,
   },
   exam_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Exam",
+    ref: 'Exam',
     required: true,
   },
   start_time: {
@@ -26,13 +26,13 @@ const userAttemptSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["completed", "failed"],
+    enum: ['completed', 'failed'],
     required: true,
   },
 });
 
 const UserAttempt =
   mongoose.models.UserAttempt ||
-  mongoose.model("UserAttempt", userAttemptSchema);
+  mongoose.model('UserAttempt', userAttemptSchema);
 
 module.exports = UserAttempt;

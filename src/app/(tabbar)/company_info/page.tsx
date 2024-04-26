@@ -1,95 +1,95 @@
-"use client";
-import Image from "next/image";
-import Select from "@/Components/Select";
-import Checkbox from "@/Components/Checkbox";
-import React, { useState, Fragment } from "react";
-import { Dialog, Menu, Popover, Switch, Transition } from "@headlessui/react";
-import { TEXT } from "@/service/Helper";
+'use client';
+import Image from 'next/image';
+import Select from '@/Components/Select';
+import Checkbox from '@/Components/Checkbox';
+import React, { useState, Fragment } from 'react';
+import { Dialog, Menu, Popover, Switch, Transition } from '@headlessui/react';
+import { TEXT } from '@/service/Helper';
 
 const Page = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [enabled, setEnabled] = useState(false);
 
   const SelectOption = [
-    { label: "HR", value: "hr" },
-    { label: "Bench sales", value: "Bench sales" },
-    { label: "Domestic Recruitment", value: "Domestic Recruitment" },
-    { label: "US Recruitment", value: "US Recruitment" },
-    { label: "UK Recruitment", value: "UK Recruitment" },
+    { label: 'HR', value: 'hr' },
+    { label: 'Bench sales', value: 'Bench sales' },
+    { label: 'Domestic Recruitment', value: 'Domestic Recruitment' },
+    { label: 'US Recruitment', value: 'US Recruitment' },
+    { label: 'UK Recruitment', value: 'UK Recruitment' },
   ];
   const tableData = [
     {
-      name: "Kate Tanner",
-      Email: "katetanner123@gmail.com",
-      Experience: "6+ years",
-      Department: "UI/UX Designer",
-      Score: "70%",
-      status: "Send",
+      name: 'Kate Tanner',
+      Email: 'katetanner123@gmail.com',
+      Experience: '6+ years',
+      Department: 'UI/UX Designer',
+      Score: '70%',
+      status: 'Send',
     },
     {
-      name: "Kate Tanner",
-      Email: "katetanner123@gmail.com",
-      Experience: "6+ years",
-      Department: "UI/UX Designer",
-      Score: "70%",
-      status: "Send",
+      name: 'Kate Tanner',
+      Email: 'katetanner123@gmail.com',
+      Experience: '6+ years',
+      Department: 'UI/UX Designer',
+      Score: '70%',
+      status: 'Send',
     },
     {
-      name: "Kate Tanner",
-      Email: "katetanner123@gmail.com",
-      Experience: "6+ years",
-      Department: "UI/UX Designer",
-      Score: "70%",
-      status: "Send",
+      name: 'Kate Tanner',
+      Email: 'katetanner123@gmail.com',
+      Experience: '6+ years',
+      Department: 'UI/UX Designer',
+      Score: '70%',
+      status: 'Send',
     },
     {
-      name: "Kate Tanner",
-      Email: "katetanner123@gmail.com",
-      Experience: "6+ years",
-      Department: "UI/UX Designer",
-      Score: "70%",
-      status: "Send",
+      name: 'Kate Tanner',
+      Email: 'katetanner123@gmail.com',
+      Experience: '6+ years',
+      Department: 'UI/UX Designer',
+      Score: '70%',
+      status: 'Send',
     },
     {
-      name: "Kate Tanner",
-      Email: "katetanner123@gmail.com",
-      Experience: "6+ years",
-      Department: "UI/UX Designer",
-      Score: "70%",
-      status: "Send",
+      name: 'Kate Tanner',
+      Email: 'katetanner123@gmail.com',
+      Experience: '6+ years',
+      Department: 'UI/UX Designer',
+      Score: '70%',
+      status: 'Send',
     },
     {
-      name: "Kate Tanner",
-      Email: "katetanner123@gmail.com",
-      Experience: "6+ years",
-      Department: "UI/UX Designer",
-      Score: "70%",
-      status: "Send",
+      name: 'Kate Tanner',
+      Email: 'katetanner123@gmail.com',
+      Experience: '6+ years',
+      Department: 'UI/UX Designer',
+      Score: '70%',
+      status: 'Send',
     },
     {
-      name: "Kate Tanner",
-      Email: "katetanner123@gmail.com",
-      Experience: "6+ years",
-      Department: "UI/UX Designer",
-      Score: "70%",
-      status: "Send",
+      name: 'Kate Tanner',
+      Email: 'katetanner123@gmail.com',
+      Experience: '6+ years',
+      Department: 'UI/UX Designer',
+      Score: '70%',
+      status: 'Send',
     },
     {
-      name: "Kate Tanner",
-      Email: "katetanner123@gmail.com",
-      Experience: "6+ years",
-      Department: "UI/UX Designer",
-      Score: "70%",
-      status: "Send",
+      name: 'Kate Tanner',
+      Email: 'katetanner123@gmail.com',
+      Experience: '6+ years',
+      Department: 'UI/UX Designer',
+      Score: '70%',
+      status: 'Send',
     },
   ];
 
   return (
     <div>
-      <div className="text-meta-purple-1 font-semibold text-2xl">
+      <div className="text-2xl font-semibold text-meta-purple-1">
         {TEXT?.COMPANY_INFO}
       </div>
-      <div className="flex gap-6 mt-5 mb-10 justify-center items-center">
+      <div className="mb-10 mt-5 flex items-center justify-center gap-6">
         <div className="w-2/4">
           <Popover className="relative">
             <Popover.Button className="absolute left-3 top-4">
@@ -97,16 +97,16 @@ const Page = () => {
                 alt="date"
                 width={19}
                 height={15}
-                src={"/dashboard/filter.svg"}
+                src={'/dashboard/filter.svg'}
               />
             </Popover.Button>
             <input
               type="text"
               placeholder="Job title"
-              className="w-full h-12 rounded-lg border-2 border-stroke bg-transparent px-12 py-3 text-black outline-none transition focus:border-primary active:border-primary"
+              className="border-stroke focus:border-primary active:border-primary h-12 w-full rounded-lg border-2 bg-transparent px-12 py-3 text-black outline-none transition"
             />
 
-            <Popover.Panel className="absolute w-full z-10 mt-2 bg-white rounded-xl shadow-xl border border-meta-light-blue-1 p-4">
+            <Popover.Panel className="absolute z-10 mt-2 w-full rounded-xl border border-meta-light-blue-1 bg-white p-4 shadow-xl">
               <div className="w-full">
                 <label className="text-base font-medium text-meta-purple-1">
                   {TEXT?.JOB_TITLE}
@@ -114,30 +114,30 @@ const Page = () => {
                 <input
                   type="text"
                   placeholder="Job title search here..."
-                  className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
+                  className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                 />
               </div>
-              <div className="w-full mt-4">
+              <div className="mt-4 w-full">
                 <label className="text-base font-medium text-meta-purple-1">
                   {TEXT?.LOCATION}
                 </label>
                 <input
                   type="text"
                   placeholder="Type location here..."
-                  className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
+                  className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                 />
               </div>
 
-              <div className="flex justify-between items-center w-full mt-4">
+              <div className="mt-4 flex w-full items-center justify-between">
                 <div>
                   <Checkbox
-                    label={"Set as default"}
-                    className={"text-meta-light-blue-3 text-base font-medium"}
+                    label={'Set as default'}
+                    className={'text-base font-medium text-meta-light-blue-3'}
                   />
                 </div>
                 <div>
-                  <button className="rounded-xl w-28 h-12 bg-meta-light-blue-1 border border-meta-light-blue-2 ml-5">
-                    <span className="flex justify-center font-medium text-sm text-meta-light-blue-3">
+                  <button className="ml-5 h-12 w-28 rounded-xl border border-meta-light-blue-2 bg-meta-light-blue-1">
+                    <span className="flex justify-center text-sm font-medium text-meta-light-blue-3">
                       {TEXT?.DONE}
                     </span>
                   </button>
@@ -146,57 +146,57 @@ const Page = () => {
             </Popover.Panel>
           </Popover>
         </div>
-        <div className="flex lg:w-2/4 w-1/3 items-center">
-          <div className="bg-meta-light-blue-2 rounded-lg p-2">
+        <div className="flex w-1/3 items-center lg:w-2/4">
+          <div className="rounded-lg bg-meta-light-blue-2 p-2">
             <Image
               alt="date"
               width={19}
               height={19}
-              src={"/dashboard/search.svg"}
+              src={'/dashboard/search.svg'}
             />
           </div>
         </div>
         <button
           onClick={() => setIsOpen(true)}
-          className="rounded-xl w-full max-w-64 min-w-50  h-12 bg-meta-blue-1 border border-meta-light-blue-2 ml-5"
+          className="min-w-50 ml-5 h-12 w-full  max-w-64 rounded-xl border border-meta-light-blue-2 bg-meta-blue-1"
         >
-          <span className="flex justify-center font-medium text-sm text-white">
+          <span className="flex justify-center text-sm font-medium text-white">
             {TEXT?.ADD_EMPLOYEE}
           </span>
         </button>
       </div>
 
       <div>
-        <table className="xl:w-full min-w-[700px] overflow-y-auto overflow-x-auto text-sm text-left">
-          <thead className="shadow-inner border-b border-meta-light-blue-1">
+        <table className="min-w-[700px] overflow-x-auto overflow-y-auto text-left text-sm xl:w-full">
+          <thead className="border-b border-meta-light-blue-1 shadow-inner">
             <tr>
-              <th className="px-6 py-4 w-1/4">
-                <div className="font-medium text-base text-meta-light-blue-3">
+              <th className="w-1/4 px-6 py-4">
+                <div className="text-base font-medium text-meta-light-blue-3">
                   {TEXT?.NAME}
                 </div>
               </th>
               <th className="px-6 py-4">
-                <div className="font-medium text-base text-meta-light-blue-3">
+                <div className="text-base font-medium text-meta-light-blue-3">
                   {TEXT?.DEPARTMENT}
                 </div>
               </th>
               <th className="px-6 py-4">
-                <div className="font-medium text-base text-meta-light-blue-3">
+                <div className="text-base font-medium text-meta-light-blue-3">
                   {TEXT?.EXPERIENCE}
                 </div>
               </th>
 
               <th className="px-6 py-4">
-                <div className="font-medium text-base text-meta-light-blue-3">
+                <div className="text-base font-medium text-meta-light-blue-3">
                   {TEXT?.EMAIL}
                 </div>
               </th>
-              <th className="px-6 w-1/12">
-                <div className="font-medium text-base text-meta-light-blue-3">
+              <th className="w-1/12 px-6">
+                <div className="text-base font-medium text-meta-light-blue-3">
                   {TEXT?.SCORE}
                 </div>
               </th>
-              <th className="px-6 w-1/12" />
+              <th className="w-1/12 px-6" />
             </tr>
           </thead>
           <tbody>
@@ -209,23 +209,23 @@ const Page = () => {
                         alt="Icon"
                         width={31}
                         height={31}
-                        src={"/dashboard/photo.svg"}
+                        src={'/dashboard/photo.svg'}
                       />
-                      <div className="font-medium text-base text-meta-purple-1 pl-4">
+                      <div className="pl-4 text-base font-medium text-meta-purple-1">
                         {item.name}
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 text-gray-500">
                     <div>
-                      <div className="font-medium text-base text-meta-purple-1">
+                      <div className="text-base font-medium text-meta-purple-1">
                         {item.Department}
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 text-gray-500">
                     <div>
-                      <div className="font-medium text-base text-meta-purple-1">
+                      <div className="text-base font-medium text-meta-purple-1">
                         {item.Experience}
                       </div>
                     </div>
@@ -233,19 +233,19 @@ const Page = () => {
 
                   <td className="px-6 py-4 text-gray-500">
                     <div>
-                      <div className="font-medium text-base">{item.Email}</div>
+                      <div className="text-base font-medium">{item.Email}</div>
                     </div>
                   </td>
                   <td className="px-6 py-4 text-gray-500">
                     <div>
-                      <div className="font-medium text-base text-green-500">
+                      <div className="text-base font-medium text-green-500">
                         {item.Score}
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 text-gray-500">
                     <div>
-                      <div className="font-medium text-base">{item.status}</div>
+                      <div className="text-base font-medium">{item.status}</div>
                     </div>
                   </td>
                 </tr>
@@ -283,19 +283,19 @@ const Page = () => {
                   <Dialog.Panel className="w-full max-w-md transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
                     <Dialog.Title
                       as="h3"
-                      className=" p-6 relative border-b-2 border-meta-light-blue-1 text-xl font-semibold leading-6 text-meta-purple-1 flex justify-center items-center"
+                      className=" relative flex items-center justify-center border-b-2 border-meta-light-blue-1 p-6 text-xl font-semibold leading-6 text-meta-purple-1"
                     >
                       {TEXT?.ADD_EMPLOYEE}
                     </Dialog.Title>
                     <div
                       onClick={() => setIsOpen(false)}
-                      className="absolute top-2 right-1 p-2 cursor-pointer"
+                      className="absolute right-1 top-2 cursor-pointer p-2"
                     >
                       <Image
                         alt="date"
                         width={19}
                         height={15}
-                        src={"CloseIcon.svg"}
+                        src={'CloseIcon.svg'}
                       />
                     </div>
                     <div className="w-full p-4">
@@ -303,23 +303,23 @@ const Page = () => {
                         <input
                           type="text"
                           placeholder="Name"
-                          className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
+                          className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                         />
                       </div>
 
-                      <div className="w-full mt-3">
+                      <div className="mt-3 w-full">
                         <Menu
                           as="div"
-                          className="relative z-[1] inline-block text-left w-full"
+                          className="relative z-[1] inline-block w-full text-left"
                         >
-                          <Menu.Button className="inline-flex w-full justify-between items-center rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3">
+                          <Menu.Button className="mt-1 inline-flex w-full items-center justify-between rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3">
                             {TEXT?.DEPARTMENT}
                             <div>
                               <Image
                                 alt="Icon"
                                 width={14}
                                 height={14}
-                                src={"/dashboard/SelectDown.svg"}
+                                src={'/dashboard/SelectDown.svg'}
                               />
                             </div>
                           </Menu.Button>
@@ -339,10 +339,10 @@ const Page = () => {
                                   return (
                                     <Menu.Item>
                                       {({ active }) => (
-                                        <div className="flex justify-between w-full items-center">
+                                        <div className="flex w-full items-center justify-between">
                                           <button
                                             className={`${
-                                              active ? "" : "text-gray-900"
+                                              active ? '' : 'text-gray-900'
                                             } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                           >
                                             {list?.label}
@@ -351,7 +351,7 @@ const Page = () => {
                                             <Checkbox
                                               value={list?.value}
                                               checked={active ? true : false}
-                                              className="text-meta-light-blue-3 text-base font-medium"
+                                              className="text-base font-medium text-meta-light-blue-3"
                                             />
                                           </div>
                                         </div>
@@ -368,21 +368,21 @@ const Page = () => {
                         <input
                           type="text"
                           placeholder="Experience"
-                          className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
+                          className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                         />
                       </div>
                       <div className="mt-3">
                         <input
                           type="text"
                           placeholder="Email"
-                          className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
+                          className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                         />
                       </div>
                       <button
                         onClick={() => setIsOpen(false)}
-                        className="rounded-xl w-full mt-3 h-12 bg-meta-blue-1 border border-meta-light-blue-2"
+                        className="mt-3 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-meta-blue-1"
                       >
-                        <span className="flex justify-center font-medium text-sm text-white">
+                        <span className="flex justify-center text-sm font-medium text-white">
                           {TEXT?.ADD_EMPLOYEE}
                         </span>
                       </button>

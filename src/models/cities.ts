@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const citiesSchema = new mongoose.Schema({
   id: {
@@ -47,6 +47,6 @@ const citiesSchema = new mongoose.Schema({
   },
 });
 
-const Cities = mongoose.models.Cities || mongoose.model("Cities", citiesSchema);
+const Cities = mongoose.models.Cities || mongoose.model('Cities', citiesSchema);
 
 export default Cities;

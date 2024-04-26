@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 
 class Helpers {
   getEnvVariable(key: string): string {
@@ -10,7 +10,7 @@ class Helpers {
   }
 
   async generateToken(id: string) {
-    const JWT_SECRET = this.getEnvVariable("JWT_SECRET");
+    const JWT_SECRET = this.getEnvVariable('JWT_SECRET');
     return jwt.sign({ id }, JWT_SECRET);
   }
 }

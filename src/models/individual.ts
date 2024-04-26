@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const individualSchema = new mongoose.Schema({
   profile_summary: {
@@ -12,7 +12,7 @@ const individualSchema = new mongoose.Schema({
   skills: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
+      ref: 'Category',
     },
   ],
   passing_date: {
@@ -21,7 +21,7 @@ const individualSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    enum: ["male", "female", "other"],
+    enum: ['male', 'female', 'other'],
     required: true,
   },
   date_of_birth: {
@@ -43,20 +43,20 @@ const individualSchema = new mongoose.Schema({
   },
   company_name: {
     type: String,
-    default: "",
+    default: '',
   },
   designation: {
     type: String,
-    default: "",
+    default: '',
   },
   employment_type: {
     type: String,
-    enum: ["full-time", "part-time"],
-    default: "full-time", // if we needed other vis we removed this
+    enum: ['full-time', 'part-time'],
+    default: 'full-time', // if we needed other vis we removed this
   },
   location: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Location",
+    ref: 'Location',
   },
   experience: {
     type: String,
@@ -76,16 +76,16 @@ const individualSchema = new mongoose.Schema({
   },
   reason_for_leaving: {
     type: String,
-    default: "",
+    default: '',
   },
   current_location: {
     type: String,
-    enum: ["USA", "Out of USA"],
+    enum: ['USA', 'Out of USA'],
     required: true,
   },
 });
 
 const Individual =
-  mongoose.models.Individual || mongoose.model("Individual", individualSchema);
+  mongoose.models.Individual || mongoose.model('Individual', individualSchema);
 
 export default Individual;

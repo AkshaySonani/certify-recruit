@@ -1,14 +1,14 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const savedJobSchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
     required: true,
   },
   job_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Job",
+    ref: 'Job',
     required: true,
   },
   saved_date: {
@@ -18,6 +18,6 @@ const savedJobSchema = new mongoose.Schema({
 });
 
 const SavedJob =
-  mongoose.models.SavedJob || mongoose.model("SavedJob", savedJobSchema);
+  mongoose.models.SavedJob || mongoose.model('SavedJob', savedJobSchema);
 
 module.exports = SavedJob;

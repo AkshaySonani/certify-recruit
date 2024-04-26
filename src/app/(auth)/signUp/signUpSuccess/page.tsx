@@ -1,8 +1,8 @@
-"use client";
-import Image from "next/image";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { TEXT } from "@/service/Helper";
+'use client';
+import Image from 'next/image';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { TEXT } from '@/service/Helper';
 
 const Page = () => {
   const router = useRouter();
@@ -11,24 +11,24 @@ const Page = () => {
     <div>
       <div className="container mx-auto">
         <div className="flex justify-center py-20">
-          <Image src={"/MainLogo.svg"} alt="MainLogo" width={334} height={56} />
+          <Image src={'/MainLogo.svg'} alt="MainLogo" width={334} height={56} />
         </div>
 
         <div className="bg-[url('/_Compound.svg')]">
           <div className="flex justify-center">
             <div className="min-w-72 max-w-xl rounded-3xl border border-meta-light-blue-2 p-10">
-              <div className="flex justify-center h-40 my-4">
+              <div className="my-4 flex h-40 justify-center">
                 <Image
                   width={99.32}
                   alt="MainLogo"
                   height={159.52}
-                  src={"/login/ClockMan.svg"}
+                  src={'/login/ClockMan.svg'}
                 />
               </div>
-              <h3 className="font-bold text-3xl text-meta-purple-1 text-center mb-4">
+              <h3 className="mb-4 text-center text-3xl font-bold text-meta-purple-1">
                 {TEXT?.THANK_YOU_FOR_SIGN_UP}
               </h3>
-              <p className="text-meta-light-blue-3 font-medium text-sm text-center mb-4">
+              <p className="mb-4 text-center text-sm font-medium text-meta-light-blue-3">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry's standard dummy
                 text ever since the 1500s

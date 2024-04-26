@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const locationSchema = new mongoose.Schema({
   country: {
@@ -16,6 +16,6 @@ const locationSchema = new mongoose.Schema({
 });
 
 const Location =
-  mongoose.models.Location || mongoose.model("Location", locationSchema);
+  mongoose.models.Location || mongoose.model('Location', locationSchema);
 
 module.exports = Location;

@@ -1,7 +1,7 @@
-"use server";
-import Cities from "@/models/cities";
-import { connect } from "@/db/mongodb";
-import { NextRequest, NextResponse } from "next/server";
+'use server';
+import Cities from '@/models/cities';
+import { connect } from '@/db/mongodb';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async (req: NextRequest) => {
   try {
@@ -16,10 +16,10 @@ export const GET = async (req: NextRequest) => {
   } catch (error) {
     return NextResponse.json(
       {
-        message: "An error occurred while fetching cities.",
+        message: 'An error occurred while fetching cities.',
         error: error,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

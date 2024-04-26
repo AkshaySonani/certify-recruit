@@ -1,20 +1,20 @@
-"use client";
-import React, { useState } from "react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { TEXT } from "@/service/Helper";
-import SignupForm from "@/Components/SignupForm";
+'use client';
+import React, { useState } from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { TEXT } from '@/service/Helper';
+import SignupForm from '@/Components/SignupForm';
 
 const IndividualComp = () => {
   const router = useRouter();
   const [showForms, setShowForms] = useState(false);
   const individualArr = [
-    "US Recruitment",
-    "Domestic Recruitment",
-    "Human Resource",
-    "Bench Sales",
-    "UK Recruitment",
-    "Canada Recruitment",
+    'US Recruitment',
+    'Domestic Recruitment',
+    'Human Resource',
+    'Bench Sales',
+    'UK Recruitment',
+    'Canada Recruitment',
   ];
 
   return (
@@ -25,23 +25,23 @@ const IndividualComp = () => {
         <div className="container mx-auto h-screen max-w-6xl">
           <div className="flex justify-center py-20">
             <Image
-              src={"/MainLogo.svg"}
+              src={'/MainLogo.svg'}
               alt="MainLogo"
               width={334}
               height={56}
             />
           </div>
 
-          <div className="bg-[url('/_Compound.svg')] w-full">
-            <div className="bg-white shadow-[0px_2px_10px_0px_#00000006] w-[80%] m-auto border border-meta-light-blue-2 p-6 rounded-3xl relative">
-              <div className="w-full flex justify-center gap-1">
+          <div className="w-full bg-[url('/_Compound.svg')]">
+            <div className="relative m-auto w-[80%] rounded-3xl border border-meta-light-blue-2 bg-white p-6 shadow-[0px_2px_10px_0px_#00000006]">
+              <div className="flex w-full justify-center gap-1">
                 <Image
                   alt="icon"
                   width={22}
                   height={22}
-                  src={"/Individual.svg"}
+                  src={'/Individual.svg'}
                 />
-                <p className="text-lg text-meta-blue-1 font-semibold">
+                <p className="text-lg font-semibold text-meta-blue-1">
                   {TEXT?.INDIVIDUAL}
                 </p>
               </div>
@@ -54,16 +54,16 @@ const IndividualComp = () => {
                 />
               </div> */}
 
-              <div className="mt-8 flex flex-wrap  gap-5 w-full m-1">
+              <div className="m-1 mt-8 flex  w-full flex-wrap gap-5">
                 {individualArr?.map((list) => {
                   return (
-                    <div className="flex items-center justify-between w-[48%] border border-meta-light-blue-1 rounded-xl py-3 px-3">
+                    <div className="flex w-[48%] items-center justify-between rounded-xl border border-meta-light-blue-1 px-3 py-3">
                       <div className="flex gap-3 ">
                         <Image
                           alt="icon"
                           width={16}
                           height={20}
-                          src={"/Individual.svg"}
+                          src={'/Individual.svg'}
                         />
                         <p className="text-sm font-medium text-meta-light-blue-3">
                           {list}
@@ -74,7 +74,7 @@ const IndividualComp = () => {
                         type="radio"
                         id="inline-2-radio"
                         name="inline-radio-group"
-                        className="w-5 h-5 text-meta-blue-1 bg-meta-blue-1 border-meta-light-blue-1"
+                        className="h-5 w-5 border-meta-light-blue-1 bg-meta-blue-1 text-meta-blue-1"
                       />
                     </div>
                   );
@@ -86,14 +86,14 @@ const IndividualComp = () => {
             onClick={() => {
               setShowForms(true);
             }}
-            className="flex gap-4 mt-5 items-center justify-end w-[80%] m-auto cursor-pointer"
+            className="m-auto mt-5 flex w-[80%] cursor-pointer items-center justify-end gap-4"
           >
-            <p className="text-lg text-meta-blue-1 font-medium">{TEXT?.NEXT}</p>
+            <p className="text-lg font-medium text-meta-blue-1">{TEXT?.NEXT}</p>
             <Image
               width={22}
               height={22}
               alt="LeftArrow"
-              src={"/RightArrow.svg"}
+              src={'/RightArrow.svg'}
             />
           </div>
         </div>

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const examSchema = new mongoose.Schema({
   title: {
@@ -13,7 +13,7 @@ const examSchema = new mongoose.Schema({
   },
   category_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Category",
+    ref: 'Category',
     required: true,
   },
   question: {
@@ -22,6 +22,6 @@ const examSchema = new mongoose.Schema({
   },
 });
 
-const Exam = mongoose.models.Exam || mongoose.model("Exam", examSchema);
+const Exam = mongoose.models.Exam || mongoose.model('Exam', examSchema);
 
 module.exports = Exam;

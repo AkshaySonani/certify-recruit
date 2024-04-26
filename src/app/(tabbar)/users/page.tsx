@@ -1,75 +1,75 @@
-"use client";
-import Image from "next/image";
-import Select from "@/Components/Select";
-import Checkbox from "@/Components/Checkbox";
-import React, { useState, Fragment } from "react";
-import { Dialog, Menu, Popover, Switch, Transition } from "@headlessui/react";
-import { TEXT } from "@/service/Helper";
+'use client';
+import Image from 'next/image';
+import Select from '@/Components/Select';
+import Checkbox from '@/Components/Checkbox';
+import React, { useState, Fragment } from 'react';
+import { Dialog, Menu, Popover, Switch, Transition } from '@headlessui/react';
+import { TEXT } from '@/service/Helper';
 
 const Page = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const SelectOption = [
-    { label: "Admin", value: "admin" },
-    { label: "Employee", value: "employee" },
-    { label: "Role1", value: "Role1" },
+    { label: 'Admin', value: 'admin' },
+    { label: 'Employee', value: 'employee' },
+    { label: 'Role1', value: 'Role1' },
   ];
   const tableData = [
     {
-      name: "Kate Tanner",
-      Email: "UI/UX Designer",
-      Role: "6+ years",
-      Status: "Available",
+      name: 'Kate Tanner',
+      Email: 'UI/UX Designer',
+      Role: '6+ years',
+      Status: 'Available',
     },
     {
-      name: "April Curtis",
-      Email: "UI/UX Designer",
-      Role: "5.5+ years",
-      Status: "Hired",
+      name: 'April Curtis',
+      Email: 'UI/UX Designer',
+      Role: '5.5+ years',
+      Status: 'Hired',
     },
     {
-      name: "Sledge Hammer",
-      Email: "UI/UX Designer",
-      Role: "5.5+ years",
-      Status: "Available",
+      name: 'Sledge Hammer',
+      Email: 'UI/UX Designer',
+      Role: '5.5+ years',
+      Status: 'Available',
     },
     {
-      name: "B.A. Baracus",
-      Email: "UI/UX Designer",
-      Role: "5+ years",
-      Status: "Available",
+      name: 'B.A. Baracus',
+      Email: 'UI/UX Designer',
+      Role: '5+ years',
+      Status: 'Available',
     },
     {
-      name: "Mike Torello",
-      Email: "UI/UX Designer",
-      Role: "4+ years",
-      Status: "Available",
+      name: 'Mike Torello',
+      Email: 'UI/UX Designer',
+      Role: '4+ years',
+      Status: 'Available',
     },
     {
-      name: "Dori Doreau",
-      Email: "UI/UX Designer",
-      Role: "4+ years",
-      Status: "Hired",
+      name: 'Dori Doreau',
+      Email: 'UI/UX Designer',
+      Role: '4+ years',
+      Status: 'Hired',
     },
     {
-      name: "Murdock",
-      Email: "UI/UX Designer",
-      Role: "6+ years",
-      Status: "Available",
+      name: 'Murdock',
+      Email: 'UI/UX Designer',
+      Role: '6+ years',
+      Status: 'Available',
     },
     {
-      name: "Lynn Tanner",
-      Email: "UI/UX Designer",
-      Role: "5+ years",
-      Status: "Hired",
+      name: 'Lynn Tanner',
+      Email: 'UI/UX Designer',
+      Role: '5+ years',
+      Status: 'Hired',
     },
   ];
   const [enabled, setEnabled] = useState(false);
 
   return (
     <div>
-      <div className="text-meta-purple-1 font-semibold text-2xl">Users</div>
-      <div className="flex gap-6 mt-5 mb-10 justify-center items-center">
+      <div className="text-2xl font-semibold text-meta-purple-1">Users</div>
+      <div className="mb-10 mt-5 flex items-center justify-center gap-6">
         <div className="w-2/4">
           <Popover className="relative">
             <Popover.Button className="absolute left-3 top-4">
@@ -77,16 +77,16 @@ const Page = () => {
                 alt="date"
                 width={19}
                 height={15}
-                src={"/dashboard/filter.svg"}
+                src={'/dashboard/filter.svg'}
               />
             </Popover.Button>
             <input
               type="text"
               placeholder="Job title"
-              className="w-full h-12 rounded-lg border-2 border-stroke bg-transparent px-12 py-3 text-black outline-none transition focus:border-primary active:border-primary"
+              className="border-stroke focus:border-primary active:border-primary h-12 w-full rounded-lg border-2 bg-transparent px-12 py-3 text-black outline-none transition"
             />
 
-            <Popover.Panel className="absolute w-full z-10 mt-2 bg-white rounded-xl shadow-xl border border-meta-light-blue-1 p-4">
+            <Popover.Panel className="absolute z-10 mt-2 w-full rounded-xl border border-meta-light-blue-1 bg-white p-4 shadow-xl">
               <div className="w-full">
                 <label className="text-base font-medium text-meta-purple-1">
                   {TEXT?.JOB_TITLE}
@@ -94,30 +94,30 @@ const Page = () => {
                 <input
                   type="text"
                   placeholder="Job title search here..."
-                  className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
+                  className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                 />
               </div>
-              <div className="w-full mt-4">
+              <div className="mt-4 w-full">
                 <label className="text-base font-medium text-meta-purple-1">
                   {TEXT?.LOCATION}
                 </label>
                 <input
                   type="text"
                   placeholder="Type location here..."
-                  className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
+                  className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                 />
               </div>
 
-              <div className="flex justify-between items-center w-full mt-4">
+              <div className="mt-4 flex w-full items-center justify-between">
                 <div>
                   <Checkbox
-                    label={"Set as default"}
-                    className="text-meta-light-blue-3 text-base font-medium"
+                    label={'Set as default'}
+                    className="text-base font-medium text-meta-light-blue-3"
                   />
                 </div>
                 <div>
-                  <button className="rounded-xl w-28 h-12 bg-meta-light-blue-1 border border-meta-light-blue-2 ml-5">
-                    <span className="flex justify-center font-medium text-sm text-meta-light-blue-3">
+                  <button className="ml-5 h-12 w-28 rounded-xl border border-meta-light-blue-2 bg-meta-light-blue-1">
+                    <span className="flex justify-center text-sm font-medium text-meta-light-blue-3">
                       {TEXT?.DONE}
                     </span>
                   </button>
@@ -126,52 +126,52 @@ const Page = () => {
             </Popover.Panel>
           </Popover>
         </div>
-        <div className="flex lg:w-2/4 w-1/3 items-center">
-          <div className="bg-meta-light-blue-2 rounded-lg p-2">
+        <div className="flex w-1/3 items-center lg:w-2/4">
+          <div className="rounded-lg bg-meta-light-blue-2 p-2">
             <Image
               alt="date"
               width={19}
               height={19}
-              src={"/dashboard/search.svg"}
+              src={'/dashboard/search.svg'}
             />
           </div>
         </div>
         <button
           onClick={() => setIsOpen(true)}
-          className="rounded-xl w-full max-w-64 min-w-50  h-12 bg-meta-blue-1 border border-meta-light-blue-2 ml-5"
+          className="min-w-50 ml-5 h-12 w-full  max-w-64 rounded-xl border border-meta-light-blue-2 bg-meta-blue-1"
         >
-          <span className="flex justify-center font-medium text-sm text-white">
+          <span className="flex justify-center text-sm font-medium text-white">
             {TEXT?.ADD_USER}
           </span>
         </button>
       </div>
 
       <div>
-        <table className="xl:w-full min-w-[700px] overflow-y-auto overflow-x-auto text-sm text-left">
-          <thead className="shadow-inner border-b border-meta-light-blue-1">
+        <table className="min-w-[700px] overflow-x-auto overflow-y-auto text-left text-sm xl:w-full">
+          <thead className="border-b border-meta-light-blue-1 shadow-inner">
             <tr>
-              <th className="px-6 py-4 w-1/4">
-                <div className="font-medium text-base text-meta-light-blue-3">
+              <th className="w-1/4 px-6 py-4">
+                <div className="text-base font-medium text-meta-light-blue-3">
                   {TEXT?.NAME}
                 </div>
               </th>
               <th className="px-6 py-4">
-                <div className="font-medium text-base text-meta-light-blue-3">
+                <div className="text-base font-medium text-meta-light-blue-3">
                   {TEXT?.EMAIL}
                 </div>
               </th>
               <th className="px-6 py-4">
-                <div className="font-medium text-base text-meta-light-blue-3">
+                <div className="text-base font-medium text-meta-light-blue-3">
                   {TEXT?.ROLE}
                 </div>
               </th>
 
               <th className="px-6 py-4">
-                <div className="font-medium text-base text-meta-light-blue-3">
+                <div className="text-base font-medium text-meta-light-blue-3">
                   {TEXT?.STATUS}
                 </div>
               </th>
-              <th className="px-6 w-1/12" />
+              <th className="w-1/12 px-6" />
             </tr>
           </thead>
           <tbody>
@@ -184,23 +184,23 @@ const Page = () => {
                         alt="Icon"
                         width={31}
                         height={31}
-                        src={"/dashboard/photo.svg"}
+                        src={'/dashboard/photo.svg'}
                       />
-                      <div className="font-medium text-base text-meta-purple-1 pl-4">
+                      <div className="pl-4 text-base font-medium text-meta-purple-1">
                         {item.name}
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 text-gray-500">
                     <div>
-                      <div className="font-medium text-base text-meta-purple-1">
+                      <div className="text-base font-medium text-meta-purple-1">
                         {item.Email}
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 text-gray-500">
                     <div>
-                      <div className="font-medium text-base text-meta-purple-1">
+                      <div className="text-base font-medium text-meta-purple-1">
                         {item.Role}
                       </div>
                     </div>
@@ -209,10 +209,10 @@ const Page = () => {
                   <td className="px-6 py-4 text-gray-500">
                     <div>
                       <div
-                        className={`font-medium text-base ${
-                          item.Status === "Hired"
-                            ? "text-meta-red-1"
-                            : "text-meta-green-1"
+                        className={`text-base font-medium ${
+                          item.Status === 'Hired'
+                            ? 'text-meta-red-1'
+                            : 'text-meta-green-1'
                         }  `}
                       >
                         {item.Status}
@@ -225,13 +225,13 @@ const Page = () => {
                         checked={enabled}
                         onChange={setEnabled}
                         className={`${
-                          enabled ? "bg-gray-100" : "bg-green-100"
+                          enabled ? 'bg-gray-100' : 'bg-green-100'
                         } relative inline-flex h-6 w-12 items-center rounded-full`}
                       >
                         <span className="sr-only">Enable notifications</span>
                         <span
                           className={`${
-                            enabled ? "translate-x-6" : "translate-x-1"
+                            enabled ? 'translate-x-6' : 'translate-x-1'
                           } inline-block h-4 w-4 transform rounded-full bg-blue-600 transition`}
                         />
                       </Switch>
@@ -240,7 +240,7 @@ const Page = () => {
                         width={21}
                         height={21}
                         className="mx-4"
-                        src={"/dashboard/EditIcon.svg"}
+                        src={'/dashboard/EditIcon.svg'}
                       />
                     </div>
                   </td>
@@ -279,19 +279,19 @@ const Page = () => {
                   <Dialog.Panel className="w-full max-w-md transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
                     <Dialog.Title
                       as="h3"
-                      className=" p-6 relative border-b-default-1 border-meta-light-blue-1 text-xl font-semibold leading-6 text-meta-purple-1 flex justify-center items-center"
+                      className=" border-b-default-1 relative flex items-center justify-center border-meta-light-blue-1 p-6 text-xl font-semibold leading-6 text-meta-purple-1"
                     >
                       {TEXT?.ADD_USER}
                     </Dialog.Title>
                     <div
                       onClick={() => setIsOpen(false)}
-                      className="absolute top-2 right-1 p-2 cursor-pointer"
+                      className="absolute right-1 top-2 cursor-pointer p-2"
                     >
                       <Image
                         alt="date"
                         width={19}
                         height={15}
-                        src={"CloseIcon.svg"}
+                        src={'CloseIcon.svg'}
                       />
                     </div>
                     <div className="w-full p-4">
@@ -299,29 +299,29 @@ const Page = () => {
                         <input
                           type="text"
                           placeholder="Name"
-                          className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
+                          className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                         />
                       </div>
                       <div className="mt-3">
                         <input
                           type="text"
                           placeholder="Email"
-                          className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
+                          className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                         />
                       </div>
-                      <div className="w-full mt-3">
+                      <div className="mt-3 w-full">
                         <Menu
                           as="div"
-                          className="relative z-[1] inline-block text-left w-full"
+                          className="relative z-[1] inline-block w-full text-left"
                         >
-                          <Menu.Button className="inline-flex w-full justify-between items-center rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3">
+                          <Menu.Button className="mt-1 inline-flex w-full items-center justify-between rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3">
                             {TEXT?.ROLE}
                             <div>
                               <Image
                                 alt="Icon"
                                 width={14}
                                 height={14}
-                                src={"/dashboard/SelectDown.svg"}
+                                src={'/dashboard/SelectDown.svg'}
                               />
                             </div>
                           </Menu.Button>
@@ -341,10 +341,10 @@ const Page = () => {
                                   return (
                                     <Menu.Item>
                                       {({ active }) => (
-                                        <div className="flex justify-between w-full items-center">
+                                        <div className="flex w-full items-center justify-between">
                                           <button
                                             className={`${
-                                              active ? "" : "text-gray-900"
+                                              active ? '' : 'text-gray-900'
                                             } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                           >
                                             {list?.label}
@@ -354,7 +354,7 @@ const Page = () => {
                                               checked={active ? true : false}
                                               value={list?.value}
                                               className={
-                                                "text-meta-light-blue-3 text-base font-medium"
+                                                'text-base font-medium text-meta-light-blue-3'
                                               }
                                             />
                                           </div>
@@ -370,9 +370,9 @@ const Page = () => {
                       </div>
                       <button
                         onClick={() => setIsOpen(false)}
-                        className="rounded-xl w-full mt-4 h-12 bg-meta-blue-1 border border-meta-light-blue-2"
+                        className="mt-4 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-meta-blue-1"
                       >
-                        <span className="flex justify-center font-medium text-sm text-white">
+                        <span className="flex justify-center text-sm font-medium text-white">
                           {TEXT?.ADD_USER}
                         </span>
                       </button>

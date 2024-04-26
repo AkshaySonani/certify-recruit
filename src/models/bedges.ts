@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const badgeSchema = new mongoose.Schema({
   name: {
@@ -11,20 +11,20 @@ const badgeSchema = new mongoose.Schema({
   },
   certificate_url: {
     type: String, // Assuming storing image URL
-    default: "",
+    default: '',
   },
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
     required: true,
   },
   exam_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Exam",
+    ref: 'Exam',
     required: true,
   },
 });
 
-const Badge = mongoose.models.Badge || mongoose.model("Badge", badgeSchema);
+const Badge = mongoose.models.Badge || mongoose.model('Badge', badgeSchema);
 
 module.exports = Badge;

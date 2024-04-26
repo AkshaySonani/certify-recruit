@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { boolean } from "yup";
+import mongoose from 'mongoose';
+import { boolean } from 'yup';
 
 const jobSchema = new mongoose.Schema({
   title: {
@@ -8,7 +8,7 @@ const jobSchema = new mongoose.Schema({
   },
   company_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
     required: true,
   },
   company_name: {
@@ -26,26 +26,26 @@ const jobSchema = new mongoose.Schema({
   workplace: {
     type: String,
     require: true,
-    enum: ["ONSITE", "HYBRID", "REMOTE"],
+    enum: ['ONSITE', 'HYBRID', 'REMOTE'],
   },
   status: {
     type: String,
-    enum: ["PENDING", "ACTIVE"],
+    enum: ['PENDING', 'ACTIVE'],
   },
   job_types: {
     type: String,
     enum: [
-      "FULLTIME",
-      "PARTTIME",
-      "ONDEMAND",
-      "TEMPORARY",
-      "VOLUNTEER",
-      "INTERNSHIP",
+      'FULLTIME',
+      'PARTTIME',
+      'ONDEMAND',
+      'TEMPORARY',
+      'VOLUNTEER',
+      'INTERNSHIP',
     ],
   },
   salary_pay: {
     type: String,
-    enum: ["HOURLY", "MONTHLY"],
+    enum: ['HOURLY', 'MONTHLY'],
   },
   hourly_rate: {
     type: Number,
@@ -64,7 +64,7 @@ const jobSchema = new mongoose.Schema({
   skills: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
+      ref: 'Category',
     },
   ],
   multiple_hire: {
@@ -76,7 +76,7 @@ const jobSchema = new mongoose.Schema({
   city: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Cities",
+      ref: 'Cities',
       required: true,
     },
   ],
@@ -100,6 +100,6 @@ const jobSchema = new mongoose.Schema({
   },
 });
 
-const Job = mongoose.models.Job || mongoose.model("Job", jobSchema);
+const Job = mongoose.models.Job || mongoose.model('Job', jobSchema);
 
 export default Job;

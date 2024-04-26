@@ -1,20 +1,20 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const jobApplicationSchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
     required: true,
   },
   job_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Job",
+    ref: 'Job',
     required: true,
   },
   status: {
     type: String,
-    enum: ["pending", "accepted", "rejected"],
-    default: "pending",
+    enum: ['pending', 'accepted', 'rejected'],
+    default: 'pending',
   },
   cover_letter: {
     type: String,
@@ -27,6 +27,6 @@ const jobApplicationSchema = new mongoose.Schema({
 
 const JobApplication =
   mongoose.models.JobApplication ||
-  mongoose.model("JobApplication", jobApplicationSchema);
+  mongoose.model('JobApplication', jobApplicationSchema);
 
 module.exports = JobApplication;

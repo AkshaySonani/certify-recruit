@@ -1,30 +1,30 @@
-import bcrypt from "bcryptjs";
-import User from "@/models/user";
-import NextAuth from "next-auth/next";
-import { connect } from "@/db/mongodb";
-import { AuthOptions } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from 'bcryptjs';
+import User from '@/models/user';
+import NextAuth from 'next-auth/next';
+import { connect } from '@/db/mongodb';
+import { AuthOptions } from 'next-auth';
+import GoogleProvider from 'next-auth/providers/google';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const authOptions: AuthOptions = {
   providers: [
     // SignUp
     CredentialsProvider({
-      id: "signup",
-      name: "credentials",
+      id: 'signup',
+      name: 'credentials',
       credentials: {
-        isLogin: { type: "boolean" },
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+        isLogin: { type: 'boolean' },
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
         const { role, email, password }: any = credentials;
         try {
           await connect();
           // check if the user exists
-          const user = await User.findOne({ email }).select("+password");
+          const user = await User.findOne({ email }).select('+password');
           if (user) {
-            throw new Error("User with email already exists!");
+            throw new Error('User with email already exists!');
           } else {
             // hash password, create user
             const salt = await bcrypt.genSalt(Number(process.env.NEXT_SLAT));
@@ -38,18 +38,18 @@ export const authOptions: AuthOptions = {
             return newUser;
           }
         } catch (error) {
-          console.log("register error", error);
+          console.log('register error', error);
           throw new Error(`${error}`);
         }
       },
     }),
     // SignIn
     CredentialsProvider({
-      id: "signin",
-      name: "credentials",
+      id: 'signin',
+      name: 'credentials',
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
         const { email, password }: any = credentials;
@@ -57,41 +57,41 @@ export const authOptions: AuthOptions = {
           await connect();
           // check if the user exists
           // Find user by email
-          const user = await User.findOne({ email: email }).select("+password");
+          const user = await User.findOne({ email: email }).select('+password');
           if (!user) {
-            throw new Error("User not found.");
+            throw new Error('User not found.');
           } else {
             // Check password
             const passwordsMatch = await bcrypt.compare(
               password,
-              user.password
+              user.password,
             );
             if (!passwordsMatch) {
-              throw new Error("Incorrect credentials provided.");
+              throw new Error('Incorrect credentials provided.');
             } else {
               return user;
             }
           }
         } catch (error) {
-          console.log("login error", error);
+          console.log('login error', error);
           throw new Error(`${error}`);
         }
       },
     }),
     // Google auth
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+      clientId: process.env.GOOGLE_CLIENT_ID || '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
     }),
   ],
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60, // 30 days
     updateAge: 24 * 60 * 60, // 24 hours
   },
   callbacks: {
     async signIn({ user, account }: any) {
-      if (account.provider === "signin" || account.provider === "signup") {
+      if (account.provider === 'signin' || account.provider === 'signup') {
         return true;
       }
 
@@ -142,7 +142,7 @@ export const authOptions: AuthOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/login",
+    signIn: '/login',
   },
 };
 

@@ -1,14 +1,14 @@
-"use client";
-import * as Yup from "yup";
-import Image from "next/image";
-import { useFormik } from "formik";
-import Api from "@/service/ApiService";
-import { toast } from "react-toastify";
-import React, { useState } from "react";
-import { signIn } from "next-auth/react";
-import Button from "@/Components/Button";
-import { useRouter } from "next/navigation";
-import { EMAIlREGEX, ROUTE, TEXT } from "@/service/Helper";
+'use client';
+import * as Yup from 'yup';
+import Image from 'next/image';
+import { useFormik } from 'formik';
+import Api from '@/service/ApiService';
+import { toast } from 'react-toastify';
+import React, { useState } from 'react';
+import { signIn } from 'next-auth/react';
+import Button from '@/Components/Button';
+import { useRouter } from 'next/navigation';
+import { EMAIlREGEX, ROUTE, TEXT } from '@/service/Helper';
 
 const Page = () => {
   const router = useRouter();
@@ -16,34 +16,34 @@ const Page = () => {
   const [eye, setEye] = useState(false);
   const validationSchema = Yup.object().shape({
     email: Yup.string()
-      .required("Email is required.")
-      .matches(EMAIlREGEX, "Invalid email"),
+      .required('Email is required.')
+      .matches(EMAIlREGEX, 'Invalid email'),
 
     password: Yup.string()
-      .required("Password is required.")
+      .required('Password is required.')
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/,
         // /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+        'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character',
       ),
   });
 
   const signInWithEmailAndPassword = async (values: any) => {
     try {
-      const signInResponse = await signIn("signin", {
+      const signInResponse = await signIn('signin', {
         ...values,
         redirect: false,
       });
-      console.log("signInResponse", signInResponse);
+      console.log('signInResponse', signInResponse);
       if (!signInResponse?.ok) {
         toast.error(signInResponse?.error);
       } else {
-        router.push("/dashboard");
-        toast.success("User successfully logged in");
+        router.push('/dashboard');
+        toast.success('User successfully logged in');
       }
     } catch (error) {
-      console.log("🚀 ~ signInWithEmailAndPassword ~ error:", error);
-      toast.error("Error signing in with email and password. Try again later.");
+      console.log('🚀 ~ signInWithEmailAndPassword ~ error:', error);
+      toast.error('Error signing in with email and password. Try again later.');
     }
   };
 
@@ -79,8 +79,8 @@ const Page = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
     validationSchema,
     enableReinitialize: true,
@@ -90,36 +90,36 @@ const Page = () => {
     <div>
       <div className="container mx-auto max-w-6xl">
         <div className="flex justify-center py-20">
-          <Image src={"/MainLogo.svg"} alt="MainLogo" width={334} height={56} />
+          <Image src={'/MainLogo.svg'} alt="MainLogo" width={334} height={56} />
         </div>
 
         <div className="bg-[url('/_Compound.svg')]">
           <form onSubmit={formik.handleSubmit}>
             <div className="flex justify-center">
-              <div className="min-w-72 max-w-md bg-white w-10/12 rounded-3xl border border-meta-light-blue-2 py-10 px-5 sm:px-10 mb-20">
-                <h3 className="font-bold text-3xl text-meta-purple-1 text-center mb-4">
+              <div className="mb-20 w-10/12 min-w-72 max-w-md rounded-3xl border border-meta-light-blue-2 bg-white px-5 py-10 sm:px-10">
+                <h3 className="mb-4 text-center text-3xl font-bold text-meta-purple-1">
                   {TEXT?.HI_THERE}
                 </h3>
-                <p className="text-meta-light-blue-3 font-medium text-sm text-center mb-10">
+                <p className="mb-10 text-center text-sm font-medium text-meta-light-blue-3">
                   {TEXT?.WELCOME_BACK_TO_CERTIFY}
                 </p>
-                <button className="rounded-xl w-full h-12 bg-white text-xl font-semibold text-meta-light-blue-3 border border-meta-light-blue-2 hover:bg-meta-gray-2 mb-8">
+                <button className="mb-8 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-white text-xl font-semibold text-meta-light-blue-3 hover:bg-meta-gray-2">
                   <span className="flex justify-center">
                     <Image
                       width={20}
                       height={20}
                       alt="Google-icon"
-                      src={"/login/GoogleIcon.svg"}
+                      src={'/login/GoogleIcon.svg'}
                     />
-                    <span className="ml-5 font-medium text-sm text-meta-blue-1">
+                    <span className="ml-5 text-sm font-medium text-meta-blue-1">
                       {TEXT?.LOG_IN_WITH_GOOGLE}
                     </span>
                   </span>
                 </button>
-                <div className="flex justify-center items-center mb-8">
-                  <div className="border-b border-meta-light-blue-2 w-14" />
-                  <span className="text-xs font-normal mx-2">{TEXT?.OR}</span>
-                  <div className="border-b border-meta-light-blue-2 w-14" />
+                <div className="mb-8 flex items-center justify-center">
+                  <div className="w-14 border-b border-meta-light-blue-2" />
+                  <span className="mx-2 text-xs font-normal">{TEXT?.OR}</span>
+                  <div className="w-14 border-b border-meta-light-blue-2" />
                 </div>
                 <div className="mb-3">
                   <input
@@ -129,7 +129,7 @@ const Page = () => {
                     name="email"
                     type="text"
                     placeholder={TEXT?.EMAIL}
-                    className="rounded-xl w-full h-12 border focus:outline-meta-light-blue-1 border-meta-light-blue-2  pl-4"
+                    className="h-12 w-full rounded-xl border border-meta-light-blue-2 pl-4  focus:outline-meta-light-blue-1"
                   />
                   {formik.touched.email && formik.errors.email && (
                     <div className="error">{formik.errors.email}</div>
@@ -141,15 +141,15 @@ const Page = () => {
                     onChange={formik.handleChange}
                     name="password"
                     placeholder={TEXT?.PASSWORD}
-                    type={eye ? "text" : "password"}
-                    className="rounded-xl w-full h-12 border focus:outline-meta-light-blue-1 border-meta-light-blue-2  pl-4"
+                    type={eye ? 'text' : 'password'}
+                    className="h-12 w-full rounded-xl border border-meta-light-blue-2 pl-4  focus:outline-meta-light-blue-1"
                   />
                   {!eye && (
                     <Image
                       alt="eye"
                       width={18}
                       height={18}
-                      src={"/login/Eye-close.svg"}
+                      src={'/login/Eye-close.svg'}
                       className="absolute right-4 top-4"
                       onClick={() => setEye((prev) => !prev)}
                     />
@@ -159,7 +159,7 @@ const Page = () => {
                       alt="eye"
                       width={18}
                       height={18}
-                      src={"/login/Eye-open.svg"}
+                      src={'/login/Eye-open.svg'}
                       className="absolute right-4 top-4"
                       onClick={() => setEye((prev) => !prev)}
                     />
@@ -168,17 +168,17 @@ const Page = () => {
                     <div className="error">{formik.errors.password}</div>
                   )}
                 </div>
-                <div className="flex justify-end items-center mb-3">
+                <div className="mb-3 flex items-center justify-end">
                   <span
-                    className="text-xs text-meta-blue-1 font-normal mx-2 cursor-pointer"
-                    onClick={() => router.push("/login/forgotPass")}
+                    className="mx-2 cursor-pointer text-xs font-normal text-meta-blue-1"
+                    onClick={() => router.push('/login/forgotPass')}
                   >
                     {TEXT?.FORGOT_PASSWORD}
                   </span>
                 </div>
                 <Button
                   title={TEXT?.LOG_IN}
-                  handleClick={() => console.log("click")}
+                  handleClick={() => console.log('click')}
                 />
                 {/* <button
                   // onClick={() => handleSubmit()}
@@ -189,12 +189,12 @@ const Page = () => {
                   </span>
                 </button> */}
 
-                <div className="flex justify-center items-center font-medium text-sm text-meta-light-blue-3">
+                <div className="flex items-center justify-center text-sm font-medium text-meta-light-blue-3">
                   <span>
                     {TEXT?.DONT_HAVE_AN_ACCOUNT}
                     <span
                       onClick={() => router.push(ROUTE?.SIGN_UP)}
-                      className="text-meta-blue-1 hover:text-meta-blue-2 cursor-pointer"
+                      className="cursor-pointer text-meta-blue-1 hover:text-meta-blue-2"
                     >
                       {TEXT?.SIGN_UP}
                     </span>

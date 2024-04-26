@@ -1,16 +1,16 @@
-"use client";
-import * as Yup from "yup";
-import Button from "./Button";
-import Image from "next/image";
-import { useFormik } from "formik";
-import { toast } from "react-toastify";
-import API from "@/service/ApiService";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import SignupSuccess from "./SignupSuccess";
-import AppContext from "@/context/AppProvider";
-import React, { useContext, useState } from "react";
-import { EMAIlREGEX, ROUTE, TEXT } from "@/service/Helper";
+'use client';
+import * as Yup from 'yup';
+import Button from './Button';
+import Image from 'next/image';
+import { useFormik } from 'formik';
+import { toast } from 'react-toastify';
+import API from '@/service/ApiService';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import SignupSuccess from './SignupSuccess';
+import AppContext from '@/context/AppProvider';
+import React, { useContext, useState } from 'react';
+import { EMAIlREGEX, ROUTE, TEXT } from '@/service/Helper';
 
 type formValues = {
   email: string;
@@ -24,33 +24,33 @@ const SignupForm = () => {
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
-      .required("Email is required.")
-      .matches(EMAIlREGEX, "Invalid email"),
+      .required('Email is required.')
+      .matches(EMAIlREGEX, 'Invalid email'),
 
     password: Yup.string()
-      .required("Password is required.")
+      .required('Password is required.')
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+        'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character',
       ),
   });
 
   const signUpWithEmailAndPassword = async (values: any) => {
     try {
-      const signUpResponse = await signIn("signup", {
+      const signUpResponse = await signIn('signup', {
         ...values,
         redirect: false,
         role: context.currentRole,
       });
-      console.log("signInResponse", signUpResponse);
+      console.log('signInResponse', signUpResponse);
       if (!signUpResponse?.ok) {
         toast.error(signUpResponse?.error);
       } else {
         setSuccessMsg(true);
-        toast.success("User successfully register");
+        toast.success('User successfully register');
       }
     } catch (error) {
-      toast.error("Error signing in with email and password. Try again later.");
+      toast.error('Error signing in with email and password. Try again later.');
     }
   };
 
@@ -93,8 +93,8 @@ const SignupForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
     validationSchema,
     enableReinitialize: true,
@@ -109,7 +109,7 @@ const SignupForm = () => {
         <div className="container mx-auto max-w-6xl">
           <div className="flex justify-center py-20">
             <Image
-              src={"/MainLogo.svg"}
+              src={'/MainLogo.svg'}
               alt="MainLogo"
               width={334}
               height={56}
@@ -118,30 +118,30 @@ const SignupForm = () => {
           <form onSubmit={formik.handleSubmit}>
             <div className="bg-[url('/_Compound.svg')] ">
               <div className="flex justify-center">
-                <div className="min-w-72 max-w-md bg-white w-10/12 rounded-3xl border border-meta-light-blue-2 py-10 px-5 sm:px-10 mb-20">
-                  <h3 className="font-bold text-3xl text-meta-purple-1 text-center mb-4">
+                <div className="mb-20 w-10/12 min-w-72 max-w-md rounded-3xl border border-meta-light-blue-2 bg-white px-5 py-10 sm:px-10">
+                  <h3 className="mb-4 text-center text-3xl font-bold text-meta-purple-1">
                     {TEXT?.Get_Started}
                   </h3>
-                  <p className="text-meta-light-blue-3 font-medium text-sm text-center mb-10">
+                  <p className="mb-10 text-center text-sm font-medium text-meta-light-blue-3">
                     {TEXT?.YOUR_NEW_JOURNEY_BEGINS_NOW}
                   </p>
-                  <button className="rounded-xl w-full h-12 bg-white text-xl font-semibold text-meta-light-blue-3 border border-meta-light-blue-2 hover:bg-meta-gray-2 mb-8">
-                    <span className="flex justify-center items-center">
+                  <button className="mb-8 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-white text-xl font-semibold text-meta-light-blue-3 hover:bg-meta-gray-2">
+                    <span className="flex items-center justify-center">
                       <Image
                         width={20}
                         height={20}
                         alt="Google-icon"
-                        src={"/login/GoogleIcon.svg"}
+                        src={'/login/GoogleIcon.svg'}
                       />
-                      <span className="ml-5 font-medium text-sm text-meta-blue-1">
+                      <span className="ml-5 text-sm font-medium text-meta-blue-1">
                         {TEXT?.SIGN_UP_WITH_GOOGLE}
                       </span>
                     </span>
                   </button>
-                  <div className="flex justify-center items-center mb-8">
-                    <div className="border-b border-meta-light-blue-2 w-14" />
-                    <span className="text-xs font-normal mx-2">{TEXT?.OR}</span>
-                    <div className="border-b border-meta-light-blue-2 w-14" />
+                  <div className="mb-8 flex items-center justify-center">
+                    <div className="w-14 border-b border-meta-light-blue-2" />
+                    <span className="mx-2 text-xs font-normal">{TEXT?.OR}</span>
+                    <div className="w-14 border-b border-meta-light-blue-2" />
                   </div>
                   <div className="mb-3">
                     <input
@@ -151,7 +151,7 @@ const SignupForm = () => {
                       name="email"
                       type="text"
                       placeholder={TEXT?.EMAIL}
-                      className="rounded-xl w-full h-12 border border-meta-light-blue-2 focus:outline-meta-light-blue-1 pl-4"
+                      className="h-12 w-full rounded-xl border border-meta-light-blue-2 pl-4 focus:outline-meta-light-blue-1"
                     />
                     {formik.touched.email && formik.errors.email && (
                       <div className="error">{formik.errors.email}</div>
@@ -163,15 +163,15 @@ const SignupForm = () => {
                       onChange={formik.handleChange}
                       name="password"
                       placeholder={TEXT?.PASSWORD}
-                      type={eye ? "text" : "password"}
-                      className="rounded-xl w-full h-12 border border-meta-light-blue-2 focus:outline-meta-light-blue-1 pl-4"
+                      type={eye ? 'text' : 'password'}
+                      className="h-12 w-full rounded-xl border border-meta-light-blue-2 pl-4 focus:outline-meta-light-blue-1"
                     />
                     {!eye && (
                       <Image
                         alt="eye"
                         width={18}
                         height={18}
-                        src={"/login/Eye-close.svg"}
+                        src={'/login/Eye-close.svg'}
                         className="absolute right-4 top-4"
                         onClick={() => setEye((prev) => !prev)}
                       />
@@ -181,7 +181,7 @@ const SignupForm = () => {
                         alt="eye"
                         width={18}
                         height={18}
-                        src={"/login/Eye-open.svg"}
+                        src={'/login/Eye-open.svg'}
                         className="absolute right-4 top-4"
                         onClick={() => setEye((prev) => !prev)}
                       />
@@ -201,12 +201,12 @@ const SignupForm = () => {
                       {TEXT?.SIGN_UP}
                     </span>
                   </button> */}
-                  <div className="flex justify-center items-center font-medium text-sm text-meta-light-blue-3">
+                  <div className="flex items-center justify-center text-sm font-medium text-meta-light-blue-3">
                     <span>
                       {TEXT?.ALREADY_HAVE_AN_ACCOUNT}
                       <span
                         onClick={() => router.push(ROUTE?.LOGIN)}
-                        className="text-meta-blue-1 hover:text-meta-blue-2 cursor-pointer"
+                        className="cursor-pointer text-meta-blue-1 hover:text-meta-blue-2"
                       >
                         {TEXT?.LOG_IN}
                       </span>

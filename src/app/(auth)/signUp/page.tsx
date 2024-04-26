@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import React, { useContext, useEffect, useState } from "react";
-import SelectRoleComp from "@/Components/SelectRoleComp";
-import EmployeeComp from "@/Components/EmployeeComp";
-import IndividualComp from "@/Components/IndividualComp";
-import AppContext from "@/context/AppProvider";
+import React, { useContext, useEffect, useState } from 'react';
+import SelectRoleComp from '@/Components/SelectRoleComp';
+import EmployeeComp from '@/Components/EmployeeComp';
+import IndividualComp from '@/Components/IndividualComp';
+import AppContext from '@/context/AppProvider';
 const Page = () => {
   const context = useContext(AppContext);
   useEffect(() => {
-    context?.setCurrentRole("");
+    context?.setCurrentRole('');
   }, []);
 
   return (
     <div>
-      {context?.currentRole === "" ? (
+      {context?.currentRole === '' ? (
         <SelectRoleComp />
-      ) : context?.currentRole === "employee" ? (
+      ) : context?.currentRole === 'employee' ? (
         <EmployeeComp />
-      ) : context?.currentRole === "individual" ? (
+      ) : context?.currentRole === 'individual' ? (
         <IndividualComp />
       ) : (
-        ""
+        ''
       )}
     </div>
   );

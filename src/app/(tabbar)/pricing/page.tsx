@@ -1,8 +1,8 @@
-"use client";
-import Image from "next/image";
-import React, { useState } from "react";
-import { Switch } from "@headlessui/react";
-import { TEXT } from "@/service/Helper";
+'use client';
+import Image from 'next/image';
+import React, { useState } from 'react';
+import { Switch } from '@headlessui/react';
+import { TEXT } from '@/service/Helper';
 
 const Page = () => {
   const [enabled, setEnabled] = useState(false);
@@ -10,16 +10,16 @@ const Page = () => {
   return (
     <section>
       <div className="text-center">
-        <div className="text-meta-purple-1 font-semibold text-3xl">
+        <div className="text-3xl font-semibold text-meta-purple-1">
           {TEXT?.CHOOSE_YOUR_PLAN}
         </div>
-        <div className="text-meta-light-blue-3 font-medium text-base mt-2">
+        <div className="mt-2 text-base font-medium text-meta-light-blue-3">
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry.
         </div>
       </div>
-      <div className="flex justify-center items-center my-14">
-        <div className="text-meta-purple-1 font-medium text-xl mx-3">
+      <div className="my-14 flex items-center justify-center">
+        <div className="mx-3 text-xl font-medium text-meta-purple-1">
           {TEXT?.MONTHLY}
         </div>
         <div className="mx-2">
@@ -27,48 +27,48 @@ const Page = () => {
             checked={enabled}
             onChange={setEnabled}
             className={`${
-              enabled ? "bg-gray-100" : "bg-green-100"
+              enabled ? 'bg-gray-100' : 'bg-green-100'
             } relative inline-flex h-6 w-11 items-center rounded-full`}
           >
             <span className="sr-only">Enable notifications</span>
             <span
               className={`${
-                enabled ? "translate-x-6" : "translate-x-1"
+                enabled ? 'translate-x-6' : 'translate-x-1'
               } inline-block h-4 w-4 transform rounded-full bg-blue-600 transition`}
             />
           </Switch>
         </div>
-        <div className="text-meta-light-blue-3 font-medium text-xl mx-2">
+        <div className="mx-2 text-xl font-medium text-meta-light-blue-3">
           {TEXT?.YEARLY}
         </div>
-        <div className="text-meta-blue-1 font-medium text-sm">20%off</div>
+        <div className="text-sm font-medium text-meta-blue-1">20%off</div>
       </div>
 
-      <div className="flex flex-wrap gap-6 justify-center items-end">
-        <div className="bg-meta-gray-2 flex flex-col justify-between rounded-3xl px-8 py-10 max-w-96 min-w-64 h-[520px]">
+      <div className="flex flex-wrap items-end justify-center gap-6">
+        <div className="flex h-[520px] min-w-64 max-w-96 flex-col justify-between rounded-3xl bg-meta-gray-2 px-8 py-10">
           <div>
-            <div className="text-meta-purple-1 font-medium text-base text-center">
+            <div className="text-center text-base font-medium text-meta-purple-1">
               {TEXT?.BASIC_PLAN}
             </div>
 
-            <div className="flex justify-center items-end my-6">
-              <div className="text-meta-purple-1 font-medium text-4xl">$20</div>
-              <div className="text-meta-light-blue-3 font-medium text-xs mb-1">
+            <div className="my-6 flex items-end justify-center">
+              <div className="text-4xl font-medium text-meta-purple-1">$20</div>
+              <div className="mb-1 text-xs font-medium text-meta-light-blue-3">
                 {TEXT?.Month}
               </div>
             </div>
 
             {Array.from({ length: 4 }).map((_, index) => (
-              <div key={index} className="flex items-center justify-start mb-3">
+              <div key={index} className="mb-3 flex items-center justify-start">
                 <div className="mr-4">
                   <Image
                     alt="Icon"
                     width={20}
                     height={20}
-                    src={"/pricing/rightTick.svg"}
+                    src={'/pricing/rightTick.svg'}
                   />
                 </div>
-                <div className="text-meta-purple-1 font-normal text-sm">
+                <div className="text-sm font-normal text-meta-purple-1">
                   Lorem Ipsum is simply dummy
                 </div>
               </div>
@@ -76,29 +76,29 @@ const Page = () => {
           </div>
 
           <div>
-            <button className="rounded-xl w-full h-12 bg-meta-blue-2">
-              <span className="flex justify-center font-medium text-sm text-white">
+            <button className="h-12 w-full rounded-xl bg-meta-blue-2">
+              <span className="flex justify-center text-sm font-medium text-white">
                 {TEXT?.GET_STARTED}
               </span>
             </button>
           </div>
         </div>
 
-        <div className="rounded-3xl max-w-96 min-w-64">
-          <div className="text-white bg-meta-purple-1 font-medium text-base text-center py-2">
+        <div className="min-w-64 max-w-96 rounded-3xl">
+          <div className="bg-meta-purple-1 py-2 text-center text-base font-medium text-white">
             {TEXT?.MOST_POPULAR}
           </div>
-          <div className="bg-meta-gray-2 flex flex-col justify-between h-[520px] px-8 pb-10 pt-10">
+          <div className="flex h-[520px] flex-col justify-between bg-meta-gray-2 px-8 pb-10 pt-10">
             <div>
-              <div className="text-meta-purple-1 font-medium text-base text-center">
+              <div className="text-center text-base font-medium text-meta-purple-1">
                 {TEXT?.STANDARD_PLAN}
               </div>
 
-              <div className="flex justify-center items-end my-6">
-                <div className="text-meta-purple-1 font-medium text-4xl">
+              <div className="my-6 flex items-end justify-center">
+                <div className="text-4xl font-medium text-meta-purple-1">
                   $70
                 </div>
-                <div className="text-meta-light-blue-3 font-medium text-xs mb-1">
+                <div className="mb-1 text-xs font-medium text-meta-light-blue-3">
                   {TEXT?.Month}
                 </div>
               </div>
@@ -106,17 +106,17 @@ const Page = () => {
               {Array.from({ length: 7 }).map((_, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-start mb-3"
+                  className="mb-3 flex items-center justify-start"
                 >
                   <div className="mr-4">
                     <Image
                       alt="Icon"
                       width={20}
                       height={20}
-                      src={"/pricing/rightTick.svg"}
+                      src={'/pricing/rightTick.svg'}
                     />
                   </div>
-                  <div className="text-meta-purple-1 font-normal text-sm">
+                  <div className="text-sm font-normal text-meta-purple-1">
                     Lorem Ipsum is simply dummy
                   </div>
                 </div>
@@ -124,8 +124,8 @@ const Page = () => {
             </div>
 
             <div>
-              <button className="rounded-xl w-full h-12 bg-meta-blue-2">
-                <span className="flex justify-center font-medium text-sm text-white">
+              <button className="h-12 w-full rounded-xl bg-meta-blue-2">
+                <span className="flex justify-center text-sm font-medium text-white">
                   {TEXT?.GET_STARTED}
                 </span>
               </button>
@@ -133,30 +133,30 @@ const Page = () => {
           </div>
         </div>
 
-        <div className="bg-meta-gray-2 flex flex-col justify-between rounded-3xl px-8 py-10 max-w-96 min-w-64 h-[520px]">
+        <div className="flex h-[520px] min-w-64 max-w-96 flex-col justify-between rounded-3xl bg-meta-gray-2 px-8 py-10">
           <div>
-            <div className="text-meta-purple-1 font-medium text-base text-center">
+            <div className="text-center text-base font-medium text-meta-purple-1">
               {TEXT?.BUSINESS_PLAN}
             </div>
 
-            <div className="flex justify-center items-end my-6">
-              <div className="text-meta-purple-1 font-medium text-4xl">$99</div>
-              <div className="text-meta-light-blue-3 font-medium text-xs mb-1">
+            <div className="my-6 flex items-end justify-center">
+              <div className="text-4xl font-medium text-meta-purple-1">$99</div>
+              <div className="mb-1 text-xs font-medium text-meta-light-blue-3">
                 {TEXT?.Month}
               </div>
             </div>
 
             {Array.from({ length: 5 }).map((_, index) => (
-              <div key={index} className="flex items-center justify-start mb-3">
+              <div key={index} className="mb-3 flex items-center justify-start">
                 <div className="mr-4">
                   <Image
                     alt="Icon"
                     width={20}
                     height={20}
-                    src={"/pricing/rightTick.svg"}
+                    src={'/pricing/rightTick.svg'}
                   />
                 </div>
-                <div className="text-meta-purple-1 font-normal text-sm">
+                <div className="text-sm font-normal text-meta-purple-1">
                   Lorem Ipsum is simply dummy
                 </div>
               </div>
@@ -164,8 +164,8 @@ const Page = () => {
           </div>
 
           <div>
-            <button className="rounded-xl w-full h-12 bg-meta-blue-2">
-              <span className="flex justify-center font-medium text-sm text-white">
+            <button className="h-12 w-full rounded-xl bg-meta-blue-2">
+              <span className="flex justify-center text-sm font-medium text-white">
                 {TEXT?.GET_STARTED}
               </span>
             </button>

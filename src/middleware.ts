@@ -22,17 +22,17 @@
 // }
 // export const config = { matcher: ["/", "/login", "/signup", "/dashboard"] };
 
-import { NextResponse } from "next/server";
-import { withAuth } from "next-auth/middleware";
+import { NextResponse } from 'next/server';
+import { withAuth } from 'next-auth/middleware';
 
 export default withAuth(
   function middleware(req: any) {
     const token = req.nextauth.token;
     const { pathname, origin } = req.nextUrl;
     const isAuthPaths = (path: any) =>
-      ["/login", "/signup"].some((e) => path.includes(e));
-    if (pathname.includes("api/auth") || token) {
-      if (pathname === "/login" || pathname === "/signup") {
+      ['/login', '/signup'].some((e) => path.includes(e));
+    if (pathname.includes('api/auth') || token) {
+      if (pathname === '/login' || pathname === '/signup') {
         return NextResponse.redirect(`${origin}/dashboard`);
       } else {
         return NextResponse.next();
@@ -48,6 +48,6 @@ export default withAuth(
         return true;
       },
     },
-  }
+  },
 );
-export const config = { matcher: ["/", "/dashboard", "/login", "/signup"] };
+export const config = { matcher: ['/', '/dashboard', '/login', '/signup'] };

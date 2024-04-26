@@ -1,13 +1,13 @@
-"use client";
-import Image from "next/image";
-import React, { useState } from "react";
+'use client';
+import Image from 'next/image';
+import React, { useState } from 'react';
 
 interface SelectProps {
   options: { label: string; value: string }[];
 }
 
 const Select: React.FC<SelectProps> = ({ options }) => {
-  const [selectedOption, setSelectedOption] = useState<string>("");
+  const [selectedOption, setSelectedOption] = useState<string>('');
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
 
   const changeTextColor = () => {
@@ -23,8 +23,8 @@ const Select: React.FC<SelectProps> = ({ options }) => {
             setSelectedOption(e.target.value);
             changeTextColor();
           }}
-          className={`relative z-20 w-full min-w-80 appearance-none rounded-lg border border-stroke bg-transparent px-5 py-2 outline-none transition focus:border-meta-blue-1 active:border-meta-blue-1 ${
-            isOptionSelected ? "text-black" : ""
+          className={`border-stroke relative z-20 w-full min-w-80 appearance-none rounded-lg border bg-transparent px-5 py-2 outline-none transition focus:border-meta-blue-1 active:border-meta-blue-1 ${
+            isOptionSelected ? 'text-black' : ''
           }`}
         >
           {options.map((item: any) => {
@@ -46,7 +46,7 @@ const Select: React.FC<SelectProps> = ({ options }) => {
         </select>
         <span className="absolute right-4 top-1/2 z-30 -translate-y-1/2">
           <Image
-            src={"/dashboard/SelectDown.svg"}
+            src={'/dashboard/SelectDown.svg'}
             alt="Icon"
             width={14}
             height={14}

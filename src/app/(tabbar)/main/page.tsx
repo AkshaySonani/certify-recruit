@@ -1,8 +1,8 @@
-"use client";
-import React from "react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { TEXT } from "@/service/Helper";
+'use client';
+import React from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { TEXT } from '@/service/Helper';
 
 const Page = () => {
   const router = useRouter();
@@ -10,14 +10,14 @@ const Page = () => {
     <div>
       <div className="container mx-auto h-screen">
         <div className="flex justify-center py-10">
-          <Image src={"/MainLogo.svg"} alt="MainLogo" width={334} height={56} />
+          <Image src={'/MainLogo.svg'} alt="MainLogo" width={334} height={56} />
         </div>
         <div className="bg-[url('/_Compound.svg')]">
-          <div className="flex justify-center mt-10">
+          <div className="mt-10 flex justify-center">
             <div className="flex w-2/4 justify-between">
               <div
-                onClick={() => router.push("/main/employee")}
-                className="w-64 h-44 border border-meta-light-blue-2 rounded-lg flex justify-center items-center"
+                onClick={() => router.push('/main/employee')}
+                className="flex h-44 w-64 items-center justify-center rounded-lg border border-meta-light-blue-2"
               >
                 <div className="w-24">
                   <div className="flex justify-center">
@@ -25,17 +25,17 @@ const Page = () => {
                       alt="icon"
                       width={70}
                       height={52}
-                      src={"/Employee.svg"}
+                      src={'/Employee.svg'}
                     />
                   </div>
-                  <div className="text-center mt-4 text-xl font-semibold text-meta-blue-1">
+                  <div className="mt-4 text-center text-xl font-semibold text-meta-blue-1">
                     {TEXT?.EMPLOYEE}
                   </div>
                 </div>
               </div>
               <div
-                onClick={() => router.push("/main/individual")}
-                className="w-64 h-44 border border-meta-light-blue-2 rounded-lg flex justify-center items-center"
+                onClick={() => router.push('/main/individual')}
+                className="flex h-44 w-64 items-center justify-center rounded-lg border border-meta-light-blue-2"
               >
                 <div className="w-24">
                   <div className="flex justify-center">
@@ -43,10 +43,10 @@ const Page = () => {
                       alt="icon"
                       width={44}
                       height={52}
-                      src={"/Individual.svg"}
+                      src={'/Individual.svg'}
                     />
                   </div>
-                  <div className="text-center mt-4 text-xl font-semibold text-meta-blue-1">
+                  <div className="mt-4 text-center text-xl font-semibold text-meta-blue-1">
                     {TEXT?.INDIVIDUAL}
                   </div>
                 </div>

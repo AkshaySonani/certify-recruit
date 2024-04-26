@@ -1,15 +1,15 @@
-"use server";
-import Job from "@/models/job";
-import { connect } from "@/db/mongodb";
-import { getServerSession } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
-import { authOptions } from "../auth/[...nextauth]/route";
+'use server';
+import Job from '@/models/job';
+import { connect } from '@/db/mongodb';
+import { getServerSession } from 'next-auth';
+import { NextRequest, NextResponse } from 'next/server';
+import { authOptions } from '../auth/[...nextauth]/route';
 
 export const POST = async (req: NextRequest) => {
   const session = await getServerSession(authOptions);
   if (!session?.user?._id) {
     return NextResponse.json({
-      message: "Unauthorized",
+      message: 'Unauthorized',
       status: 401,
     });
   }
@@ -64,15 +64,15 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json({
       status: 201,
       data: newJob,
-      message: "Job crate successfully",
+      message: 'Job crate successfully',
     });
   } catch (error) {
     return NextResponse.json(
       {
-        message: "An error occurred while creating job.",
+        message: 'An error occurred while creating job.',
         error: error,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
@@ -81,7 +81,7 @@ export const GET = async (req: NextResponse) => {
   const session = await getServerSession(authOptions);
   if (!session?.user?._id) {
     return NextResponse.json({
-      message: "Unauthorized",
+      message: 'Unauthorized',
       status: 401,
     });
   }
@@ -95,10 +95,10 @@ export const GET = async (req: NextResponse) => {
   } catch (error) {
     return NextResponse.json(
       {
-        message: "An error occurred while fetching category.",
+        message: 'An error occurred while fetching category.',
         error: error,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
