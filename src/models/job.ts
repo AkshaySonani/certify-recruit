@@ -73,10 +73,13 @@ const jobSchema = new mongoose.Schema({
   working_schedule: {
     type: String,
   },
-  city: {
-    type: Object,
-    required: true,
-  },
+  city: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Cities",
+      required: true,
+    },
+  ],
   area: {
     type: String,
     required: true,

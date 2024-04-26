@@ -1,65 +1,72 @@
 "use server";
 import Job from "@/models/job";
 import { connect } from "@/db/mongodb";
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
+import { authOptions } from "../auth/[...nextauth]/route";
 
-const handler = async (req: NextRequest) => {
-  //   if (!session) {
-  //     // return res.status(401).json({ message: "Unauthorized" });
-  //     return NextResponse.json({
-  //       message: "Unauthorized",
-  //       status: 401,
-  //     });
-  //   }
+export const POST = async (req: NextRequest) => {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?._id) {
+    return NextResponse.json({
+      message: "Unauthorized",
+      status: 401,
+    });
+  }
+
   try {
     await connect();
     const {
+      area,
+      city,
       title,
-      company_name,
-      description,
-      requirements,
-      workplace,
       status,
+      skills,
+      pincode,
+      workplace,
       job_types,
+      company_id,
       salary_pay,
+      description,
       hourly_rate,
-      salary_negotiable,
-      experience_required,
-      skills_required,
-      multiple_hire,
-      working_schedule,
-      location,
-      salary_started,
       salary_upto,
+      company_name,
+      multiple_hire,
+      street_address,
+      salary_started,
+      working_schedule,
+      is_hiring_manager,
+      salary_negotiable,
     } = await req.json();
 
     const newJob = await Job.create({
+      area,
+      city,
       title,
-      company_name,
-      description,
-      requirements,
-      workplace,
       status,
+      skills,
+      pincode,
+      workplace,
       job_types,
+      company_id,
       salary_pay,
+      description,
       hourly_rate,
-      salary_negotiable,
-      experience_required,
-      skills_required,
-      multiple_hire,
-      working_schedule,
-      location,
-      salary_started,
       salary_upto,
+      company_name,
+      multiple_hire,
+      street_address,
+      salary_started,
+      working_schedule,
+      is_hiring_manager,
+      salary_negotiable,
     });
-    console.log("🚀 ~ handler ~ newJob:", newJob);
     return NextResponse.json({
       status: 201,
       data: newJob,
       message: "Job crate successfully",
     });
   } catch (error) {
-    console.log("🚀 ~ handler ~ error:", error);
     return NextResponse.json(
       {
         message: "An error occurred while creating job.",
@@ -70,4 +77,28 @@ const handler = async (req: NextRequest) => {
   }
 };
 
-export { handler as POST };
+export const GET = async (req: NextResponse) => {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?._id) {
+    return NextResponse.json({
+      message: "Unauthorized",
+      status: 401,
+    });
+  }
+  try {
+    await connect();
+    let results = await Job.find({});
+    return NextResponse.json({
+      status: 200,
+      data: results,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: "An error occurred while fetching category.",
+        error: error,
+      },
+      { status: 500 }
+    );
+  }
+};

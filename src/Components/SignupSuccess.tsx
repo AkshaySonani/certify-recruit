@@ -1,12 +1,19 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { TEXT } from "@/service/Helper";
 
 const SignupSuccess = () => {
   const router = useRouter();
   const [eye, setEye] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      router.push("/dashboard");
+    }, 2000);
+  }, []);
+
   return (
     <div>
       <div className="container mx-auto">
