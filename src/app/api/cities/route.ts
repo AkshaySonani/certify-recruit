@@ -3,7 +3,7 @@ import Cities from "@/models/cities";
 import { connect } from "@/db/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 
-const handler = async (req: NextRequest) => {
+export const GET = async (req: NextRequest) => {
   try {
     await connect();
 
@@ -23,5 +23,3 @@ const handler = async (req: NextRequest) => {
     );
   }
 };
-
-export { handler as POST };
