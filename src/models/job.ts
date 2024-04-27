@@ -103,8 +103,24 @@ const jobSchema = new mongoose.Schema({
     type: Number,
   },
   working_schedule: {
-    type: String,
+    type: [{
+      type: String,
+      enum: [
+        'Monday to Friday',
+        'Weekend availability',
+        'Day shift',
+      ]
+    }],
+    validate: {
+      validator: function(value) {
+        return !value || (Array.isArray(value) && value.length > 0); // Allow null or array with at least one working schedule
+      },
+      message: 'If working schedule are provided, it must be a non-empty array of allowed working schedule'
+    }
   },
+  // working_schedule: {
+  //   type: String,
+  // },
   city: [
     {
       type: mongoose.Schema.Types.ObjectId,
