@@ -99,7 +99,7 @@ const jobSchema = new mongoose.Schema({
       ref: 'Category',
     },
   ],
-  multiple_hire: {
+  vacancy: {
     type: Number,
   },
   working_schedule: {
