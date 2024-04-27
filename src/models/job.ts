@@ -24,25 +24,57 @@ const jobSchema = new mongoose.Schema({
   //   required: false, // change false to true when create category schema
   // },
   workplace: {
-    type: String,
     require: true,
-    enum: ['ONSITE', 'HYBRID', 'REMOTE'],
+    type: [{
+      type: String,
+      enum: ['ONSITE', 'HYBRID', 'REMOTE']
+    }],
+    validate: {
+      validator: function(value) {
+        return value !== undefined; // Check if the value is not undefined
+      },
+      message: 'Workplace type must be one of ONSITE, HYBRID, or REMOTE'
+    }
   },
+  // workplace: {
+  //   type: String,
+  //   require: true,
+  //   enum: ['ONSITE', 'HYBRID', 'REMOTE'],
+  // },
   status: {
     type: String,
     enum: ['PENDING', 'ACTIVE'],
   },
   job_types: {
-    type: String,
-    enum: [
-      'FULLTIME',
-      'PARTTIME',
-      'ONDEMAND',
-      'TEMPORARY',
-      'VOLUNTEER',
-      'INTERNSHIP',
-    ],
+    type: [{
+      type: String,
+      enum: [
+        'FULLTIME',
+        'PARTTIME',
+        'ONDEMAND',
+        'TEMPORARY',
+        'VOLUNTEER',
+        'INTERNSHIP',
+      ]
+    }],
+    validate: {
+      validator: function(value) {
+        return !value || (Array.isArray(value) && value.length > 0); // Allow null or array with at least one job type
+      },
+      message: 'If job types are provided, it must be a non-empty array of allowed job types'
+    }
   },
+  // job_types: {
+  //   type: ,
+  //   enum: [
+  //     'FULLTIME',
+  //     'PARTTIME',
+  //     'ONDEMAND',
+  //     'TEMPORARY',
+  //     'VOLUNTEER',
+  //     'INTERNSHIP',
+  //   ],
+  // },
   salary_pay: {
     type: String,
     enum: ['HOURLY', 'MONTHLY'],
