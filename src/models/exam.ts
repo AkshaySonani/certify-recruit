@@ -22,6 +22,6 @@ const examSchema = new mongoose.Schema({
   },
 });
 
+examSchema.set("timestamps", true)
 const Exam = mongoose.models.Exam || mongoose.model('Exam', examSchema);
-
-module.exports = Exam;
+export default Exam;

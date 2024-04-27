@@ -25,8 +25,8 @@ const jobApplicationSchema = new mongoose.Schema({
   },
 });
 
+jobApplicationSchema.set("timestamps", true)
 const JobApplication =
   mongoose.models.JobApplication ||
   mongoose.model('JobApplication', jobApplicationSchema);
-
-module.exports = JobApplication;
+  export default JobApplication;

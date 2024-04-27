@@ -31,8 +31,8 @@ const userAttemptSchema = new mongoose.Schema({
   },
 });
 
+userAttemptSchema.set("timestamps", true)
 const UserAttempt =
   mongoose.models.UserAttempt ||
   mongoose.model('UserAttempt', userAttemptSchema);
-
-module.exports = UserAttempt;
+export default UserAttempt;

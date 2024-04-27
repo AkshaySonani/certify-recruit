@@ -100,6 +100,6 @@ const jobSchema = new mongoose.Schema({
   },
 });
 
+jobSchema.set("timestamps", true)
 const Job = mongoose.models.Job || mongoose.model('Job', jobSchema);
-
 export default Job;

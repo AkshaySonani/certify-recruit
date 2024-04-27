@@ -47,6 +47,6 @@ const citiesSchema = new mongoose.Schema({
   },
 });
 
+citiesSchema.set("timestamps", true)
 const Cities = mongoose.models.Cities || mongoose.model('Cities', citiesSchema);
-
 export default Cities;

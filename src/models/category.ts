@@ -14,7 +14,7 @@ const categorySchema = new mongoose.Schema({
   },
 });
 
+categorySchema.set("timestamps", true)
 const Category =
   mongoose.models.Category || mongoose.model('Category', categorySchema);
-
 export default Category;

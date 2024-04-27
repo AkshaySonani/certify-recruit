@@ -85,7 +85,7 @@ const individualSchema = new mongoose.Schema({
   },
 });
 
+individualSchema.set("timestamps", true)
 const Individual =
   mongoose.models.Individual || mongoose.model('Individual', individualSchema);
-
 export default Individual;
