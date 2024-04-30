@@ -114,7 +114,7 @@ const TEXT = {
   BUSINESS_PLAN: 'Business Plan',
   DATE_UPLOADED: 'Date Uploaded',
   LEARN_AND_EARN: 'Learn & Earn',
-  WORKPLACE_TYPE: 'Workplace typ',
+  WORKPLACE_TYPE: 'Workplace type',
   RESET_PASSWORD: 'Reset Password',
   INTERVIEW_TIME: 'Interview Time',
   Company_Detail: 'Company Detail',

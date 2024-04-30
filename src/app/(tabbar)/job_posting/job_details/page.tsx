@@ -47,8 +47,8 @@ const Page = () => {
 
   return (
     <div>
-      <div className="mb-10 flex items-center justify-between">
-        <p className="sm:text-text-text-2xl text-lg font-semibold text-meta-purple-1">
+      <div className="flex items-center justify-between mb-10">
+        <p className="sm:text-2xl text-lg font-semibold text-meta-purple-1">
           {TEXT?.JOB_POSTING}
         </p>
         <div className="flex cursor-pointer items-center">
