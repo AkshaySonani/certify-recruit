@@ -21,11 +21,13 @@ const individualSchema = new mongoose.Schema({
     required: false,
   },
   college_school_name: {
-    type: String, // change when create collage and degree schema
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Collages',
     required: false,
   },
   degree: {
-    type: String, // change when create collage and degree schema
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Degrees',
     required: false,
   },
   completion_date: {
@@ -107,9 +109,9 @@ const individualSchema = new mongoose.Schema({
       required: true,
       validate: {
         validator: function (v) {
-          return v >= 0;
+          return v >= 1900 && v <= new Date().getFullYear();
         },
-        message: props => `${props.value} is not a valid number of years!`
+        message: props => `${props.value} is not a valid year!`
       }
     },
     month: {

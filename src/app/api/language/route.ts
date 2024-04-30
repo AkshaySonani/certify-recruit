@@ -25,3 +25,23 @@ export const POST = async (req: NextRequest) => {
       );
     }
   };
+
+  export const GET = async (req: NextRequest) => {
+    try {
+      await connect();
+      let results = await Languages.find({});
+  
+      return NextResponse.json({
+        status: 200,
+        data: results,
+      });
+    } catch (error) {
+      return NextResponse.json(
+        {
+          message: 'An error occurred while fetching languages.',
+          error: error,
+        },
+        { status: 500 },
+      );
+    }
+  };

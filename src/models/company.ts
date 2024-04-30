@@ -11,20 +11,22 @@ const companySchema = new mongoose.Schema({
   //   ref: 'Category',
   //   required: true,
   // },
+  role: {
+    type: String,
+  },
   company_name: {
     type: String,
   },
   website_url: {
     // unique: true,
-    type:String,
+    type: String,
     validate: {
-      validator: function (v:any) {
-        // Regular expression for URL validation
-        return /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/.test(v);
+      validator: function (v: any) {
+        const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
+        return urlRegex.test(v);
       },
-      message: (props:any) => `${props.value} is not a valid URL!`
+      message: (props: any) => `${props.value} is not a valid URL!`
     }
-
   },
   owner: {
     type: String,
@@ -50,10 +52,10 @@ const companySchema = new mongoose.Schema({
     type: String,
     unique: true,
     validate: {
-      validator: function (v:any) {
+      validator: function (v: any) {
         return /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(v);
       },
-      message: (props:any) => `${props.value} is not a valid PAN number!`
+      message: (props: any) => `${props.value} is not a valid PAN number!`
     }
 
   },
