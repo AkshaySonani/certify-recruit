@@ -9,9 +9,6 @@ const Checkbox = ({
   name,
   handleChange,
 }: any) => {
-  console.log("checked", isChecked);
-  console.log("value", value);
-
   return (
     <div>
       <label
