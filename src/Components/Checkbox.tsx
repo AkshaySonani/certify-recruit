@@ -1,8 +1,16 @@
 'use client';
 import { useState } from 'react';
 
-const Checkbox = ({ label, className }: any) => {
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+const Checkbox = ({
+  label,
+  className,
+  isChecked,
+  value,
+  name,
+  handleChange,
+}: any) => {
+  console.log("checked", isChecked);
+  console.log("value", value);
 
   return (
     <div>
@@ -13,9 +21,10 @@ const Checkbox = ({ label, className }: any) => {
         <div className="relative">
           <input
             type="checkbox"
+            name={name}
+            value={value}
             className="sr-only"
-            id="checkboxLabelOne"
-            onChange={() => setIsChecked(!isChecked)}
+            onChange={(e) => handleChange(e)}
           />
           <div
             className={`mr-3 flex h-5 w-5 items-center justify-center rounded border ${
