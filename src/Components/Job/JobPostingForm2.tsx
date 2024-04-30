@@ -33,7 +33,7 @@ const WORK_SCHEDULE = [
 
 
 const style = {
-  control: (base, state) => ({
+  control: (base:any, state:any) => ({
     ...base,
     border: state.isFocused ? 0 : 0,
     // This line disable the blue border
@@ -46,12 +46,11 @@ const style = {
 };
 
 
-const JobPostingForm2 = ({ formik }) => {
+const JobPostingForm2 = ({ formik }:{formik:any}) => {
   const handleClose=(list:any)=>{
-    const arr=formik?.values?.working_schedule.filter((el)=>{
+    const arr=formik?.values?.working_schedule.filter((el:any)=>{
       return el!==list
     });
-  formik?.setFieldValue("working_schedule", arr)
     
     }
   const router = useRouter();
@@ -143,7 +142,7 @@ const JobPostingForm2 = ({ formik }) => {
                   )}
          
           <div className="text-start mt-4 flex items-center sm:flex-nowrap flex-wrap">
-            {formik?.values?.working_schedule?.map((ele,i) => {
+            {formik?.values?.working_schedule?.map((ele:any,i:any) => {
               return (
                 <div className="flex items-center px-2 py-1 border-2 border-meta-light-blue-1 rounded-lg mr-3 mb-2">
                   <p className="text-meta-light-blue-3 font-medium text-sm whitespace-nowrap">

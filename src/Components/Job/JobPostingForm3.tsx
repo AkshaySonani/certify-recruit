@@ -4,8 +4,6 @@ import ReactQuill from "react-quill";
 import React, { useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import { useRouter } from "next/navigation";
-import Checkbox from "@/Components/Checkbox";
-import SelectBox from "@/Components/SelectBox";
 import { TEXT } from "@/service/Helper";
 import MultipleSelect from "../MultipleSelect";
 
@@ -32,7 +30,7 @@ const languageOptions = [
   },
 ];
 
-const JobPostingForm3 = ({ formik,skillData }) => {
+const JobPostingForm3 = ({ formik,skillData }:{formik:any,skillData:any}) => {
   const router = useRouter();
 
   const [hireMultiple, setHireMultiple] = useState(false);
@@ -59,10 +57,9 @@ const JobPostingForm3 = ({ formik,skillData }) => {
       formik?.values?.vacancy > 1 ? formik?.values?.vacancy - 1 : 1
     );
 const handleClose=(list:any)=>{
-  const arr=formik?.values?.skills.filter((el)=>{
+  const arr=formik?.values?.skills.filter((el:any)=>{
     return el!==list
   });
-formik?.setFieldValue("skills", arr)
   
   }
   return (
@@ -114,7 +111,7 @@ formik?.setFieldValue("skills", arr)
             />
           </div>
           <div className="text-start mt-4 flex items-start sm:flex-nowrap flex-wrap justify-start">
-            {formik?.values?.skills?.map((ele,i) => {
+            {formik?.values?.skills?.map((ele:any,i:any) => {
               return (
                 <div className="flex items-center px-2 py-1 border-2 border-meta-light-blue-1 rounded-lg mr-3 mb-2">
                   <p className="text-meta-light-blue-3 font-medium text-sm whitespace-nowrap">
@@ -173,7 +170,7 @@ formik?.setFieldValue("skills", arr)
           <input
                   type="checkbox"
                   id="hire-multiple"
-                  value={hireMultiple}
+                  value={hireMultiple as any}
                   onChange={()=>setHireMultiple(!hireMultiple)}
                 />
             <label htmlFor="hire-multiple" className="sm:text-base pl-2 text-sm font-medium text-meta-light-blue-3">

@@ -14,7 +14,6 @@ import JobPostingForm3 from "@/Components/Job/JobPostingForm3";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 import PreviewDialog from "../../../Components/Job/PreviewDialog"
-// import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
 const SelectOption = [
   { label: "Type here....", value: "" },
@@ -470,9 +469,9 @@ const handlePrevious=()=>{
           </div>
         ) : nextPage === 2 ? (
           <JobPostingForm2 formik={formik} />
-        ) : nextPage === 3 ?  (
+        ) :  (
           <JobPostingForm3 formik={formik} skillData={skillData} />
-        ):""}
+        )}
         <div className={`"w-full flex  mt-16 ${nextPage===1 ? "justify-end" : "justify-between"}`}>
           {nextPage !== 1 && (
             <button

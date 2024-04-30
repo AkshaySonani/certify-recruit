@@ -2,7 +2,7 @@ import { Dialog, Menu, Transition } from "@headlessui/react";
 import { ROUTE, TEXT } from "@/service/Helper";
 import React, { Fragment, useState } from "react";
 import Image from "next/image";
-const PreviewDialog=({isOpen,setIsOpen,formik})=>{
+const PreviewDialog=({isOpen,setIsOpen,formik}:any)=>{
   let description = {
     __html: `<div className="">${formik?.values?.description} </div>`,
   };
@@ -120,7 +120,7 @@ const PreviewDialog=({isOpen,setIsOpen,formik})=>{
                       {TEXT?.EMPLOYMENT_TYPE}
                     </p>
                     <div className="py-1 px-4 text-sm text-meta-light-blue-3 rounded-md gap-3 flex flex-wrap">
-                      {formik?.values?.job_types?.map((list) => {
+                      {formik?.values?.job_types?.map((list:any) => {
                         return (
                           <div className="py-1 px-4 text-sm bg-blue-100 text-meta-blue-2  rounded-md">
                             {list}
@@ -134,7 +134,7 @@ const PreviewDialog=({isOpen,setIsOpen,formik})=>{
                       {TEXT?.WORKING_SCHEDULE}
                     </p>
                     <div className="py-1 px-4 text-sm text-meta-light-blue-3 rounded-md gap-3 flex flex-wrap">
-                      {formik?.values?.working_schedule?.map((list) => {
+                      {formik?.values?.working_schedule?.map((list:any) => {
                         return (
                           <div className="py-1 px-4 text-sm bg-blue-100 text-meta-blue-2  rounded-md">
                             {list}
@@ -188,7 +188,7 @@ const PreviewDialog=({isOpen,setIsOpen,formik})=>{
                       {TEXT?.SKILLS}
                     </p>
                     <div className="py-1 px-4 text-sm text-meta-light-blue-3 rounded-md gap-3 flex flex-wrap">
-                      {formik?.values?.skills?.map((list) => {
+                      {formik?.values?.skills?.map((list:any) => {
                         return (
                           <div className="py-1 px-4 text-sm bg-blue-100 text-meta-blue-2  rounded-md">
                             {list}
