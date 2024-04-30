@@ -77,6 +77,7 @@ const jobSchema = new mongoose.Schema({
   // },
   salary_pay: {
     type: String,
+    require: false,
     enum: ['HOURLY', 'MONTHLY'],
   },
   hourly_rate: {
@@ -130,15 +131,15 @@ const jobSchema = new mongoose.Schema({
   ],
   area: {
     type: String,
-    required: true,
+    required: false,
   },
   pincode: {
     type: String,
-    required: true,
+    required: false,
   },
   street_address: {
     type: String,
-    required: true,
+    required: false,
   },
   salary_started: {
     type: Number,

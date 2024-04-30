@@ -1,29 +1,31 @@
 'use server';
+import User from '@/models/user';
 import { connect } from '@/db/mongodb';
 import Company from '@/models/company';
 import { getServerSession } from 'next-auth';
+import Individual from '@/models/individual';
 import { authOptions } from '@/service/AuthOptions';
 import { NextRequest, NextResponse } from 'next/server';
-import User from '@/models/user';
 
 export const POST = async (req: NextRequest) => {
-    //   const session = await getServerSession(authOptions);
-    //   if (!session?.user?._id) {
-    //     return NextResponse.json({
-    //       message: 'Unauthorized',
-    //       status: 401,
-    //     });
-    //   }
-
-    const userDetails = await User.findById("662cca8c52f81a310051487a")
-    console.log("🚀 ~ POST ~ userDetails:", userDetails)
+      const session = await getServerSession(authOptions);
+      if (!session?.user?._id) {
+        return NextResponse.json({
+          message: 'Unauthorized',
+          status: 401,
+        });
+      }
+      
+    await connect();
+    const userDetails = await User.findById("session?.user?._id")
 
     if (userDetails?.role === "employee") {
+        // for company user (that create job)
         try {
-            await connect();
             const {
                 logo,
                 city,
+                role,
                 owner,
                 state,
                 country,
@@ -39,9 +41,10 @@ export const POST = async (req: NextRequest) => {
                 street_address,
             } = await req.json();
 
-            const newCompany = {
+            const newCompany = await Company.create({
                 logo,
                 city,
+                role,
                 owner,
                 state,
                 country,
@@ -55,36 +58,13 @@ export const POST = async (req: NextRequest) => {
                 contact_email,
                 contact_phone,
                 street_address,
-            }
+            });
 
             return NextResponse.json({
                 status: 201,
-                company: newCompany,
-                message: 'Your profile edited successfully',
+                data: newCompany,
+                message: 'Your profile was updated successfully',
             });
-
-            // const newCompany = await Company.create({
-            //     logo,
-            //     city,
-            //     owner,
-            //     state,
-            //     country,
-            //     pincode,
-            //     pan_number,
-            //     website_url,
-            //     description,
-            //     name_on_pan,
-            //     company_name,
-            //     company_type,
-            //     contact_email,
-            //     contact_phone,
-            //     street_address,
-            // });
-            // return NextResponse.json({
-            //     status: 201,
-            //     data: newCompany,
-            //     message: 'Job crate successfully',
-            // });
         } catch (error) {
             return NextResponse.json(
                 {
@@ -95,8 +75,8 @@ export const POST = async (req: NextRequest) => {
             );
         }
     } else if (userDetails.role === 'individual') {
+        // for employee user ( user that find job )
         try {
-            await connect();
             const {
                 skills,
                 degree,
@@ -116,7 +96,7 @@ export const POST = async (req: NextRequest) => {
                 expected_salary_start_at,
             } = await req.json();
 
-            const newEmployee = {
+            const newCompany = await Individual.create({
                 skills,
                 degree,
                 gender,
@@ -133,36 +113,12 @@ export const POST = async (req: NextRequest) => {
                 college_school_name,
                 expected_salary_upto,
                 expected_salary_start_at,
-            }
-
+            });
             return NextResponse.json({
                 status: 201,
-                employee: newEmployee,
-                message: 'Your profile edited successfully',
+                data: newCompany,
+                message: 'Your profile was updated successfully',
             });
-
-            // const newCompany = await Company.create({
-            //     logo,
-            //     city,
-            //     owner,
-            //     state,
-            //     country,
-            //     pincode,
-            //     pan_number,
-            //     website_url,
-            //     description,
-            //     name_on_pan,
-            //     company_name,
-            //     company_type,
-            //     contact_email,
-            //     contact_phone,
-            //     street_address,
-            // });
-            // return NextResponse.json({
-            //     status: 201,
-            //     data: newCompany,
-            //     message: 'Job crate successfully',
-            // });
         } catch (error) {
             return NextResponse.json(
                 {
