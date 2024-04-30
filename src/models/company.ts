@@ -11,6 +11,9 @@ const companySchema = new mongoose.Schema({
   //   ref: 'Category',
   //   required: true,
   // },
+  user_name: {
+    type: String,
+  },
   role: {
     type: String,
   },
