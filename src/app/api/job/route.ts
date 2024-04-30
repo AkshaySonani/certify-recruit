@@ -3,7 +3,7 @@ import Job from '@/models/job';
 import { connect } from '@/db/mongodb';
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
-import { authOptions } from '../auth/[...nextauth]/route';
+import { authOptions } from '@/service/AuthOptions';
 
 export const POST = async (req: NextRequest) => {
   const session = await getServerSession(authOptions);

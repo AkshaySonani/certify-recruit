@@ -3,11 +3,11 @@ import mongoose from 'mongoose';
 const individualSchema = new mongoose.Schema({
   profile_summary: {
     type: String,
-    required: true,
+    required: false,
   },
   resume: {
     type: String,
-    required: true,
+    required: false,
   },
   skills: [
     {
@@ -15,73 +15,136 @@ const individualSchema = new mongoose.Schema({
       ref: 'Category',
     },
   ],
-  passing_date: {
+  highest_education: {
     type: String,
-    required: true,
+    enum: ['TEN_OR_BELOW', 'TWELVE_PASS', 'DIPLOMA', 'GRADUATE'],
+    required: false,
+  },
+  college_school_name: {
+    type: String, // change when create collage and degree schema
+    required: false,
+  },
+  degree: {
+    type: String, // change when create collage and degree schema
+    required: false,
+  },
+  completion_date: {
+    type: {
+      month: {
+        type: String,
+        required: true,
+        enum: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+      },
+      year: {
+        type: Number,
+        required: true,
+        validate: {
+          validator: function (v) {
+            return v >= 1900 && v <= new Date().getFullYear();
+          },
+          message: props => `${props.value} is not a valid year!`
+        }
+      }
+    },
+    required: false
   },
   gender: {
     type: String,
-    enum: ['male', 'female', 'other'],
-    required: true,
+    enum: ['MALE', 'FEMALE', 'OTHER'],
+    required: false,
   },
   date_of_birth: {
     type: Date,
-    required: true,
+    required: false,
+    validate: {
+      validator: function (v: any) {
+        // Validate if the input is a valid date
+        return v instanceof Date && !isNaN(v);
+      },
+      message: (props: any) => `${props.value} is not a valid date!`
+    }
   },
-  language: [
-    {
-      type: String,
+  languages: [{
+    language: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Languages',
+      required: true
     },
-  ],
+    proficiency: {
+      type: String,
+      required: true,
+      enum: ["BEGINNER", "PROFICIENT", "EXPERT"]
+    }
+  }],
+  total_experiences: [{
+    companyName: {
+      type: String,
+      required: true
+    },
+    role: {
+      type: String,
+      required: true
+    },
+    location: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Cities',
+      required: true,
+    },
+    employmentType: {
+      type: String,
+      enum: [
+        'FULLTIME',
+        'PARTTIME',
+        'ONDEMAND',
+        'TEMPORARY',
+        'VOLUNTEER',
+        'INTERNSHIP',
+      ],
+      required: true
+    },
+    years: {
+      type: Number,
+      required: true,
+      validate: {
+        validator: function (v) {
+          return v >= 0;
+        },
+        message: props => `${props.value} is not a valid number of years!`
+      }
+    },
+    month: {
+      type: Number,
+      validate: {
+        validator: function (v) {
+          return v >= 1 && v <= 12;
+        },
+        message: props => `${props.value} is not a valid month!`
+      }
+    },
+    reasonForLeaving: {
+      type: String
+    }
+  }],
   expected_salary_start_at: {
     type: Number,
-    required: true,
+    required: false,
   },
   expected_salary_upto: {
     type: Number,
-    required: true,
+    required: false,
   },
   company_name: {
     type: String,
     default: '',
   },
-  designation: {
-    type: String,
-    default: '',
-  },
-  employment_type: {
-    type: String,
-    enum: ['full-time', 'part-time'],
-    default: 'full-time', // if we needed other vis we removed this
-  },
-  location: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Location',
-  },
-  experience: {
-    type: String,
-    required: true,
-  },
-  education: {
-    type: String,
-    required: true,
-  },
-  college_school_name: {
-    type: String,
-    required: true,
-  },
-  degree: {
-    type: String,
-    required: true,
-  },
-  reason_for_leaving: {
-    type: String,
-    default: '',
-  },
   current_location: {
     type: String,
-    enum: ['USA', 'Out of USA'],
-    required: true,
+    enum: ['USA', 'OUT_OF_USA'],
+    required: false,
+  },
+  contact_number: {
+    type: Number,
+    required: false,
   },
 });
 
