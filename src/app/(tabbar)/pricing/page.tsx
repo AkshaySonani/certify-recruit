@@ -1,11 +1,59 @@
 'use client';
+import axios from 'axios';
 import Image from 'next/image';
+import { v4 as uuidv4 } from 'uuid';
+import sha256 from 'crypto-js/sha256';
+import API from '@/service/ApiService';
 import React, { useState } from 'react';
-import { Switch } from '@headlessui/react';
 import { TEXT } from '@/service/Helper';
+import Button from '@/Components/Button';
+import { Switch } from '@headlessui/react';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 const Page = () => {
+  const router = useRouter();
+  const session = useSession();
+
   const [enabled, setEnabled] = useState(false);
+
+  const makePayment = async (amount: any) => {
+    const transactionid =
+      session?.data?.user?._id + '-' + uuidv4().toString().slice(-6);
+
+    const payload = {
+      amount: amount * 100,
+      redirectMode: 'POST',
+      merchantTransactionId: transactionid,
+      paymentInstrument: { type: 'PAY_PAGE' },
+      merchantId: process.env.NEXT_PUBLIC_MERCHANT_ID,
+      redirectUrl: `${process.env.NEXT_PUBLIC_DOMAIN}/api/transaction/${transactionid}`,
+      callbackUrl: `${process.env.NEXT_PUBLIC_DOMAIN}/api/transaction/${transactionid}`,
+    };
+
+    const dataBase64 = Buffer.from(JSON.stringify(payload)).toString('base64');
+
+    const fullURL =
+      dataBase64 + '/pg/v1/pay' + process.env.NEXT_PUBLIC_SALT_KEY;
+
+    const checksum =
+      sha256(fullURL) + '###' + process.env.NEXT_PUBLIC_SALT_INDEX;
+
+    const response = await axios.post(
+      'https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay',
+      { request: dataBase64 },
+      {
+        headers: {
+          accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-VERIFY': checksum,
+        },
+      },
+    );
+
+    const redirect = response.data.data.instrumentResponse.redirectInfo.url;
+    router.replace(redirect);
+  };
 
   return (
     <section>
@@ -75,13 +123,12 @@ const Page = () => {
             ))}
           </div>
 
-          <div>
-            <button className="h-12 w-full rounded-xl bg-meta-blue-2">
-              <span className="flex justify-center text-sm font-medium text-white">
-                {TEXT?.GET_STARTED}
-              </span>
-            </button>
-          </div>
+          <Button
+            title={TEXT?.GET_STARTED}
+            btnClass="h-12 w-full !mb-0"
+            handleClick={() => makePayment(20)}
+            titleClass="flex justify-center text-sm font-medium text-white"
+          />
         </div>
 
         <div className="min-w-64 max-w-96 rounded-3xl">
@@ -123,13 +170,12 @@ const Page = () => {
               ))}
             </div>
 
-            <div>
-              <button className="h-12 w-full rounded-xl bg-meta-blue-2">
-                <span className="flex justify-center text-sm font-medium text-white">
-                  {TEXT?.GET_STARTED}
-                </span>
-              </button>
-            </div>
+            <Button
+              title={TEXT?.GET_STARTED}
+              btnClass="h-12 w-full !mb-0"
+              handleClick={() => makePayment(70)}
+              titleClass="flex justify-center text-sm font-medium text-white"
+            />
           </div>
         </div>
 
@@ -163,13 +209,12 @@ const Page = () => {
             ))}
           </div>
 
-          <div>
-            <button className="h-12 w-full rounded-xl bg-meta-blue-2">
-              <span className="flex justify-center text-sm font-medium text-white">
-                {TEXT?.GET_STARTED}
-              </span>
-            </button>
-          </div>
+          <Button
+            title={TEXT?.GET_STARTED}
+            btnClass="h-12 w-full !mb-0"
+            handleClick={() => makePayment(99)}
+            titleClass="flex justify-center text-sm font-medium text-white"
+          />
         </div>
       </div>
     </section>
