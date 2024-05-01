@@ -13,16 +13,10 @@ import JobPostingForm2 from "@/Components/Job/JobPostingForm2";
 import JobPostingForm3 from "@/Components/Job/JobPostingForm3";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
-import PreviewDialog from "../../../Components/Job/PreviewDialog"
+import PreviewDialog from "../../../Components/Job/PreviewDialog";
+import Spinner from "../../icons/Spinner";
 
-const SelectOption = [
-  { label: "Type here....", value: "" },
-  { label: "Surat", value: "Surat" },
-  { label: "Mumbai", value: "Mumbai" },
-  { label: "Rajkot", value: "Rajkot" },
-];
 const people = [
-
   { _id: "662ccb4a52f81a3100514885", name: "surat" },
   { _id: "662ccb4a52f81a3100514885", name: "Ahemedabad" },
   { _id: "662ccb4a52f81a3100514885", name: "Baroda" },
@@ -31,14 +25,14 @@ const people = [
   { _id: "662ccb4a52f81a3100514885", name: "pune" },
 ];
 
-const WORKPLACE_TYPE = ['ONSITE', 'HYBRID', 'REMOTE'];
+const WORKPLACE_TYPE = ["ONSITE", "HYBRID", "REMOTE"];
 
 const Page = () => {
   const [cityData, setCityData] = useState([]);
   let [isOpen, setIsOpen] = useState(false);
   const [skillData, setSkillData] = useState([]);
   const [nextPage, setNextPage] = useState(1);
-const session=useSession()
+  const session = useSession() as any;
 
   const [query, setQuery] = useState("");
   const filteredPeople =
@@ -51,82 +45,75 @@ const session=useSession()
             .includes(query.toLowerCase().replace(/\s+/g, ""))
         );
 
-
   useEffect(() => {
     // getCityDataApi();
-    getSkillDataApi()
+    getSkillDataApi();
   }, []);
-  ['ONSITE', 'HYBRID', 'REMOTE']
-  
 
-  const handleSubmit = async (values: formValues,actions:any) => {
-    if(nextPage===3){
-      let pushArray = [];
-      skillData?.filter((el:any) => {
-         values?.skills?.map((list:any) => {
+  const handleSubmit = async (values: any, actions: any) => {
+    if (nextPage === 3) {
+      let pushArray = [] as any;
+      skillData?.filter((el: any) => {
+        values?.skills?.map((list: any) => {
           if (list === el?.value) {
             pushArray.push({ _id: el?._id });
           }
         });
       });
-        const data={
-          ...values,
-          skills:pushArray
-        }
-        // setSubmitting(true);
-        // let data = Edit
-        //   ? { ...values, loginUid: employee?.loginUid, id: employee?.id }
-        //   : { ...values, password: values.password, type: "Add" };
-        API.post(API_CONSTANT.JOB, data)
-          .then((res) => {
-           console.log("res",res);
-           setNextPage(nextPage + 1);
-           toast?.success("Successfully job posting")
-           actions.setSubmitting(false);
-          })
-          .catch((error) => {
-            console.log("error",error);
-            
-          });
-    }
-    else{
-      console.log("hello");
-      
-      setNextPage(nextPage + 1)
+      const data = {
+        ...values,
+        skills: pushArray,
+      };
+      API.post(API_CONSTANT.JOB, data)
+        .then((res) => {
+          console.log("res", res);
+          setNextPage(nextPage + 1);
+          toast?.success("Successfully update profile");
+          actions.setSubmitting(false);
+        })
+        .catch((error) => {
+          actions.setSubmitting(false);
+          console.log("error", error);
+        });
+    } else {
+      setNextPage(nextPage + 1);
       actions.setTouched({});
       actions.setSubmitting(false);
     }
-    
   };
 
-  
   const validationSchema = [
     Yup.object().shape({
-    company_name: Yup.string().required("Company is required."),
-    title: Yup.string().required("job title is required."),
-    workplace: Yup.array().min(1, `select at least one workplace type`),
-    city: Yup.object().shape({
-      _id: Yup.string().required('city is required'),
+      company_name: Yup.string().required("Company is required."),
+      title: Yup.string().required("Job title is required."),
+      workplace: Yup.array().min(1, `select at least one workplace type`),
+      city: Yup.object()
+        .shape({
+          _id: Yup.string().required("city is required"),
+        })
+        .nonNullable("City is required"),
+
+      // description:Yup.string().required("description is required.")
     }),
-    
-  
-    // description:Yup.string().required("description is required.")
-  }),
-  Yup.object().shape({
-    working_schedule: Yup.array().min(1, `select at least one working schedule`),
-    job_types:Yup.array().min(1, `select at least one job type`)
-  }),
-  Yup.object().shape({
-    // city: Yup.array().min(1,"City is required."),
-    description:Yup.string().required("description is required.")
-  })]
-  const currentValidationSchema = validationSchema[nextPage - 1]
+    Yup.object().shape({
+      working_schedule: Yup.array().min(
+        1,
+        `Select at least one working schedule`
+      ),
+      job_types: Yup.array().min(1, `Select at least one job type`),
+    }),
+    Yup.object().shape({
+      // city: Yup.array().min(1,"City is required."),
+      description: Yup.string().required("Description is required."),
+    }),
+  ];
+  const currentValidationSchema = validationSchema[nextPage - 1];
   const formik = useFormik({
     initialValues: {
       is_hiring_manager: false,
       title: "",
       company_id: session?.data?.user._id,
-      company_name:"",
+      company_name: "",
       description: "",
       workplace: [],
       job_types: [],
@@ -136,7 +123,7 @@ const session=useSession()
       vacancy: 1,
       working_schedule: [],
       area: "",
-      status:"ACTIVE",
+      status: "ACTIVE",
       pincode: "",
       street_address: "",
       salary_started: "",
@@ -145,7 +132,7 @@ const session=useSession()
       skills: [],
     },
     enableReinitialize: true,
-    validationSchema:currentValidationSchema,
+    validationSchema: currentValidationSchema,
     onSubmit: handleSubmit,
   });
 
@@ -166,10 +153,13 @@ const session=useSession()
   const getSkillDataApi = () => {
     API.get(API_CONSTANT?.CATEGORY)
       .then((res) => {
-      let skiilArr=  res?.data?.data?.map((list:any)=>{
-      return{_id:list?._id,label:list?.subcategory,value:list?.subcategory}
-    
-        })
+        let skiilArr = res?.data?.data?.map((list: any) => {
+          return {
+            _id: list?._id,
+            label: list?.subcategory,
+            value: list?.subcategory,
+          };
+        });
         setSkillData(skiilArr);
       })
       .catch((error) => {
@@ -177,9 +167,9 @@ const session=useSession()
         toast.error(error?.response?.data?.error);
       });
   };
-const handlePrevious=()=>{
-  setNextPage(nextPage-1)
-}
+  const handlePrevious = () => {
+    setNextPage(nextPage - 1);
+  };
 
   return (
     <div>
@@ -187,7 +177,10 @@ const handlePrevious=()=>{
         <p className="sm:text-2xl text-lg font-semibold text-meta-purple-1">
           {TEXT?.JOB_POSTING}
         </p>
-        <div className="flex items-center cursor-pointer" onClick={()=>setIsOpen(true)}>
+        <div
+          className="flex items-center cursor-pointer"
+          onClick={() => setIsOpen(true)}
+        >
           <Image
             width={25}
             height={25}
@@ -218,10 +211,10 @@ const handlePrevious=()=>{
                 >
                   <input
                     id="Yes"
-                    name="is_hiring_manager"
                     type="radio"
                     radioGroup="Salary"
                     value={"true"}
+                    name="is_hiring_manager"
                     onChange={formik.handleChange}
                     className=""
                   />
@@ -267,8 +260,8 @@ const handlePrevious=()=>{
                 />
               </div>
               {formik.touched.company_name && formik.errors.company_name && (
-                    <div className="error">{formik.errors.company_name}</div>
-                  )}
+                <div className="error">{formik.errors.company_name}</div>
+              )}
             </div>
             <div className="border-meta-light-blue-1 border my-6" />
 
@@ -292,8 +285,8 @@ const handlePrevious=()=>{
                 />
               </div>
               {formik.touched.title && formik.errors.title && (
-                    <div className="error">{formik.errors.title}</div>
-                  )}
+                <div className="error">{formik.errors.title}</div>
+              )}
             </div>
             <div className="border-meta-light-blue-1 border my-6" />
 
@@ -311,7 +304,6 @@ const handlePrevious=()=>{
                 {WORKPLACE_TYPE?.map((list) => {
                   return (
                     <div className="border-meta-light-blue-1 border rounded-lg w-1/3 p-3">
-                    
                       <label
                         htmlFor="checkboxLabelOne"
                         className={`flex cursor-pointer select-none items-center `}
@@ -321,18 +313,16 @@ const handlePrevious=()=>{
                           name={"workplace"}
                           value={list}
                           onChange={formik.handleChange}
-                        
                         />
                         <p className="pl-3 capitalize">{list}</p>
                       </label>
                     </div>
                   );
                 })}
-              
               </div>
               {formik.touched.workplace && formik.errors.workplace && (
-                        <div className="error">{formik.errors.workplace}</div>
-                      )}
+                <div className="error">{formik.errors.workplace}</div>
+              )}
             </div>
             <div className="border-meta-light-blue-1 border my-6" />
 
@@ -347,13 +337,15 @@ const handlePrevious=()=>{
               </div>
               <div className="lg:w-1/2 w-full">
                 <div className="lg:mt-0 mt-2">
-                 
-                  <Combobox  value={formik?.values?.city} onChange={(e)=>formik.setFieldValue("city",e)}>
+                  <Combobox
+                    value={formik?.values?.city}
+                    onChange={(e) => formik.setFieldValue("city", e)}
+                  >
                     <div className="relative mt-1">
                       <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left border focus:outline-none border-meta-light-blue-1 sm:text-sm">
                         <Combobox.Input
                           className="w-full py-3 pl-3 pr-10  focus:outline-none text-sm leading-5 text-gray-900"
-                          displayValue={(person) => person?.name}
+                          displayValue={(person: any) => person?.name}
                           placeholder="Select city"
                           name="city"
                           onChange={(event) => setQuery(event.target.value)}
@@ -469,33 +461,52 @@ const handlePrevious=()=>{
           </div>
         ) : nextPage === 2 ? (
           <JobPostingForm2 formik={formik} />
-        ) :  (
+        ) : (
           <JobPostingForm3 formik={formik} skillData={skillData} />
         )}
-        <div className={`"w-full flex  mt-16 ${nextPage===1 ? "justify-end" : "justify-between"}`}>
+        <div
+          className={`"w-full flex  mt-16 ${nextPage === 1 ? "justify-end" : "justify-between"}`}
+        >
           {nextPage !== 1 && (
             <button
-            type="button"
+              type="button"
               onClick={handlePrevious}
-              className="border-meta-light-blue-1 border text-base text-meta-light-blue-3 font-medium py-3 rounded-lg sm:min-w-48 min-w-full sm:mb-0 mb-3"
+              className="border-meta-light-blue-1 border text-base text-meta-light-blue-3 font-medium rounded-lg sm:min-w-48 min-w-full sm:mb-8 mb-8"
             >
               {TEXT?.BACK}
             </button>
           )}
-          <button
+          {/* <button
             disabled={formik?.isSubmitting}
-            type={ "submit" }
+            type={"submit"}
             className="bg-meta-light-blue-1 text-base text-meta-light-blue-3 font-medium py-3 rounded-lg min-w-48 "
           >
             {TEXT?.NEXT}
+          </button> */}
+
+          <button
+            disabled={formik?.isSubmitting}
+            type={"submit"}
+            className={`mb-8 h-12  border text-meta-light-blue-3 border-meta-light-blue-2 py-3 rounded-lg min-w-48 bg-meta-light-blue-1 transition delay-150 duration-300 ease-in-out will-change-auto hover:bg-hiring-btn-gradient`}
+          >
+            {formik?.isSubmitting ? (
+              <Spinner className="spinner" />
+            ) : (
+              <span
+                className={`flex justify-center text-sm font-medium text-white`}
+              >
+                {nextPage === 3 ? TEXT?.SAVE : TEXT?.NEXT}
+              </span>
+            )}
           </button>
         </div>
       </form>
 
-      {isOpen && <PreviewDialog isOpen={isOpen} setIsOpen={setIsOpen} formik={formik}/>}
+      {isOpen && (
+        <PreviewDialog isOpen={isOpen} setIsOpen={setIsOpen} formik={formik} />
+      )}
     </div>
   );
 };
 
 export default Page;
-

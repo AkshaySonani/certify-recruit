@@ -1,34 +1,98 @@
-'use client';
-import Image from 'next/image';
-import { Fragment, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Menu, Transition } from '@headlessui/react';
-import { TEXT } from '@/service/Helper';
-
-const COMPANY_ARR = [
-  { id: 1, name: 'Corporate Company' },
-  { id: 2, name: 'It Company' },
-  { id: 3, name: 'Software Company' },
-  { id: 1, name: 'CLient Company' },
-];
+"use client";
+import Image from "next/image";
+import { Fragment, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Menu, Transition } from "@headlessui/react";
+import { TEXT, USER_ROLE } from "@/service/Helper";
+import { useSession } from "next-auth/react";
+import CompanyProfile from "@/Components/profile/CompanyProfile";
+import IndividualProfile from "@/Components/profile/IndividualProfile";
+import API from "@/service/ApiService";
+import { API_CONSTANT } from "@/constant/ApiConstant";
+import { toast } from "react-toastify";
 
 const MyProfile = () => {
   const router = useRouter();
-  const [active, setActive] = useState(0);
-  const [company, setCompany] = useState(COMPANY_ARR[0]?.name);
+  const session = useSession() as any;
+  const [degreeList, setDegreeList] = useState([]);
+  const [collegeList, setCollegeList] = useState([]);
+  const [languageList, setLanguageList] = useState([]);
 
   function classNames(...classes: any) {
-    return classes.filter(Boolean).join(' ');
+    return classes.filter(Boolean).join(" ");
   }
+  useEffect(() => {
+    // getDegreeList();
+    // getCollegeList();
+    // getLanguageList();
+  }, []);
+  const getDegreeList = () => {
+    API.get(API_CONSTANT?.DEGREE)
+      .then((res) => {
+        console.log("res---->degree", res);
+
+        // let skiilArr = res?.data?.data?.map((list: any) => {
+        //   return {
+        //     _id: list?._id,
+        //     label: list?.subcategory,
+        //     value: list?.subcategory,
+        //   };
+        // });
+        setDegreeList(res?.data?.data);
+      })
+      .catch((error) => {
+        console.log("error", error);
+        toast.error(error?.response?.data?.error);
+      });
+  };
+
+  const getCollegeList = () => {
+    API.get(API_CONSTANT?.COLLEGE)
+      .then((res) => {
+        console.log("res----->College", res);
+
+        // let skiilArr = res?.data?.data?.map((list: any) => {
+        //   return {
+        //     _id: list?._id,
+        //     label: list?.subcategory,
+        //     value: list?.subcategory,
+        //   };
+        // });
+        setCollegeList(res?.data?.data);
+      })
+      .catch((error) => {
+        console.log("error", error);
+        toast.error(error?.response?.data?.error);
+      });
+  };
+
+  const getLanguageList = () => {
+    API.get(API_CONSTANT?.LANGUAGE)
+      .then((res) => {
+        console.log("res---> language", res);
+        setLanguageList(res?.data?.data);
+        // let skiilArr = res?.data?.data?.map((list: any) => {
+        //   return {
+        //     _id: list?._id,
+        //     label: list?.subcategory,
+        //     value: list?.subcategory,
+        //   };
+        // });
+      })
+      .catch((error) => {
+        console.log("error", error);
+        toast.error(error?.response?.data?.error);
+      });
+  };
 
   return (
     <div className="m-auto w-4/5">
       <div className="flex items-center justify-between">
         <div
           className="flex cursor-pointer"
-          onClick={() => router?.push('/dashboard')}
+          onClick={() => router?.push("/dashboard")}
         >
-          <Image src={'/BackArrow.svg'} alt="date" width={20} height={20} />
+          <Image src={"/BackArrow.svg"} alt="date" width={20} height={20} />
           <p className="text-5 pl-2 font-semibold text-meta-purple-1">
             {TEXT?.DASHBOARD}
           </p>
@@ -45,7 +109,7 @@ const MyProfile = () => {
             width={109}
             height={135}
             alt="MainLogo"
-            src={'/ProfileLogo.svg'}
+            src={"/ProfileLogo.svg"}
           />
           <div className="flex w-full gap-8">
             <div className="w-11/12">
@@ -63,7 +127,7 @@ const MyProfile = () => {
                     width={16}
                     height={16}
                     alt="MainLogo"
-                    src={'/location.svg'}
+                    src={"/location.svg"}
                   />
                   <p className="text-xs text-meta-light-blue-3">
                     {TEXT?.NEW_YOUR_USA}
@@ -74,7 +138,7 @@ const MyProfile = () => {
                     width={16}
                     height={16}
                     alt="MainLogo"
-                    src={'/call.svg'}
+                    src={"/call.svg"}
                   />
                   <p className="text-xs text-meta-light-blue-3">516-742-4006</p>
                 </div>
@@ -84,7 +148,7 @@ const MyProfile = () => {
                   width={16}
                   height={16}
                   alt="MainLogo"
-                  src={'/mail.svg'}
+                  src={"/mail.svg"}
                 />
                 <p className="text-xs text-meta-light-blue-3">516-742-4006</p>
               </div>
@@ -95,8 +159,17 @@ const MyProfile = () => {
           </div>
         </div>
       </div>
+      {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
+        <CompanyProfile />
+      ) : (
+        <IndividualProfile
+          languageList={languageList}
+          collegeList={collegeList}
+          degreeList={degreeList}
+        />
+      )}
 
-      <div className="mt-5">
+      {/* <div className="mt-5">
         <div className="flex w-3/5 justify-around">
           <div
             onClick={() => setActive(0)}
@@ -334,7 +407,7 @@ const MyProfile = () => {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

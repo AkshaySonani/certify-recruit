@@ -1,57 +1,11 @@
 'use client';
-import axios from 'axios';
 import Image from 'next/image';
-import { v4 as uuidv4 } from 'uuid';
-import sha256 from 'crypto-js/sha256';
 import React, { useState } from 'react';
-import { TEXT } from '@/service/Helper';
 import { Switch } from '@headlessui/react';
-import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
+import { TEXT } from '@/service/Helper';
 
 const Page = () => {
-  const router = useRouter();
-  const session = useSession();
-
   const [enabled, setEnabled] = useState(false);
-
-  const makePayment = async (amount: any) => {
-    const transactionid =
-      session?.data?.user?._id + '-' + uuidv4().toString().slice(-6);
-
-    const payload = {
-      amount: amount * 100,
-      redirectMode: 'POST',
-      merchantTransactionId: transactionid,
-      paymentInstrument: { type: 'PAY_PAGE' },
-      merchantId: process.env.NEXT_PUBLIC_MERCHANT_ID,
-      redirectUrl: `${process.env.NEXT_PUBLIC_DOMAIN}/api/status/${transactionid}`,
-      callbackUrl: `${process.env.NEXT_PUBLIC_DOMAIN}/api/status/${transactionid}`,
-    };
-
-    const dataBase64 = Buffer.from(JSON.stringify(payload)).toString('base64');
-
-    const fullURL =
-      dataBase64 + '/pg/v1/pay' + process.env.NEXT_PUBLIC_SALT_KEY;
-
-    const checksum =
-      sha256(fullURL) + '###' + process.env.NEXT_PUBLIC_SALT_INDEX;
-
-    const response = await axios.post(
-      'https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay',
-      { request: dataBase64 },
-      {
-        headers: {
-          accept: 'application/json',
-          'Content-Type': 'application/json',
-          'X-VERIFY': checksum,
-        },
-      },
-    );
-
-    const redirect = response.data.data.instrumentResponse.redirectInfo.url;
-    router.replace(redirect);
-  };
 
   return (
     <section>
@@ -121,7 +75,7 @@ const Page = () => {
             ))}
           </div>
 
-          <div onClick={() => makePayment(20)}>
+          <div>
             <button className="h-12 w-full rounded-xl bg-meta-blue-2">
               <span className="flex justify-center text-sm font-medium text-white">
                 {TEXT?.GET_STARTED}
@@ -169,7 +123,7 @@ const Page = () => {
               ))}
             </div>
 
-            <div onClick={() => makePayment(70)}>
+            <div>
               <button className="h-12 w-full rounded-xl bg-meta-blue-2">
                 <span className="flex justify-center text-sm font-medium text-white">
                   {TEXT?.GET_STARTED}
@@ -209,7 +163,7 @@ const Page = () => {
             ))}
           </div>
 
-          <div onClick={() => makePayment(99)}>
+          <div>
             <button className="h-12 w-full rounded-xl bg-meta-blue-2">
               <span className="flex justify-center text-sm font-medium text-white">
                 {TEXT?.GET_STARTED}

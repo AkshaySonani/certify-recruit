@@ -3,16 +3,9 @@ import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { TEXT } from "@/service/Helper";
-import MultipleSelect from "../MultipleSelect";
+import MultipleSelectBox from "../MultipleSelectBox";
+import { EMP_TYPE_ARR } from "@/constant/Enum";
 
-const JOB_TYPE_ARR = [
-  'FULLTIME',
-  'PARTTIME',
-  'ONDEMAND',
-  'TEMPORARY',
-  'VOLUNTEER',
-  'INTERNSHIP',
-]
 const WORK_SCHEDULE = [
   {
     id: 1,
@@ -31,28 +24,25 @@ const WORK_SCHEDULE = [
   },
 ];
 
-
 const style = {
-  control: (base:any, state:any) => ({
+  control: (base: any, state: any) => ({
     ...base,
     border: state.isFocused ? 0 : 0,
     // This line disable the blue border
     boxShadow: state.isFocused ? 0 : 0,
-    paddingLeft:"20px",
+    paddingLeft: "20px",
     "&:hover": {
-      border: state.isFocused ? 0 : 0
-    }
-  })
+      border: state.isFocused ? 0 : 0,
+    },
+  }),
 };
 
-
-const JobPostingForm2 = ({ formik }:{formik:any}) => {
-  const handleClose=(list:any)=>{
-    const arr=formik?.values?.working_schedule.filter((el:any)=>{
-      return el!==list
+const JobPostingForm2 = ({ formik }: { formik: any }) => {
+  const handleClose = (list: any) => {
+    const arr = formik?.values?.working_schedule.filter((el: any) => {
+      return el !== list;
     });
-    
-    }
+  };
   const router = useRouter();
   return (
     <div className="">
@@ -67,7 +57,7 @@ const JobPostingForm2 = ({ formik }:{formik:any}) => {
         </div>
         <div className="grid grid-cols-1 lg:w-1/2 w-full lg:mt-0 mt-2">
           <div className="flex items-center  flex-wrap w-full gap-3 ">
-            {JOB_TYPE_ARR?.map((list: any) => {
+            {EMP_TYPE_ARR?.map((list: any) => {
               return (
                 <div className="border-meta-light-blue-1 lg:w-[48%] border rounded-lg p-3 sm:w-[30%] w-full">
                   <label
@@ -80,13 +70,6 @@ const JobPostingForm2 = ({ formik }:{formik:any}) => {
                       id={list}
                       value={list}
                       onChange={formik.handleChange}
-                      // onChange={(e) =>
-
-                      //   formik?.setFieldValue("workplace", [
-                      //     ...formik?.values?.workplace,
-                      //     e?.target?.value,
-                      //   ])
-                      // }
                     />
                     <p className="pl-3 capitalize">{list}</p>
                   </label>
@@ -95,9 +78,8 @@ const JobPostingForm2 = ({ formik }:{formik:any}) => {
             })}
           </div>
           {formik.touched.job_types && formik.errors.job_types && (
-                    <div className="error">{formik.errors.job_types}</div>
-                  )}
-         
+            <div className="error">{formik.errors.job_types}</div>
+          )}
         </div>
       </div>
       <div className="border-meta-light-blue-1 border my-6" />
@@ -116,9 +98,8 @@ const JobPostingForm2 = ({ formik }:{formik:any}) => {
             className={`w-full flex items-center justify-between min-w-64 appearance-none rounded-lg border border-stroke px-1  outline-none transition focus:border-meta-blue-1 active:border-meta-blue-1`}
           >
             <div className="flex items-center w-full relative">
-              
-              <MultipleSelect
-              style={style}
+              <MultipleSelectBox
+                style={style}
                 className="border-none w-full  "
                 value={formik?.values?.working_schedule}
                 name="working_schedule"
@@ -137,27 +118,30 @@ const JobPostingForm2 = ({ formik }:{formik:any}) => {
               </div>
             </div>
           </div>
-          {formik.touched.working_schedule && formik.errors.working_schedule && (
-                    <div className="error">{formik.errors.working_schedule}</div>
-                  )}
-         
+          {formik.touched.working_schedule &&
+            formik.errors.working_schedule && (
+              <div className="error">{formik.errors.working_schedule}</div>
+            )}
+
           <div className="text-start mt-4 flex items-center sm:flex-nowrap flex-wrap">
-            {formik?.values?.working_schedule?.map((ele:any,i:any) => {
+            {formik?.values?.working_schedule?.map((ele: any, i: any) => {
               return (
                 <div className="flex items-center px-2 py-1 border-2 border-meta-light-blue-1 rounded-lg mr-3 mb-2">
                   <p className="text-meta-light-blue-3 font-medium text-sm whitespace-nowrap">
                     {ele}
                   </p>
-                  <div className="cursor-pointer " onClick={()=>handleClose(ele)}>
-                  <Image
-                    width={19}
-                    height={19}
-                    alt="Preview"
-                    className="ml-3"
-                    src={"/job/Close.svg"}
-                  />
+                  <div
+                    className="cursor-pointer "
+                    onClick={() => handleClose(ele)}
+                  >
+                    <Image
+                      width={19}
+                      height={19}
+                      alt="Preview"
+                      className="ml-3"
+                      src={"/job/Close.svg"}
+                    />
                   </div>
-                 
                 </div>
               );
             })}
@@ -236,13 +220,6 @@ const JobPostingForm2 = ({ formik }:{formik:any}) => {
             <div className="border-meta-light-blue-1 border my-4" />
 
             <div className="mr-3 sm:w-1/2 w-full">
-              {/* <Checkbox
-                label={"Salary is negotiable"}
-                handleChange={formik.handleChange}
-                // value={formik?.values?.salary_negotiable as any}
-                isChecked={formik?.values?.salary_negotiable === true ?? false}
-                name={"salary_negotiable"}
-              /> */}
               <label
                 htmlFor="checkboxLabelOne"
                 className={`flex cursor-pointer select-none items-center `}
