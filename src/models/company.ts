@@ -2,9 +2,34 @@ import mongoose from 'mongoose';
 
 const companySchema = new mongoose.Schema({
   company_type: {
-    default: "",
+    default: '',
     type: String,
-    enum: ["PUBLIC", "PRIVATE", "OPC"],
+    enum: [
+      'Public company',
+      'Limited by guarantee',
+      'One Person Company',
+      'Private company',
+      'Unlimited company',
+      'Holding company',
+      'State-owned enterprise',
+      'Associate companies',
+      'Producer Companies',
+      'Small business',
+      'Foreign company',
+      'Section 8 company',
+      'Statutory corporation',
+      'Company',
+      'Dormant company',
+      'Unlisted company',
+      'Chartered company',
+      'Classification of companies',
+      'Corporations',
+      'Indian company',
+      'Nonprofit organization',
+      'Public limited',
+      'Banking company',
+      'Nidhi Companies',
+    ],
   },
   // company_type: {
   //   type: mongoose.Schema.Types.ObjectId,
@@ -25,11 +50,12 @@ const companySchema = new mongoose.Schema({
     type: String,
     validate: {
       validator: function (v: any) {
-        const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
+        const urlRegex =
+          /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
         return urlRegex.test(v);
       },
-      message: (props: any) => `${props.value} is not a valid URL!`
-    }
+      message: (props: any) => `${props.value} is not a valid URL!`,
+    },
   },
   owner: {
     type: String,
@@ -45,7 +71,7 @@ const companySchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    default: "",
+    default: '',
   },
   logo: {
     type: String, // Assuming storing image URL
@@ -58,9 +84,8 @@ const companySchema = new mongoose.Schema({
       validator: function (v: any) {
         return /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(v);
       },
-      message: (props: any) => `${props.value} is not a valid PAN number!`
-    }
-
+      message: (props: any) => `${props.value} is not a valid PAN number!`,
+    },
   },
   name_on_pan: {
     type: String,
@@ -93,8 +118,8 @@ const companySchema = new mongoose.Schema({
         // Regular expression for PIN code validation
         return /^[1-9][0-9]{5}$/.test(v);
       },
-      message: (props: any) => `${props.value} is not a valid PIN code!`
-    }
+      message: (props: any) => `${props.value} is not a valid PIN code!`,
+    },
   },
   street_address: {
     type: String,
@@ -102,7 +127,7 @@ const companySchema = new mongoose.Schema({
   },
 });
 
-companySchema.set("timestamps", true)
+companySchema.set('timestamps', true);
 const Company =
   mongoose.models.Company || mongoose.model('Company', companySchema);
 export default Company;
