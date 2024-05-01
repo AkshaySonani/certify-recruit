@@ -5,8 +5,37 @@ const individualSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  user_ref_id: {
+    ref: 'User',
+    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+  },
   resume: {
-    type: String,
+    type: [
+      {
+        file_name: {
+          type: String,
+          required: true,
+        },
+        file_url: {
+          type: String,
+          required: true,
+          validate: {
+            validator: (v: any) => {
+              const urlRegex =
+                /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
+              return urlRegex.test(v);
+            },
+            message: (props: any) => `${props.value} is not a valid URL!`,
+          },
+        },
+        _id: {
+          auto: true,
+          required: true,
+          type: mongoose.Schema.Types.ObjectId,
+        },
+      },
+    ],
     required: false,
   },
   skills: [
@@ -54,10 +83,10 @@ const individualSchema = new mongoose.Schema({
         type: Number,
         required: true,
         validate: {
-          validator: function (v) {
+          validator: (v: any) => {
             return v >= 1900 && v <= new Date().getFullYear();
           },
-          message: (props) => `${props.value} is not a valid year!`,
+          message: (props: any) => `${props.value} is not a valid year!`,
         },
       },
     },
@@ -72,7 +101,7 @@ const individualSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.Date,
     required: false,
     validate: {
-      validator: function (v: any) {
+      validator: (v: any) => {
         // Validate if the input is a valid date
         return v instanceof Date && !isNaN(v);
       },
@@ -124,19 +153,19 @@ const individualSchema = new mongoose.Schema({
         type: Number,
         required: true,
         validate: {
-          validator: function (v) {
+          validator: (v: any) => {
             return v >= 1900 && v <= new Date().getFullYear();
           },
-          message: (props) => `${props.value} is not a valid year!`,
+          message: (props: any) => `${props.value} is not a valid year!`,
         },
       },
       month: {
         type: Number,
         validate: {
-          validator: function (v) {
+          validator: (v: any) => {
             return v >= 1 && v <= 12;
           },
-          message: (props) => `${props.value} is not a valid month!`,
+          message: (props: any) => `${props.value} is not a valid month!`,
         },
       },
       reasonForLeaving: {
