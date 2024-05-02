@@ -15,7 +15,7 @@ const UploadResumeTab = () => {
       'application/pdf': [],
     },
 
-    onDrop: (acceptedFiles) => {
+    onDrop: (acceptedFiles: any) => {
       UploadFileOnBucket(acceptedFiles[0]);
     },
   });

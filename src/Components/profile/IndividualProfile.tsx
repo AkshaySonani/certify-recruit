@@ -1,149 +1,197 @@
-import Image from "next/image";
-import { Fragment, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Combobox, Menu, Transition } from "@headlessui/react";
-import { TEXT } from "@/service/Helper";
-import API from "@/service/ApiService";
-import { API_CONSTANT } from "@/constant/ApiConstant";
-import * as Yup from "yup";
-import { useFormik, Field } from "formik";
-import AutoComplete from "../Autocomplete";
-import { toast } from "react-toastify";
-import { GENDER } from "@/constant/Enum";
+import Image from 'next/image';
+import { Fragment, useEffect, useState } from 'react';
+import { Combobox, Menu, Transition } from '@headlessui/react';
+import { TEXT } from '@/service/Helper';
+import API from '@/service/ApiService';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import * as Yup from 'yup';
+import { useFormik, Field } from 'formik';
+import { toast } from 'react-toastify';
+import {
+  COMPLETION_DATE,
+  GENDER,
+  HIGH_EDUCATION,
+  PROFICIENCY,
+} from '@/constant/Enum';
+import MultipleSelectBox from '../MultipleSelectBox';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import moment from 'moment';
+import CareerInfoTab from './CareerInfoTab';
+import PersonalDetailsTab from './PersonalDetailsTab';
+import EducationTab from './EducationTab';
+import KeySkillTab from './KeySkillTab';
+import UploadResumeTab from './UploadResumeTab';
+
 const COMPANY_ARR = [
-  { id: 1, name: "Corporate Company" },
-  { id: 2, name: "It Company" },
-  { id: 3, name: "Software Company" },
-  { id: 1, name: "CLient Company" },
+  { id: 1, name: 'Corporate Company' },
+  { id: 2, name: 'It Company' },
+  { id: 3, name: 'Software Company' },
+  { id: 1, name: 'CLient Company' },
 ];
 const city = [
-  { _id: "662ccb4a52f81a3100514885", name: "surat" },
-  { _id: "662a8768683fb48bab4be172", name: "Ahemedabad" },
-  { _id: "662a8768683fb48bab4be173", name: "Baroda" },
-  { _id: "662a8768683fb48bab4be174", name: "Rajkot" },
-  { _id: "662a8768683fb48bab4be175", name: "Botad" },
-  { _id: "662a8768683fb48bab4be176", name: "pune" },
+  { _id: '662ccb4a52f81a3100514885', name: 'surat' },
+  { _id: '662a8768683fb48bab4be172', name: 'Ahemedabad' },
+  { _id: '662a8768683fb48bab4be173', name: 'Baroda' },
+  { _id: '662a8768683fb48bab4be174', name: 'Rajkot' },
+  { _id: '662a8768683fb48bab4be175', name: 'Botad' },
+  { _id: '662a8768683fb48bab4be176', name: 'pune' },
 ];
 
 const Country = [
-  { _id: "662a83d8683fb48bab4bcc70", name: "India" },
-  { _id: "662a83d8683fb48bab4bcc71", name: "Canada" },
-  { _id: "662a83d8683fb48bab4bcc72", name: "Uk" },
-  { _id: "662a83d8683fb48bab4bcc73", name: "UK" },
-  { _id: "662a83d8683fb48bab4bcc74", name: "USA" },
-  { _id: "662a83d8683fb48bab4bcc75", name: "Germany" },
+  { _id: '662a83d8683fb48bab4bcc70', name: 'India' },
+  { _id: '662a83d8683fb48bab4bcc71', name: 'Canada' },
+  { _id: '662a83d8683fb48bab4bcc72', name: 'Uk' },
+  { _id: '662a83d8683fb48bab4bcc73', name: 'UK' },
+  { _id: '662a83d8683fb48bab4bcc74', name: 'USA' },
+  { _id: '662a83d8683fb48bab4bcc75', name: 'Germany' },
 ];
 
 const State = [
-  { _id: "662a873b683fb48bab4bcd70", name: "Gujarat" },
-  { _id: "662a873b683fb48bab4bcd71", name: "Maharashtra" },
-  { _id: "662a873b683fb48bab4bcd72", name: "Bhopal" },
-  { _id: "662a873b683fb48bab4bcd73", name: "Bamyan" },
-  { _id: "662a873b683fb48bab4bcd74", name: "Badakhshan" },
-  { _id: "662a873b683fb48bab4bcd75", name: "La Rioja" },
+  { _id: '662a873b683fb48bab4bcd70', name: 'Gujarat' },
+  { _id: '662a873b683fb48bab4bcd71', name: 'Maharashtra' },
+  { _id: '662a873b683fb48bab4bcd72', name: 'Bhopal' },
+  { _id: '662a873b683fb48bab4bcd73', name: 'Bamyan' },
+  { _id: '662a873b683fb48bab4bcd74', name: 'Badakhshan' },
+  { _id: '662a873b683fb48bab4bcd75', name: 'La Rioja' },
 ];
 
-const page = [{id:1,page:"Profile Summary"},{id:2,page:"Resume"},{id:3, page:"Key skill"},{id:4,page:"Education"},{id:5,page:"Personal Detail"},{id:6,page:"Career info"}];
+const page = [
+  { id: 1, page: 'Profile Summary' },
+  { id: 2, page: 'Resume' },
+  { id: 3, page: 'Key skill' },
+  { id: 4, page: 'Education' },
+  { id: 5, page: 'Personal Detail' },
+  { id: 6, page: 'Career info' },
+];
 
-const IndividualProfile = ({ languageList, collegeList, degreeList }: any) => {
+const IndividualProfile = ({
+  languageList,
+  collegeList,
+  degreeList,
+  citiesData,
+}: any) => {
   const [activePage, setActivePage] = useState(1);
-  const [query, setQuery] = useState("");
+  const [skillData, setSkillData] = useState([]);
+  const [query, setQuery] = useState('');
   function classNames(...classes: any) {
-    return classes.filter(Boolean).join(" ");
+    return classes.filter(Boolean).join(' ');
   }
 
-  const handleSubmit = async (values: any, actions: any) => {
-    if (activePage === 3) {
-      API.post(API_CONSTANT?.JOB, values)
-        .then((res) => {
-          setActivePage(activePage + 1);
-          toast?.success("Successfully job posting");
-          actions.setSubmitting(false);
-        })
-        .catch((error) => {
-          console.log("error", error);
+  const city = [
+    { _id: '662ccb4a52f81a3100514885', name: 'surat' },
+    { _id: '662a8768683fb48bab4be172', name: 'Ahemedabad' },
+    { _id: '662a8768683fb48bab4be173', name: 'Baroda' },
+    { _id: '662a8768683fb48bab4be174', name: 'Rajkot' },
+    { _id: '662a8768683fb48bab4be175', name: 'Botad' },
+    { _id: '662a8768683fb48bab4be176', name: 'pune' },
+  ];
+
+  const getSkillDataApi = () => {
+    API.get(API_CONSTANT?.CATEGORY)
+      .then((res) => {
+        let skiilArr = res?.data?.data?.map((list: any) => {
+          return {
+            _id: list?._id,
+            label: list?.subcategory,
+            value: list?.subcategory,
+          };
         });
-    } else {
-      setActivePage(activePage + 1);
-      actions.setTouched({});
-      actions.setSubmitting(false);
-    }
+        setSkillData(skiilArr);
+      })
+      .catch((error) => {
+        console.log('error', error);
+        toast.error(error?.response?.data?.error);
+      });
+  };
+  useEffect(() => {
+    // getCityDataApi();
+    getSkillDataApi();
+  }, []);
+  const handleSubmit = async (values: any, actions: any) => {
+    // if (activePage === 3) {
+    //   API.post(API_CONSTANT?.JOB, values)
+    //     .then((res) => {
+    //       setActivePage(activePage + 1);
+    //       toast?.success("Successfully job posting");
+    //       actions.setSubmitting(false);
+    //     })
+    //     .catch((error) => {
+    //       console.log("error", error);
+    //     });
+    // } else {
+    setActivePage(activePage + 1);
+    actions.setTouched({});
+    actions.setSubmitting(false);
+    // }
   };
 
   const validationSchema = [
     Yup.object().shape({
-      // contact_number: Yup.string().required("Contact number is required."),
-      // user_name: Yup.string().required("Username is required."),
-      // role: Yup.string().required("Role is required."),
+      profile_summary: Yup.string().required('Profile summary is required.'),
+    }),
+    Yup.object().shape({}),
+    Yup.object().shape({
+      skills: Yup.array().min(1, `select at least one skill`),
     }),
     Yup.object().shape({
-    //   city: Yup.object()
-    //     .shape({
-    //       _id: Yup.string().required("City is required"),
-    //     })
-    //     .nonNullable("City is required"),
-    //   company_name: Yup.string().required("Company name is required."),
-    //   company_type: Yup.string().required("Company type is required."),
-    //   owner: Yup.string().required("Owner is required."),
-    //   street_address: Yup.string().required("Address is required."),
-    //   country: Yup.object()
-    //     .shape({
-    //       _id: Yup.string().required("Country is required"),
-    //     })
-    //     .nonNullable("Country is required"),
-    //   state: Yup.object()
-    //     .shape({
-    //       _id: Yup.string().required("State is required"),
-    //     })
-    //     .nonNullable("State is required."),
-    //   website_url: Yup.string()
-    //     .required("Website url is required.")
-    //     .matches(/\s+/g, "Invalid email."),
-    //   pincode: Yup.string()
-    //     .required("Zip code is required.")
-    //     .matches(/\s+/g, "Invalid email."),
-    // }),
-    // Yup.object().shape({
-    //   pan_number: Yup.string()
-    //     .required("Pan number is required.")
-    //     .matches(/\s+/g, "Invalid email"),
-    //   name_on_pan: Yup.string().required("Name of pan is required."),
+      college_school_name: Yup.string().required(`College name is required.`),
+      // degree: Yup.string().required(`Degree is required.`),
+      highest_education: Yup.string().required(
+        `Please select highest education`,
+      ),
+      completion_date: Yup.object().shape({
+        year: Yup.string().required('Year is required'),
+        month: Yup.string().required('Month is required'),
+      }),
+    }),
+    Yup.object().shape({
+      gender: Yup.string().required(`Gender is required.`),
+      date_of_birth: Yup.string().required(`Date of birth is required.`),
+      languages: Yup.array().of(
+        Yup.object().shape({
+          language: Yup.string().nonNullable('Language is required'),
+          proficiency: Yup.string().required('Proficiency is required'),
+        }),
+      ),
     }),
   ];
-  const currentValidationSchema = validationSchema[activePage];
+
+  const currentValidationSchema = validationSchema[activePage - 1];
   const formik = useFormik({
     initialValues: {
-      resume: "",
-      gender: GENDER[0],
-      company_name: "",
-      current_location: "",
-      expected_salary_upto: "",
-      profile_summary: "",
-      date_of_birth: "",
-      highest_education: "",
-      expected_salary_start_at: "",
-      college_school_name: "",
+      resume: '',
+      gender: '',
+      company_name: '',
+      current_location: '',
+      expected_salary_upto: '',
+      profile_summary: '',
+      degree: '',
+      date_of_birth: '',
+      highest_education: '',
+      expected_salary_start_at: '',
+      college_school_name: '',
       total_experiences: [
         {
-          companyName: "",
-          role: "",
+          companyName: '',
+          role: '',
           location: null,
-          employmentType: "",
-          years: "",
-          month: "",
-          reason_for_leaving: "",
+          employmentType: '',
+          years: '',
+          month: '',
+          reason_for_leaving: '',
         },
       ],
       skills: [],
       languages: [
         {
           language: null,
-          proficiency: "",
+          proficiency: '',
         },
       ],
       completion_date: {
-        year: "",
-        month: "",
+        year: '',
+        month: '',
       },
       city: null,
       state: null,
@@ -154,286 +202,95 @@ const IndividualProfile = ({ languageList, collegeList, degreeList }: any) => {
     onSubmit: handleSubmit,
   });
   let filteredArr = [];
-
   const searchItems = (arr: any) => {
     filteredArr =
-      query === ""
+      query === ''
         ? arr
         : arr.filter((list: any) =>
             list.name
               .toLowerCase()
-              .replace(/\s+/g, "")
-              .includes(query.toLowerCase().replace(/\s+/g, ""))
+              .replace(/\s+/g, '')
+              .includes(query.toLowerCase().replace(/\s+/g, '')),
           );
     return filteredArr;
   };
-console.log("page",page[0]);
+  console.log('formik', formik?.errors);
+
+  // console.log(
+  //   "selected month ---->",
+  //   COMPLETION_DATE[formik?.values?.completion_date?.month]
+  // );
 
   return (
     <div className="mt-5">
       <div className="flex w-[80%] justify-around">
-        {page?.map((list:any,i)=>{
-          return(
+        {page?.map((list: any, i) => {
+          return (
             <div
-            className={`cursor-pointer text-sm font-medium ${
-              activePage === list?.id ? "text-meta-blue-1" : "text-meta-light-blue-3"
-            }`}
-          >
-            {list?.page}
-          </div>
-          )
+              className={`cursor-pointer text-sm font-medium ${
+                activePage === list?.id
+                  ? 'text-meta-blue-1'
+                  : 'text-meta-light-blue-3'
+              }`}
+            >
+              {list?.page}
+            </div>
+          );
         })}
-      
       </div>
       <div className="my-3 w-full border border-meta-light-blue-1" />
       <form onSubmit={formik.handleSubmit}>
         <div>
-          {activePage===page[0]?.id && (
+          {activePage === page[0]?.id && (
             <>
               <div className="mt-5 flex w-full gap-3 pl-9">
                 <div className="w-full">
                   <label className="text-base font-medium text-meta-purple-1">
-                  Profile Summary
+                    Profile Summary
                   </label>
-                  <p className="pt-1 mb-3 text-sm text-meta-light-blue-3 font-medium">Your profile summary should mention the highlights of your career and education, what your professional interests are, and what kind of a career you 
-are looking for. Write a meaningful summary of more than 50 characters.</p>
+                  <p className="mb-3 pt-1 text-sm font-medium text-meta-light-blue-3">
+                    Your profile summary should mention the highlights of your
+                    career and education, what your professional interests are,
+                    and what kind of a career you are looking for. Write a
+                    meaningful summary of more than 50 characters.
+                  </p>
                   <textarea
-                    value={formik?.values?.user_name}
-                    name="user_name"
+                    value={formik?.values?.profile_summary}
+                    name="profile_summary"
                     onChange={formik.handleChange}
                     placeholder="Summery"
                     rows={4}
                     className="mt-2 w-full rounded-2xl border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                   />
-                  {formik.touched.user_name && formik.errors.user_name && (
-                    <div className="error">{formik.errors.user_name}</div>
-                  )}
-                </div>               
+                  {formik.touched.profile_summary &&
+                    formik.errors.profile_summary && (
+                      <div className="error">
+                        {formik.errors.profile_summary}
+                      </div>
+                    )}
+                </div>
               </div>
-             
             </>
           )}
+          {activePage === page[1]?.id && <UploadResumeTab />}
           {activePage === page[2]?.id && (
             <>
-              <div className="mt-5 flex w-full gap-3 pl-9">
-                <Menu as="div" className="relative w-1/2">
-                  <label className="text-base font-medium text-meta-purple-1">
-                    {TEXT?.COMPANY_TYPE}
-                  </label>
-                  <Menu.Button className="border-meta-light-blue-1 relative z-20 mt-2 flex w-full appearance-none items-center justify-between rounded-lg border pl-5 pr-[11px] py-3 outline-none transition">
-                    <p>
-                      {formik?.values?.company_type === ""
-                        ? "Select Company type"
-                        : formik?.values?.company_type}
-                    </p>
-                    <Image
-                      alt="Icon"
-                      width={14}
-                      height={14}
-                      src={"/dashboard/SelectDown.svg"}
-                    />
-                  </Menu.Button>
-                  <Transition
-                    as={Fragment}
-                    leave="transition ease-in duration-75"
-                    leaveTo="transform opacity-0 scale-95"
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leaveFrom="transform opacity-100 scale-100"
-                  >
-                    <Menu.Items className="absolute right-0 z-30 mt- w-full origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <div>
-                        {COMPANY_ARR?.map((list) => {
-                          return (
-                            <Menu.Item>
-                              {({ active }) => (
-                                <div
-                                  onClick={() =>
-                                    formik.setFieldValue(
-                                      "company_type",
-                                      list?.name
-                                    )
-                                  }
-                                  className={classNames(
-                                    active
-                                      ? "bg-meta-blue-1 text-white"
-                                      : "text-gray-900",
-                                    "block px-4 py-2 text-[14px]"
-                                  )}
-                                >
-                                  {list?.name}
-                                </div>
-                              )}
-                            </Menu.Item>
-                          );
-                        })}
-                      </div>
-                    </Menu.Items>
-                  </Transition>
-                  {formik.touched.company_type &&
-                    formik.errors.company_type && (
-                      <div className="error">{formik.errors.company_type}</div>
-                    )}
-                </Menu>
-
-                <div className="w-1/2">
-                  <label className="text-base font-medium text-meta-purple-1">
-                    {TEXT?.COMPANY_NAME}
-                  </label>
-                  <input
-                    type="text"
-                    onChange={formik.handleChange}
-                    value={formik?.values?.company_name}
-                    name="company_name"
-                    placeholder="Company name"
-                    className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
-                  />
-                  {formik.touched.company_name &&
-                    formik.errors.company_name && (
-                      <div className="error">{formik.errors.company_name}</div>
-                    )}
-                </div>
-              </div>
-              <div className="mt-3 flex w-full gap-3 pl-9">
-                <div className="w-1/2">
-                  <label className="text-base font-medium text-meta-purple-1">
-                    {TEXT?.WEBSITE_URL}
-                  </label>
-                  <input
-                    type="text"
-                    onChange={formik.handleChange}
-                    value={formik?.values?.website_url}
-                    name="website_url"
-                    placeholder="Website url"
-                    className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
-                  />
-                  {formik.touched.website_url && formik.errors.website_url && (
-                    <div className="error">{formik.errors.website_url}</div>
-                  )}
-                </div>
-                <div className="w-1/2">
-                  <label className="text-base font-medium text-meta-purple-1">
-                    {TEXT?.OWNER}
-                  </label>
-                  <input
-                    onChange={formik.handleChange}
-                    value={formik?.values?.owner}
-                    name="owner"
-                    type="text"
-                    placeholder="owner name"
-                    className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
-                  />
-                  {formik.touched.owner && formik.errors.owner && (
-                    <div className="error">{formik.errors.owner}</div>
-                  )}
-                </div>
-              </div>
-              <div className="mt-3 w-full pl-9">
-                <label className="text-base font-medium text-meta-purple-1">
-                  {TEXT?.COMPANY_MAILING_ADDRESS}
-                </label>
-                <input
-                  onChange={formik.handleChange}
-                  value={formik?.values?.street_address}
-                  name="street_address"
-                  type="text"
-                  placeholder="Street address"
-                  className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
-                />
-                {formik.touched.street_address &&
-                  formik.errors.street_address && (
-                    <div className="error">{formik.errors.street_address}</div>
-                  )}
-              </div>
-              <div className="mt-3 flex w-full gap-3 pl-9">
-                <div className="w-1/2">
-                  <AutoComplete
-                    value={formik?.values?.state}
-                    filterArr={searchItems(State)}
-                    query={query}
-                    setQuery={setQuery}
-                    name={"state"}
-                    placeholder="Search state"
-                    handleChange={(e: any) => formik.setFieldValue("state", e)}
-                  />
-                  {formik.touched.state && formik.errors.state && (
-                    <div className="error">{formik.errors.state}</div>
-                  )}
-                </div>
-                <div className="w-1/2">
-                  <AutoComplete
-                    value={formik?.values?.city}
-                    filterArr={searchItems(city)}
-                    query={query}
-                    setQuery={setQuery}
-                    name={"city"}
-                    placeholder="Search city"
-                    handleChange={(e: any) => formik.setFieldValue("city", e)}
-                  />
-                  {formik.touched.city && formik.errors.city && (
-                    <div className="error">{formik.errors.city}</div>
-                  )}
-                </div>
-              </div>
-              <div className="mt-3 flex w-full gap-3 pl-9">
-                <div className="w-1/2">
-                  <input
-                    type="text"
-                    name="pincode"
-                    onChange={formik.handleChange}
-                    value={formik?.values?.pincode}
-                    placeholder="Zip Code"
-                    className="w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
-                  />
-                  {formik.touched.pincode && formik.errors.pincode && (
-                    <div className="error">{formik.errors.pincode}</div>
-                  )}
-                </div>
-                <div className="w-1/2 relative">
-                  <AutoComplete
-                    value={formik?.values?.country}
-                    filterArr={searchItems(Country)}
-                    query={query}
-                    setQuery={setQuery}
-                    name={"country"}
-                    placeholder="Search Country"
-                    handleChange={(e: any) =>
-                      formik.setFieldValue("country", e)
-                    }
-                  />
-                  {formik.touched.country && formik.errors.country && (
-                    <div className="error">{formik.errors.country}</div>
-                  )}
-                </div>
-              </div>
+              <KeySkillTab formik={formik} skillData={skillData} />
             </>
           )}
-          {activePage === 3 && (
+
+          {activePage === page[3]?.id && (
             <>
-              <div className="mt-5 flex w-full gap-3 pl-9">
-                <div className="w-1/2">
-                  <label className="text-base font-medium text-meta-purple-1">
-                    {TEXT?.PAN_NUMBER}
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="NSLPQS2154"
-                    className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
-                  />
-                </div>
-                <div className="w-1/2">
-                  <label className="text-base font-medium text-meta-purple-1">
-                    {TEXT?.NAME_ON_PAN_CARD}
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Webnova Infotech"
-                    className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
-                  />
-                </div>
-              </div>
+              <EducationTab formik={formik} degreeList={degreeList} />
             </>
+          )}
+          {activePage === page[4]?.id && (
+            <>
+              <PersonalDetailsTab languageList={languageList} formik={formik} />
+            </>
+          )}
+          {activePage === page[5]?.id && (
+            <CareerInfoTab formik={formik} cityData={city} />
           )}
           <div className="mt-8 flex w-full justify-end">
             <button

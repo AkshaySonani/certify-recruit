@@ -33,6 +33,7 @@ const JobPostingForm3 = ({
     const arr = formik?.values?.skills.filter((el: any) => {
       return el !== list;
     });
+    formik?.setFieldValue("skills",arr)
   };
   return (
     <div>

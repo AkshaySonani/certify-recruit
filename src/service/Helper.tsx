@@ -18,6 +18,7 @@ const ROUTE = {
 };
 
 const TEXT = {
+  UPLOAD: 'Upload',
   OR: 'or',
   CSS: 'Css',
   SEND: 'Send',
@@ -201,49 +202,49 @@ const USER_ROLE = {
 
 const SIDE_BAR_DATA = [
   {
-    path: "dashboard",
-    title: "Dashboard",
-    icon: "/sidebarIcon/dashboard.svg",
+    path: 'dashboard',
+    title: 'Dashboard',
+    icon: '/sidebarIcon/dashboard.svg',
   },
   {
-    path: "job_posting",
-    title: "Job Posting",
-    icon: "/sidebarIcon/jobPosting.svg",
+    path: 'job_posting',
+    title: 'Job Posting',
+    icon: '/sidebarIcon/jobPosting.svg',
   },
   {
-    path: "job",
-    title: "Job",
-    icon: "/sidebarIcon/jobPosting.svg",
+    path: 'job',
+    title: 'Job',
+    icon: '/sidebarIcon/jobPosting.svg',
   },
   {
-    path: "pricing",
-    title: "Pricing",
-    icon: "/sidebarIcon/pricing.svg",
+    path: 'pricing',
+    title: 'Pricing',
+    icon: '/sidebarIcon/pricing.svg',
   },
   {
-    path: "search_CVs",
-    title: "Search CVs",
-    icon: "/sidebarIcon/dashboard.svg",
+    path: 'search_CVs',
+    title: 'Search CVs',
+    icon: '/sidebarIcon/dashboard.svg',
   },
   {
-    path: "users",
-    title: "Users",
-    icon: "/sidebarIcon/dashboard.svg",
+    path: 'users',
+    title: 'Users',
+    icon: '/sidebarIcon/dashboard.svg',
   },
   {
-    path: "company_info",
-    title: "Company info",
-    icon: "/sidebarIcon/dashboard.svg",
+    path: 'company_info',
+    title: 'Company info',
+    icon: '/sidebarIcon/dashboard.svg',
   },
   {
-    path: "earn_badge",
-    title: "Earn Badge",
-    icon: "/sidebarIcon/dashboard.svg",
+    path: 'earn_badge',
+    title: 'Earn Badge',
+    icon: '/sidebarIcon/dashboard.svg',
   },
   {
-    path: "learn&earn",
-    title: "Learn & Earn",
-    icon: "/sidebarIcon/dashboard.svg",
+    path: 'learn&earn',
+    title: 'Learn & Earn',
+    icon: '/sidebarIcon/dashboard.svg',
   },
 ];
 

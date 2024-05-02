@@ -11,50 +11,55 @@ const EMP_TYPE_ARR = [
 
 const GENDER = ["MALE", "FEMALE", "OTHER"];
 
-const HIGH_EDUCATION = ["TEN_OR_BELOW", "TWELVE_PASS", "DIPLOMA", "GRADUATE"];
+const HIGH_EDUCATION = [
+  { label: "10th or Below 10th", value: "TEN_OR_BELOW" },
+  { label: "12th Pass", value: "TWELVE_PASS" },
+  { label: "Diploma", value: "DIPLOMA" },
+  { label: "Graduate", value: "GRADUATE" },
+];
 
 const CURRENT_LOCATION = ["USA", "OUT_OF_USA"];
 
- const COMPANY_TYPE=[
-  'Public company',
-  'Limited by guarantee',
-  'One Person Company',
-  'Private company',
-  'Unlimited company',
-  'Holding company',
-  'State-owned enterprise',
-  'Associate companies',
-  'Producer Companies',
-  'Small business',
-  'Foreign company',
-  'Section 8 company',
-  'Statutory corporation',
-  'Company',
-  'Dormant company',
-  'Unlisted company',
-  'Chartered company',
-  'Classification of companies',
-  'Corporations',
-  'Indian company',
-  'Nonprofit organization',
-  'Public limited',
-  'Banking company',
-  'Nidhi Companies',
-]
-const COMPLETION_DATE = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+const COMPANY_TYPE = [
+  "Public company",
+  "Limited by guarantee",
+  "One Person Company",
+  "Private company",
+  "Unlimited company",
+  "Holding company",
+  "State-owned enterprise",
+  "Associate companies",
+  "Producer Companies",
+  "Small business",
+  "Foreign company",
+  "Section 8 company",
+  "Statutory corporation",
+  "Company",
+  "Dormant company",
+  "Unlisted company",
+  "Chartered company",
+  "Classification of companies",
+  "Corporations",
+  "Indian company",
+  "Nonprofit organization",
+  "Public limited",
+  "Banking company",
+  "Nidhi Companies",
 ];
+const COMPLETION_DATE = {
+  1: "January",
+  2: "February",
+  3: "March",
+  4: "April",
+  5: "May",
+  6: "June",
+  7: "July",
+  8: "August",
+  9: "September",
+  10: "October",
+  11: "November",
+  12: "December",
+};
 
 export {
   PROFICIENCY,
@@ -63,5 +68,5 @@ export {
   HIGH_EDUCATION,
   CURRENT_LOCATION,
   COMPLETION_DATE,
-  COMPANY_TYPE
+  COMPANY_TYPE,
 };

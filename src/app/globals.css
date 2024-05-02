@@ -21,6 +21,7 @@
     text-wrap: balance;
   }
 }
+
 .error {
   color: red;
   font-size: 12px;
@@ -36,6 +37,10 @@
   animation-duration: 500ms;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
+}
+
+.react-datepicker-popper {
+  z-index: 999 !important;
 }
 
 @keyframes spin {
