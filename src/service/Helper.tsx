@@ -79,6 +79,7 @@ const TEXT = {
   ADD_SKILL: 'Add Skill',
   AVAILABLE: 'Available',
   QUIZ_INFO: 'Quiz info',
+  FULL_NAME: 'Full Name',
   DEPARTMENT: 'Department',
   EXPERIENCE: 'Experience',
   ACTIVE_JOB: 'Active Job',
