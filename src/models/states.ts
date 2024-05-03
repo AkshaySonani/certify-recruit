@@ -35,6 +35,6 @@ const statesSchema = new mongoose.Schema({
   },
 });
 
-statesSchema.set("timestamps", true)
-const States = mongoose.models.Cities || mongoose.model('States', statesSchema);
+statesSchema.set('timestamps', true);
+const States = mongoose.models.States || mongoose.model('States', statesSchema);
 export default States;
