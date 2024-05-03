@@ -30,9 +30,9 @@ export const POST = async (req: NextRequest) => {
         state,
         country,
         pincode,
+        user_name,
         pan_number,
         website_url,
-        user_ref_id,
         description,
         name_on_pan,
         company_name,
@@ -51,9 +51,9 @@ export const POST = async (req: NextRequest) => {
       state && (reqData.state = state);
       country && (reqData.country = country);
       pincode && (reqData.pincode = pincode);
+      user_name && (reqData.user_name = user_name);
       pan_number && (reqData.pan_number = pan_number);
       website_url && (reqData.website_url = website_url);
-      user_ref_id && (reqData.user_ref_id = user_ref_id);
       description && (reqData.description = description);
       name_on_pan && (reqData.name_on_pan = name_on_pan);
       company_name && (reqData.company_name = company_name);
@@ -94,7 +94,6 @@ export const POST = async (req: NextRequest) => {
         gender,
         resume,
         languages,
-        user_ref_id,
         company_name,
         date_of_birth,
         contact_number,
@@ -114,7 +113,6 @@ export const POST = async (req: NextRequest) => {
       degree && (reqData.degree = degree);
       gender && (reqData.gender = gender);
       languages && (reqData.languages = languages);
-      user_ref_id && (reqData.user_ref_id = user_ref_id);
       company_name && (reqData.company_name = company_name);
       date_of_birth && (reqData.date_of_birth = date_of_birth);
       contact_number && (reqData.contact_number = contact_number);
