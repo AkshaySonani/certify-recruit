@@ -1,16 +1,16 @@
-"use client";
-import Image from "next/image";
-import { Fragment, Suspense, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Menu, Transition } from "@headlessui/react";
-import { TEXT, USER_ROLE } from "@/service/Helper";
-import { useSession } from "next-auth/react";
-import CompanyProfile from "@/Components/profile/CompanyProfile";
-import IndividualProfile from "@/Components/profile/IndividualProfile";
-import API from "@/service/ApiService";
-import { API_CONSTANT } from "@/constant/ApiConstant";
-import { toast } from "react-toastify";
-import Loader from "@/Components/Loader";
+'use client';
+import Image from 'next/image';
+import { Fragment, Suspense, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Menu, Transition } from '@headlessui/react';
+import { TEXT, USER_ROLE } from '@/service/Helper';
+import { useSession } from 'next-auth/react';
+import CompanyProfile from '@/Components/profile/CompanyProfile';
+import IndividualProfile from '@/Components/profile/IndividualProfile';
+import API from '@/service/ApiService';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import { toast } from 'react-toastify';
+import Loader from '@/Components/Loader';
 
 const MyProfile = () => {
   const router = useRouter();
@@ -22,7 +22,7 @@ const MyProfile = () => {
   const [userDetails, setUserDetails] = useState({});
 
   function classNames(...classes: any) {
-    return classes.filter(Boolean).join(" ");
+    return classes.filter(Boolean).join(' ');
   }
   useEffect(() => {
     getDegreeList();
@@ -38,7 +38,7 @@ const MyProfile = () => {
         setDegreeList(res?.data?.data);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log('error', error);
         toast.error(error?.response?.data?.error);
       });
   };
@@ -49,7 +49,7 @@ const MyProfile = () => {
         setCollegeList(res?.data?.data);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log('error', error);
         toast.error(error?.response?.data?.error);
       });
   };
@@ -60,7 +60,7 @@ const MyProfile = () => {
         setLanguageList(res?.data?.data);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log('error', error);
         toast.error(error?.response?.data?.error);
       });
   };
@@ -68,11 +68,11 @@ const MyProfile = () => {
   const getProfileDetails = () => {
     API.get(API_CONSTANT?.PROFILE)
       .then((res) => {
-        console.log("res---->Profile", res);
+        console.log('res---->Profile', res);
         setUserDetails(res?.data?.data);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log('error', error);
         toast.error(error?.response?.data?.error);
       });
   };
@@ -80,12 +80,12 @@ const MyProfile = () => {
   return (
     <Suspense fallback={<Loader />}>
       <div className="m-auto w-4/5 max-w-[1200px]">
-        {/* <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between">
           <div
             className="flex cursor-pointer"
-            onClick={() => router?.push("/dashboard")}
+            onClick={() => router?.push('/dashboard')}
           >
-            <Image src={"/BackArrow.svg"} alt="date" width={20} height={20} />
+            <Image src={'/BackArrow.svg'} alt="date" width={20} height={20} />
             <p className="text-5 pl-2 font-semibold text-meta-purple-1">
               {TEXT?.DASHBOARD}
             </p>
@@ -102,7 +102,7 @@ const MyProfile = () => {
               width={109}
               height={135}
               alt="MainLogo"
-              src={"/ProfileLogo.svg"}
+              src={'/ProfileLogo.svg'}
             />
             <div className="flex w-full gap-8">
               <div className="w-11/12">
@@ -120,7 +120,7 @@ const MyProfile = () => {
                       width={16}
                       height={16}
                       alt="MainLogo"
-                      src={"/location.svg"}
+                      src={'/location.svg'}
                     />
                     <p className="text-xs text-meta-light-blue-3">
                       {TEXT?.NEW_YOUR_USA}
@@ -131,7 +131,7 @@ const MyProfile = () => {
                       width={16}
                       height={16}
                       alt="MainLogo"
-                      src={"/call.svg"}
+                      src={'/call.svg'}
                     />
                     <p className="text-xs text-meta-light-blue-3">
                       516-742-4006
@@ -143,7 +143,7 @@ const MyProfile = () => {
                     width={16}
                     height={16}
                     alt="MainLogo"
-                    src={"/mail.svg"}
+                    src={'/mail.svg'}
                   />
                   <p className="text-xs text-meta-light-blue-3">516-742-4006</p>
                 </div>
@@ -153,7 +153,7 @@ const MyProfile = () => {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
 
         {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
           <CompanyProfile userDetails={userDetails} session={session?.data} />

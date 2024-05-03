@@ -1,38 +1,86 @@
-import { GENDER, PROFICIENCY } from "@/constant/Enum";
-import { Menu, Transition } from "@headlessui/react";
-import Image from "next/image";
-import { Fragment } from "react";
-import DatePicker from "react-datepicker";
+import { GENDER, PROFICIENCY } from '@/constant/Enum';
+import { Menu, Transition } from '@headlessui/react';
+import Image from 'next/image';
+import { Fragment } from 'react';
+import DatePicker from 'react-datepicker';
+import { TEXT } from '@/service/Helper';
+import API from '@/service/ApiService';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import * as Yup from 'yup';
+import { useFormik, Field } from 'formik';
+import { toast } from 'react-toastify';
+import 'react-datepicker/dist/react-datepicker.css';
 function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ');
 }
-const PersonalDetailsTab = ({ formik, languageList }: any) => {
-  const handleAddMoreLang = () => {
-    formik?.setFieldValue("languages", [
-      ...formik?.values?.languages,
-      { language: null, proficiency: "" },
-    ]);
+const PersonalDetailsTab = ({
+  languageList,
+  userDetails,
+  setActivePage,
+  activePage,
+}: any) => {
+  const handleSubmit = async (values: any, actions: any) => {
+    const obj = {
+      ...values,
+    };
+    API.post(API_CONSTANT?.PROFILE, obj)
+      .then((res) => {
+        setActivePage(activePage + 1);
+        toast?.success('Successfully Update Profile');
+        actions.setSubmitting(false);
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
   };
 
-  // console.log(
-  //   "selected month ---->",
-  //   COMPLETION_DATE[formik?.values?.completion_date?.month]
-  // );
+  const validationSchema = Yup.object().shape({
+    gender: Yup.string().required(`Gender is required.`),
+    date_of_birth: Yup.string().required(`Date of birth is required.`),
+    languages: Yup.array().of(
+      Yup.object().shape({
+        language: Yup.object().nonNullable('Language is required'),
+        proficiency: Yup.string().required('Proficiency is required'),
+      }),
+    ),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      gender: userDetails?.gender ?? '',
+      date_of_birth: userDetails?.date_of_birth ?? '',
+      languages: userDetails?.languages ?? [
+        {
+          language: null,
+          proficiency: '',
+        },
+      ],
+    },
+    enableReinitialize: true,
+    validationSchema: validationSchema,
+    onSubmit: handleSubmit,
+  });
+  const handleAddMoreLang = () => {
+    formik?.setFieldValue('languages', [
+      ...formik?.values?.languages,
+      { language: null, proficiency: '' },
+    ]);
+  };
 
   const handleChangeLanguages = (i: any, el: any, name: any) => {
     let arr = [...formik?.values?.languages];
     arr[i][name] = el;
-    formik?.setFieldValue("languages", arr);
+    formik?.setFieldValue('languages', arr);
   };
 
   const handleRemove = (list: any) => {
     const arr = formik?.values?.languages.filter((el: any) => {
       return el !== list;
     });
-    formik?.setFieldValue("languages", arr);
+    formik?.setFieldValue('languages', arr);
   };
   return (
-    <div>
+    <form onSubmit={formik.handleSubmit}>
       <div className="mt-5  w-full  pl-9">
         <label className="text-base font-medium text-meta-purple-1">
           Gender
@@ -41,8 +89,8 @@ const PersonalDetailsTab = ({ formik, languageList }: any) => {
           {GENDER?.map((list: any) => {
             return (
               <div
-                className={`cursor-pointer rounded-3xl border border-meta-light-blue-1 px-3 py-2  text-sm ${list === formik?.values?.gender ? "bg-meta-blue-1 text-white " : "bg-white text-meta-light-blue-3"}`}
-                onClick={() => formik.setFieldValue("gender", list)}
+                className={`cursor-pointer rounded-3xl border border-meta-light-blue-1 px-3 py-2  text-sm ${list === formik?.values?.gender ? 'bg-meta-blue-1 text-white ' : 'bg-white text-meta-light-blue-3'}`}
+                onClick={() => formik.setFieldValue('gender', list)}
               >
                 <p className="capitalize">{list}</p>
               </div>
@@ -67,7 +115,7 @@ const PersonalDetailsTab = ({ formik, languageList }: any) => {
             placeholderText="Select date of birth"
             className="mt-3 w-full rounded-xl border border-meta-light-blue-1 p-3"
             onChange={(date: any) =>
-              formik?.setFieldValue("date_of_birth", date)
+              formik?.setFieldValue('date_of_birth', date)
             }
           />
           {formik.touched.date_of_birth && formik.errors.date_of_birth && (
@@ -87,14 +135,14 @@ const PersonalDetailsTab = ({ formik, languageList }: any) => {
                     <Menu.Button className="relative z-20 mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
                       <p>
                         {list?.language === null
-                          ? "Select your language"
+                          ? 'Select your language'
                           : list?.language?.language}
                       </p>
                       <Image
                         alt="Icon"
                         width={14}
                         height={14}
-                        src={"/dashboard/SelectDown.svg"}
+                        src={'/dashboard/SelectDown.svg'}
                       />
                     </Menu.Button>
                     <Transition
@@ -106,7 +154,7 @@ const PersonalDetailsTab = ({ formik, languageList }: any) => {
                       enterTo="transform opacity-100 scale-100"
                       leaveFrom="transform opacity-100 scale-100"
                     >
-                      <Menu.Items className="max-h-[200px] overflow-auto absolute right-0 z-30 w-full origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Items className="absolute right-0 z-30 max-h-[200px] w-full origin-top-right divide-y divide-gray-200 overflow-auto rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div>
                           {languageList?.map((el: any) => {
                             return (
@@ -114,13 +162,13 @@ const PersonalDetailsTab = ({ formik, languageList }: any) => {
                                 {({ active }) => (
                                   <div
                                     onClick={() =>
-                                      handleChangeLanguages(i, el, "language")
+                                      handleChangeLanguages(i, el, 'language')
                                     }
                                     className={classNames(
                                       active
-                                        ? "bg-meta-blue-1 text-white"
-                                        : "text-gray-900",
-                                      "block px-4 py-2 text-[14px] capitalize"
+                                        ? 'bg-meta-blue-1 text-white'
+                                        : 'text-gray-900',
+                                      'block px-4 py-2 text-[14px] capitalize',
                                     )}
                                   >
                                     {el?.language}
@@ -144,15 +192,15 @@ const PersonalDetailsTab = ({ formik, languageList }: any) => {
                   <Menu as="div" className="relative w-full">
                     <Menu.Button className="relative z-20 mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
                       <p>
-                        {list?.proficiency === ""
-                          ? "Select your Proficiency "
+                        {list?.proficiency === ''
+                          ? 'Select your Proficiency '
                           : list?.proficiency}
                       </p>
                       <Image
                         alt="Icon"
                         width={14}
                         height={14}
-                        src={"/dashboard/SelectDown.svg"}
+                        src={'/dashboard/SelectDown.svg'}
                       />
                     </Menu.Button>
                     <Transition
@@ -175,14 +223,14 @@ const PersonalDetailsTab = ({ formik, languageList }: any) => {
                                       handleChangeLanguages(
                                         i,
                                         el,
-                                        "proficiency"
+                                        'proficiency',
                                       )
                                     }
                                     className={classNames(
                                       active
-                                        ? "bg-meta-blue-1 text-white"
-                                        : "text-gray-900",
-                                      "block px-4 py-2 text-[14px] capitalize"
+                                        ? 'bg-meta-blue-1 text-white'
+                                        : 'text-gray-900',
+                                      'block px-4 py-2 text-[14px] capitalize',
                                     )}
                                   >
                                     {el}
@@ -211,7 +259,7 @@ const PersonalDetailsTab = ({ formik, languageList }: any) => {
                       width={20}
                       height={20}
                       alt="Google-icon"
-                      src={"/CloseIcon.svg"}
+                      src={'/CloseIcon.svg'}
                     />
                   </div>
                 )}
@@ -226,7 +274,15 @@ const PersonalDetailsTab = ({ formik, languageList }: any) => {
           Add another language
         </div>
       </div>
-    </div>
+      <div className="mt-8 flex w-full justify-end">
+        <button
+          type="submit"
+          className="w-36 rounded-lg bg-meta-blue-1 py-2 text-base text-white"
+        >
+          {TEXT?.SAVE}
+        </button>
+      </div>
+    </form>
   );
 };
 export default PersonalDetailsTab;
