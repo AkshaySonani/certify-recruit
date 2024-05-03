@@ -10,6 +10,10 @@ const individualSchema = new mongoose.Schema({
     required: true,
     type: mongoose.Schema.Types.ObjectId,
   },
+  is_fresher: {
+    type: Boolean,
+    require: false,
+  },
   resume: {
     type: [
       {

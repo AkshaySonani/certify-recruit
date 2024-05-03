@@ -42,29 +42,38 @@ export const POST = async (req: NextRequest) => {
         street_address,
       } = await req.json();
 
-      const newCompany = await Company.create({
-        logo,
-        city,
-        role,
-        owner,
-        state,
-        country,
-        pincode,
-        pan_number,
-        user_ref_id,
-        website_url,
-        description,
-        name_on_pan,
-        company_name,
-        company_type,
-        contact_email,
-        contact_phone,
-        street_address,
-      });
+      let reqData: any = {};
+
+      logo && (reqData.logo = logo);
+      city && (reqData.city = city);
+      role && (reqData.role = role);
+      owner && (reqData.owner = owner);
+      state && (reqData.state = state);
+      country && (reqData.country = country);
+      pincode && (reqData.pincode = pincode);
+      pan_number && (reqData.pan_number = pan_number);
+      website_url && (reqData.website_url = website_url);
+      user_ref_id && (reqData.user_ref_id = user_ref_id);
+      description && (reqData.description = description);
+      name_on_pan && (reqData.name_on_pan = name_on_pan);
+      company_name && (reqData.company_name = company_name);
+      company_type && (reqData.company_type = company_type);
+      contact_email && (reqData.contact_email = contact_email);
+      contact_phone && (reqData.contact_phone = contact_phone);
+      street_address && (reqData.street_address = street_address);
+
+      const updatedCompany = await Company.findOneAndUpdate(
+        { user_ref_id: session?.user?._id },
+        reqData,
+        {
+          upsert: true,
+          new: true,
+        },
+      );
 
       return NextResponse.json({
-        status: 201,
-        data: newCompany,
+        status: 200,
+        data: updatedCompany,
         message: 'Your profile was updated successfully',
       });
     } catch (error) {
@@ -99,28 +108,51 @@ export const POST = async (req: NextRequest) => {
         expected_salary_start_at,
       } = await req.json();
 
-      const newCompany = await Individual.create({
-        skills,
-        degree,
-        gender,
-        resume,
-        languages,
-        user_ref_id,
-        company_name,
-        date_of_birth,
-        contact_number,
-        completion_date,
-        profile_summary,
-        current_location,
-        highest_education,
-        total_experiences,
-        college_school_name,
-        expected_salary_upto,
-        expected_salary_start_at,
-      });
+      let reqData: any = {};
+
+      skills && (reqData.skills = skills);
+      degree && (reqData.degree = degree);
+      gender && (reqData.gender = gender);
+      languages && (reqData.languages = languages);
+      user_ref_id && (reqData.user_ref_id = user_ref_id);
+      company_name && (reqData.company_name = company_name);
+      date_of_birth && (reqData.date_of_birth = date_of_birth);
+      contact_number && (reqData.contact_number = contact_number);
+      completion_date && (reqData.completion_date = completion_date);
+      profile_summary && (reqData.profile_summary = profile_summary);
+      current_location && (reqData.current_location = current_location);
+      highest_education && (reqData.highest_education = highest_education);
+      total_experiences && (reqData.total_experiences = total_experiences);
+      college_school_name &&
+        (reqData.college_school_name = college_school_name);
+      expected_salary_upto &&
+        (reqData.expected_salary_upto = expected_salary_upto);
+      expected_salary_start_at &&
+        (reqData.expected_salary_start_at = expected_salary_start_at);
+
+      const updatedUser = await Individual.findOneAndUpdate(
+        { user_ref_id: session?.user?._id },
+        reqData,
+        {
+          upsert: true,
+          new: true,
+        },
+      );
+
+      if (resume) {
+        await Individual.findOneAndUpdate(
+          { user_ref_id: session?.user?._id },
+          { $push: { resume: resume } },
+          {
+            upsert: true,
+            new: true,
+          },
+        );
+      }
+
       return NextResponse.json({
-        status: 201,
-        data: newCompany,
+        status: 200,
+        data: updatedUser,
         message: 'Your profile was updated successfully',
       });
     } catch (error) {
@@ -164,7 +196,7 @@ export const GET = async (req: NextRequest) => {
 
       return NextResponse.json({
         status: 200,
-        employeeData: employeeData,
+        data: employeeData,
       });
     } catch (error) {
       return NextResponse.json(
@@ -191,7 +223,7 @@ export const GET = async (req: NextRequest) => {
 
       return NextResponse.json({
         status: 200,
-        companyData: companyData,
+        data: companyData,
       });
     } catch (error) {
       return NextResponse.json(
