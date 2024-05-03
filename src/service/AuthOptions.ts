@@ -1,7 +1,9 @@
 import bcrypt from 'bcryptjs';
 import User from '@/models/user';
 import { connect } from '@/db/mongodb';
+import Company from '@/models/company';
 import { AuthOptions } from 'next-auth';
+import Individual from '@/models/individual';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
@@ -34,6 +36,18 @@ export const authOptions: AuthOptions = {
               email: email,
               password: hashedPassword,
             });
+
+            // create
+            if (role === 'employee') {
+              await Company.create({
+                user_ref_id: newUser?._id,
+              });
+            } else {
+              await Individual.create({
+                user_ref_id: newUser?._id,
+              });
+            }
+
             return newUser;
           }
         } catch (error) {
