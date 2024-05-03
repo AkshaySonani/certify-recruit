@@ -1,50 +1,57 @@
-import { EMP_TYPE_ARR } from '@/constant/Enum';
-import { TEXT } from '@/service/Helper';
-import { Menu, Transition } from '@headlessui/react';
-import Image from 'next/image';
-import { Fragment, useState } from 'react';
+import { EMP_TYPE_ARR } from "@/constant/Enum";
+import { TEXT } from "@/service/Helper";
+import { Menu, Transition } from "@headlessui/react";
+import Image from "next/image";
+import { Fragment, useState } from "react";
 function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
-const CareerInfoTab = ({ formik, locationList, cityData }: any) => {
+const CareerInfoTab = ({
+  formik,
+  locationList,
+  cityData,
+  setIsFresher,
+}: any) => {
   const [active, setActive] = useState(1);
   const EXPERIENCE_TYPE = [
     {
-      id: 2,
-      label: "I'm experienced",
-      content: 'I have work experience (excluding internships)',
-    },
-    {
       id: 1,
       label: "I'm Fresher",
-      content: 'I am Student (I have no work experience)',
+      content: "I am Student (I have no work experience)",
+      is_fresher: true,
+    },
+    {
+      id: 2,
+      label: "I'm experienced",
+      content: "I have work experience (excluding internships)",
+      is_fresher: false,
     },
   ];
 
   const handleChangeMenu = (i: any, el: any, name: any) => {
     let arr = [...formik?.values?.total_experiences];
     arr[i][name] = el;
-    formik?.setFieldValue('total_experiences', arr);
+    formik?.setFieldValue("total_experiences", arr);
   };
 
   const handleRemove = (list: any) => {
     const arr = formik?.values?.total_experiences.filter((el: any) => {
       return el !== list;
     });
-    formik?.setFieldValue('total_experiences', arr);
+    formik?.setFieldValue("total_experiences", arr);
   };
 
   const handleAddMoreEXP = () => {
-    formik?.setFieldValue('total_experiences', [
+    formik?.setFieldValue("total_experiences", [
       ...formik?.values?.total_experiences,
       {
-        companyName: '',
-        role: '',
+        companyName: "",
+        role: "",
         location: null,
-        employmentType: '',
-        years: '',
-        month: '',
-        reason_for_leaving: '',
+        employmentType: "",
+        years: "",
+        month: "",
+        reason_for_leaving: "",
       },
       ,
     ]);
@@ -53,9 +60,8 @@ const CareerInfoTab = ({ formik, locationList, cityData }: any) => {
   const handleFormChange = (index: any, event: any) => {
     let data = [...formik?.values?.total_experiences];
     data[index][event.target.name] = event.target.value;
-    formik?.setFieldValue('total_experiences', data);
+    formik?.setFieldValue("total_experiences", data);
   };
-  console.log('formik', formik?.values);
 
   return (
     <div className="mt-5 flex w-full gap-3 pl-9">
@@ -72,8 +78,12 @@ const CareerInfoTab = ({ formik, locationList, cityData }: any) => {
           {EXPERIENCE_TYPE?.map((list) => {
             return (
               <div
-                className={`flex h-20 w-full flex-col items-center justify-center  rounded-xl border-2 text-center lg:w-1/2 ${active === list?.id ? 'border-meta-blue-1' : 'border-meta-light-blue-1 '}`}
-                onClick={() => setActive(list?.id)}
+                className={`flex h-20 w-full flex-col items-center justify-center  rounded-xl border-2 text-center lg:w-1/2 ${active === list?.id ? "border-meta-blue-1" : "border-meta-light-blue-1 "}`}
+                onClick={() => {
+                  setActive(list?.id);
+                  setIsFresher(list?.is_fresher);
+                  formik?.setFieldValue("is_fresher", list?.is_fresher);
+                }}
               >
                 <p className="font-bold text-black">{list?.label}</p>
                 <p>{list?.content} </p>
@@ -101,11 +111,13 @@ const CareerInfoTab = ({ formik, locationList, cityData }: any) => {
                           placeholder="Company name"
                           className=" w-full rounded-2xl border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                         />
-                        {formik?.touched?.total_experiences?.[i]?.companyName &&
-                          formik.errors.total_experiences?.[i]?.companyName && (
+                        {formik?.touched?.total_experiences?.[index]
+                          ?.companyName &&
+                          formik.errors.total_experiences?.[index]
+                            ?.companyName && (
                             <div className="error">
                               {
-                                formik?.errors?.total_experiences?.[i]
+                                formik?.errors?.total_experiences?.[index]
                                   ?.companyName
                               }
                             </div>
@@ -120,28 +132,28 @@ const CareerInfoTab = ({ formik, locationList, cityData }: any) => {
                           placeholder="Company role"
                           className=" w-full rounded-2xl border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                         />
-                        {formik?.touched?.total_experiences?.[i]?.role &&
-                          formik.errors.total_experiences?.[i]?.role && (
+                        {formik?.touched?.total_experiences?.[index]?.role &&
+                          formik.errors.total_experiences?.[index]?.role && (
                             <div className="error">
-                              {formik?.errors?.total_experiences?.[i]?.role}
+                              {formik?.errors?.total_experiences?.[index]?.role}
                             </div>
                           )}
                       </div>
                     </div>
                     <div className="mt-1 flex w-full gap-3 ">
-                      <div>
-                        <Menu as="div" className="relative w-1/2">
+                      <div className="w-1/2">
+                        <Menu as="div" className="relative">
                           <Menu.Button className="relative z-20 mt-2 flex w-full appearance-none items-center justify-between rounded-2xl border  border-meta-light-blue-1 bg-white py-3 pl-5 pr-[11px] outline-none transition">
                             <p>
                               {list?.location === null
-                                ? 'Select location'
+                                ? "Select location"
                                 : list?.location?.name}
                             </p>
                             <Image
                               alt="Icon"
                               width={14}
                               height={14}
-                              src={'/dashboard/SelectDown.svg'}
+                              src={"/dashboard/SelectDown.svg"}
                             />
                           </Menu.Button>
                           <Transition
@@ -164,14 +176,14 @@ const CareerInfoTab = ({ formik, locationList, cityData }: any) => {
                                             handleChangeMenu(
                                               index,
                                               el,
-                                              'location',
+                                              "location"
                                             )
                                           }
                                           className={classNames(
                                             active
-                                              ? 'bg-meta-blue-1 text-white'
-                                              : 'text-gray-900',
-                                            'block px-4 py-2 text-[14px] capitalize',
+                                              ? "bg-meta-blue-1 text-white"
+                                              : "text-gray-900",
+                                            "block px-4 py-2 text-[14px] capitalize"
                                           )}
                                         >
                                           {el?.name}
@@ -184,26 +196,31 @@ const CareerInfoTab = ({ formik, locationList, cityData }: any) => {
                             </Menu.Items>
                           </Transition>
                         </Menu>
-                        {formik?.touched?.total_experiences?.[i]?.location &&
-                          formik.errors.total_experiences?.[i]?.location && (
+                        {formik?.touched?.total_experiences?.[index]
+                          ?.location &&
+                          formik.errors.total_experiences?.[index]
+                            ?.location && (
                             <div className="error">
-                              {formik?.errors?.total_experiences?.[i]?.location}
+                              {
+                                formik?.errors?.total_experiences?.[index]
+                                  ?.location
+                              }
                             </div>
                           )}
                       </div>
-                      <div>
-                        <Menu as="div" className="relative w-1/2">
+                      <div className="w-1/2">
+                        <Menu as="div" className="relative">
                           <Menu.Button className="relative z-20 mt-2 flex w-full appearance-none items-center justify-between rounded-2xl border border-meta-light-blue-1 bg-white py-3 pl-5 pr-[11px] outline-none transition">
                             <p>
-                              {list?.employmentType === ''
-                                ? 'Select your employeement type'
+                              {list?.employmentType === ""
+                                ? "Select your employeement type"
                                 : list?.employmentType}
                             </p>
                             <Image
                               alt="Icon"
                               width={14}
                               height={14}
-                              src={'/dashboard/SelectDown.svg'}
+                              src={"/dashboard/SelectDown.svg"}
                             />
                           </Menu.Button>
                           <Transition
@@ -226,14 +243,14 @@ const CareerInfoTab = ({ formik, locationList, cityData }: any) => {
                                             handleChangeMenu(
                                               index,
                                               el,
-                                              'employmentType',
+                                              "employmentType"
                                             )
                                           }
                                           className={classNames(
                                             active
-                                              ? 'bg-meta-blue-1 text-white'
-                                              : 'text-gray-900',
-                                            'block px-4 py-2 text-[14px] capitalize',
+                                              ? "bg-meta-blue-1 text-white"
+                                              : "text-gray-900",
+                                            "block px-4 py-2 text-[14px] capitalize"
                                           )}
                                         >
                                           {el}
@@ -246,44 +263,65 @@ const CareerInfoTab = ({ formik, locationList, cityData }: any) => {
                             </Menu.Items>
                           </Transition>
                         </Menu>
-                        {formik?.touched?.total_experiences?.[i]
+                        {formik?.touched?.total_experiences?.[index]
                           ?.employmentType &&
-                          formik.errors.total_experiences?.[i]
+                          formik.errors.total_experiences?.[index]
                             ?.employmentType && (
                             <div className="error">
                               {
-                                formik?.errors?.total_experiences?.[i]
+                                formik?.errors?.total_experiences?.[index]
                                   ?.employmentType
                               }
                             </div>
                           )}
                       </div>
                     </div>
-                    <div className="mt-1 flex w-1/2 items-center gap-1">
-                      <div className="flex w-1/2 items-center gap-1">
-                        <input
-                          type="number "
-                          onChange={(event) => handleFormChange(index, event)}
-                          value={list?.years}
-                          name="years"
-                          className="mt-2 w-1/2 rounded-2xl border border-meta-light-blue-1 py-3  pl-2 focus:border-meta-light-blue-3"
-                        />
-                        <div className="w-1/2 pt-1 text-base font-medium text-meta-purple-1">
-                          Years
+                    <div className="mt-1 flex w-1/2  gap-1">
+                      <div className="w-1/2">
+                        <div className="flex  items-center gap-1">
+                          <input
+                            type="number "
+                            onChange={(event) => handleFormChange(index, event)}
+                            value={list?.years}
+                            name="years"
+                            className="mt-2 w-1/2 rounded-2xl border border-meta-light-blue-1 py-3  pl-2 focus:border-meta-light-blue-3"
+                          />
+                          <div className="w-1/2 pt-1 text-base font-medium text-meta-purple-1">
+                            Years
+                          </div>
                         </div>
+                        {formik?.touched?.total_experiences?.[index]?.years &&
+                          formik.errors.total_experiences?.[index]?.years && (
+                            <div className="error">
+                              {
+                                formik?.errors?.total_experiences?.[index]
+                                  ?.years
+                              }
+                            </div>
+                          )}
                       </div>
-
-                      <div className="flex w-1/2 items-center gap-1">
-                        <input
-                          type="number"
-                          onChange={(event) => handleFormChange(index, event)}
-                          value={list?.month}
-                          name="month"
-                          className="mt-2 w-1/2 rounded-2xl border border-meta-light-blue-1 py-3  pl-2 focus:border-meta-light-blue-3"
-                        />
-                        <div className="w-1/2  pt-1 text-base font-medium text-meta-purple-1">
-                          Month
+                      <div className="w-1/2">
+                        <div className="flex items-center gap-1">
+                          <input
+                            type="number"
+                            onChange={(event) => handleFormChange(index, event)}
+                            value={list?.month}
+                            name="month"
+                            className="mt-2 w-1/2 rounded-2xl border border-meta-light-blue-1 py-3  pl-2 focus:border-meta-light-blue-3"
+                          />
+                          <div className="w-1/2  pt-1 text-base font-medium text-meta-purple-1">
+                            Month
+                          </div>
                         </div>
+                        {formik?.touched?.total_experiences?.[index]?.month &&
+                          formik.errors.total_experiences?.[index]?.month && (
+                            <div className="error">
+                              {
+                                formik?.errors?.total_experiences?.[index]
+                                  ?.month
+                              }
+                            </div>
+                          )}
                       </div>
                     </div>
                     <div className="mt-[10px] w-full">
@@ -298,13 +336,13 @@ const CareerInfoTab = ({ formik, locationList, cityData }: any) => {
                         placeholder="Type here"
                         className="mt-2 w-full rounded-2xl border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                       />
-                      {formik?.touched?.total_experiences?.[i]
+                      {formik?.touched?.total_experiences?.[index]
                         ?.reason_for_leaving &&
-                        formik.errors.total_experiences?.[i]
+                        formik.errors.total_experiences?.[index]
                           ?.reason_for_leaving && (
                           <div className="error">
                             {
-                              formik?.errors?.total_experiences?.[i]
+                              formik?.errors?.total_experiences?.[index]
                                 ?.reason_for_leaving
                             }
                           </div>
@@ -319,7 +357,7 @@ const CareerInfoTab = ({ formik, locationList, cityData }: any) => {
                           width={20}
                           height={20}
                           alt="Google-icon"
-                          src={'/CloseIcon.svg'}
+                          src={"/CloseIcon.svg"}
                         />
                       </div>
                     )}

@@ -1,16 +1,16 @@
-import { GENDER, PROFICIENCY } from '@/constant/Enum';
-import { Menu, Transition } from '@headlessui/react';
-import Image from 'next/image';
-import { Fragment } from 'react';
-import DatePicker from 'react-datepicker';
+import { GENDER, PROFICIENCY } from "@/constant/Enum";
+import { Menu, Transition } from "@headlessui/react";
+import Image from "next/image";
+import { Fragment } from "react";
+import DatePicker from "react-datepicker";
 function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
 const PersonalDetailsTab = ({ formik, languageList }: any) => {
   const handleAddMoreLang = () => {
-    formik?.setFieldValue('languages', [
+    formik?.setFieldValue("languages", [
       ...formik?.values?.languages,
-      { language: null, proficiency: '' },
+      { language: null, proficiency: "" },
     ]);
   };
 
@@ -22,14 +22,14 @@ const PersonalDetailsTab = ({ formik, languageList }: any) => {
   const handleChangeLanguages = (i: any, el: any, name: any) => {
     let arr = [...formik?.values?.languages];
     arr[i][name] = el;
-    formik?.setFieldValue('languages', arr);
+    formik?.setFieldValue("languages", arr);
   };
 
   const handleRemove = (list: any) => {
     const arr = formik?.values?.languages.filter((el: any) => {
       return el !== list;
     });
-    formik?.setFieldValue('languages', arr);
+    formik?.setFieldValue("languages", arr);
   };
   return (
     <div>
@@ -41,8 +41,8 @@ const PersonalDetailsTab = ({ formik, languageList }: any) => {
           {GENDER?.map((list: any) => {
             return (
               <div
-                className={`cursor-pointer rounded-3xl border border-meta-light-blue-1 px-3 py-2  text-sm ${list === formik?.values?.gender ? 'bg-meta-blue-1 text-white ' : 'bg-white text-meta-light-blue-3'}`}
-                onClick={() => formik.setFieldValue('gender', list)}
+                className={`cursor-pointer rounded-3xl border border-meta-light-blue-1 px-3 py-2  text-sm ${list === formik?.values?.gender ? "bg-meta-blue-1 text-white " : "bg-white text-meta-light-blue-3"}`}
+                onClick={() => formik.setFieldValue("gender", list)}
               >
                 <p className="capitalize">{list}</p>
               </div>
@@ -67,7 +67,7 @@ const PersonalDetailsTab = ({ formik, languageList }: any) => {
             placeholderText="Select date of birth"
             className="mt-3 w-full rounded-xl border border-meta-light-blue-1 p-3"
             onChange={(date: any) =>
-              formik?.setFieldValue('date_of_birth', date)
+              formik?.setFieldValue("date_of_birth", date)
             }
           />
           {formik.touched.date_of_birth && formik.errors.date_of_birth && (
@@ -87,14 +87,14 @@ const PersonalDetailsTab = ({ formik, languageList }: any) => {
                     <Menu.Button className="relative z-20 mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
                       <p>
                         {list?.language === null
-                          ? 'Select your language'
-                          : list?.language}
+                          ? "Select your language"
+                          : list?.language?.language}
                       </p>
                       <Image
                         alt="Icon"
                         width={14}
                         height={14}
-                        src={'/dashboard/SelectDown.svg'}
+                        src={"/dashboard/SelectDown.svg"}
                       />
                     </Menu.Button>
                     <Transition
@@ -106,7 +106,7 @@ const PersonalDetailsTab = ({ formik, languageList }: any) => {
                       enterTo="transform opacity-100 scale-100"
                       leaveFrom="transform opacity-100 scale-100"
                     >
-                      <Menu.Items className="mt- absolute right-0 z-30 w-full origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Items className="max-h-[200px] overflow-auto absolute right-0 z-30 w-full origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div>
                           {languageList?.map((el: any) => {
                             return (
@@ -114,13 +114,13 @@ const PersonalDetailsTab = ({ formik, languageList }: any) => {
                                 {({ active }) => (
                                   <div
                                     onClick={() =>
-                                      handleChangeLanguages(i, el, 'language')
+                                      handleChangeLanguages(i, el, "language")
                                     }
                                     className={classNames(
                                       active
-                                        ? 'bg-meta-blue-1 text-white'
-                                        : 'text-gray-900',
-                                      'block px-4 py-2 text-[14px] capitalize',
+                                        ? "bg-meta-blue-1 text-white"
+                                        : "text-gray-900",
+                                      "block px-4 py-2 text-[14px] capitalize"
                                     )}
                                   >
                                     {el?.language}
@@ -144,15 +144,15 @@ const PersonalDetailsTab = ({ formik, languageList }: any) => {
                   <Menu as="div" className="relative w-full">
                     <Menu.Button className="relative z-20 mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
                       <p>
-                        {list?.proficiency === ''
-                          ? 'Select your Proficiency '
+                        {list?.proficiency === ""
+                          ? "Select your Proficiency "
                           : list?.proficiency}
                       </p>
                       <Image
                         alt="Icon"
                         width={14}
                         height={14}
-                        src={'/dashboard/SelectDown.svg'}
+                        src={"/dashboard/SelectDown.svg"}
                       />
                     </Menu.Button>
                     <Transition
@@ -175,14 +175,14 @@ const PersonalDetailsTab = ({ formik, languageList }: any) => {
                                       handleChangeLanguages(
                                         i,
                                         el,
-                                        'proficiency',
+                                        "proficiency"
                                       )
                                     }
                                     className={classNames(
                                       active
-                                        ? 'bg-meta-blue-1 text-white'
-                                        : 'text-gray-900',
-                                      'block px-4 py-2 text-[14px] capitalize',
+                                        ? "bg-meta-blue-1 text-white"
+                                        : "text-gray-900",
+                                      "block px-4 py-2 text-[14px] capitalize"
                                     )}
                                   >
                                     {el}
@@ -211,7 +211,7 @@ const PersonalDetailsTab = ({ formik, languageList }: any) => {
                       width={20}
                       height={20}
                       alt="Google-icon"
-                      src={'/CloseIcon.svg'}
+                      src={"/CloseIcon.svg"}
                     />
                   </div>
                 )}

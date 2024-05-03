@@ -1,18 +1,17 @@
-import Image from 'next/image';
-import API from '@/service/ApiService';
-import { toast } from 'react-toastify';
-import React, { useState } from 'react';
-import { useDropzone } from 'react-dropzone';
-import { API_CONSTANT } from '@/constant/ApiConstant';
+import Image from "next/image";
+import API from "@/service/ApiService";
+import { toast } from "react-toastify";
+import React, { useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { API_CONSTANT } from "@/constant/ApiConstant";
 
-const UploadResumeTab = () => {
-  const [fileName, setFileName] = useState('');
-  const [uploadedFiles, setUploadedFiles] = useState([]);
+const UploadResumeTab = ({ formik }: any) => {
+  const [fileName, setFileName] = useState("");
 
   const { getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
     accept: {
-      'application/pdf': [],
+      "application/pdf": [],
     },
 
     onDrop: (acceptedFiles: any) => {
@@ -22,38 +21,37 @@ const UploadResumeTab = () => {
 
   const UploadFileOnBucket = async (file: any) => {
     const NewFormData = new FormData();
-    NewFormData.append('file', file);
+    NewFormData.append("file", file);
 
     API.post(API_CONSTANT?.UPLOAD_FILE, NewFormData)
       .then((res) => {
         if (res?.data?.success) {
-          setUploadedFiles((uploadedFiles): any => [
-            ...uploadedFiles,
+          formik?.setFieldValue("resume", [
+            ...formik?.values?.resume,
             {
               file_name: fileName,
               file_url: res?.data?.fileName,
               file_id: Date.now() + 1000 * 50,
             },
           ]);
-          setFileName('');
+          setFileName("");
         } else {
           toast.error(
-            res?.data?.error || 'Your resume are not upload please try again',
+            res?.data?.error || "Your resume are not upload please try again"
           );
-          setFileName('');
+          setFileName("");
         }
       })
       .catch((error) => {
-        toast.error(error || 'Something want wrong');
+        toast.error(error || "Something want wrong");
       });
   };
 
   const removeFile = (fileToRemove: any) => {
-    const updatedFiles = uploadedFiles.filter(
-      (file) => file.file_id !== fileToRemove.file_id,
+    const updatedFiles = formik?.values?.resume?.filter(
+      (file: any) => file.file_id !== fileToRemove.file_id
     );
-
-    setUploadedFiles(updatedFiles);
+    formik?.setFieldValue("resume", updatedFiles);
   };
 
   return (
@@ -84,17 +82,17 @@ const UploadResumeTab = () => {
         </div>
         <div className="mt-7 flex w-full cursor-pointer items-center justify-center rounded-lg border-[2px] border-dashed border-meta-light-blue-1 p-8">
           <section className="text-center text-lg">
-            <div {...getRootProps({ className: 'dropzone' })}>
+            <div {...getRootProps({ className: "dropzone" })}>
               <input {...getInputProps()} multiple={false} />
               <Image
                 width={32}
                 height={32}
                 alt="UploadLogo"
-                src={'/profile/upload.svg'}
+                src={"/profile/upload.svg"}
                 className="mx-auto"
               />
               <p className="mt-4 font-medium">
-                Drag & Drop or{' '}
+                Drag & Drop or{" "}
                 <span className="text-meta-blue-1">choose file</span> to upload
               </p>
               <p className="font-medium text-meta-light-blue-3">
@@ -115,9 +113,9 @@ const UploadResumeTab = () => {
           </div>
         )} */}
 
-        {uploadedFiles?.length !== 0 &&
-          uploadedFiles &&
-          uploadedFiles?.map((ele) => {
+        {formik?.values?.resume?.length !== 0 &&
+          formik?.values?.resume &&
+          formik?.values?.resume?.map((ele: any) => {
             return (
               <div
                 key={ele?.file_id}
@@ -125,13 +123,13 @@ const UploadResumeTab = () => {
               >
                 <div
                   className="flex items-center"
-                  onClick={() => window.open(ele?.file_url, '_blank')}
+                  onClick={() => window.open(ele?.file_url, "_blank")}
                 >
                   <Image
                     alt="file"
                     width={22}
                     height={22}
-                    src={'/sidebarIcon/jobPosting.svg'}
+                    src={"/sidebarIcon/jobPosting.svg"}
                   />
                   <p className="test-meta-light-blue-3 ml-3 text-sm font-medium">
                     {ele?.file_name}
@@ -142,7 +140,7 @@ const UploadResumeTab = () => {
                   width={22}
                   height={22}
                   alt="remove"
-                  src={'CloseIcon.svg'}
+                  src={"CloseIcon.svg"}
                   className="cursor-pointer"
                   onClick={(e) => {
                     e.stopPropagation();

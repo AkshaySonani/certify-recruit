@@ -1,68 +1,24 @@
-import Image from 'next/image';
-import { Fragment, useEffect, useState } from 'react';
-import { Combobox, Menu, Transition } from '@headlessui/react';
-import { TEXT } from '@/service/Helper';
-import API from '@/service/ApiService';
-import { API_CONSTANT } from '@/constant/ApiConstant';
-import * as Yup from 'yup';
-import { useFormik, Field } from 'formik';
-import { toast } from 'react-toastify';
-import {
-  COMPLETION_DATE,
-  GENDER,
-  HIGH_EDUCATION,
-  PROFICIENCY,
-} from '@/constant/Enum';
-import MultipleSelectBox from '../MultipleSelectBox';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import moment from 'moment';
-import CareerInfoTab from './CareerInfoTab';
-import PersonalDetailsTab from './PersonalDetailsTab';
-import EducationTab from './EducationTab';
-import KeySkillTab from './KeySkillTab';
-import UploadResumeTab from './UploadResumeTab';
-
-const COMPANY_ARR = [
-  { id: 1, name: 'Corporate Company' },
-  { id: 2, name: 'It Company' },
-  { id: 3, name: 'Software Company' },
-  { id: 1, name: 'CLient Company' },
-];
-const city = [
-  { _id: '662ccb4a52f81a3100514885', name: 'surat' },
-  { _id: '662a8768683fb48bab4be172', name: 'Ahemedabad' },
-  { _id: '662a8768683fb48bab4be173', name: 'Baroda' },
-  { _id: '662a8768683fb48bab4be174', name: 'Rajkot' },
-  { _id: '662a8768683fb48bab4be175', name: 'Botad' },
-  { _id: '662a8768683fb48bab4be176', name: 'pune' },
-];
-
-const Country = [
-  { _id: '662a83d8683fb48bab4bcc70', name: 'India' },
-  { _id: '662a83d8683fb48bab4bcc71', name: 'Canada' },
-  { _id: '662a83d8683fb48bab4bcc72', name: 'Uk' },
-  { _id: '662a83d8683fb48bab4bcc73', name: 'UK' },
-  { _id: '662a83d8683fb48bab4bcc74', name: 'USA' },
-  { _id: '662a83d8683fb48bab4bcc75', name: 'Germany' },
-];
-
-const State = [
-  { _id: '662a873b683fb48bab4bcd70', name: 'Gujarat' },
-  { _id: '662a873b683fb48bab4bcd71', name: 'Maharashtra' },
-  { _id: '662a873b683fb48bab4bcd72', name: 'Bhopal' },
-  { _id: '662a873b683fb48bab4bcd73', name: 'Bamyan' },
-  { _id: '662a873b683fb48bab4bcd74', name: 'Badakhshan' },
-  { _id: '662a873b683fb48bab4bcd75', name: 'La Rioja' },
-];
+import { Fragment, useEffect, useState } from "react";
+import { TEXT } from "@/service/Helper";
+import API from "@/service/ApiService";
+import { API_CONSTANT } from "@/constant/ApiConstant";
+import * as Yup from "yup";
+import { useFormik, Field } from "formik";
+import { toast } from "react-toastify";
+import "react-datepicker/dist/react-datepicker.css";
+import CareerInfoTab from "./CareerInfoTab";
+import PersonalDetailsTab from "./PersonalDetailsTab";
+import EducationTab from "./EducationTab";
+import KeySkillTab from "./KeySkillTab";
+import UploadResumeTab from "./UploadResumeTab";
 
 const page = [
-  { id: 1, page: 'Profile Summary' },
-  { id: 2, page: 'Resume' },
-  { id: 3, page: 'Key skill' },
-  { id: 4, page: 'Education' },
-  { id: 5, page: 'Personal Detail' },
-  { id: 6, page: 'Career info' },
+  { id: 1, page: "Profile Summary" },
+  { id: 2, page: "Resume" },
+  { id: 3, page: "Key skill" },
+  { id: 4, page: "Education" },
+  { id: 5, page: "Personal Detail" },
+  { id: 6, page: "Career info" },
 ];
 
 const IndividualProfile = ({
@@ -70,21 +26,25 @@ const IndividualProfile = ({
   collegeList,
   degreeList,
   citiesData,
+  userDetails,
+  session,
 }: any) => {
+  // const [activePage, setActivePage] = useState(4);
   const [activePage, setActivePage] = useState(1);
   const [skillData, setSkillData] = useState([]);
-  const [query, setQuery] = useState('');
+  const [isFresher, setIsFresher] = useState(userDetails?.is_fresher);
+  const [query, setQuery] = useState("");
   function classNames(...classes: any) {
-    return classes.filter(Boolean).join(' ');
+    return classes.filter(Boolean).join(" ");
   }
 
   const city = [
-    { _id: '662ccb4a52f81a3100514885', name: 'surat' },
-    { _id: '662a8768683fb48bab4be172', name: 'Ahemedabad' },
-    { _id: '662a8768683fb48bab4be173', name: 'Baroda' },
-    { _id: '662a8768683fb48bab4be174', name: 'Rajkot' },
-    { _id: '662a8768683fb48bab4be175', name: 'Botad' },
-    { _id: '662a8768683fb48bab4be176', name: 'pune' },
+    { _id: "662ccb4a52f81a3100514885", name: "surat" },
+    { _id: "662a8768683fb48bab4be172", name: "Ahemedabad" },
+    { _id: "662a8768683fb48bab4be173", name: "Baroda" },
+    { _id: "662a8768683fb48bab4be174", name: "Rajkot" },
+    { _id: "662a8768683fb48bab4be175", name: "Botad" },
+    { _id: "662a8768683fb48bab4be176", name: "pune" },
   ];
 
   const getSkillDataApi = () => {
@@ -100,7 +60,7 @@ const IndividualProfile = ({
         setSkillData(skiilArr);
       })
       .catch((error) => {
-        console.log('error', error);
+        console.log("error", error);
         toast.error(error?.response?.data?.error);
       });
   };
@@ -108,41 +68,50 @@ const IndividualProfile = ({
     // getCityDataApi();
     getSkillDataApi();
   }, []);
+
   const handleSubmit = async (values: any, actions: any) => {
-    // if (activePage === 3) {
-    //   API.post(API_CONSTANT?.JOB, values)
-    //     .then((res) => {
-    //       setActivePage(activePage + 1);
-    //       toast?.success("Successfully job posting");
-    //       actions.setSubmitting(false);
-    //     })
-    //     .catch((error) => {
-    //       console.log("error", error);
-    //     });
-    // } else {
-    setActivePage(activePage + 1);
-    actions.setTouched({});
-    actions.setSubmitting(false);
-    // }
+    if (activePage === page[5]?.id) {
+      const obj = {
+        ...values,
+        user_ref_id: session?.user?._id,
+        _id: userDetails?._id ?? null,
+      };
+
+      API.post(API_CONSTANT?.PROFILE, obj)
+        .then((res) => {
+          setActivePage(1);
+          toast?.success("Successfully Update Profile");
+          actions.setSubmitting(false);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    } else {
+      setActivePage(activePage + 1);
+      actions.setTouched({});
+      actions.setSubmitting(false);
+    }
   };
 
   const validationSchema = [
     Yup.object().shape({
-      profile_summary: Yup.string().required('Profile summary is required.'),
+      profile_summary: Yup.string().required("Profile summary is required."),
     }),
     Yup.object().shape({}),
     Yup.object().shape({
       skills: Yup.array().min(1, `select at least one skill`),
     }),
     Yup.object().shape({
-      college_school_name: Yup.string().required(`College name is required.`),
-      // degree: Yup.string().required(`Degree is required.`),
+      college_school_name: Yup.object().nonNullable(
+        `College name is required.`
+      ),
+      degree: Yup.object().nonNullable(`Degree is required.`),
       highest_education: Yup.string().required(
-        `Please select highest education`,
+        `Please select highest education`
       ),
       completion_date: Yup.object().shape({
-        year: Yup.string().required('Year is required'),
-        month: Yup.string().required('Month is required'),
+        year: Yup.string().required("Year is required"),
+        month: Yup.string().required("Month is required"),
       }),
     }),
     Yup.object().shape({
@@ -150,76 +119,77 @@ const IndividualProfile = ({
       date_of_birth: Yup.string().required(`Date of birth is required.`),
       languages: Yup.array().of(
         Yup.object().shape({
-          language: Yup.string().nonNullable('Language is required'),
-          proficiency: Yup.string().required('Proficiency is required'),
-        }),
+          language: Yup.object().nonNullable("Language is required"),
+          proficiency: Yup.string().required("Proficiency is required"),
+        })
       ),
+    }),
+    Yup.object().shape({
+      total_experiences:
+        isFresher === true
+          ? Yup.array()
+          : Yup.array().of(
+              Yup.object().shape({
+                companyName: Yup.string().required("Company name is required"),
+                role: Yup.string().required("Role is required"),
+                location: Yup.object().nonNullable("location is required"),
+                employmentType: Yup.string().required("Emp type is required"),
+                years: Yup.string().required("Year is required"),
+                month: Yup.string()
+                  .optional()
+                  .matches(
+                    /(^0?[1-9]$)|(^1[0-2]$)$/,
+                    "Invalid Month,insert must between 1 to 12"
+                  ),
+                reason_for_leaving: Yup.string().required(
+                  "Reason for leaving is required"
+                ),
+              })
+            ),
     }),
   ];
 
   const currentValidationSchema = validationSchema[activePage - 1];
   const formik = useFormik({
     initialValues: {
-      resume: '',
-      gender: '',
-      company_name: '',
-      current_location: '',
-      expected_salary_upto: '',
-      profile_summary: '',
-      degree: '',
-      date_of_birth: '',
-      highest_education: '',
-      expected_salary_start_at: '',
-      college_school_name: '',
-      total_experiences: [
+      resume: userDetails?.resume ?? [],
+      gender: userDetails?.gender ?? "",
+      company_name: userDetails?.company_name ?? "",
+      current_location: userDetails?.current_location ?? "USA",
+      expected_salary_upto: userDetails?.expected_salary_upto ?? "",
+      profile_summary: userDetails?.profile_summary ?? "",
+      degree: userDetails?.degree ?? null,
+      date_of_birth: userDetails?.date_of_birth ?? "",
+      highest_education: userDetails?.highest_education ?? "",
+      expected_salary_start_at: userDetails?.expected_salary_start_at ?? "",
+      college_school_name: userDetails?.college_school_name ?? null,
+      total_experiences: userDetails?.total_experiences ?? [
         {
-          companyName: '',
-          role: '',
+          companyName: "",
+          role: "",
           location: null,
-          employmentType: '',
-          years: '',
-          month: '',
-          reason_for_leaving: '',
+          employmentType: "",
+          years: "",
+          month: "",
+          reason_for_leaving: "",
         },
       ],
-      skills: [],
-      languages: [
+      skills: userDetails?.skills ?? [],
+      languages: userDetails?.languages ?? [
         {
           language: null,
-          proficiency: '',
+          proficiency: "",
         },
       ],
-      completion_date: {
-        year: '',
-        month: '',
+      completion_date: userDetails?.completion_date ?? {
+        year: "",
+        month: "",
       },
-      city: null,
-      state: null,
-      country: null,
     },
     enableReinitialize: true,
     validationSchema: currentValidationSchema,
     onSubmit: handleSubmit,
   });
-  let filteredArr = [];
-  const searchItems = (arr: any) => {
-    filteredArr =
-      query === ''
-        ? arr
-        : arr.filter((list: any) =>
-            list.name
-              .toLowerCase()
-              .replace(/\s+/g, '')
-              .includes(query.toLowerCase().replace(/\s+/g, '')),
-          );
-    return filteredArr;
-  };
-  console.log('formik', formik?.errors);
-
-  // console.log(
-  //   "selected month ---->",
-  //   COMPLETION_DATE[formik?.values?.completion_date?.month]
-  // );
 
   return (
     <div className="mt-5">
@@ -229,8 +199,8 @@ const IndividualProfile = ({
             <div
               className={`cursor-pointer text-sm font-medium ${
                 activePage === list?.id
-                  ? 'text-meta-blue-1'
-                  : 'text-meta-light-blue-3'
+                  ? "text-meta-blue-1"
+                  : "text-meta-light-blue-3"
               }`}
             >
               {list?.page}
@@ -265,14 +235,14 @@ const IndividualProfile = ({
                   {formik.touched.profile_summary &&
                     formik.errors.profile_summary && (
                       <div className="error">
-                        {formik.errors.profile_summary}
+                        {formik?.errors?.profile_summary as any}
                       </div>
                     )}
                 </div>
               </div>
             </>
           )}
-          {activePage === page[1]?.id && <UploadResumeTab />}
+          {activePage === page[1]?.id && <UploadResumeTab formik={formik} />}
           {activePage === page[2]?.id && (
             <>
               <KeySkillTab formik={formik} skillData={skillData} />
@@ -281,7 +251,11 @@ const IndividualProfile = ({
 
           {activePage === page[3]?.id && (
             <>
-              <EducationTab formik={formik} degreeList={degreeList} />
+              <EducationTab
+                formik={formik}
+                degreeList={degreeList}
+                collegeList={collegeList}
+              />
             </>
           )}
           {activePage === page[4]?.id && (
@@ -290,14 +264,18 @@ const IndividualProfile = ({
             </>
           )}
           {activePage === page[5]?.id && (
-            <CareerInfoTab formik={formik} cityData={city} />
+            <CareerInfoTab
+              formik={formik}
+              cityData={city}
+              setIsFresher={setIsFresher}
+            />
           )}
           <div className="mt-8 flex w-full justify-end">
             <button
               type="submit"
               className="w-36 rounded-lg bg-meta-blue-1 py-2 text-base text-white"
             >
-              {activePage === 3 ? TEXT?.SAVE : TEXT?.NEXT}
+              {activePage === page[5]?.id ? TEXT?.SAVE : TEXT?.NEXT}
             </button>
           </div>
         </div>
