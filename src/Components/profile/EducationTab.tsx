@@ -20,6 +20,7 @@ const EducationTab = ({
   activePage,
   collegeList,
   degreeList,
+  getUserDataApiCall,
 }: any) => {
   const handleSubmit = async (values: any, actions: any) => {
     const obj = {
@@ -27,12 +28,15 @@ const EducationTab = ({
     };
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
-        setActivePage(activePage + 1);
-        toast?.success('Successfully Update Profile');
-        actions.setSubmitting(false);
+        if (res?.data?.status === 200) {
+          getUserDataApiCall();
+          actions.setSubmitting(false);
+          setActivePage(activePage + 1);
+          toast?.success(res?.data?.message || 'Successfully Update Profile');
+        }
       })
       .catch((error) => {
-        console.log('error', error);
+        toast.error(error || 'Something want wrong');
       });
   };
 
@@ -49,10 +53,10 @@ const EducationTab = ({
       degree: userDetails?.degree ?? null,
       highest_education: userDetails?.highest_education ?? '',
       college_school_name: userDetails?.college_school_name ?? null,
-      // completion_date: userDetails?.completion_date ?? {
-      //   year: "",
-      //   month: "",
-      // },
+      completion_date: userDetails?.completion_date ?? {
+        year: '',
+        month: '',
+      },
     },
     enableReinitialize: true,
     validationSchema: validationSchema,

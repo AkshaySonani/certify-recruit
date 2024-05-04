@@ -1,18 +1,19 @@
-import Image from "next/image";
-import MultipleSelectBox from "../MultipleSelectBox";
-import { TEXT } from "@/service/Helper";
-import API from "@/service/ApiService";
-import { API_CONSTANT } from "@/constant/ApiConstant";
-import * as Yup from "yup";
-import { useFormik, Field } from "formik";
-import { toast } from "react-toastify";
-import "react-datepicker/dist/react-datepicker.css";
+import Image from 'next/image';
+import MultipleSelectBox from '../MultipleSelectBox';
+import { TEXT } from '@/service/Helper';
+import API from '@/service/ApiService';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import * as Yup from 'yup';
+import { useFormik, Field } from 'formik';
+import { toast } from 'react-toastify';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const KeySkillTab = ({
   userDetails,
   setActivePage,
   activePage,
   skillData,
+  getUserDataApiCall,
 }: any) => {
   const handleSubmit = async (values: any, actions: any) => {
     let pushArray = [] as any;
@@ -28,12 +29,15 @@ const KeySkillTab = ({
     };
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
-        setActivePage(activePage + 1);
-        toast?.success("Successfully Update Profile");
-        actions.setSubmitting(false);
+        if (res?.data?.status === 200) {
+          getUserDataApiCall();
+          actions.setSubmitting(false);
+          setActivePage(activePage + 1);
+          toast?.success(res?.data?.message || 'Successfully Update Profile');
+        }
       })
       .catch((error) => {
-        console.log("error", error);
+        toast.error(error || 'Something want wrong');
       });
   };
 
@@ -54,7 +58,7 @@ const KeySkillTab = ({
     const arr = formik?.values?.skills.filter((el: any) => {
       return el !== list;
     });
-    formik?.setFieldValue("skills", arr);
+    formik?.setFieldValue('skills', arr);
   };
 
   const MultiboxStyle = {
@@ -63,10 +67,10 @@ const KeySkillTab = ({
       border: state.isFocused ? 1 : 1,
       // This line disable the blue border
       boxShadow: state.isFocused ? 0 : 0,
-      paddingLeft: "20px",
-      paddingTop: "0px",
-      paddingBottom: "0px",
-      "&:hover": {
+      paddingLeft: '20px',
+      paddingTop: '0px',
+      paddingBottom: '0px',
+      '&:hover': {
         border: state.isFocused ? 0 : 0,
       },
     }),
@@ -115,7 +119,7 @@ const KeySkillTab = ({
                         height={19}
                         alt="Preview"
                         className="ml-3"
-                        src={"/job/Close.svg"}
+                        src={'/job/Close.svg'}
                       />
                     </div>
                   </div>

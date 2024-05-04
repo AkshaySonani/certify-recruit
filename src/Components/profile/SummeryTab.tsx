@@ -1,25 +1,33 @@
-import { Fragment, useEffect, useState } from "react";
-import { TEXT } from "@/service/Helper";
-import API from "@/service/ApiService";
-import { API_CONSTANT } from "@/constant/ApiConstant";
-import * as Yup from "yup";
-import { useFormik, Field } from "formik";
-import { toast } from "react-toastify";
-import "react-datepicker/dist/react-datepicker.css";
+import { Fragment, useEffect, useState } from 'react';
+import { TEXT } from '@/service/Helper';
+import API from '@/service/ApiService';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import * as Yup from 'yup';
+import { useFormik, Field } from 'formik';
+import { toast } from 'react-toastify';
+import 'react-datepicker/dist/react-datepicker.css';
 
-const SummaryTab = ({ userDetails, setActivePage, activePage }: any) => {
+const SummaryTab = ({
+  userDetails,
+  setActivePage,
+  activePage,
+  getUserDataApiCall,
+}: any) => {
   const handleSubmit = async (values: any, actions: any) => {
     const obj = {
       ...values,
     };
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
-        setActivePage(activePage + 1);
-        toast?.success("Successfully Update Profile");
-        actions.setSubmitting(false);
+        if (res?.data?.status === 200) {
+          getUserDataApiCall();
+          setActivePage(activePage + 1);
+          toast?.success('Successfully Update Profile');
+          actions.setSubmitting(false);
+        }
       })
       .catch((error) => {
-        console.log("error", error);
+        toast.error(error || 'Something want wrong');
       });
   };
 
@@ -27,7 +35,7 @@ const SummaryTab = ({ userDetails, setActivePage, activePage }: any) => {
 
   const formik = useFormik({
     initialValues: {
-      profile_summary: userDetails?.profile_summary ?? "",
+      profile_summary: userDetails?.profile_summary ?? '',
     },
     enableReinitialize: true,
     validationSchema: validationSchema,

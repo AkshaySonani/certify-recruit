@@ -125,7 +125,9 @@ const MyProfile = () => {
                     />
                     <p className="text-xs text-meta-light-blue-3">
                       {userDetails?.current_location
-                        ? userDetails?.current_location
+                        ? userDetails?.current_location === 'OUT_OF_USA'
+                          ? TEXT?.OUT_SIDE_USA
+                          : TEXT?.USA
                         : '-'}
                     </p>
                   </div>

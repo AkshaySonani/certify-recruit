@@ -92,6 +92,7 @@ const IndividualProfile = ({
             setActivePage={setActivePage}
             userDetails={userDetails}
             activePage={activePage}
+            getUserDataApiCall={getUserDataApiCall}
           />
         )}
         {activePage === page[1]?.id && (
@@ -109,6 +110,7 @@ const IndividualProfile = ({
               setActivePage={setActivePage}
               userDetails={userDetails}
               activePage={activePage}
+              getUserDataApiCall={getUserDataApiCall}
             />
           </>
         )}
@@ -121,6 +123,7 @@ const IndividualProfile = ({
               activePage={activePage}
               degreeList={degreeList}
               collegeList={collegeList}
+              getUserDataApiCall={getUserDataApiCall}
             />
           </>
         )}
@@ -131,6 +134,7 @@ const IndividualProfile = ({
               setActivePage={setActivePage}
               userDetails={userDetails}
               activePage={activePage}
+              getUserDataApiCall={getUserDataApiCall}
             />
           </>
         )}
@@ -140,6 +144,7 @@ const IndividualProfile = ({
             userDetails={userDetails}
             activePage={activePage}
             cityData={city}
+            getUserDataApiCall={getUserDataApiCall}
           />
         )}
       </div>

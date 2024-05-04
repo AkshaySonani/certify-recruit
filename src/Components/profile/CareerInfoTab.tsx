@@ -1,22 +1,23 @@
-import { EMP_TYPE_ARR } from "@/constant/Enum";
-import { TEXT } from "@/service/Helper";
-import { Menu, Transition } from "@headlessui/react";
-import Image from "next/image";
-import { Fragment, useEffect, useState } from "react";
-import API from "@/service/ApiService";
-import { API_CONSTANT } from "@/constant/ApiConstant";
-import * as Yup from "yup";
-import { useFormik, Field } from "formik";
-import { toast } from "react-toastify";
-import "react-datepicker/dist/react-datepicker.css";
+import { EMP_TYPE_ARR } from '@/constant/Enum';
+import { TEXT } from '@/service/Helper';
+import { Menu, Transition } from '@headlessui/react';
+import Image from 'next/image';
+import { Fragment, useEffect, useState } from 'react';
+import API from '@/service/ApiService';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import * as Yup from 'yup';
+import { useFormik, Field } from 'formik';
+import { toast } from 'react-toastify';
+import 'react-datepicker/dist/react-datepicker.css';
 function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ');
 }
 const CareerInfoTab = ({
   cityData,
   userDetails,
   setActivePage,
   activePage,
+  getUserDataApiCall,
 }: any) => {
   const [active, setActive] = useState(1);
   const [isFresher, setIsFresher] = useState(userDetails?.is_fresher);
@@ -26,12 +27,15 @@ const CareerInfoTab = ({
     };
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
-        setActivePage(activePage + 1);
-        toast?.success("Successfully Update Profile");
-        actions.setSubmitting(false);
+        if (res?.data?.status === 200) {
+          getUserDataApiCall();
+          actions.setSubmitting(false);
+          setActivePage(activePage + 1);
+          toast?.success(res?.data?.message || 'Successfully Update Profile');
+        }
       })
       .catch((error) => {
-        console.log("error", error);
+        toast.error(error || 'Something want wrong');
       });
   };
 
@@ -41,33 +45,33 @@ const CareerInfoTab = ({
         ? Yup.array()
         : Yup.array().of(
             Yup.object().shape({
-              companyName: Yup.string().required("Company name is required"),
-              role: Yup.string().required("Role is required"),
-              location: Yup.object().nonNullable("location is required"),
-              employmentType: Yup.string().required("Emp type is required"),
-              years: Yup.string().required("Year is required"),
+              companyName: Yup.string().required('Company name is required'),
+              role: Yup.string().required('Role is required'),
+              location: Yup.object().nonNullable('location is required'),
+              employmentType: Yup.string().required('Emp type is required'),
+              years: Yup.string().required('Year is required'),
               month: Yup.string()
                 .optional()
                 .matches(
                   /(^0?[1-9]$)|(^1[0-2]$)$/,
-                  "Invalid Month,insert must between 1 to 12"
+                  'Invalid Month,insert must between 1 to 12',
                 ),
               reason_for_leaving: Yup.string(),
-            })
+            }),
           ),
   });
   const formik: any = useFormik({
     initialValues: {
-      expected_salary_start_at: userDetails?.expected_salary_start_at ?? "",
+      expected_salary_start_at: userDetails?.expected_salary_start_at ?? '',
       total_experiences: userDetails?.total_experiences ?? [
         {
-          companyName: "",
-          role: "",
+          companyName: '',
+          role: '',
           location: null,
-          employmentType: "",
-          years: "",
-          month: "",
-          reason_for_leaving: "",
+          employmentType: '',
+          years: '',
+          month: '',
+          reason_for_leaving: '',
         },
       ],
     },
@@ -79,13 +83,13 @@ const CareerInfoTab = ({
     {
       id: 1,
       label: "I'm Fresher",
-      content: "I am Student (I have no work experience)",
+      content: 'I am Student (I have no work experience)',
       is_fresher: true,
     },
     {
       id: 2,
       label: "I'm experienced",
-      content: "I have work experience (excluding internships)",
+      content: 'I have work experience (excluding internships)',
       is_fresher: false,
     },
   ];
@@ -93,38 +97,38 @@ const CareerInfoTab = ({
   const handleChangeMenu = (i: any, el: any, name: any) => {
     let arr = [...formik?.values?.total_experiences];
     arr[i][name] = el;
-    formik?.setFieldValue("total_experiences", arr);
+    formik?.setFieldValue('total_experiences', arr);
   };
 
   const handleRemove = (list: any) => {
     const arr = formik?.values?.total_experiences.filter((el: any) => {
       return el !== list;
     });
-    formik?.setFieldValue("total_experiences", arr);
+    formik?.setFieldValue('total_experiences', arr);
   };
 
   const handleAddMoreEXP = () => {
-    formik?.setFieldValue("total_experiences", [
+    formik?.setFieldValue('total_experiences', [
       ...formik?.values?.total_experiences,
       {
-        companyName: "",
-        role: "",
+        companyName: '',
+        role: '',
         location: null,
-        employmentType: "",
-        years: "",
-        month: "",
-        reason_for_leaving: "",
+        employmentType: '',
+        years: '',
+        month: '',
+        reason_for_leaving: '',
       },
       ,
     ]);
   };
 
-  console.log("formik", formik?.errors);
+  console.log('formik', formik?.errors);
 
   const handleFormChange = (index: any, event: any) => {
     let data = [...formik?.values?.total_experiences];
     data[index][event.target.name] = event.target.value;
-    formik?.setFieldValue("total_experiences", data);
+    formik?.setFieldValue('total_experiences', data);
   };
 
   return (
@@ -143,11 +147,11 @@ const CareerInfoTab = ({
             {EXPERIENCE_TYPE?.map((list) => {
               return (
                 <div
-                  className={`flex h-20 w-full flex-col items-center justify-center  rounded-xl border-2 text-center lg:w-1/2 ${active === list?.id ? "border-meta-blue-1" : "border-meta-light-blue-1 "}`}
+                  className={`flex h-20 w-full flex-col items-center justify-center  rounded-xl border-2 text-center lg:w-1/2 ${active === list?.id ? 'border-meta-blue-1' : 'border-meta-light-blue-1 '}`}
                   onClick={() => {
                     setActive(list?.id);
                     setIsFresher(list?.is_fresher);
-                    formik?.setFieldValue("is_fresher", list?.is_fresher);
+                    formik?.setFieldValue('is_fresher', list?.is_fresher);
                   }}
                 >
                   <p className="font-bold text-black">{list?.label}</p>
@@ -221,14 +225,14 @@ const CareerInfoTab = ({
                               <Menu.Button className="relative z-20 mt-2 flex w-full appearance-none items-center justify-between rounded-2xl border  border-meta-light-blue-1 bg-white py-3 pl-5 pr-[11px] outline-none transition">
                                 <p>
                                   {list?.location === null
-                                    ? "Select location"
+                                    ? 'Select location'
                                     : list?.location?.name}
                                 </p>
                                 <Image
                                   alt="Icon"
                                   width={14}
                                   height={14}
-                                  src={"/dashboard/SelectDown.svg"}
+                                  src={'/dashboard/SelectDown.svg'}
                                 />
                               </Menu.Button>
                               <Transition
@@ -251,14 +255,14 @@ const CareerInfoTab = ({
                                                 handleChangeMenu(
                                                   index,
                                                   el,
-                                                  "location"
+                                                  'location',
                                                 )
                                               }
                                               className={classNames(
                                                 active
-                                                  ? "bg-meta-blue-1 text-white"
-                                                  : "text-gray-900",
-                                                "block px-4 py-2 text-[14px] capitalize"
+                                                  ? 'bg-meta-blue-1 text-white'
+                                                  : 'text-gray-900',
+                                                'block px-4 py-2 text-[14px] capitalize',
                                               )}
                                             >
                                               {el?.name}
@@ -287,15 +291,15 @@ const CareerInfoTab = ({
                             <Menu as="div" className="relative">
                               <Menu.Button className="relative z-20 mt-2 flex w-full appearance-none items-center justify-between rounded-2xl border border-meta-light-blue-1 bg-white py-3 pl-5 pr-[11px] outline-none transition">
                                 <p>
-                                  {list?.employmentType === ""
-                                    ? "Select your employeement type"
+                                  {list?.employmentType === ''
+                                    ? 'Select your employeement type'
                                     : list?.employmentType}
                                 </p>
                                 <Image
                                   alt="Icon"
                                   width={14}
                                   height={14}
-                                  src={"/dashboard/SelectDown.svg"}
+                                  src={'/dashboard/SelectDown.svg'}
                                 />
                               </Menu.Button>
                               <Transition
@@ -318,14 +322,14 @@ const CareerInfoTab = ({
                                                 handleChangeMenu(
                                                   index,
                                                   el,
-                                                  "employmentType"
+                                                  'employmentType',
                                                 )
                                               }
                                               className={classNames(
                                                 active
-                                                  ? "bg-meta-blue-1 text-white"
-                                                  : "text-gray-900",
-                                                "block px-4 py-2 text-[14px] capitalize"
+                                                  ? 'bg-meta-blue-1 text-white'
+                                                  : 'text-gray-900',
+                                                'block px-4 py-2 text-[14px] capitalize',
                                               )}
                                             >
                                               {el}
@@ -440,14 +444,14 @@ const CareerInfoTab = ({
                               width={20}
                               height={20}
                               alt="Google-icon"
-                              src={"/CloseIcon.svg"}
+                              src={'/CloseIcon.svg'}
                             />
                           </div>
                         )}
                       </div>
                     </>
                   );
-                }
+                },
               )}
               <div
                 className="my-2 w-full cursor-pointer rounded-2xl border border-dashed border-x-meta-light-blue-1 p-3"

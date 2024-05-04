@@ -18,6 +18,7 @@ const PersonalDetailsTab = ({
   userDetails,
   setActivePage,
   activePage,
+  getUserDataApiCall,
 }: any) => {
   const handleSubmit = async (values: any, actions: any) => {
     const obj = {
@@ -25,12 +26,15 @@ const PersonalDetailsTab = ({
     };
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
-        setActivePage(activePage + 1);
-        toast?.success('Successfully Update Profile');
-        actions.setSubmitting(false);
+        if (res?.data?.status === 200) {
+          getUserDataApiCall();
+          actions.setSubmitting(false);
+          setActivePage(activePage + 1);
+          toast?.success(res?.data?.message || 'Successfully Update Profile');
+        }
       })
       .catch((error) => {
-        console.log('error', error);
+        toast.error(error || 'Something want wrong');
       });
   };
 
