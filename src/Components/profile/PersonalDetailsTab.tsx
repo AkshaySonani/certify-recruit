@@ -42,23 +42,27 @@ const PersonalDetailsTab = ({
   const validationSchema = Yup.object().shape({
     gender: Yup.string(),
     date_of_birth: Yup.string(),
-    // languages: Yup.array().of(
-    //   Yup.object().shape({
-    //     language:     //     proficiency: Yup.string(),
-    //   })
-    // ),
+    languages: Yup.array().of(
+      Yup.object().shape({
+        language: Yup.object().nullable(),
+        proficiency: Yup.string(),
+      }),
+    ),
   });
 
   const formik: any = useFormik({
     initialValues: {
       gender: userDetails?.gender ?? '',
       date_of_birth: userDetails?.date_of_birth ?? '',
-      languages: userDetails?.languages ?? [
-        {
-          language: null,
-          proficiency: '',
-        },
-      ],
+      languages:
+        userDetails?.languages?.length !== 0
+          ? userDetails?.languages
+          : [
+              {
+                language: null,
+                proficiency: '',
+              },
+            ],
     },
     enableReinitialize: true,
     validationSchema: validationSchema,

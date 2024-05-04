@@ -1,11 +1,11 @@
-"use client";
-import Image from "next/image";
-import ReactQuill from "react-quill";
-import React, { useState } from "react";
-import "react-quill/dist/quill.snow.css";
-import { useRouter } from "next/navigation";
-import { TEXT } from "@/service/Helper";
-import MultipleSelectBox from "../MultipleSelectBox";
+'use client';
+import Image from 'next/image';
+import ReactQuill from 'react-quill';
+import React, { useState } from 'react';
+import 'react-quill/dist/quill.snow.css';
+import { useRouter } from 'next/navigation';
+import { TEXT } from '@/service/Helper';
+import MultipleSelectBox from '../MultipleSelectBox';
 
 const JobPostingForm3 = ({
   formik,
@@ -23,55 +23,55 @@ const JobPostingForm3 = ({
       ? `0${formik?.values?.vacancy}`
       : `${formik?.values?.vacancy}`;
   const handleIncrement = () =>
-    formik?.setFieldValue("vacancy", formik?.values?.vacancy + 1);
+    formik?.setFieldValue('vacancy', formik?.values?.vacancy + 1);
   const handleDecrement = () =>
     formik?.setFieldValue(
-      "vacancy",
-      formik?.values?.vacancy > 1 ? formik?.values?.vacancy - 1 : 1
+      'vacancy',
+      formik?.values?.vacancy > 1 ? formik?.values?.vacancy - 1 : 1,
     );
   const handleClose = (list: any) => {
     const arr = formik?.values?.skills.filter((el: any) => {
       return el !== list;
     });
-    formik?.setFieldValue("skills",arr)
+    formik?.setFieldValue('skills', arr);
   };
   return (
     <div>
-      <div className="flex items-start justify-between w-full lg:flex-nowrap h-full flex-wrap">
-        <div className="lg:w-1/2 w-full lg:mr-5 text-start">
-          <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
+      <div className="flex h-full w-full flex-wrap items-start justify-between lg:flex-nowrap">
+        <div className="w-full text-start lg:mr-5 lg:w-1/2">
+          <p className="text-xl font-semibold text-meta-purple-1 sm:text-2xl">
             {TEXT?.JOB_DETAILS}
           </p>
-          <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
+          <p className="text-sm font-medium text-meta-light-blue-3 sm:text-base">
             {TEXT?.TELL_US_ABOUT_THE_ROLE}
           </p>
         </div>
-        <div className="flex items-center lg:w-1/2 w-full lg:mt-0 mt-3 mb-5">
+        <div className="mb-5 mt-3 flex w-full items-center lg:mt-0 lg:w-1/2">
           <ReactQuill
             theme="snow"
             value={formik?.values?.description}
-            onChange={(e: any) => formik.setFieldValue("description", e)}
-            className="!h-78 !rounded-lg !w-full"
+            onChange={(e: any) => formik.setFieldValue('description', e)}
+            className="!h-78 !w-full !rounded-lg"
           />
+          {formik.touched.description && formik.errors.description && (
+            <div className="error">{formik.errors.description}</div>
+          )}
         </div>
-        {formik.touched.description && formik.errors.description && (
-          <div className="error">{formik.errors.description}</div>
-        )}
       </div>
-      <div className="border-meta-light-blue-1 border my-6" />
+      <div className="my-6 border border-meta-light-blue-1" />
 
-      <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
-        <div className="lg:w-1/2 w-full lg:mr-5 text-start">
-          <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
+      <div className="flex w-full flex-wrap items-center justify-between lg:flex-nowrap">
+        <div className="w-full text-start lg:mr-5 lg:w-1/2">
+          <p className="text-xl font-semibold text-meta-purple-1 sm:text-2xl">
             {TEXT?.SKILLS}
           </p>
-          <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
+          <p className="text-sm font-medium text-meta-light-blue-3 sm:text-base">
             {TEXT?.ADD_SKILL_KEYWORDS_TO_MAKE_YOUR_JOB}
           </p>
         </div>
 
-        <div className="flex items-start flex-col lg:w-1/2 w-full lg:mt-0 mt-3">
-          <div className="flex items-start w-full lg:mt-0 mt-3 flex-wrap">
+        <div className="mt-3 flex w-full flex-col items-start lg:mt-0 lg:w-1/2">
+          <div className="mt-3 flex w-full flex-wrap items-start lg:mt-0">
             <MultipleSelectBox
               className="w-full"
               value={formik?.values?.skills}
@@ -82,11 +82,11 @@ const JobPostingForm3 = ({
               isMulti={true}
             />
           </div>
-          <div className="text-start mt-4 flex items-start sm:flex-nowrap flex-wrap justify-start">
+          <div className="mt-4 flex flex-wrap items-start justify-start text-start sm:flex-nowrap">
             {formik?.values?.skills?.map((ele: any, i: any) => {
               return (
-                <div className="flex items-center px-2 py-1 border-2 border-meta-light-blue-1 rounded-lg mr-3 mb-2">
-                  <p className="text-meta-light-blue-3 font-medium text-sm whitespace-nowrap">
+                <div className="mb-2 mr-3 flex items-center rounded-lg border-2 border-meta-light-blue-1 px-2 py-1">
+                  <p className="whitespace-nowrap text-sm font-medium text-meta-light-blue-3">
                     {ele}
                   </p>
                   <div
@@ -98,7 +98,7 @@ const JobPostingForm3 = ({
                       height={19}
                       alt="Preview"
                       className="ml-3"
-                      src={"/job/Close.svg"}
+                      src={'/job/Close.svg'}
                     />
                   </div>
                 </div>
@@ -107,21 +107,21 @@ const JobPostingForm3 = ({
           </div>
         </div>
       </div>
-      <div className="border-meta-light-blue-1 border my-6" />
+      <div className="my-6 border border-meta-light-blue-1" />
 
-      <div className="flex items-center justify-between w-full lg:flex-nowrap flex-wrap">
-        <div className="lg:w-1/2 w-full lg:mr-5 text-start">
-          <p className="sm:text-2xl text-xl font-semibold text-meta-purple-1">
+      <div className="flex w-full flex-wrap items-center justify-between lg:flex-nowrap">
+        <div className="w-full text-start lg:mr-5 lg:w-1/2">
+          <p className="text-xl font-semibold text-meta-purple-1 sm:text-2xl">
             {TEXT?.HIRING_MULTIPLE_CANDIDATES}
           </p>
-          <p className="sm:text-base text-sm font-medium text-meta-light-blue-3">
+          <p className="text-sm font-medium text-meta-light-blue-3 sm:text-base">
             {TEXT?.THIS_WILL_BE_DISPLAYED_ON_JOB_PAGE_FOR_CANDIDATES_SEE}
           </p>
         </div>
-        <div className="flex items-start lg:w-1/2 w-full lg:mt-0 mt-3 flex-col">
-          <div className="border-2 border-meta-light-blue-1 rounded-lg w-48 min-h-12 flex justify-between">
+        <div className="mt-3 flex w-full flex-col items-start lg:mt-0 lg:w-1/2">
+          <div className="flex min-h-12 w-48 justify-between rounded-lg border-2 border-meta-light-blue-1">
             <button
-              className="px-3 w-1/3"
+              className="w-1/3 px-3"
               disabled={!hireMultiple}
               onClick={handleIncrement}
             >
@@ -129,14 +129,14 @@ const JobPostingForm3 = ({
                 width={25}
                 height={25}
                 alt="Preview"
-                src={"/job/Plus.svg"}
+                src={'/job/Plus.svg'}
               />
             </button>
-            <div className="border-x-2 border-x-meta-light-blue-1 w-2/3 flex items-center justify-center text-meta-light-blue-3 text-base font-medium">
+            <div className="flex w-2/3 items-center justify-center border-x-2 border-x-meta-light-blue-1 text-base font-medium text-meta-light-blue-3">
               <p>{formattedValue}</p>
             </div>
             <button
-              className="px-3 w-1/3"
+              className="w-1/3 px-3"
               disabled={!hireMultiple}
               onClick={handleDecrement}
             >
@@ -144,11 +144,11 @@ const JobPostingForm3 = ({
                 width={25}
                 height={25}
                 alt="Preview"
-                src={"/job/Minus.svg"}
+                src={'/job/Minus.svg'}
               />
             </button>
           </div>
-          <div className="flex items-center mt-5">
+          <div className="mt-5 flex items-center">
             <input
               type="checkbox"
               id="hire-multiple"
@@ -157,14 +157,14 @@ const JobPostingForm3 = ({
             />
             <label
               htmlFor="hire-multiple"
-              className="sm:text-base pl-2 text-sm font-medium text-meta-light-blue-3"
+              className="pl-2 text-sm font-medium text-meta-light-blue-3 sm:text-base"
             >
               {TEXT?.I_AM_HIRING_MULTIPLE_CANDIDATES}
             </label>
           </div>
         </div>
       </div>
-      <div className="border-meta-light-blue-1 border my-6" />
+      <div className="my-6 border border-meta-light-blue-1" />
     </div>
   );
 };

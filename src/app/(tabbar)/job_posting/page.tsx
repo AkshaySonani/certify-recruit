@@ -68,7 +68,7 @@ const Page = () => {
         .then((res) => {
           console.log('res', res);
           setNextPage(nextPage + 1);
-          toast?.success('Successfully update profile');
+          toast?.success('Successfully your job is posting');
           actions.setSubmitting(false);
         })
         .catch((error) => {
@@ -305,11 +305,12 @@ const Page = () => {
                   return (
                     <div className="w-1/3 rounded-lg border border-meta-light-blue-1 p-3">
                       <label
-                        htmlFor="checkboxLabelOne"
+                        htmlFor={list}
                         className={`flex cursor-pointer select-none items-center `}
                       >
                         <input
                           type="checkbox"
+                          id={list}
                           name={'workplace'}
                           value={list}
                           onChange={formik.handleChange}

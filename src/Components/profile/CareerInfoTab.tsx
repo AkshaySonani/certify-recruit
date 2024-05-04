@@ -56,17 +56,20 @@ const CareerInfoTab = ({
   const formik: any = useFormik({
     initialValues: {
       expected_salary_start_at: userDetails?.expected_salary_start_at ?? '',
-      total_experiences: userDetails?.total_experiences ?? [
-        {
-          companyName: '',
-          role: '',
-          location: null,
-          employmentType: '',
-          years: '',
-          month: '',
-          reason_for_leaving: '',
-        },
-      ],
+      total_experiences:
+        userDetails?.total_experiences?.length !== 0
+          ? userDetails?.total_experiences
+          : [
+              {
+                companyName: '',
+                role: '',
+                location: null,
+                employmentType: '',
+                years: '',
+                month: '',
+                reason_for_leaving: '',
+              },
+            ],
     },
     enableReinitialize: true,
     validationSchema: validationSchema,
@@ -86,6 +89,7 @@ const CareerInfoTab = ({
       is_fresher: false,
     },
   ];
+  console.log('formik?.values', formik?.values);
 
   const handleChangeMenu = (i: any, el: any, name: any) => {
     let arr = [...formik?.values?.total_experiences];
@@ -157,7 +161,7 @@ const CareerInfoTab = ({
           {active !== 1 && (
             <div className="mt-5 w-full">
               <label className="text-base font-medium text-meta-purple-1">
-                Career profile
+                Total years of experience
               </label>
               {formik?.values?.total_experiences?.map(
                 (list: any, index: any) => {
