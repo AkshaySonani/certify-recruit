@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
-// import ReactQuill from "react-quill";
+import dynamic from 'next/dynamic';
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import React, { useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import { useRouter } from 'next/navigation';
@@ -47,8 +48,8 @@ const Page = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-10">
-        <p className="sm:text-2xl text-lg font-semibold text-meta-purple-1">
+      <div className="mb-10 flex items-center justify-between">
+        <p className="text-lg font-semibold text-meta-purple-1 sm:text-2xl">
           {TEXT?.JOB_POSTING}
         </p>
         <div className="flex cursor-pointer items-center">

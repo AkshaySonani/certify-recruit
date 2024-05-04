@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
-import ReactQuill from 'react-quill';
+import dynamic from 'next/dynamic';
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import React, { useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import { useRouter } from 'next/navigation';
