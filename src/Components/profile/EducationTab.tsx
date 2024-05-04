@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 import API from '@/service/ApiService';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { toast } from 'react-toastify';
+import Button from '../Button';
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
@@ -268,13 +269,20 @@ const EducationTab = ({
         </div>
       </div>
       <div className="mt-8 flex w-full justify-end">
+        <Button
+          title={TEXT?.SAVE}
+          titleClass="!text-base !text-white"
+          btnClass="!w-36 !rounded-lg !bg-meta-blue-1 !py-2"
+        />
+      </div>
+      {/* <div className="mt-8 flex w-full justify-end">
         <button
           type="submit"
           className="w-36 rounded-lg bg-meta-blue-1 py-2 text-base text-white"
         >
           {TEXT?.SAVE}
         </button>
-      </div>
+      </div> */}
     </form>
   );
 };

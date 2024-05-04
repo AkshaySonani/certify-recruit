@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Button from '../Button';
 import { useFormik } from 'formik';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
@@ -198,13 +199,21 @@ const UploadResumeTab = ({
       </div>
 
       <div className="mt-8 flex w-full justify-end">
+        <Button
+          title={TEXT?.SAVE}
+          titleClass="!text-base !text-white"
+          btnClass="!w-36 !rounded-lg !bg-meta-blue-1 !py-2"
+        />
+      </div>
+
+      {/* <div className="mt-8 flex w-full justify-end">
         <button
           type="submit"
           className="w-36 rounded-lg bg-meta-blue-1 py-2 text-base text-white"
         >
           {TEXT?.SAVE}
         </button>
-      </div>
+      </div> */}
     </form>
   );
 };

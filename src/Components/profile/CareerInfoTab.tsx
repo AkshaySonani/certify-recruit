@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 import { useFormik, Field } from 'formik';
 import { toast } from 'react-toastify';
 import 'react-datepicker/dist/react-datepicker.css';
+import Button from '../Button';
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
@@ -139,7 +140,7 @@ const CareerInfoTab = ({
             {EXPERIENCE_TYPE?.map((list) => {
               return (
                 <div
-                  className={`flex h-20 w-full flex-col items-center justify-center  rounded-xl border-2 text-center lg:w-1/2 ${active === list?.id ? 'border-meta-blue-1' : 'border-meta-light-blue-1 '}`}
+                  className={`flex h-20 w-full cursor-pointer flex-col items-center justify-center rounded-xl border-2 text-center lg:w-1/2 ${active === list?.id ? 'border-meta-blue-1' : 'border-meta-light-blue-1 '}`}
                   onClick={() => {
                     setActive(list?.id);
                     setIsFresher(list?.is_fresher);
@@ -477,13 +478,20 @@ const CareerInfoTab = ({
         </div>
       </div>
       <div className="mt-8 flex w-full justify-end">
+        <Button
+          title={TEXT?.SAVE}
+          titleClass="!text-base !text-white"
+          btnClass="!w-36 !rounded-lg !bg-meta-blue-1 !py-2"
+        />
+      </div>
+      {/* <div className="mt-8 flex w-full justify-end">
         <button
           type="submit"
           className="w-36 rounded-lg bg-meta-blue-1 py-2 text-base text-white"
         >
           {TEXT?.SAVE}
         </button>
-      </div>
+      </div> */}
     </form>
   );
 };

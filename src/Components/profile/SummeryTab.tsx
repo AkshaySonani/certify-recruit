@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { useFormik, Field } from 'formik';
 import { toast } from 'react-toastify';
 import 'react-datepicker/dist/react-datepicker.css';
+import Button from '../Button';
 
 const SummaryTab = ({
   userDetails,
@@ -71,13 +72,20 @@ const SummaryTab = ({
         </div>
       </div>
       <div className="mt-8 flex w-full justify-end">
+        <Button
+          title={TEXT?.SAVE}
+          titleClass="!text-base !text-white"
+          btnClass="!w-36 !rounded-lg !bg-meta-blue-1 !py-2"
+        />
+      </div>
+      {/* <div className="mt-8 flex w-full justify-end">
         <button
           type="submit"
           className="w-36 rounded-lg bg-meta-blue-1 py-2 text-base text-white"
         >
           {TEXT?.SAVE}
         </button>
-      </div>
+      </div> */}
     </form>
   );
 };
