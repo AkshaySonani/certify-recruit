@@ -1,25 +1,25 @@
-import { Fragment, useEffect, useState } from "react";
-import { TEXT } from "@/service/Helper";
-import API from "@/service/ApiService";
-import { API_CONSTANT } from "@/constant/ApiConstant";
-import * as Yup from "yup";
-import { useFormik, Field } from "formik";
-import { toast } from "react-toastify";
-import "react-datepicker/dist/react-datepicker.css";
-import CareerInfoTab from "./CareerInfoTab";
-import PersonalDetailsTab from "./PersonalDetailsTab";
-import EducationTab from "./EducationTab";
-import KeySkillTab from "./KeySkillTab";
-import UploadResumeTab from "./UploadResumeTab";
-import SummaryTab from "./SummeryTab";
+import { Fragment, useEffect, useState } from 'react';
+import { TEXT } from '@/service/Helper';
+import API from '@/service/ApiService';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import * as Yup from 'yup';
+import { useFormik, Field } from 'formik';
+import { toast } from 'react-toastify';
+import 'react-datepicker/dist/react-datepicker.css';
+import CareerInfoTab from './CareerInfoTab';
+import PersonalDetailsTab from './PersonalDetailsTab';
+import EducationTab from './EducationTab';
+import KeySkillTab from './KeySkillTab';
+import UploadResumeTab from './UploadResumeTab';
+import SummaryTab from './SummeryTab';
 
 const page = [
-  { id: 1, page: "Profile Summary" },
-  { id: 2, page: "Resume" },
-  { id: 3, page: "Key skill" },
-  { id: 4, page: "Education" },
-  { id: 5, page: "Personal Detail" },
-  { id: 6, page: "Career info" },
+  { id: 1, page: 'Profile Summary' },
+  { id: 2, page: 'Resume' },
+  { id: 3, page: 'Key skill' },
+  { id: 4, page: 'Education' },
+  { id: 5, page: 'Personal Detail' },
+  { id: 6, page: 'Career info' },
 ];
 
 const IndividualProfile = ({
@@ -29,18 +29,19 @@ const IndividualProfile = ({
   citiesData,
   userDetails,
   session,
+  getUserDataApiCall,
 }: any) => {
   // const [activePage, setActivePage] = useState(4);
   const [activePage, setActivePage] = useState(1);
   const [skillData, setSkillData] = useState([]);
 
   const city = [
-    { _id: "662ccb4a52f81a3100514885", name: "surat" },
-    { _id: "662a8768683fb48bab4be172", name: "Ahemedabad" },
-    { _id: "662a8768683fb48bab4be173", name: "Baroda" },
-    { _id: "662a8768683fb48bab4be174", name: "Rajkot" },
-    { _id: "662a8768683fb48bab4be175", name: "Botad" },
-    { _id: "662a8768683fb48bab4be176", name: "pune" },
+    { _id: '662ccb4a52f81a3100514885', name: 'surat' },
+    { _id: '662a8768683fb48bab4be172', name: 'Ahemedabad' },
+    { _id: '662a8768683fb48bab4be173', name: 'Baroda' },
+    { _id: '662a8768683fb48bab4be174', name: 'Rajkot' },
+    { _id: '662a8768683fb48bab4be175', name: 'Botad' },
+    { _id: '662a8768683fb48bab4be176', name: 'pune' },
   ];
 
   const getSkillDataApi = () => {
@@ -56,7 +57,7 @@ const IndividualProfile = ({
         setSkillData(skiilArr);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log('error', error);
         toast.error(error?.response?.data?.error);
       });
   };
@@ -74,8 +75,8 @@ const IndividualProfile = ({
               onClick={() => setActivePage(list?.id)}
               className={`cursor-pointer text-sm font-medium ${
                 activePage === list?.id
-                  ? "text-meta-blue-1"
-                  : "text-meta-light-blue-3"
+                  ? 'text-meta-blue-1'
+                  : 'text-meta-light-blue-3'
               }`}
             >
               {list?.page}
@@ -98,6 +99,7 @@ const IndividualProfile = ({
             setActivePage={setActivePage}
             userDetails={userDetails}
             activePage={activePage}
+            getUserDataApiCall={getUserDataApiCall}
           />
         )}
         {activePage === page[2]?.id && (

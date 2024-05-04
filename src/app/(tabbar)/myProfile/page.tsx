@@ -186,6 +186,7 @@ const MyProfile = () => {
             collegeList={collegeList}
             degreeList={degreeList}
             session={session?.data}
+            getUserDataApiCall={() => getProfileDetails()}
           />
         )}
       </div>

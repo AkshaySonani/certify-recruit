@@ -1,21 +1,25 @@
-import Image from "next/image";
-import API from "@/service/ApiService";
-import { toast } from "react-toastify";
-import React, { useState } from "react";
-import { useDropzone } from "react-dropzone";
-import { API_CONSTANT } from "@/constant/ApiConstant";
-import { useFormik } from "formik";
-import { TEXT } from "@/service/Helper";
-import * as Yup from "yup";
+import Image from 'next/image';
+import { useFormik } from 'formik';
+import API from '@/service/ApiService';
+import { toast } from 'react-toastify';
+import React, { useState } from 'react';
+import { TEXT } from '@/service/Helper';
+import { useDropzone } from 'react-dropzone';
+import { API_CONSTANT } from '@/constant/ApiConstant';
 
-const UploadResumeTab = ({ userDetails, setActivePage, activePage }: any) => {
+const UploadResumeTab = ({
+  userDetails,
+  setActivePage,
+  activePage,
+  getUserDataApiCall,
+}: any) => {
   const [files, setFiles] = useState([]);
-  const [fileName, setFileName] = useState("");
+  const [fileName, setFileName] = useState('');
 
   const { getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
     accept: {
-      "application/pdf": [],
+      'application/pdf': [],
     },
 
     onDrop: (acceptedFiles: any) => {
@@ -26,12 +30,12 @@ const UploadResumeTab = ({ userDetails, setActivePage, activePage }: any) => {
 
   const UploadFileOnBucket = async (file: any) => {
     const NewFormData = new FormData();
-    NewFormData.append("file", file[0]);
+    NewFormData.append('file', file[0]);
 
     API.post(API_CONSTANT?.UPLOAD_FILE, NewFormData)
       .then((res) => {
         if (res?.data?.success) {
-          formik?.setFieldValue("resume", [
+          formik?.setFieldValue('resume', [
             ...formik?.values?.resume,
             {
               file_name: fileName,
@@ -49,25 +53,25 @@ const UploadResumeTab = ({ userDetails, setActivePage, activePage }: any) => {
           API.post(API_CONSTANT?.PROFILE, { resume: obj })
             .then((res) => {
               if (res?.data?.status === 200) {
-                setFileName("");
+                setFileName('');
                 // actions.setSubmitting(false);
                 // setActivePage(activePage + 1);
                 toast?.success(res?.data?.message);
               }
             })
             .catch((error) => {
-              console.log("error", error);
+              console.log('error', error);
               toast?.error(error);
             });
         } else {
           toast.error(
-            res?.data?.error || "Your resume are not upload please try again"
+            res?.data?.error || 'Your resume are not upload please try again',
           );
-          setFileName("");
+          setFileName('');
         }
       })
       .catch((error) => {
-        toast.error(error || "Something want wrong");
+        toast.error(error || 'Something want wrong');
       });
   };
 
@@ -75,7 +79,7 @@ const UploadResumeTab = ({ userDetails, setActivePage, activePage }: any) => {
     if (fileName && files?.length !== 0) {
       UploadFileOnBucket(files);
     } else {
-      toast.error("File name and file is required");
+      toast.error('File name and file is required');
     }
   };
 
@@ -88,23 +92,20 @@ const UploadResumeTab = ({ userDetails, setActivePage, activePage }: any) => {
   });
 
   const removeFile = (fileToRemove: any) => {
-    console.log("🚀 ~ removeFile ~ fileToRemove:", fileToRemove?._id);
     let obj: any = {
       resumeId: fileToRemove?._id,
     };
-    API.delete(API_CONSTANT?.DELETE_RESUME, obj)
+    API.post(API_CONSTANT?.DELETE_RESUME, obj)
       .then((res) => {
-        console.log("🚀 ~ .then ~ res:", res);
         if (res?.data?.status === 200) {
           toast?.success(res?.data?.message);
+          getUserDataApiCall();
         }
       })
       .catch((error) => {
-        console.log("error", error);
         toast?.error(error);
       });
   };
-  console.log("formik", formik);
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -135,17 +136,17 @@ const UploadResumeTab = ({ userDetails, setActivePage, activePage }: any) => {
           </div>
           <div className="mt-7 flex w-full cursor-pointer items-center justify-center rounded-lg border-[2px] border-dashed border-meta-light-blue-1 p-8">
             <section className="text-center text-lg">
-              <div {...getRootProps({ className: "dropzone" })}>
+              <div {...getRootProps({ className: 'dropzone' })}>
                 <input {...getInputProps()} multiple={false} />
                 <Image
                   width={32}
                   height={32}
                   alt="UploadLogo"
-                  src={"/profile/upload.svg"}
+                  src={'/profile/upload.svg'}
                   className="mx-auto"
                 />
                 <p className="mt-4 font-medium">
-                  Drag & Drop or{" "}
+                  Drag & Drop or{' '}
                   <span className="text-meta-blue-1">choose file</span> to
                   upload
                 </p>
@@ -166,13 +167,13 @@ const UploadResumeTab = ({ userDetails, setActivePage, activePage }: any) => {
                 >
                   <div
                     className="flex items-center"
-                    onClick={() => window.open(ele?.file_url, "_blank")}
+                    onClick={() => window.open(ele?.file_url, '_blank')}
                   >
                     <Image
                       alt="file"
                       width={22}
                       height={22}
-                      src={"/sidebarIcon/jobPosting.svg"}
+                      src={'/sidebarIcon/jobPosting.svg'}
                     />
                     <p className="test-meta-light-blue-3 ml-3 text-sm font-medium">
                       {ele?.file_name}
@@ -183,7 +184,7 @@ const UploadResumeTab = ({ userDetails, setActivePage, activePage }: any) => {
                     width={22}
                     height={22}
                     alt="remove"
-                    src={"CloseIcon.svg"}
+                    src={'CloseIcon.svg'}
                     className="cursor-pointer"
                     onClick={(e) => {
                       e.stopPropagation();
