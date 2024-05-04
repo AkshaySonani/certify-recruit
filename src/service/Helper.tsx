@@ -146,7 +146,7 @@ const TEXT = {
   START_NOW_ITS_FREE: " Start now - it's free",
   REDIRECT_TO_CALENDLY: 'Redirect to Calendly',
   MAX_TAB_SWITCH_ALLOW: 'Max Tab Switch Allow',
-  DONT_HAVE_AN_ACCOUNT: 'Don’t have an account? ',
+  DONT_HAVE_AN_ACCOUNT: "Don't have an account? ",
   PICK_WORKING_SCHEDULE: 'Pick working schedule',
   KYC_Compliance_Detail: 'KYC Compliance Detail',
   THANK_YOU_FOR_SIGN_UP: 'Thank you for sign up!',
@@ -186,7 +186,7 @@ const TEXT = {
   THE_HIRED_CANDIDATE_WILL_WORK_IN_REPORTING_CHAIN:
     ' The hired candidate will work in your reporting chain.',
   WHICH_OPTION_BEST_DESCRIBE_THIS_JOBS_LOCATION:
-    ' Which option best describe this job’s location?',
+    " Which option best describe this job's location?",
   WINNING_PRIZE_REDEEM_WITH_HOURS_AFTER_TEST_COMPLETE:
     'Winning Prize redeem with in 24 Hours after test complete',
   ONLY_WHEN_YOU_HAVE_CERTIFICATION_CAN_YOU_DO_LEARN_AND_EARN_USE:

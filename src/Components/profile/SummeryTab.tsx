@@ -1,16 +1,11 @@
-import { Fragment, useEffect, useState } from 'react';
-import { TEXT } from '@/service/Helper';
-import API from '@/service/ApiService';
-import { API_CONSTANT } from '@/constant/ApiConstant';
-import * as Yup from 'yup';
-import { useFormik, Field } from 'formik';
-import { toast } from 'react-toastify';
-import 'react-datepicker/dist/react-datepicker.css';
-import CareerInfoTab from './CareerInfoTab';
-import PersonalDetailsTab from './PersonalDetailsTab';
-import EducationTab from './EducationTab';
-import KeySkillTab from './KeySkillTab';
-import UploadResumeTab from './UploadResumeTab';
+import { Fragment, useEffect, useState } from "react";
+import { TEXT } from "@/service/Helper";
+import API from "@/service/ApiService";
+import { API_CONSTANT } from "@/constant/ApiConstant";
+import * as Yup from "yup";
+import { useFormik, Field } from "formik";
+import { toast } from "react-toastify";
+import "react-datepicker/dist/react-datepicker.css";
 
 const SummaryTab = ({ userDetails, setActivePage, activePage }: any) => {
   const handleSubmit = async (values: any, actions: any) => {
@@ -20,53 +15,19 @@ const SummaryTab = ({ userDetails, setActivePage, activePage }: any) => {
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         setActivePage(activePage + 1);
-        toast?.success('Successfully Update Profile');
+        toast?.success("Successfully Update Profile");
         actions.setSubmitting(false);
       })
       .catch((error) => {
-        console.log('error', error);
+        console.log("error", error);
       });
   };
 
-  const validationSchema = Yup.object().shape({
-    profile_summary: Yup.string().required('Profile summary is required.'),
-  });
+  const validationSchema = Yup.object().shape({});
 
   const formik = useFormik({
     initialValues: {
-      resume: userDetails?.resume ?? [],
-      gender: userDetails?.gender ?? '',
-      company_name: userDetails?.company_name ?? '',
-      current_location: userDetails?.current_location ?? 'USA',
-      expected_salary_upto: userDetails?.expected_salary_upto ?? '',
-      profile_summary: userDetails?.profile_summary ?? '',
-      degree: userDetails?.degree ?? null,
-      date_of_birth: userDetails?.date_of_birth ?? '',
-      highest_education: userDetails?.highest_education ?? '',
-      expected_salary_start_at: userDetails?.expected_salary_start_at ?? '',
-      college_school_name: userDetails?.college_school_name ?? null,
-      total_experiences: userDetails?.total_experiences ?? [
-        {
-          companyName: '',
-          role: '',
-          location: null,
-          employmentType: '',
-          years: '',
-          month: '',
-          reason_for_leaving: '',
-        },
-      ],
-      skills: userDetails?.skills ?? [],
-      languages: userDetails?.languages ?? [
-        {
-          language: null,
-          proficiency: '',
-        },
-      ],
-      completion_date: userDetails?.completion_date ?? {
-        year: '',
-        month: '',
-      },
+      profile_summary: userDetails?.profile_summary ?? "",
     },
     enableReinitialize: true,
     validationSchema: validationSchema,

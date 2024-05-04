@@ -5,12 +5,13 @@ import { useRouter } from 'next/navigation';
 import { Menu, Transition, Dialog } from '@headlessui/react';
 import { TEXT, USER_ROLE } from '@/service/Helper';
 import { useSession } from 'next-auth/react';
-import CompanyProfile from '@/Components/profile/CompanyProfile';
-import IndividualProfile from '@/Components/profile/IndividualProfile';
 import API from '@/service/ApiService';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { toast } from 'react-toastify';
 import Loader from '@/Components/Loader';
+import EditDetailsDialog from '@/Components/profile/EditDetailsDialog';
+import CompanyProfile from '@/Components/profile/CompanyProfile';
+import IndividualProfile from '@/Components/profile/IndividualProfile';
 
 const MyProfile = () => {
   const router = useRouter();
@@ -29,7 +30,6 @@ const MyProfile = () => {
     getDegreeList();
     getCollegeList();
     getLanguageList();
-
     getProfileDetails();
   }, []);
 
@@ -124,7 +124,9 @@ const MyProfile = () => {
                       src={'/location.svg'}
                     />
                     <p className="text-xs text-meta-light-blue-3">
-                      {TEXT?.NEW_YOUR_USA}
+                      {userDetails?.current_location
+                        ? userDetails?.current_location
+                        : '-'}
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
@@ -135,7 +137,9 @@ const MyProfile = () => {
                       src={'/call.svg'}
                     />
                     <p className="text-xs text-meta-light-blue-3">
-                      516-742-4006
+                      {userDetails?.contact_number
+                        ? userDetails?.contact_number
+                        : '-'}
                     </p>
                   </div>
                 </div>
@@ -146,116 +150,28 @@ const MyProfile = () => {
                     alt="MainLogo"
                     src={'/mail.svg'}
                   />
-                  <p className="text-xs text-meta-light-blue-3">516-742-4006</p>
+                  <p className="text-xs text-meta-light-blue-3">
+                    {session?.data?.user?.email}
+                  </p>
                 </div>
               </div>
-              <div
-                onClick={() => setIsOpen(true)}
-                className="text-base font-medium text-meta-blue-1"
-              >
-                {TEXT?.EDIT}
-              </div>
-
+              {session?.data?.user?.role !== USER_ROLE?.EMPLOYEE && (
+                <div
+                  onClick={() => setIsOpen(true)}
+                  className="cursor-pointer text-base font-medium text-meta-blue-1"
+                >
+                  {TEXT?.EDIT}
+                </div>
+              )}
               <div>
-                <Transition appear show={isOpen} as={Fragment}>
-                  <Dialog as="div" onClose={() => setIsOpen(false)}>
-                    <Transition.Child
-                      as={Fragment}
-                      leaveTo="opacity-0"
-                      enterFrom="opacity-0"
-                      enterTo="opacity-100"
-                      leaveFrom="opacity-100"
-                      leave="ease-in duration-200"
-                      enter="ease-out duration-300"
-                    >
-                      <div className="fixed inset-0 bg-black/25" />
-                    </Transition.Child>
-
-                    <div className="fixed inset-0 overflow-y-auto">
-                      <div className="flex min-h-full items-center justify-center text-center">
-                        <Transition.Child
-                          as={Fragment}
-                          leave="ease-in duration-200"
-                          leaveTo="opacity-0 scale-95"
-                          enter="ease-out duration-300"
-                          enterFrom="opacity-0 scale-95"
-                          enterTo="opacity-100 scale-100"
-                          leaveFrom="opacity-100 scale-100"
-                        >
-                          <Dialog.Panel className="w-full max-w-3xl transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
-                            <Dialog.Title
-                              as="h3"
-                              className=" border-b-default-1 relative flex items-start border-meta-light-blue-1 p-8 text-xl font-semibold leading-6 text-meta-purple-1"
-                            >
-                              {TEXT?.BASIC_DETAIL}
-                            </Dialog.Title>
-
-                            <div className="w-full p-8 pt-0">
-                              <div className="flex items-center justify-between">
-                                <div className="mr-3 w-1/2">
-                                  <label>{TEXT?.FULL_NAME}</label>
-                                  <input
-                                    type="text"
-                                    placeholder="Name"
-                                    className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
-                                  />
-                                </div>
-                                <div className="w-1/2">
-                                  <label>{TEXT?.EMAIL}</label>
-                                  <input
-                                    type="text"
-                                    placeholder="Email"
-                                    className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
-                                  />
-                                </div>
-                              </div>
-                              <div className="mt-3 w-full">
-                                <Menu
-                                  as="div"
-                                  className="relative z-[1] inline-block w-full text-left"
-                                >
-                                  <Menu.Button className="mt-1 inline-flex w-full items-center justify-between rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3">
-                                    {TEXT?.ROLE}
-                                    <div>
-                                      <Image
-                                        alt="Icon"
-                                        width={14}
-                                        height={14}
-                                        src={'/dashboard/SelectDown.svg'}
-                                      />
-                                    </div>
-                                  </Menu.Button>
-
-                                  <Transition
-                                    as={Fragment}
-                                    leave="transition ease-in duration-75"
-                                    leaveTo="transform opacity-0 scale-95"
-                                    enter="transition ease-out duration-100"
-                                    enterFrom="transform opacity-0 scale-95"
-                                    enterTo="transform opacity-100 scale-100"
-                                    leaveFrom="transform opacity-100 scale-100"
-                                  >
-                                    <Menu.Items className="absolute right-0 mt-2 w-full divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
-                                      <div className="px-1 py-1">test</div>
-                                    </Menu.Items>
-                                  </Transition>
-                                </Menu>
-                              </div>
-                              <button
-                                onClick={() => setIsOpen(false)}
-                                className="mt-4 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-meta-blue-1"
-                              >
-                                <span className="flex justify-center text-sm font-medium text-white">
-                                  {TEXT?.ADD_USER}
-                                </span>
-                              </button>
-                            </div>
-                          </Dialog.Panel>
-                        </Transition.Child>
-                      </div>
-                    </div>
-                  </Dialog>
-                </Transition>
+                {isOpen && (
+                  <EditDetailsDialog
+                    session={session?.data}
+                    setIsOpen={setIsOpen}
+                    isOpen={isOpen}
+                    userDetails={userDetails}
+                  />
+                )}
               </div>
             </div>
           </div>

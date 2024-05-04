@@ -59,39 +59,20 @@ const CompanyDetailsTab = ({ setActivePage, userDetails, activePage }: any) => {
   };
 
   const validationSchema = Yup.object().shape({
-    city: Yup.object()
-      .shape({
-        _id: Yup.string().required('City is required'),
-      })
-      .nonNullable('City is required'),
-    company_name: Yup.string().required('Company name is required.'),
-    company_type: Yup.string().required('Company type is required.'),
-    owner: Yup.string().required('Owner is required.'),
-    street_address: Yup.string().required('Address is required.'),
-    country: Yup.object()
-      .shape({
-        _id: Yup.string().required('Country is required'),
-      })
-      .nonNullable('Country is required'),
-    state: Yup.object()
-      .shape({
-        _id: Yup.string().required('State is required'),
-      })
-      .nonNullable('State is required.'),
-    website_url: Yup.string()
-      .required('Website url is required.')
-      .matches(
-        /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
-        'Invalid Website url.',
-      ),
-    pincode: Yup.string()
-      .required('Zip code is required.')
-      .matches(/^[1-9][0-9]{5}$/, 'Invalid zipcode.'),
+    company_name: Yup.string(),
+    company_type: Yup.string(),
+    owner: Yup.string(),
+    street_address: Yup.string(),
+    website_url: Yup.string().matches(
+      /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
+      'Invalid Website url.',
+    ),
+    pincode: Yup.string().matches(/^[1-9][0-9]{5}$/, 'Invalid zipcode.'),
   });
 
   const currentValidationSchema = validationSchema;
 
-  const formik = useFormik({
+  const formik: any = useFormik({
     initialValues: {
       contact_email: userDetails?.contact_email ?? '',
       description: userDetails?.description ?? '',
@@ -151,7 +132,7 @@ const CompanyDetailsTab = ({ setActivePage, userDetails, activePage }: any) => {
             enterTo="transform opacity-100 scale-100"
             leaveFrom="transform opacity-100 scale-100"
           >
-            <Menu.Items className="mt- absolute right-0 z-30 w-full origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Menu.Items className="mt- absolute right-0 z-30 max-h-[200px] w-full origin-top-right divide-y divide-gray-200 overflow-auto rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div>
                 {COMPANY_TYPE?.map((list: any) => {
                   return (

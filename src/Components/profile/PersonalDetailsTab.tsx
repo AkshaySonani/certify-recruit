@@ -35,17 +35,16 @@ const PersonalDetailsTab = ({
   };
 
   const validationSchema = Yup.object().shape({
-    gender: Yup.string().required(`Gender is required.`),
-    date_of_birth: Yup.string().required(`Date of birth is required.`),
-    languages: Yup.array().of(
-      Yup.object().shape({
-        language: Yup.object().nonNullable('Language is required'),
-        proficiency: Yup.string().required('Proficiency is required'),
-      }),
-    ),
+    gender: Yup.string(),
+    date_of_birth: Yup.string(),
+    // languages: Yup.array().of(
+    //   Yup.object().shape({
+    //     language:     //     proficiency: Yup.string(),
+    //   })
+    // ),
   });
 
-  const formik = useFormik({
+  const formik: any = useFormik({
     initialValues: {
       gender: userDetails?.gender ?? '',
       date_of_birth: userDetails?.date_of_birth ?? '',

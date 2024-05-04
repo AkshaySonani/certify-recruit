@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const individualSchema = new mongoose.Schema({
   profile_summary: {
@@ -6,12 +6,16 @@ const individualSchema = new mongoose.Schema({
     required: false,
   },
   user_ref_id: {
-    ref: 'User',
+    ref: "User",
     required: true,
     type: mongoose.Schema.Types.ObjectId,
   },
   is_fresher: {
     type: Boolean,
+    require: false,
+  },
+  user_name: {
+    type: String,
     require: false,
   },
   resume: {
@@ -45,22 +49,26 @@ const individualSchema = new mongoose.Schema({
   skills: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Category',
+      ref: "Category",
     },
   ],
   highest_education: {
     type: String,
-    enum: ['TEN_OR_BELOW', 'TWELVE_PASS', 'DIPLOMA', 'GRADUATE'],
+    enum: ["TEN_OR_BELOW", "TWELVE_PASS", "DIPLOMA", "GRADUATE"],
+    required: false,
+  },
+  role: {
+    type: String,
     required: false,
   },
   college_school_name: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Collages',
+    ref: "Collages",
     required: false,
   },
   degree: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Degrees',
+    ref: "Degrees",
     required: false,
   },
   completion_date: {
@@ -69,18 +77,18 @@ const individualSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: [
-          'January',
-          'February',
-          'March',
-          'April',
-          'May',
-          'June',
-          'July',
-          'August',
-          'September',
-          'October',
-          'November',
-          'December',
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
         ],
       },
       year: {
@@ -98,7 +106,7 @@ const individualSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    enum: ['MALE', 'FEMALE', 'OTHER'],
+    enum: ["MALE", "FEMALE", "OTHER"],
     required: false,
   },
   date_of_birth: {
@@ -116,13 +124,13 @@ const individualSchema = new mongoose.Schema({
     {
       language: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Languages',
+        ref: "Languages",
         required: true,
       },
       proficiency: {
         type: String,
         required: true,
-        enum: ['BEGINNER', 'PROFICIENT', 'EXPERT'],
+        enum: ["BEGINNER", "PROFICIENT", "EXPERT"],
       },
     },
   ],
@@ -136,20 +144,24 @@ const individualSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
+      reason_for_leaving: {
+        type: String,
+        required: true,
+      },
       location: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Cities',
+        ref: "Cities",
         required: true,
       },
       employmentType: {
         type: String,
         enum: [
-          'FULLTIME',
-          'PARTTIME',
-          'ONDEMAND',
-          'TEMPORARY',
-          'VOLUNTEER',
-          'INTERNSHIP',
+          "FULLTIME",
+          "PARTTIME",
+          "ONDEMAND",
+          "TEMPORARY",
+          "VOLUNTEER",
+          "INTERNSHIP",
         ],
         required: true,
       },
@@ -187,11 +199,11 @@ const individualSchema = new mongoose.Schema({
   },
   company_name: {
     type: String,
-    default: '',
+    default: "",
   },
   current_location: {
     type: String,
-    enum: ['USA', 'OUT_OF_USA'],
+    enum: ["USA", "OUT_OF_USA"],
     required: false,
   },
   contact_number: {
@@ -200,7 +212,7 @@ const individualSchema = new mongoose.Schema({
   },
 });
 
-individualSchema.set('timestamps', true);
+individualSchema.set("timestamps", true);
 const Individual =
-  mongoose.models.Individual || mongoose.model('Individual', individualSchema);
+  mongoose.models.Individual || mongoose.model("Individual", individualSchema);
 export default Individual;

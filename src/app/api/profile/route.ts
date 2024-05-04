@@ -1,25 +1,25 @@
-'use server';
-import User from '@/models/user';
-import { connect } from '@/db/mongodb';
-import Company from '@/models/company';
-import Individual from '@/models/individual';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/service/AuthOptions';
-import { NextRequest, NextResponse } from 'next/server';
+"use server";
+import User from "@/models/user";
+import { connect } from "@/db/mongodb";
+import Company from "@/models/company";
+import Individual from "@/models/individual";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/service/AuthOptions";
+import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
   const session = await getServerSession(authOptions);
-  if (!session?.user?._id) {
-    return NextResponse.json({
-      message: 'Unauthorized',
-      status: 401,
-    });
-  }
+  // if (!session?.user?._id) {
+  //   return NextResponse.json({
+  //     message: 'Unauthorized',
+  //     status: 401,
+  //   });
+  // }
 
   await connect();
   const userDetails = await User.findById(session?.user?._id);
 
-  if (userDetails?.role === 'employee') {
+  if (userDetails?.role === "employee") {
     // for company user (that create job)
     try {
       const {
@@ -68,24 +68,24 @@ export const POST = async (req: NextRequest) => {
         {
           upsert: true,
           new: true,
-        },
+        }
       );
 
       return NextResponse.json({
         status: 200,
         data: updatedCompany,
-        message: 'Your profile was updated successfully',
+        message: "Your profile was updated successfully",
       });
     } catch (error) {
       return NextResponse.json(
         {
-          message: 'An error occurred while edit profile.',
+          message: "An error occurred while edit profile.",
           error: error,
         },
-        { status: 500 },
+        { status: 500 }
       );
     }
-  } else if (userDetails.role === 'individual') {
+  } else if (userDetails.role === "individual") {
     // for employee user ( user that find job )
     try {
       const {
@@ -134,7 +134,7 @@ export const POST = async (req: NextRequest) => {
         {
           upsert: true,
           new: true,
-        },
+        }
       );
 
       if (resume) {
@@ -144,22 +144,22 @@ export const POST = async (req: NextRequest) => {
           {
             upsert: true,
             new: true,
-          },
+          }
         );
       }
 
       return NextResponse.json({
         status: 200,
         data: updatedUser,
-        message: 'Your profile was updated successfully',
+        message: "Your profile was updated successfully",
       });
     } catch (error) {
       return NextResponse.json(
         {
-          message: 'An error occurred while edit profile.',
+          message: "An error occurred while edit profile.",
           error: error,
         },
-        { status: 500 },
+        { status: 500 }
       );
     }
   }
@@ -168,8 +168,9 @@ export const POST = async (req: NextRequest) => {
 export const GET = async (req: NextRequest) => {
   const session = await getServerSession(authOptions);
   if (!session?.user?._id) {
+    console.log("🚀 ~ GET ~ session?.user:", session?.user);
     return NextResponse.json({
-      message: 'Unauthorized',
+      message: "Unauthorized",
       status: 401,
     });
   }
@@ -178,17 +179,21 @@ export const GET = async (req: NextRequest) => {
 
   const userDetails = await User.findById(session?.user?._id);
 
-  if (userDetails?.role === 'employee') {
+  if (userDetails?.role === "employee") {
     // for company user (that create job)
     try {
       const employeeData = await Company.findOne({
         user_ref_id: userDetails?._id,
       });
 
+      await employeeData.populate({ path: "city" });
+      await employeeData.populate({ path: "state" });
+      await employeeData.populate({ path: "country" });
+
       if (!employeeData) {
         return NextResponse.json({
           status: 404,
-          message: 'User not found!',
+          message: "User not found!",
         });
       }
 
@@ -199,13 +204,13 @@ export const GET = async (req: NextRequest) => {
     } catch (error) {
       return NextResponse.json(
         {
-          message: 'An error occurred while getting user profile details.',
+          message: "An error occurred while getting user profile details.",
           error: error,
         },
-        { status: 500 },
+        { status: 500 }
       );
     }
-  } else if (userDetails.role === 'individual') {
+  } else if (userDetails.role === "individual") {
     // for employee user ( user that find job )
     try {
       const companyData = await Individual.findOne({
@@ -215,7 +220,7 @@ export const GET = async (req: NextRequest) => {
       if (!companyData) {
         return NextResponse.json({
           status: 404,
-          message: 'User not found!',
+          message: "User not found!",
         });
       }
 
@@ -226,10 +231,10 @@ export const GET = async (req: NextRequest) => {
     } catch (error) {
       return NextResponse.json(
         {
-          message: 'An error occurred while getting user profile details.',
+          message: "An error occurred while getting user profile details.",
           error: error,
         },
-        { status: 500 },
+        { status: 500 }
       );
     }
   }

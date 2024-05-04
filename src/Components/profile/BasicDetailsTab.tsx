@@ -1,10 +1,10 @@
-import { TEXT } from '@/service/Helper';
-import API from '@/service/ApiService';
-import { API_CONSTANT } from '@/constant/ApiConstant';
-import * as Yup from 'yup';
-import { useFormik, Field } from 'formik';
-import AutoComplete from '../Autocomplete';
-import { toast } from 'react-toastify';
+import { TEXT } from "@/service/Helper";
+import API from "@/service/ApiService";
+import { API_CONSTANT } from "@/constant/ApiConstant";
+import * as Yup from "yup";
+import { useFormik, Field } from "formik";
+import AutoComplete from "../Autocomplete";
+import { toast } from "react-toastify";
 const BasicDetails = ({ setActivePage, userDetails, activePage }: any) => {
   const handleSubmit = async (values: any, actions: any) => {
     let obj = {
@@ -13,30 +13,33 @@ const BasicDetails = ({ setActivePage, userDetails, activePage }: any) => {
 
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
-        console.log('res', res);
+        console.log("res", res);
         setActivePage(activePage + 1);
-        toast?.success('Successfully update profile');
+        toast?.success("Successfully update profile");
         actions.setSubmitting(false);
       })
       .catch((error) => {
-        console.log('error', error);
+        console.log("error", error);
       });
   };
 
   const validationSchema = Yup.object().shape({
-    contact_number: Yup.string().required('Contact number is required.'),
-    user_name: Yup.string().required('Username is required.'),
-    role: Yup.string().required('Role is required.'),
+    contact_number: Yup.string().matches(
+      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
+      "invalid contact number"
+    ),
+    user_name: Yup.string(),
+    role: Yup.string(),
   });
 
   const currentValidationSchema = validationSchema;
 
   const formik = useFormik({
     initialValues: {
-      contact_number: userDetails?.contact_number ?? '',
-      user_name: userDetails?.user_name ?? '',
-      role: userDetails?.role ?? '',
-      contact_email: userDetails?.contact_email ?? '',
+      contact_number: userDetails?.contact_number ?? "",
+      user_name: userDetails?.user_name ?? "",
+      role: userDetails?.role ?? "",
+      contact_email: userDetails?.contact_email ?? "",
     },
     enableReinitialize: true,
     validationSchema: currentValidationSchema,

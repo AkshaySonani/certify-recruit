@@ -1,10 +1,10 @@
-import { TEXT } from '@/service/Helper';
-import API from '@/service/ApiService';
-import { API_CONSTANT } from '@/constant/ApiConstant';
-import * as Yup from 'yup';
-import { useFormik, Field } from 'formik';
-import AutoComplete from '../Autocomplete';
-import { toast } from 'react-toastify';
+import { TEXT } from "@/service/Helper";
+import API from "@/service/ApiService";
+import { API_CONSTANT } from "@/constant/ApiConstant";
+import * as Yup from "yup";
+import { useFormik, Field } from "formik";
+import AutoComplete from "../Autocomplete";
+import { toast } from "react-toastify";
 const KYCDetailsTab = ({ setActivePage, userDetails, activePage }: any) => {
   const handleSubmit = async (values: any, actions: any) => {
     let obj = {
@@ -13,29 +13,29 @@ const KYCDetailsTab = ({ setActivePage, userDetails, activePage }: any) => {
 
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
-        console.log('res', res);
         setActivePage(activePage + 1);
-        toast?.success('Successfully update profile');
+        toast?.success("Successfully update profile");
         actions.setSubmitting(false);
       })
       .catch((error) => {
-        console.log('error', error);
+        console.log("error", error);
       });
   };
 
   const validationSchema = Yup.object().shape({
-    pan_number: Yup.string()
-      .required('Pan number is required.')
-      .matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid pan number'),
-    name_on_pan: Yup.string().required('Name of pan is required.'),
+    pan_number: Yup.string().matches(
+      /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
+      "Invalid pan number"
+    ),
+    name_on_pan: Yup.string(),
   });
 
   const currentValidationSchema = validationSchema;
 
-  const formik = useFormik({
+  const formik: any = useFormik({
     initialValues: {
-      pan_number: userDetails?.pan_number ?? '',
-      name_on_pan: userDetails?.name_on_pan ?? '',
+      pan_number: userDetails?.pan_number ?? "",
+      name_on_pan: userDetails?.name_on_pan ?? "",
     },
     enableReinitialize: true,
     validationSchema: currentValidationSchema,

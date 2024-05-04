@@ -94,27 +94,21 @@ const companySchema = new mongoose.Schema({
   name_on_pan: {
     type: String,
   },
-  city: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Cities',
-      required: true,
-    },
-  ],
-  state: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'States',
-      required: true,
-    },
-  ],
-  country: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Cities',
-      required: true,
-    },
-  ],
+  city: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Cities',
+    required: false,
+  },
+  state: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'States',
+    required: false,
+  },
+  country: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Cities',
+    required: false,
+  },
   pincode: {
     type: Number,
     validate: {

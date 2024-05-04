@@ -1,12 +1,12 @@
-import Image from 'next/image';
-import MultipleSelectBox from '../MultipleSelectBox';
-import { TEXT } from '@/service/Helper';
-import API from '@/service/ApiService';
-import { API_CONSTANT } from '@/constant/ApiConstant';
-import * as Yup from 'yup';
-import { useFormik, Field } from 'formik';
-import { toast } from 'react-toastify';
-import 'react-datepicker/dist/react-datepicker.css';
+import Image from "next/image";
+import MultipleSelectBox from "../MultipleSelectBox";
+import { TEXT } from "@/service/Helper";
+import API from "@/service/ApiService";
+import { API_CONSTANT } from "@/constant/ApiConstant";
+import * as Yup from "yup";
+import { useFormik, Field } from "formik";
+import { toast } from "react-toastify";
+import "react-datepicker/dist/react-datepicker.css";
 
 const KeySkillTab = ({
   userDetails,
@@ -15,25 +15,33 @@ const KeySkillTab = ({
   skillData,
 }: any) => {
   const handleSubmit = async (values: any, actions: any) => {
+    let pushArray = [] as any;
+    skillData?.filter((el: any) => {
+      values?.skills?.map((list: any) => {
+        if (list === el?.value) {
+          pushArray.push({ _id: el?._id });
+        }
+      });
+    });
     const obj = {
-      ...values,
+      skills: pushArray,
     };
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         setActivePage(activePage + 1);
-        toast?.success('Successfully Update Profile');
+        toast?.success("Successfully Update Profile");
         actions.setSubmitting(false);
       })
       .catch((error) => {
-        console.log('error', error);
+        console.log("error", error);
       });
   };
 
   const validationSchema = Yup.object().shape({
-    skills: Yup.array().min(1, `select at least one skill`),
+    skills: Yup.array(),
   });
 
-  const formik = useFormik({
+  const formik: any = useFormik({
     initialValues: {
       skills: userDetails?.skills ?? [],
     },
@@ -46,7 +54,7 @@ const KeySkillTab = ({
     const arr = formik?.values?.skills.filter((el: any) => {
       return el !== list;
     });
-    formik?.setFieldValue('skills', arr);
+    formik?.setFieldValue("skills", arr);
   };
 
   const MultiboxStyle = {
@@ -55,10 +63,10 @@ const KeySkillTab = ({
       border: state.isFocused ? 1 : 1,
       // This line disable the blue border
       boxShadow: state.isFocused ? 0 : 0,
-      paddingLeft: '20px',
-      paddingTop: '0px',
-      paddingBottom: '0px',
-      '&:hover': {
+      paddingLeft: "20px",
+      paddingTop: "0px",
+      paddingBottom: "0px",
+      "&:hover": {
         border: state.isFocused ? 0 : 0,
       },
     }),
@@ -94,7 +102,7 @@ const KeySkillTab = ({
             <div className="mt-4 flex flex-wrap items-start justify-start text-start sm:flex-nowrap">
               {formik?.values?.skills?.map((ele: any, i: any) => {
                 return (
-                  <div className="mb-2 mr-3 flex items-center rounded-lg border-2 border-meta-light-blue-1 px-2 py-1">
+                  <div className="mb-2 mr-3 flex items-center rounded-lg border-2 border-meta-light-blue-1 px-2 py-2">
                     <p className="whitespace-nowrap text-sm font-medium text-meta-light-blue-3">
                       {ele}
                     </p>
@@ -107,7 +115,7 @@ const KeySkillTab = ({
                         height={19}
                         alt="Preview"
                         className="ml-3"
-                        src={'/job/Close.svg'}
+                        src={"/job/Close.svg"}
                       />
                     </div>
                   </div>

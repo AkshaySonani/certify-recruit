@@ -50,4 +50,6 @@ export default withAuth(
     },
   },
 );
-export const config = { matcher: ['/', '/dashboard', '/login', '/signup'] };
+export const config = {
+  matcher: ['/', '/dashboard', '/login', '/signup', '/myProfile'],
+};

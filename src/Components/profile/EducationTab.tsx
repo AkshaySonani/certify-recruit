@@ -7,6 +7,9 @@ import { Fragment } from 'react';
 import { useFormik, Field } from 'formik';
 import DatePicker from 'react-datepicker';
 import * as Yup from 'yup';
+import API from '@/service/ApiService';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import { toast } from 'react-toastify';
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
@@ -34,24 +37,22 @@ const EducationTab = ({
   };
 
   const validationSchema = Yup.object().shape({
-    college_school_name: Yup.object().nonNullable(`College name is required.`),
-    degree: Yup.object().nonNullable(`Degree is required.`),
-    highest_education: Yup.string().required(`Please select highest education`),
-    completion_date: Yup.object().shape({
-      year: Yup.string().required('Year is required'),
-      month: Yup.string().required('Month is required'),
-    }),
+    highest_education: Yup.string(),
+    // completion_date: Yup.object().shape({
+    //   year: Yup.string(),
+    //   month: Yup.string(),
+    // }),
   });
 
-  const formik = useFormik({
+  const formik: any = useFormik({
     initialValues: {
       degree: userDetails?.degree ?? null,
       highest_education: userDetails?.highest_education ?? '',
       college_school_name: userDetails?.college_school_name ?? null,
-      completion_date: userDetails?.completion_date ?? {
-        year: '',
-        month: '',
-      },
+      // completion_date: userDetails?.completion_date ?? {
+      //   year: "",
+      //   month: "",
+      // },
     },
     enableReinitialize: true,
     validationSchema: validationSchema,
