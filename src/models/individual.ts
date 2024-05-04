@@ -1,3 +1,4 @@
+import { createModal } from '@/service/Helper';
 import mongoose from 'mongoose';
 
 const individualSchema = new mongoose.Schema({
@@ -149,10 +150,14 @@ const individualSchema = new mongoose.Schema({
         required: true,
       },
       location: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Cities',
+        type: String,
         required: true,
       },
+      // location: {
+      //   type: mongoose.Schema.Types.ObjectId,
+      //   ref: 'Cities',
+      //   required: true,
+      // },
       employmentType: {
         type: String,
         enum: [
@@ -213,6 +218,5 @@ const individualSchema = new mongoose.Schema({
 });
 
 individualSchema.set('timestamps', true);
-const Individual =
-  mongoose.models.Individual || mongoose.model('Individual', individualSchema);
+export const Individual = createModal('Individual', individualSchema);
 export default Individual;

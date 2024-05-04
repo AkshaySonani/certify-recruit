@@ -1,3 +1,4 @@
+import { createModal } from '@/service/Helper';
 import mongoose from 'mongoose';
 
 const savedJobSchema = new mongoose.Schema({
@@ -17,7 +18,6 @@ const savedJobSchema = new mongoose.Schema({
   },
 });
 
-savedJobSchema.set("timestamps", true)
-const SavedJob =
-  mongoose.models.SavedJob || mongoose.model('SavedJob', savedJobSchema);
+savedJobSchema.set('timestamps', true);
+export const SavedJob = createModal('SavedJob', savedJobSchema);
 export default SavedJob;

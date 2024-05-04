@@ -1,3 +1,4 @@
+import { createModal } from '@/service/Helper';
 import mongoose from 'mongoose';
 
 const degreesSchema = new mongoose.Schema({
@@ -8,6 +9,5 @@ const degreesSchema = new mongoose.Schema({
 });
 
 degreesSchema.set('timestamps', true);
-const Degrees =
-  mongoose.models.Degrees || mongoose.model('Degrees', degreesSchema);
+export const Degrees = createModal('Degrees', degreesSchema);
 export default Degrees;

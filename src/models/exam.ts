@@ -1,3 +1,4 @@
+import { createModal } from '@/service/Helper';
 import mongoose from 'mongoose';
 
 const examSchema = new mongoose.Schema({
@@ -22,6 +23,6 @@ const examSchema = new mongoose.Schema({
   },
 });
 
-examSchema.set("timestamps", true)
-const Exam = mongoose.models.Exam || mongoose.model('Exam', examSchema);
+examSchema.set('timestamps', true);
+export const Exam = createModal('Exam', examSchema);
 export default Exam;

@@ -1,3 +1,4 @@
+import { createModal } from '@/service/Helper';
 import mongoose from 'mongoose';
 
 const locationSchema = new mongoose.Schema({
@@ -15,7 +16,6 @@ const locationSchema = new mongoose.Schema({
   },
 });
 
-locationSchema.set("timestamps", true)
-const Location =
-  mongoose.models.Location || mongoose.model('Location', locationSchema);
+locationSchema.set('timestamps', true);
+export const Location = createModal('Location', locationSchema);
 export default Location;

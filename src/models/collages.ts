@@ -1,3 +1,4 @@
+import { createModal } from '@/service/Helper';
 import mongoose from 'mongoose';
 
 const collagesSchema = new mongoose.Schema({
@@ -8,6 +9,5 @@ const collagesSchema = new mongoose.Schema({
 });
 
 collagesSchema.set('timestamps', true);
-const Collages =
-  mongoose.models.Collages || mongoose.model('Collages', collagesSchema);
+export const Collages = createModal('Collages', collagesSchema);
 export default Collages;

@@ -1,3 +1,4 @@
+import { createModal } from '@/service/Helper';
 import mongoose from 'mongoose';
 
 const badgeSchema = new mongoose.Schema({
@@ -25,6 +26,6 @@ const badgeSchema = new mongoose.Schema({
   },
 });
 
-badgeSchema.set("timestamps", true)
-const Badge = mongoose.models.Badge || mongoose.model('Badge', badgeSchema);
+badgeSchema.set('timestamps', true);
+export const Badge = createModal('Badge', badgeSchema);
 export default Badge;

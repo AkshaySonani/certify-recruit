@@ -1,3 +1,4 @@
+import { createModal } from '@/service/Helper';
 import mongoose from 'mongoose';
 
 const jobApplicationSchema = new mongoose.Schema({
@@ -25,8 +26,9 @@ const jobApplicationSchema = new mongoose.Schema({
   },
 });
 
-jobApplicationSchema.set("timestamps", true)
-const JobApplication =
-  mongoose.models.JobApplication ||
-  mongoose.model('JobApplication', jobApplicationSchema);
-  export default JobApplication;
+jobApplicationSchema.set('timestamps', true);
+export const JobApplication = createModal(
+  'JobApplication',
+  jobApplicationSchema,
+);
+export default JobApplication;

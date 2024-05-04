@@ -1,3 +1,4 @@
+import { createModal } from '@/service/Helper';
 import mongoose from 'mongoose';
 
 const companySchema = new mongoose.Schema({
@@ -106,7 +107,7 @@ const companySchema = new mongoose.Schema({
   },
   country: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Cities',
+    ref: 'Countries',
     required: false,
   },
   pincode: {
@@ -126,6 +127,5 @@ const companySchema = new mongoose.Schema({
 });
 
 companySchema.set('timestamps', true);
-const Company =
-  mongoose.models.Company || mongoose.model('Company', companySchema);
+export const Company = createModal('Company', companySchema);
 export default Company;

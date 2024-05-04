@@ -1,3 +1,4 @@
+import { createModal } from '@/service/Helper';
 import mongoose from 'mongoose';
 
 const statesSchema = new mongoose.Schema({
@@ -36,5 +37,5 @@ const statesSchema = new mongoose.Schema({
 });
 
 statesSchema.set('timestamps', true);
-const States = mongoose.models.States || mongoose.model('States', statesSchema);
+export const States = createModal('States', statesSchema);
 export default States;

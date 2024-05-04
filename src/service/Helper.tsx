@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 const EMAIlREGEX =
   /^[a-zA-Z0-9]+([._-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-]?[a-zA-Z0-9]+)*\.[a-zA-Z]{2,}$/g;
 // const EMAIlREGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
@@ -255,4 +257,7 @@ const SIDE_BAR_DATA = [
   },
 ];
 
-export { TEXT, ROUTE, EMAIlREGEX, USER_ROLE, SIDE_BAR_DATA };
+const createModal = (name: string, schema: any) =>
+  mongoose.models?.[name] || mongoose.model(name, schema);
+
+export { TEXT, ROUTE, EMAIlREGEX, USER_ROLE, SIDE_BAR_DATA, createModal };

@@ -1,3 +1,4 @@
+import { createModal } from '@/service/Helper';
 import mongoose from 'mongoose';
 
 const languagesSchema = new mongoose.Schema({
@@ -8,6 +9,5 @@ const languagesSchema = new mongoose.Schema({
 });
 
 languagesSchema.set('timestamps', true);
-const Languages =
-  mongoose.models.Languages || mongoose.model('Languages', languagesSchema);
+export const Languages = createModal('Languages', languagesSchema);
 export default Languages;

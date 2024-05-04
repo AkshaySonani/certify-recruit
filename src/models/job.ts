@@ -1,3 +1,4 @@
+import { createModal } from '@/service/Helper';
 import mongoose from 'mongoose';
 import { boolean } from 'yup';
 
@@ -25,16 +26,18 @@ const jobSchema = new mongoose.Schema({
   // },
   workplace: {
     require: true,
-    type: [{
-      type: String,
-      enum: ['ONSITE', 'HYBRID', 'REMOTE']
-    }],
+    type: [
+      {
+        type: String,
+        enum: ['ONSITE', 'HYBRID', 'REMOTE'],
+      },
+    ],
     validate: {
-      validator: function(value) {
+      validator: function (value) {
         return value !== undefined; // Check if the value is not undefined
       },
-      message: 'Workplace type must be one of ONSITE, HYBRID, or REMOTE'
-    }
+      message: 'Workplace type must be one of ONSITE, HYBRID, or REMOTE',
+    },
   },
   // workplace: {
   //   type: String,
@@ -46,23 +49,26 @@ const jobSchema = new mongoose.Schema({
     enum: ['PENDING', 'ACTIVE'],
   },
   job_types: {
-    type: [{
-      type: String,
-      enum: [
-        'FULLTIME',
-        'PARTTIME',
-        'ONDEMAND',
-        'TEMPORARY',
-        'VOLUNTEER',
-        'INTERNSHIP',
-      ]
-    }],
+    type: [
+      {
+        type: String,
+        enum: [
+          'FULLTIME',
+          'PARTTIME',
+          'ONDEMAND',
+          'TEMPORARY',
+          'VOLUNTEER',
+          'INTERNSHIP',
+        ],
+      },
+    ],
     validate: {
-      validator: function(value) {
+      validator: function (value) {
         return !value || (Array.isArray(value) && value.length > 0); // Allow null or array with at least one job type
       },
-      message: 'If job types are provided, it must be a non-empty array of allowed job types'
-    }
+      message:
+        'If job types are provided, it must be a non-empty array of allowed job types',
+    },
   },
   // job_types: {
   //   type: ,
@@ -104,20 +110,19 @@ const jobSchema = new mongoose.Schema({
     type: Number,
   },
   working_schedule: {
-    type: [{
-      type: String,
-      enum: [
-        'Monday to Friday',
-        'Weekend availability',
-        'Day shift',
-      ]
-    }],
+    type: [
+      {
+        type: String,
+        enum: ['Monday to Friday', 'Weekend availability', 'Day shift'],
+      },
+    ],
     validate: {
-      validator: function(value) {
+      validator: function (value) {
         return !value || (Array.isArray(value) && value.length > 0); // Allow null or array with at least one working schedule
       },
-      message: 'If working schedule are provided, it must be a non-empty array of allowed working schedule'
-    }
+      message:
+        'If working schedule are provided, it must be a non-empty array of allowed working schedule',
+    },
   },
   // working_schedule: {
   //   type: String,
@@ -149,6 +154,6 @@ const jobSchema = new mongoose.Schema({
   },
 });
 
-jobSchema.set("timestamps", true)
-const Job = mongoose.models.Job || mongoose.model('Job', jobSchema);
+jobSchema.set('timestamps', true);
+export const Job = createModal('Job', jobSchema);
 export default Job;

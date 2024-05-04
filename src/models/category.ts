@@ -1,3 +1,4 @@
+import { createModal } from '@/service/Helper';
 import mongoose from 'mongoose';
 
 const categorySchema = new mongoose.Schema({
@@ -14,7 +15,6 @@ const categorySchema = new mongoose.Schema({
   },
 });
 
-categorySchema.set("timestamps", true)
-const Category =
-  mongoose.models.Category || mongoose.model('Category', categorySchema);
+categorySchema.set('timestamps', true);
+export const Category = createModal('Category', categorySchema);
 export default Category;

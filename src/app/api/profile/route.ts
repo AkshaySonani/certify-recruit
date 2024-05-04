@@ -1,12 +1,9 @@
 'use server';
-import mongoose from 'mongoose';
-import User from '@/models/user';
 import { connect } from '@/db/mongodb';
-import Company from '@/models/company';
-import Individual from '@/models/individual';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/service/AuthOptions';
 import { NextRequest, NextResponse } from 'next/server';
+import { User, Company, Individual } from '@/models/index';
 
 export const POST = async (req: NextRequest) => {
   const session = await getServerSession(authOptions);
@@ -18,7 +15,7 @@ export const POST = async (req: NextRequest) => {
   }
 
   await connect();
-  // const userDetails = await User.findById('66351dddbfcc19d7c8be63b6');
+
   const userDetails = await User.findById(session?.user?._id);
 
   if (userDetails?.role === 'employee') {
@@ -185,26 +182,16 @@ export const GET = async (req: NextRequest) => {
   await connect();
 
   const userDetails = await User.findById(session?.user?._id);
-  // const userDetails = await User.findById('66351a91bfcc19d7c8be63a5'); ( individual )
-  // const userDetails = await User.findById('66351dddbfcc19d7c8be63b6'); ( company )
 
   if (userDetails?.role === 'employee') {
     // for company user (that create job)
     try {
       const employeeData = await Company.findOne({
         user_ref_id: userDetails?._id,
-      });
-      // .populate({ path: 'city', model: 'Cities', strictPopulate: false })
-      // .populate({ path: 'state', model: 'States', strictPopulate: false })
-      // .populate({
-      //   path: 'country',
-      //   model: 'Countries',
-      //   strictPopulate: false,
-      // });
-
-      // await employeeData.populate({ path: 'city' });
-      // await employeeData.populate({ path: 'state' });
-      // await employeeData.populate({ path: 'country' });
+      })
+        .populate({ path: 'city' })
+        .populate({ path: 'state' })
+        .populate({ path: 'country' });
 
       if (!employeeData) {
         return NextResponse.json({
@@ -233,6 +220,7 @@ export const GET = async (req: NextRequest) => {
         user_ref_id: userDetails?._id,
       })
         .populate({ path: 'degree' })
+        .populate({ path: 'skills' })
         .populate({ path: 'college_school_name' });
 
       if (!companyData) {
@@ -256,76 +244,4 @@ export const GET = async (req: NextRequest) => {
       );
     }
   }
-
-  // try {
-  //   const result = await Individual.aggregate([
-  //     {
-  //       $match: {
-  //         _id: new mongoose.Types.ObjectId('66351a91bfcc19d7c8be63a7'),
-  //       },
-  //     },
-  //     {
-  //       $lookup: {
-  //         from: 'Cities',
-  //         localField: 'total_experiences.location',
-  //         foreignField: '_id',
-  //         as: 'locationData',
-  //       },
-  //     },
-  //     {
-  //       $lookup: {
-  //         from: 'Degrees',
-  //         localField: 'degree._id',
-  //         foreignField: '_id',
-  //         as: 'degreeData',
-  //       },
-  //     },
-  //     {
-  //       $lookup: {
-  //         from: 'Colleges',
-  //         localField: 'college_school_name._id',
-  //         foreignField: '_id',
-  //         as: 'collegeData',
-  //       },
-  //     },
-  //     {
-  //       $addFields: {
-  //         degree: { $arrayElemAt: ['$degreeData', 0] },
-  //         college_school_name: { $arrayElemAt: ['$collegeData', 0] },
-  //       },
-  //     },
-  //     {
-  //       $group: {
-  //         _id: '$_id',
-  //         data: {
-  //           $push: {
-  //             total_experiences: '$total_experiences',
-  //             degree: '$degree',
-  //             college_school_name: '$college_school_name',
-  //             locationData: '$locationData',
-  //           },
-  //         },
-  //       },
-  //     },
-  //   ]);
-
-  //   console.log('🚀 ~ GET ~ result:', result);
-
-  //   return NextResponse.json({
-  //     status: 200,
-  //     data: result[0],
-  //   });
-
-  //   // res.status(200).json({ status: 200, data: result[0] });
-  // } catch (error) {
-  //   console.error('Error:', err);
-  //   return NextResponse.json(
-  //     {
-  //       message: 'An error occurred while getting user profile details.',
-  //       error: error,
-  //     },
-  //     { status: 500 },
-  //   );
-  //   // res.status(500).json({ message: 'Internal Server Error' });
-  // }
 };

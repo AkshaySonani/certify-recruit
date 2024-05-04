@@ -1,3 +1,4 @@
+import { createModal } from '@/service/Helper';
 import mongoose from 'mongoose';
 
 const citiesSchema = new mongoose.Schema({
@@ -47,6 +48,6 @@ const citiesSchema = new mongoose.Schema({
   },
 });
 
-citiesSchema.set("timestamps", true)
-const Cities = mongoose.models.Cities || mongoose.model('Cities', citiesSchema);
+citiesSchema.set('timestamps', true);
+export const Cities = createModal('Cities', citiesSchema);
 export default Cities;
