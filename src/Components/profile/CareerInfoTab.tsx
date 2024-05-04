@@ -27,15 +27,12 @@ const CareerInfoTab = ({
     };
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
-        if (res?.data?.status === 200) {
-          getUserDataApiCall();
-          actions.setSubmitting(false);
-          setActivePage(activePage + 1);
-          toast?.success(res?.data?.message || 'Successfully Update Profile');
-        }
+        setActivePage(activePage + 1);
+        toast?.success('Successfully Update Profile');
+        actions.setSubmitting(false);
       })
       .catch((error) => {
-        toast.error(error || 'Something want wrong');
+        console.log('error', error);
       });
   };
 
@@ -45,11 +42,6 @@ const CareerInfoTab = ({
         ? Yup.array()
         : Yup.array().of(
             Yup.object().shape({
-              companyName: Yup.string().required('Company name is required'),
-              role: Yup.string().required('Role is required'),
-              location: Yup.object().nonNullable('location is required'),
-              employmentType: Yup.string().required('Emp type is required'),
-              years: Yup.string().required('Year is required'),
               month: Yup.string()
                 .optional()
                 .matches(

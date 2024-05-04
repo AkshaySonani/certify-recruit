@@ -1,12 +1,12 @@
-import { API_CONSTANT } from "@/constant/ApiConstant";
-import API from "@/service/ApiService";
-import { TEXT } from "@/service/Helper";
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
-import { toast } from "react-toastify";
-import * as Yup from "yup";
-import { useFormik, Field } from "formik";
-import { CURRENT_LOCATION } from "@/constant/Enum";
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import API from '@/service/ApiService';
+import { TEXT } from '@/service/Helper';
+import { Dialog, Transition } from '@headlessui/react';
+import { Fragment } from 'react';
+import { toast } from 'react-toastify';
+import * as Yup from 'yup';
+import { useFormik, Field } from 'formik';
+import { CURRENT_LOCATION } from '@/constant/Enum';
 const EditDetailsDialog = ({
   setIsOpen,
   isOpen,
@@ -20,33 +20,48 @@ const EditDetailsDialog = ({
 
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
-        toast?.success("Successfully Update Profile");
+        toast?.success('Successfully Update Profile');
         setIsOpen(false);
         actions.setSubmitting(false);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log('error', error);
       });
   };
   const validationSchema = Yup.object().shape({
     contact_number: Yup.string().matches(
       /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
-      "invalid contact number"
+      'invalid contact number',
     ),
   });
 
   const formik = useFormik({
     initialValues: {
-      current_location: userDetails?.current_location ?? "USA",
-      contact_number: userDetails?.contact_number ?? "",
-      user_name: userDetails?.user_name ?? "",
-      role: userDetails?.role ?? "",
+      current_location: userDetails?.current_location ?? 'USA',
+      contact_number: userDetails?.contact_number ?? '',
+      user_name: userDetails?.user_name ?? '',
+      role: userDetails?.role ?? '',
       email: session?.user?.email,
     },
     enableReinitialize: true,
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
   });
+  let totalYears = 0;
+  let totalMonths = 0;
+  function calculateTotalExperience() {
+    userDetails?.total_experiences?.forEach((experience: any) => {
+      totalYears += experience.years;
+      totalMonths += experience.month;
+    });
+
+    // Adjust totalMonths to years if it's more than 12
+    totalYears += Math.floor(totalMonths / 12);
+    totalMonths %= 12;
+
+    return { totalYears, totalMonths };
+  }
+  calculateTotalExperience();
 
   return (
     <div>
@@ -131,56 +146,58 @@ const EditDetailsDialog = ({
                         />
                       </div>
 
-                      <div className="w-full mt-3">
-                        <label>{TEXT?.TOTAL_EXPERIENCE}</label>
-                        <div className="flex items-center mt-2">
+                      <div className="mt-3 w-full">
+                        <label>Total Experience</label>
+                        <div className="mt-2 flex items-center">
                           <div className="mr-3 w-1/2">
-                            <label>{TEXT?.YEAR}</label>
+                            <label>{'Year'}</label>
                             <input
                               type="number"
+                              value={totalYears}
                               readOnly
-                              placeholder={TEXT?.YEAR}
+                              placeholder={'Year'}
                               className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                             />
                           </div>
                           <div className="w-1/2">
-                            <label>{TEXT?.MONTH}</label>
+                            <label>{'Month'}</label>
                             <input
                               type="number"
+                              value={totalMonths}
                               readOnly
-                              placeholder={TEXT?.MONTH}
+                              placeholder={'Month'}
                               className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                             />
                           </div>
                         </div>
                       </div>
-                      <div className="w-full mt-3">
-                        <label>{TEXT?.CURRENT_LOCATION}</label>
+                      <div className="mt-3 w-full">
+                        <label>Current Location</label>
                         <div className="flex items-center">
                           <div className="p-3 pl-0">
                             <label
-                              htmlFor={TEXT?.USA}
+                              htmlFor={'USA'}
                               className={`flex cursor-pointer select-none items-center `}
                             >
                               <input
                                 type="radio"
-                                id={TEXT?.USA}
+                                id={'USA'}
                                 value={CURRENT_LOCATION[0]}
                                 onChange={formik.handleChange}
                                 defaultChecked={
                                   formik.values.current_location ===
                                   CURRENT_LOCATION[0]
                                 }
-                                name={"current_location"}
+                                name={'current_location'}
                                 radioGroup="location"
                               />
-                              <p className="pl-3 uppercase">{TEXT?.USA}</p>
+                              <p className="pl-3 uppercase">{'USA'}</p>
                             </label>
                           </div>
 
                           <div className="p-3">
                             <label
-                              htmlFor={TEXT?.OUT_SIDE_USA}
+                              htmlFor={'Out side of USA'}
                               className={`flex cursor-pointer select-none items-center `}
                             >
                               <input
@@ -192,15 +209,15 @@ const EditDetailsDialog = ({
                                   CURRENT_LOCATION[1]
                                 }
                                 radioGroup="location"
-                                id={TEXT?.OUT_SIDE_USA}
-                                name={"current_location"}
+                                id={'Out side of USA'}
+                                name={'current_location'}
                               />
-                              <p className="pl-3">{TEXT?.OUT_SIDE_USA}</p>
+                              <p className="pl-3">{'Out side of USA'}</p>
                             </label>
                           </div>
                         </div>
                       </div>
-                      <div className="w-full flex items-center justify-between">
+                      <div className="flex w-full items-center justify-between">
                         <div className="mt-8 flex w-full">
                           <button
                             onClick={() => setIsOpen(false)}
