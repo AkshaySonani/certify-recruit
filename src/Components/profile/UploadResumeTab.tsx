@@ -36,6 +36,7 @@ const UploadResumeTab = ({
     API.post(API_CONSTANT?.UPLOAD_FILE, NewFormData)
       .then((res) => {
         if (res?.data?.success) {
+          getUserDataApiCall();
           formik?.setFieldValue('resume', [
             ...formik?.values?.resume,
             {

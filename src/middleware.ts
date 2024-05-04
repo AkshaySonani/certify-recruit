@@ -51,5 +51,12 @@ export default withAuth(
   },
 );
 export const config = {
-  matcher: ['/', '/dashboard', '/login', '/signup', '/myProfile'],
+  matcher: [
+    '/',
+    '/login',
+    '/signup',
+    '/dashboard',
+    '/myProfile',
+    '/job_posting',
+  ],
 };

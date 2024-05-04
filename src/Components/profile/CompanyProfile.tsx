@@ -1,8 +1,8 @@
-import { Fragment, useState } from "react";
-import { TEXT } from "@/service/Helper";
-import BasicDetails from "./BasicDetailsTab";
-import CompanyDetailsTab from "./CompanyDetailsTab";
-import KYCDetailsTab from "./KYCDetailsTab";
+import { Fragment, useState } from 'react';
+import { TEXT } from '@/service/Helper';
+import BasicDetails from './BasicDetailsTab';
+import CompanyDetailsTab from './CompanyDetailsTab';
+import KYCDetailsTab from './KYCDetailsTab';
 const TAB = [
   {
     id: 1,
@@ -29,8 +29,8 @@ const CompanyProfile = ({ userDetails, session }: any) => {
               onClick={() => setActivePage(list.id)}
               className={`cursor-pointer text-sm font-medium ${
                 activePage === list?.id
-                  ? "text-meta-blue-1"
-                  : "text-meta-light-blue-3"
+                  ? 'text-meta-blue-1'
+                  : 'text-meta-light-blue-3'
               }`}
             >
               {list?.label}
@@ -46,6 +46,7 @@ const CompanyProfile = ({ userDetails, session }: any) => {
             setActivePage={setActivePage}
             userDetails={userDetails}
             activePage={activePage}
+            session={session}
           />
         )}
         {activePage === 2 && (
