@@ -5,7 +5,12 @@ import * as Yup from 'yup';
 import { useFormik, Field } from 'formik';
 import AutoComplete from '../Autocomplete';
 import { toast } from 'react-toastify';
-const KYCDetailsTab = ({ setActivePage, userDetails, activePage }: any) => {
+const KYCDetailsTab = ({
+  setActivePage,
+  userDetails,
+  activePage,
+  getUserDataApiCall,
+}: any) => {
   const handleSubmit = async (values: any, actions: any) => {
     let obj = {
       ...values,
@@ -13,12 +18,15 @@ const KYCDetailsTab = ({ setActivePage, userDetails, activePage }: any) => {
 
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
-        setActivePage(1);
-        toast?.success('Successfully update profile');
-        actions.setSubmitting(false);
+        if (res?.data?.status === 200) {
+          setActivePage(1);
+          getUserDataApiCall();
+          actions.setSubmitting(false);
+          toast?.success(res?.data?.message || 'Successfully Update Profile');
+        }
       })
       .catch((error) => {
-        console.log('error', error);
+        toast.error(error || 'Something want wrong');
       });
   };
 

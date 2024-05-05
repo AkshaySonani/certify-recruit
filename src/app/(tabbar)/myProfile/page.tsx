@@ -168,10 +168,11 @@ const MyProfile = () => {
               <div>
                 {isOpen && (
                   <EditDetailsDialog
-                    session={session?.data}
-                    setIsOpen={setIsOpen}
                     isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                    session={session?.data}
                     userDetails={userDetails}
+                    getUserDataApiCall={() => getProfileDetails()}
                   />
                 )}
               </div>
@@ -180,7 +181,11 @@ const MyProfile = () => {
         </div>
 
         {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
-          <CompanyProfile userDetails={userDetails} session={session?.data} />
+          <CompanyProfile
+            session={session?.data}
+            userDetails={userDetails}
+            getUserDataApiCall={() => getProfileDetails()}
+          />
         ) : (
           <IndividualProfile
             userDetails={userDetails}

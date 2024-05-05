@@ -198,7 +198,7 @@ const PersonalDetailsTab = ({
                 </div>
                 <div className="w-1/2">
                   <Menu as="div" className="relative w-full">
-                    <Menu.Button className="relative z-20 mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
+                    <Menu.Button className="relative mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
                       <p>
                         {list?.proficiency === ''
                           ? 'Select your Proficiency '

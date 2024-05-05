@@ -6,10 +6,11 @@ import { useFormik, Field } from 'formik';
 import AutoComplete from '../Autocomplete';
 import { toast } from 'react-toastify';
 const BasicDetails = ({
-  setActivePage,
-  userDetails,
-  activePage,
   session,
+  activePage,
+  userDetails,
+  setActivePage,
+  getUserDataApiCall,
 }: any) => {
   const handleSubmit = async (values: any, actions: any) => {
     let obj = {
@@ -18,13 +19,15 @@ const BasicDetails = ({
 
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
-        console.log('res', res);
-        setActivePage(activePage + 1);
-        toast?.success('Successfully update profile');
-        actions.setSubmitting(false);
+        if (res?.data?.status === 200) {
+          getUserDataApiCall();
+          actions.setSubmitting(false);
+          setActivePage(activePage + 1);
+          toast?.success(res?.data?.message || 'Successfully Update Profile');
+        }
       })
       .catch((error) => {
-        console.log('error', error);
+        toast.error(error || 'Something want wrong');
       });
   };
 

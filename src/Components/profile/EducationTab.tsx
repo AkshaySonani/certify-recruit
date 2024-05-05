@@ -93,7 +93,7 @@ const EducationTab = ({
             <label className="text-base font-medium text-meta-purple-1">
               College name
             </label>
-            <Menu.Button className="relative z-20 mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
+            <Menu.Button className="relative mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
               <p>
                 {formik?.values?.college_school_name === null
                   ? 'Select your college '
@@ -152,7 +152,7 @@ const EducationTab = ({
             <label className="text-base font-medium text-meta-purple-1">
               Degree
             </label>
-            <Menu.Button className="relative z-20 mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
+            <Menu.Button className="relative mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
               <p>
                 {formik?.values?.degree === null
                   ? 'Select your degree '

@@ -35,7 +35,12 @@ const State = [
   { _id: '662a873b683fb48bab4bcd74', name: 'Badakhshan' },
   { _id: '662a873b683fb48bab4bcd75', name: 'La Rioja' },
 ];
-const CompanyDetailsTab = ({ setActivePage, userDetails, activePage }: any) => {
+const CompanyDetailsTab = ({
+  activePage,
+  userDetails,
+  setActivePage,
+  getUserDataApiCall,
+}: any) => {
   const [query, setQuery] = useState('');
   function classNames(...classes: any) {
     return classes.filter(Boolean).join('');
@@ -48,13 +53,16 @@ const CompanyDetailsTab = ({ setActivePage, userDetails, activePage }: any) => {
 
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
-        console.log('res', res);
-        setActivePage(activePage + 1);
-        toast?.success('Successfully update profile');
-        actions.setSubmitting(false);
+        if (res?.data?.status === 200) {
+          console.log('res', res);
+          getUserDataApiCall();
+          setActivePage(activePage + 1);
+          actions.setSubmitting(false);
+          toast?.success(res?.data?.message || 'Successfully Update Profile');
+        }
       })
       .catch((error) => {
-        console.log('error', error);
+        toast.error(error || 'Something want wrong');
       });
   };
 

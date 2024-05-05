@@ -219,7 +219,7 @@ const CareerInfoTab = ({
                         <div className="mt-1 flex w-full gap-3 ">
                           <div className="w-1/2">
                             <Menu as="div" className="relative">
-                              <Menu.Button className="relative z-20 mt-2 flex w-full appearance-none items-center justify-between rounded-2xl border  border-meta-light-blue-1 bg-white py-3 pl-5 pr-[11px] outline-none transition">
+                              <Menu.Button className="relative mt-2 flex w-full appearance-none items-center justify-between rounded-2xl border  border-meta-light-blue-1 bg-white py-3 pl-5 pr-[11px] outline-none transition">
                                 <p>
                                   {list?.location === null
                                     ? 'Select location'
@@ -286,7 +286,7 @@ const CareerInfoTab = ({
                           </div>
                           <div className="w-1/2">
                             <Menu as="div" className="relative">
-                              <Menu.Button className="relative z-20 mt-2 flex w-full appearance-none items-center justify-between rounded-2xl border border-meta-light-blue-1 bg-white py-3 pl-5 pr-[11px] outline-none transition">
+                              <Menu.Button className="relative mt-2 flex w-full appearance-none items-center justify-between rounded-2xl border border-meta-light-blue-1 bg-white py-3 pl-5 pr-[11px] outline-none transition">
                                 <p>
                                   {list?.employmentType === ''
                                     ? 'Select your employeement type'

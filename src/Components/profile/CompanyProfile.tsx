@@ -1,8 +1,9 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { TEXT } from '@/service/Helper';
+import KYCDetailsTab from './KYCDetailsTab';
 import BasicDetails from './BasicDetailsTab';
 import CompanyDetailsTab from './CompanyDetailsTab';
-import KYCDetailsTab from './KYCDetailsTab';
+
 const TAB = [
   {
     id: 1,
@@ -17,7 +18,7 @@ const TAB = [
     label: TEXT?.KYC_Compliance_Detail,
   },
 ];
-const CompanyProfile = ({ userDetails, session }: any) => {
+const CompanyProfile = ({ userDetails, session, getUserDataApiCall }: any) => {
   const [activePage, setActivePage] = useState(TAB[0]?.id);
 
   return (
@@ -43,24 +44,27 @@ const CompanyProfile = ({ userDetails, session }: any) => {
       <div>
         {activePage === 1 && (
           <BasicDetails
-            setActivePage={setActivePage}
-            userDetails={userDetails}
-            activePage={activePage}
             session={session}
+            activePage={activePage}
+            userDetails={userDetails}
+            setActivePage={setActivePage}
+            getUserDataApiCall={getUserDataApiCall}
           />
         )}
         {activePage === 2 && (
           <CompanyDetailsTab
-            setActivePage={setActivePage}
-            userDetails={userDetails}
             activePage={activePage}
+            userDetails={userDetails}
+            setActivePage={setActivePage}
+            getUserDataApiCall={getUserDataApiCall}
           />
         )}
         {activePage === 3 && (
           <KYCDetailsTab
-            setActivePage={setActivePage}
-            userDetails={userDetails}
             activePage={activePage}
+            userDetails={userDetails}
+            setActivePage={setActivePage}
+            getUserDataApiCall={getUserDataApiCall}
           />
         )}
       </div>

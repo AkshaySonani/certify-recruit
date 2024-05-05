@@ -1,17 +1,19 @@
-import { API_CONSTANT } from '@/constant/ApiConstant';
-import API from '@/service/ApiService';
-import { TEXT } from '@/service/Helper';
-import { Dialog, Transition } from '@headlessui/react';
-import { Fragment } from 'react';
-import { toast } from 'react-toastify';
 import * as Yup from 'yup';
-import { useFormik, Field } from 'formik';
+import { Fragment } from 'react';
+import { useFormik } from 'formik';
+import API from '@/service/ApiService';
+import { toast } from 'react-toastify';
+import { TEXT } from '@/service/Helper';
 import { CURRENT_LOCATION } from '@/constant/Enum';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import { Dialog, Transition } from '@headlessui/react';
+
 const EditDetailsDialog = ({
-  setIsOpen,
   isOpen,
-  userDetails,
   session,
+  setIsOpen,
+  userDetails,
+  getUserDataApiCall,
 }: any) => {
   const handleSubmit = async (values: any, actions: any) => {
     const obj = {
@@ -20,12 +22,15 @@ const EditDetailsDialog = ({
 
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
-        toast?.success('Successfully Update Profile');
-        setIsOpen(false);
-        actions.setSubmitting(false);
+        if (res?.data?.status === 200) {
+          getUserDataApiCall();
+          setIsOpen(false);
+          actions.setSubmitting(false);
+          toast?.success(res?.data?.message || 'Successfully Update Profile');
+        }
       })
       .catch((error) => {
-        console.log('error', error);
+        toast.error(error || 'Something want wrong');
       });
   };
   const validationSchema = Yup.object().shape({
