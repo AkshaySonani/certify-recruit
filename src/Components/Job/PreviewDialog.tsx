@@ -1,12 +1,9 @@
-import { Dialog, Menu, Transition } from "@headlessui/react";
-import { ROUTE, TEXT } from "@/service/Helper";
-import React, { Fragment, useState } from "react";
-import Image from "next/image";
-const PreviewDialog = ({ isOpen, setIsOpen, formik }: any) => {
-  let description = {
-    __html: `<div className="">${formik?.values?.description} </div>`,
-  };
+import Image from 'next/image';
+import { ROUTE, TEXT } from '@/service/Helper';
+import React, { Fragment, useState } from 'react';
+import { Dialog, Menu, Transition } from '@headlessui/react';
 
+const PreviewDialog = ({ isOpen, setIsOpen, formik }: any) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -26,53 +23,56 @@ const PreviewDialog = ({ isOpen, setIsOpen, formik }: any) => {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-[0_3px_10px_rgb(0,0,0,0.2)] transition-all">
-                <Dialog.Title as="h3" className="  flex justify-between mb-5">
-                  <p className="font-bold leading-6 text-xl text-gray-900">
+                <Dialog.Title as="h3" className="mb-5 flex justify-between">
+                  <p className="text-xl font-bold leading-6 text-gray-900">
                     {TEXT?.PREVIEW}
                   </p>
-                  <div className="" onClick={() => setIsOpen(false)}>
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => setIsOpen(false)}
+                  >
                     <Image
                       alt="Icon"
                       width={22}
                       height={22}
-                      src={"CloseIcon.svg"}
+                      src={'CloseIcon.svg'}
                     />
                   </div>
                 </Dialog.Title>
 
-                <div className="flex justify-between w-[70%] items-center">
-                  <p className="text-gray-500 text-base font-medium">
+                <div className="flex w-full items-center justify-between">
+                  <p className="text-base font-medium text-gray-500">
                     {TEXT?.ARE_YOU_HIRING_MANAGER}
                   </p>
-                  <div className="py-1 px-4 text-sm bg-blue-100 text-meta-blue-2 rounded-md">
-                    {formik?.values?.is_hiring_manager}
+                  <div className="text-sm font-medium text-black">
+                    {formik?.values?.is_hiring_manager ? 'Yes' : 'No'}
                   </div>
                 </div>
-                <div className="flex justify-between w-[70%] items-center mt-2">
-                  <p className="text-gray-500 text-base font-medium">
+                <div className="mt-2 flex w-full items-center justify-between">
+                  <p className="text-base font-medium text-gray-500">
                     {TEXT?.YOUR_COMPANY_NAME}
                   </p>
-                  <div className="py-1 px-4 text-sm bg-blue-100 text-meta-blue-2 rounded-md">
+                  <div className="text-sm font-medium text-black">
                     {formik?.values?.company_name}
                   </div>
                 </div>
-                <div className="flex justify-between w-[70%] items-center mt-2">
-                  <p className="text-gray-500 text-base font-medium">
+                <div className="mt-2 flex w-full items-center justify-between">
+                  <p className="text-base font-medium text-gray-500">
                     {TEXT?.JOB_TITLE}
                   </p>
-                  <div className="py-1 px-4 text-sm text-meta-light-blue-3 rounded-md">
+                  <div className="rounded-md py-1 pl-4 text-sm font-medium text-black">
                     {formik?.values?.title}
                   </div>
                 </div>
-                <div className="flex justify-between w-[80%] items-start mtgi-2 ">
-                  <p className="text-gray-500 text-base font-medium w-1/2">
+                <div className="mtgi-2 flex w-full items-start justify-between ">
+                  <p className="w-1/2 text-base font-medium text-gray-500">
                     {TEXT?.WORKPLACE_TYPE}
                   </p>
-                  <div className="py-1 px-4 text-sm text-meta-light-blue-3 rounded-md gap-3 flex flex-wrap">
+                  <div className="flex flex-wrap gap-3 rounded-md py-1 pl-4 text-sm text-meta-light-blue-3">
                     {formik?.values?.workplace?.length > 0 &&
                       formik?.values?.workplace?.map((list: any) => {
                         return (
-                          <div className="py-1 px-4 text-sm bg-blue-100 text-meta-blue-2  rounded-md">
+                          <div className="text-sm font-medium text-black">
                             {list}
                           </div>
                         );
@@ -80,70 +80,69 @@ const PreviewDialog = ({ isOpen, setIsOpen, formik }: any) => {
                   </div>
                 </div>
 
-                <p className="text-center font-bold text-black text-md my-4">
-                  {" "}
+                <p className="text-md my-4 text-center font-bold text-black">
                   {TEXT?.JOB_POSTING_LOCATION}
                 </p>
 
-                <div className="flex justify-between w-[70%] items-center mt-2">
-                  <p className="text-gray-500 text-base font-medium">
+                <div className="mt-2 flex w-full items-center justify-between">
+                  <p className="text-base font-medium text-gray-500">
                     {TEXT?.CITY}
                   </p>
-                  <div className="py-1 px-4 text-sm text-meta-light-blue-3 rounded-md">
+                  <div className="rounded-md py-1 pl-4 text-sm font-medium text-black">
                     {formik?.values?.city.name}
                   </div>
                 </div>
 
-                <div className="flex justify-between w-[70%] items-center mt-2">
-                  <p className="text-gray-500 text-base font-medium">
+                <div className="mt-2 flex w-full items-center justify-between">
+                  <p className="text-base font-medium text-gray-500">
                     {TEXT?.AREA}
                   </p>
-                  <div className="py-1 px-4 text-sm text-meta-light-blue-3 rounded-md">
+                  <div className="rounded-md py-1 pl-4 text-sm font-medium text-black">
                     {formik?.values?.area}
                   </div>
                 </div>
 
-                <div className="flex justify-between w-[70%] items-center mt-2">
-                  <p className="text-gray-500 text-base font-medium">
+                <div className="mt-2 flex w-full items-center justify-between">
+                  <p className="text-base font-medium text-gray-500">
                     {TEXT?.PINCODE}
                   </p>
-                  <div className="py-1 px-4 text-sm text-meta-light-blue-3 rounded-md">
+                  <div className="rounded-md py-1 pl-4 text-sm font-medium text-black">
                     {formik?.values?.pincode}
                   </div>
                 </div>
-                <div className="flex justify-between w-[70%] items-center mt-2 ">
-                  <p className="text-gray-500 text-base font-medium w-1/2">
+                <div className="mt-2 flex w-full items-center justify-between ">
+                  <p className="w-1/2 text-base font-medium text-gray-500">
                     {TEXT?.STREET_ADDRESS}
                   </p>
-                  <div className="py-1 text-sm text-meta-light-blue-3 rounded-md">
+                  <div className="rounded-md py-1 text-sm font-medium text-black">
                     {formik?.values?.street_address}
                   </div>
                 </div>
 
-                <div className="flex justify-between w-[80%] items-start mt-2 ">
-                  <p className="text-gray-500 text-base font-medium w-1/2">
+                <div className="mt-2 flex w-full items-start justify-between ">
+                  <p className="w-1/2 text-base font-medium text-gray-500">
                     {TEXT?.EMPLOYMENT_TYPE}
                   </p>
-                  <div className="py-1 px-4 text-sm text-meta-light-blue-3 rounded-md gap-3 flex flex-wrap">
+                  <div className="flex flex-wrap gap-3 rounded-md py-1 pl-4 text-sm text-meta-light-blue-3">
                     {formik?.values?.job_types?.length > 0 &&
                       formik?.values?.job_types?.map((list: any) => {
                         return (
-                          <div className="py-1 px-4 text-sm bg-blue-100 text-meta-blue-2  rounded-md">
+                          <div className="text-sm font-medium text-black">
                             {list}
                           </div>
                         );
                       })}
                   </div>
                 </div>
-                <div className="flex justify-between w-[80%] items-start mt-2 ">
-                  <p className="text-gray-500 text-base font-medium w-1/2">
+                <div className="mt-2 flex w-full items-start justify-between ">
+                  <p className="w-1/2 text-base font-medium text-gray-500">
                     {TEXT?.WORKING_SCHEDULE}
                   </p>
-                  <div className="py-1 px-4 text-sm text-meta-light-blue-3 rounded-md gap-3 flex flex-wrap">
+                  <div className="flex flex-wrap gap-3 rounded-md py-1 pl-4 text-sm text-meta-light-blue-3">
                     {formik?.values?.working_schedule.length > 0 &&
                       formik?.values?.working_schedule?.map((list: any) => {
                         return (
-                          <div className="py-1 px-4 text-sm bg-blue-100 text-meta-blue-2  rounded-md">
+                          <div className="text-sm font-medium text-black">
                             {list}
                           </div>
                         );
@@ -151,65 +150,66 @@ const PreviewDialog = ({ isOpen, setIsOpen, formik }: any) => {
                   </div>
                 </div>
 
-                <p className="text-center font-bold text-black text-md my-4">
-                  {" "}
+                <p className="text-md my-4 text-center font-bold text-black">
                   {TEXT?.SALARY}
                 </p>
-                <div className="flex justify-between w-[70%] items-center mt-2 ">
-                  <p className="text-gray-500 text-base font-medium w-1/2">
+                <div className="mt-2 flex w-full items-center justify-between ">
+                  <p className="w-1/2 text-base font-medium text-gray-500">
                     {TEXT?.HOURLY_RATE}
                   </p>
-                  <div className="py-1 px-4 text-sm  text-meta-light-blue-3 rounded-md">
+                  <div className="rounded-md py-1 pl-4 text-sm font-medium text-black">
                     {formik?.values?.hourly_rate}
                   </div>
                 </div>
-                <div className="flex justify-between w-[70%] items-start mt-2 ">
-                  <p className="text-gray-500 text-base font-medium w-1/2">
+                <div className="mt-2 flex w-full items-start justify-between ">
+                  <p className="w-1/2 text-base font-medium text-gray-500">
                     {TEXT?.CHOOSE_HOW_YOU_PREFER_TO_PAY_FOR_THIS_JOB}
                   </p>
-                  <div className="py-1 px-4 text-sm bg-blue-100 text-meta-blue-2 rounded-md">
+                  <div className="text-sm font-medium text-black">
                     {formik?.values?.salary_pay}
                   </div>
                 </div>
 
-                <div className="flex justify-between w-[70%] items-center mt-2 ">
-                  <p className="text-gray-500 text-base font-medium w-1/2">
+                <div className="mt-2 flex w-full items-center justify-between ">
+                  <p className="w-1/2 text-base font-medium text-gray-500">
                     Salary is negotiable
                   </p>
-                  <div className="py-1 px-4 text-sm  text-meta-light-blue-3 rounded-md">
-                    {formik?.values?.salary_pay}
+                  <div className="rounded-md py-1 pl-4 text-sm font-medium text-black">
+                    {formik?.values?.salary_negotiable ? 'Yes' : 'No'}
                   </div>
                 </div>
-                <div className="flex justify-between w-[70%] items-start mt-2 ">
-                  <p className="text-gray-500 text-base font-medium w-1/2">
+                <div className="mt-2 flex w-full items-start justify-between ">
+                  <p className="w-1/2 text-base font-medium text-gray-500">
                     {TEXT?.JOB_DETAILS}
                   </p>
                   <div
-                    dangerouslySetInnerHTML={description}
-                    className="whitespace-pre-wrap text-left font-normal text-font-dark-gray"
                     id="section-to-print"
+                    className="text-font-dark-gray whitespace-pre-wrap text-left font-normal"
+                    dangerouslySetInnerHTML={{
+                      __html: `<div className="">${formik?.values?.description}</div>`,
+                    }}
                   />
                 </div>
-                <div className="flex justify-between w-[80%] items-start mt-2 ">
-                  <p className="text-gray-500 text-base font-medium w-1/2">
+                <div className="mt-2 flex w-full items-start justify-between ">
+                  <p className="w-1/2 text-base font-medium text-gray-500">
                     {TEXT?.SKILLS}
                   </p>
-                  <div className="py-1 px-4 text-sm text-meta-light-blue-3 rounded-md gap-3 flex flex-wrap">
+                  <div className="flex flex-wrap gap-3 rounded-md py-1 pl-4 text-sm text-meta-light-blue-3">
                     {formik?.values?.skills?.length > 0 &&
                       formik?.values?.skills?.map((list: any) => {
                         return (
-                          <div className="py-1 px-4 text-sm bg-blue-100 text-meta-blue-2  rounded-md">
+                          <div className="text-sm font-medium text-black">
                             {list}
                           </div>
                         );
                       })}
                   </div>
                 </div>
-                <div className="flex justify-between w-[70%] items-center mt-2 ">
-                  <p className="text-gray-500 text-base font-medium w-1/2">
+                <div className="mt-2 flex w-full items-center justify-between ">
+                  <p className="w-1/2 text-base font-medium text-gray-500">
                     Hiring Candidate
                   </p>
-                  <div className="py-1 px-4 text-sm  text-meta-light-blue-3 rounded-md">
+                  <div className="rounded-md py-1 pl-4 text-sm font-medium text-black">
                     {formik?.values?.vacancy}
                   </div>
                 </div>

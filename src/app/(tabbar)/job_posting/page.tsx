@@ -249,7 +249,7 @@ const Page = () => {
                   {TEXT?.YOUR_COMPANY_NAME}
                 </p>
               </div>
-              <div className="mt-3 flex w-full items-center lg:mt-0 lg:w-1/2">
+              <div className="mt-3 flex w-full flex-col items-start lg:mt-0 lg:w-1/2">
                 <input
                   type="text"
                   name="company_name"
@@ -258,10 +258,10 @@ const Page = () => {
                   placeholder="Type here..."
                   className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                 />
+                {formik.touched.company_name && formik.errors.company_name && (
+                  <div className="error">{formik.errors.company_name}</div>
+                )}
               </div>
-              {formik.touched.company_name && formik.errors.company_name && (
-                <div className="error">{formik.errors.company_name}</div>
-              )}
             </div>
             <div className="my-6 border border-meta-light-blue-1" />
 
@@ -274,7 +274,7 @@ const Page = () => {
                   {TEXT?.YOU_CAN_PICK_MULTIPLE_WORK_SCHEDULES}
                 </p>
               </div>
-              <div className="mt-3 flex w-full items-center lg:mt-0 lg:w-1/2">
+              <div className="mt-3 flex w-full flex-col items-start lg:mt-0 lg:w-1/2">
                 <input
                   type="text"
                   name="title"
@@ -283,10 +283,10 @@ const Page = () => {
                   placeholder="Type here..."
                   className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                 />
+                {formik.touched.title && formik.errors.title && (
+                  <div className="error">{formik.errors.title}</div>
+                )}
               </div>
-              {formik.touched.title && formik.errors.title && (
-                <div className="error">{formik.errors.title}</div>
-              )}
             </div>
             <div className="my-6 border border-meta-light-blue-1" />
 
@@ -300,30 +300,33 @@ const Page = () => {
                   {TEXT?.YOU_CAN_PICK_MULTIPLE_WORK_SCHEDULES}
                 </p>
               </div>
-              <div className="mt-3 flex w-full flex-wrap items-center gap-2 md:flex-nowrap lg:mt-0 lg:w-1/2">
-                {WORKPLACE_TYPE?.map((list) => {
-                  return (
-                    <div className="w-1/3 rounded-lg border border-meta-light-blue-1 p-3">
-                      <label
-                        htmlFor={list}
-                        className={`flex cursor-pointer select-none items-center `}
-                      >
-                        <input
-                          type="checkbox"
-                          id={list}
-                          name={'workplace'}
-                          value={list}
-                          onChange={formik.handleChange}
-                        />
-                        <p className="pl-3 capitalize">{list}</p>
-                      </label>
-                    </div>
-                  );
-                })}
+              <div className="mt-3 flex w-full flex-col flex-wrap items-start gap-2 md:flex-nowrap lg:mt-0 lg:w-1/2">
+                <div className="flex w-full items-center justify-between gap-2">
+                  {WORKPLACE_TYPE?.map((list) => {
+                    return (
+                      <div className="w-1/3 rounded-lg border border-meta-light-blue-1 p-3">
+                        <label
+                          htmlFor={list}
+                          className={`flex cursor-pointer select-none items-center `}
+                        >
+                          <input
+                            type="checkbox"
+                            id={list}
+                            name={'workplace'}
+                            value={list}
+                            onChange={formik.handleChange}
+                          />
+                          <p className="pl-3 capitalize">{list}</p>
+                        </label>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {formik.touched.workplace && formik.errors.workplace && (
+                  <div className="error">{formik.errors.workplace}</div>
+                )}
               </div>
-              {formik.touched.workplace && formik.errors.workplace && (
-                <div className="error">{formik.errors.workplace}</div>
-              )}
             </div>
             <div className="my-6 border border-meta-light-blue-1" />
 

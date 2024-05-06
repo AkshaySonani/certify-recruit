@@ -36,12 +36,12 @@ const IndividualProfile = ({
   const [skillData, setSkillData] = useState([]);
 
   const city = [
-    { _id: '662ccb4a52f81a3100514885', name: 'surat' },
+    { _id: '662a8768683fb48bab4be173', name: 'surat' },
     { _id: '662a8768683fb48bab4be172', name: 'Ahemedabad' },
-    { _id: '662a8768683fb48bab4be173', name: 'Baroda' },
+    { _id: '662a8768683fb48bab4be176', name: 'Baroda' },
     { _id: '662a8768683fb48bab4be174', name: 'Rajkot' },
-    { _id: '662a8768683fb48bab4be175', name: 'Botad' },
-    { _id: '662a8768683fb48bab4be176', name: 'pune' },
+    { _id: '662a8768683fb48bab4be366', name: 'Botad' },
+    { _id: '662a8768683fb48bab4be369', name: 'pune' },
   ];
 
   const getSkillDataApi = () => {

@@ -87,6 +87,7 @@ const PersonalDetailsTab = ({
     });
     formik?.setFieldValue('languages', arr);
   };
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="mt-5  w-full  pl-9">

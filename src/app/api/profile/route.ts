@@ -221,7 +221,9 @@ export const GET = async (req: NextRequest) => {
       })
         .populate({ path: 'degree' })
         .populate({ path: 'skills' })
-        .populate({ path: 'college_school_name' });
+        .populate({ path: 'languages.language' })
+        .populate({ path: 'college_school_name' })
+        .populate({ path: 'total_experiences.location' });
 
       if (!companyData) {
         return NextResponse.json({

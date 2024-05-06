@@ -11,6 +11,7 @@ import SignupSuccess from './SignupSuccess';
 import AppContext from '@/context/AppProvider';
 import React, { useContext, useState } from 'react';
 import { EMAIlREGEX, ROUTE, TEXT } from '@/service/Helper';
+import { API_CONSTANT } from '@/constant/ApiConstant';
 
 type formValues = {
   email: string;
@@ -35,6 +36,23 @@ const SignupForm = () => {
       ),
   });
 
+  const onNextUpdateProfileRole = async () => {
+    const currentUserRole = await localStorage.getItem('userRole');
+
+    API.post(API_CONSTANT?.PROFILE, { role: currentUserRole })
+      .then((res) => {
+        console.log('🚀 ~ .then ~ res:', res);
+        if (res?.data?.status === 200) {
+          return;
+        } else {
+          toast.error(res?.data?.message);
+        }
+      })
+      .catch((error) => {
+        toast.error(error || 'Something want wrong');
+      });
+  };
+
   const signUpWithEmailAndPassword = async (values: any) => {
     try {
       const signUpResponse = await signIn('signup', {
@@ -47,6 +65,7 @@ const SignupForm = () => {
         toast.error(signUpResponse?.error);
       } else {
         setSuccessMsg(true);
+        onNextUpdateProfileRole();
         toast.success('User successfully register');
       }
     } catch (error) {

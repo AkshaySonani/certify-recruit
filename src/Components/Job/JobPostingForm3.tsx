@@ -41,23 +41,25 @@ const JobPostingForm3 = ({
       <div className="flex h-full w-full flex-wrap items-start justify-between lg:flex-nowrap">
         <div className="w-full text-start lg:mr-5 lg:w-1/2">
           <p className="text-xl font-semibold text-meta-purple-1 sm:text-2xl">
-            {TEXT?.JOB_DETAILS}
+            {TEXT?.JOB_DETAILS} <span className="text-red-600">*</span>
           </p>
           <p className="text-sm font-medium text-meta-light-blue-3 sm:text-base">
             {TEXT?.TELL_US_ABOUT_THE_ROLE}
           </p>
         </div>
-        <div className="mb-5 mt-3 flex w-full items-center lg:mt-0 lg:w-1/2">
-          <ReactQuill
-            theme="snow"
-            value={formik?.values?.description}
-            onChange={(e: any) => formik.setFieldValue('description', e)}
-            className="!h-78 !w-full !rounded-lg"
-          />
-          {formik.touched.description && formik.errors.description && (
-            <div className="error">{formik.errors.description}</div>
-          )}
+        <div className="job_html_editor mb-5 mt-3 flex w-full flex-col items-start lg:mt-0 lg:w-1/2">
+          <div>
+            <ReactQuill
+              theme="snow"
+              value={formik?.values?.description}
+              className="!h-full !w-full !rounded-lg"
+              onChange={(e: any) => formik.setFieldValue('description', e)}
+            />
+          </div>
         </div>
+        {formik.touched.description && formik.errors.description && (
+          <div className="error mt-2">{formik.errors.description}</div>
+        )}
       </div>
       <div className="my-6 border border-meta-light-blue-1" />
 
@@ -74,13 +76,13 @@ const JobPostingForm3 = ({
         <div className="mt-3 flex w-full flex-col items-start lg:mt-0 lg:w-1/2">
           <div className="mt-3 flex w-full flex-wrap items-start lg:mt-0">
             <MultipleSelectBox
-              className="w-full"
-              value={formik?.values?.skills}
               name="skills"
               form={formik}
+              isMulti={true}
+              className="w-full"
               options={skillData}
               placeholder="Add Skill."
-              isMulti={true}
+              value={formik?.values?.skills}
             />
           </div>
           <div className="mt-4 flex flex-wrap items-start justify-start text-start sm:flex-nowrap">

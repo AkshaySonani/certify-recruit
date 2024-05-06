@@ -32,7 +32,8 @@ const KYCDetailsTab = ({
 
   const validationSchema = Yup.object().shape({
     pan_number: Yup.string().matches(
-      /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
+      /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/,
+      // /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
       'Invalid pan number',
     ),
     name_on_pan: Yup.string(),
@@ -59,10 +60,12 @@ const KYCDetailsTab = ({
           </label>
           <input
             type="text"
+            minLength={10}
+            maxLength={10}
             name="pan_number"
-            onChange={formik.handleChange}
-            value={formik?.values?.pan_number}
             placeholder="Pan number"
+            onChange={formik.handleChange}
+            value={formik?.values?.pan_number?.toUpperCase()}
             className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
           />
           {formik.touched.pan_number && formik.errors.pan_number && (

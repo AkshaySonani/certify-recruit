@@ -13,6 +13,7 @@ const individualSchema = new mongoose.Schema({
   },
   is_fresher: {
     type: Boolean,
+    default: true,
     require: false,
   },
   user_name: {
@@ -61,6 +62,14 @@ const individualSchema = new mongoose.Schema({
   role: {
     type: String,
     required: false,
+    enum: [
+      'US Recruitment',
+      'Domestic Recruitment',
+      'Human Resource',
+      'Bench Sales',
+      'UK Recruitment',
+      'Canada Recruitment',
+    ],
   },
   college_school_name: {
     type: mongoose.Schema.Types.ObjectId,
@@ -149,15 +158,15 @@ const individualSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
-      location: {
-        type: String,
-        required: true,
-      },
       // location: {
-      //   type: mongoose.Schema.Types.ObjectId,
-      //   ref: 'Cities',
+      //   type: String,
       //   required: true,
       // },
+      location: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Cities',
+        required: true,
+      },
       employmentType: {
         type: String,
         enum: [

@@ -22,6 +22,10 @@
   }
 }
 
+.job_html_editor .quill .ql-container{
+  height: 272px !important;
+}
+
 .error {
   color: red;
   font-size: 12px;

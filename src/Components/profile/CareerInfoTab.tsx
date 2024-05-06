@@ -1,15 +1,16 @@
-import { EMP_TYPE_ARR } from '@/constant/Enum';
-import { TEXT } from '@/service/Helper';
-import { Menu, Transition } from '@headlessui/react';
-import Image from 'next/image';
-import { Fragment, useEffect, useState } from 'react';
-import API from '@/service/ApiService';
-import { API_CONSTANT } from '@/constant/ApiConstant';
 import * as Yup from 'yup';
-import { useFormik, Field } from 'formik';
-import { toast } from 'react-toastify';
-import 'react-datepicker/dist/react-datepicker.css';
+import Image from 'next/image';
 import Button from '../Button';
+import API from '@/service/ApiService';
+import { toast } from 'react-toastify';
+import { TEXT } from '@/service/Helper';
+import { useFormik, Field } from 'formik';
+import { EMP_TYPE_ARR } from '@/constant/Enum';
+import 'react-datepicker/dist/react-datepicker.css';
+import { Menu, Transition } from '@headlessui/react';
+import { Fragment, useEffect, useState } from 'react';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
@@ -20,20 +21,25 @@ const CareerInfoTab = ({
   activePage,
   getUserDataApiCall,
 }: any) => {
-  const [active, setActive] = useState(1);
   const [isFresher, setIsFresher] = useState(userDetails?.is_fresher);
+  const [active, setActive] = useState(userDetails?.is_fresher ? 1 : 2);
+
   const handleSubmit = async (values: any, actions: any) => {
     const obj = {
       ...values,
     };
+
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
-        setActivePage(activePage + 1);
-        toast?.success('Successfully Update Profile');
-        actions.setSubmitting(false);
+        if (res?.data?.status === 200) {
+          setActivePage(1);
+          getUserDataApiCall();
+          actions.setSubmitting(false);
+          toast?.success(res?.data?.message || 'Successfully Update Profile');
+        }
       })
       .catch((error) => {
-        console.log('error', error);
+        toast.error(error || 'Something want wrong');
       });
   };
 
@@ -53,8 +59,10 @@ const CareerInfoTab = ({
             }),
           ),
   });
+
   const formik: any = useFormik({
     initialValues: {
+      is_fresher: isFresher ? isFresher : userDetails?.is_fresher,
       expected_salary_start_at: userDetails?.expected_salary_start_at ?? '',
       total_experiences:
         userDetails?.total_experiences?.length !== 0
@@ -75,6 +83,7 @@ const CareerInfoTab = ({
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
   });
+
   const EXPERIENCE_TYPE = [
     {
       id: 1,
@@ -89,7 +98,6 @@ const CareerInfoTab = ({
       is_fresher: false,
     },
   ];
-  console.log('formik?.values', formik?.values);
 
   const handleChangeMenu = (i: any, el: any, name: any) => {
     let arr = [...formik?.values?.total_experiences];
@@ -119,8 +127,6 @@ const CareerInfoTab = ({
       ,
     ]);
   };
-
-  console.log('formik', formik?.errors);
 
   const handleFormChange = (index: any, event: any) => {
     let data = [...formik?.values?.total_experiences];
@@ -168,7 +174,7 @@ const CareerInfoTab = ({
                   return (
                     <>
                       <div className="relative my-2 w-full rounded-3xl bg-meta-gray-2 p-5">
-                        <div className=" flex w-full gap-3 ">
+                        <div className=" flex w-full gap-3">
                           <div className="w-1/2">
                             <input
                               type="text"
@@ -201,7 +207,7 @@ const CareerInfoTab = ({
                               value={list?.role}
                               name="role"
                               placeholder="Company role"
-                              className=" w-full rounded-2xl border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+                              className="w-full rounded-2xl border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                             />
                             {formik?.touched?.total_experiences?.[index]
                               ?.role &&
@@ -216,10 +222,10 @@ const CareerInfoTab = ({
                               )}
                           </div>
                         </div>
-                        <div className="mt-1 flex w-full gap-3 ">
+                        <div className="mt-1 flex w-full gap-3">
                           <div className="w-1/2">
                             <Menu as="div" className="relative">
-                              <Menu.Button className="relative mt-2 flex w-full appearance-none items-center justify-between rounded-2xl border  border-meta-light-blue-1 bg-white py-3 pl-5 pr-[11px] outline-none transition">
+                              <Menu.Button className="relative mt-2 flex min-h-[50px] w-full appearance-none items-center justify-between rounded-2xl border border-meta-light-blue-1 bg-white py-3 pl-5 pr-[11px] outline-none transition">
                                 <p>
                                   {list?.location === null
                                     ? 'Select location'
@@ -286,10 +292,10 @@ const CareerInfoTab = ({
                           </div>
                           <div className="w-1/2">
                             <Menu as="div" className="relative">
-                              <Menu.Button className="relative mt-2 flex w-full appearance-none items-center justify-between rounded-2xl border border-meta-light-blue-1 bg-white py-3 pl-5 pr-[11px] outline-none transition">
+                              <Menu.Button className="relative mt-2 flex min-h-[50px] w-full appearance-none items-center justify-between rounded-2xl border border-meta-light-blue-1 bg-white py-3 pl-5 pr-[11px] outline-none transition">
                                 <p>
                                   {list?.employmentType === ''
-                                    ? 'Select your employeement type'
+                                    ? 'Select your employment type'
                                     : list?.employmentType}
                                 </p>
                                 <Image
@@ -356,13 +362,13 @@ const CareerInfoTab = ({
                           <div className="w-1/2">
                             <div className="flex  items-center gap-1">
                               <input
-                                type="number "
+                                type="number"
                                 onChange={(event) =>
                                   handleFormChange(index, event)
                                 }
                                 value={list?.years}
                                 name="years"
-                                className="mt-2 w-1/2 rounded-2xl border border-meta-light-blue-1 py-3  pl-2 focus:border-meta-light-blue-3"
+                                className="mt-2 w-1/2 rounded-2xl border border-meta-light-blue-1 py-3 pl-2 focus:border-meta-light-blue-3"
                               />
                               <div className="w-1/2 pt-1 text-base font-medium text-meta-purple-1">
                                 Years
@@ -451,10 +457,10 @@ const CareerInfoTab = ({
                 },
               )}
               <div
-                className="my-2 w-full cursor-pointer rounded-2xl border border-dashed border-x-meta-light-blue-1 p-3"
+                className="my-2 w-full cursor-pointer rounded-2xl border-[2px] border-dashed border-x-meta-light-blue-1 p-3"
                 onClick={() => handleAddMoreEXP()}
               >
-                <p className="text-center text-base ">Add experience</p>
+                <p className="text-center text-base">Add experience</p>
               </div>
             </div>
           )}

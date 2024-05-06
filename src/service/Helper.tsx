@@ -107,6 +107,7 @@ const TEXT = {
   QUIZ_DETAIL: 'Quiz Detail',
   Get_Started: 'Get Started!',
   OUT_SIDE_USA: 'Outside USA',
+  MONTHLY_RATE: 'Monthly rate',
   SUCCESSFULLY: 'Successfully',
   COMPANY_INFO: 'Company Info',
   ADD_EMPLOYEE: 'Add Employee',

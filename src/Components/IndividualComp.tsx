@@ -1,13 +1,17 @@
 'use client';
-import React, { useState } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import API from '@/service/ApiService';
+import { toast } from 'react-toastify';
+import React, { useState } from 'react';
 import { TEXT } from '@/service/Helper';
+import { useRouter } from 'next/navigation';
 import SignupForm from '@/Components/SignupForm';
+import { API_CONSTANT } from '@/constant/ApiConstant';
 
 const IndividualComp = () => {
   const router = useRouter();
   const [showForms, setShowForms] = useState(false);
+
   const individualArr = [
     'US Recruitment',
     'Domestic Recruitment',
@@ -65,15 +69,19 @@ const IndividualComp = () => {
                           height={20}
                           src={'/Individual.svg'}
                         />
-                        <p className="text-sm font-medium text-meta-light-blue-3">
+                        <label
+                          htmlFor={list}
+                          className="cursor-pointer text-sm font-medium text-meta-light-blue-3"
+                        >
                           {list}
-                        </p>
+                        </label>
                       </div>
                       <input
-                        value=""
+                        id={list}
                         type="radio"
-                        id="inline-2-radio"
+                        value={list}
                         name="inline-radio-group"
+                        onChange={() => localStorage.setItem('userRole', list)}
                         className="h-5 w-5 border-meta-light-blue-1 bg-meta-blue-1 text-meta-blue-1"
                       />
                     </div>
@@ -83,9 +91,7 @@ const IndividualComp = () => {
             </div>
           </div>
           <div
-            onClick={() => {
-              setShowForms(true);
-            }}
+            onClick={() => setShowForms(true)}
             className="m-auto mt-5 flex w-[80%] cursor-pointer items-center justify-end gap-4"
           >
             <p className="text-lg font-medium text-meta-blue-1">{TEXT?.NEXT}</p>

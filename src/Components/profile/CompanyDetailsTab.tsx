@@ -241,12 +241,12 @@ const CompanyDetailsTab = ({
       <div className="mt-3 flex w-full gap-3 pl-9">
         <div className="w-1/2">
           <AutoComplete
+            query={query}
+            name={'state'}
+            setQuery={setQuery}
+            placeholder="Search state"
             value={formik?.values?.state}
             filterArr={searchItems(State)}
-            query={query}
-            setQuery={setQuery}
-            name={'state'}
-            placeholder="Search state"
             handleChange={(e: any) => formik.setFieldValue('state', e)}
           />
           {formik.touched.state && formik.errors.state && (
@@ -268,7 +268,7 @@ const CompanyDetailsTab = ({
           )}
         </div>
       </div>
-      <div className="mt-3 flex w-full gap-3 pl-9">
+      <div className="mt-3 flex w-full items-center gap-3 pl-9">
         <div className="w-1/2">
           <input
             type="text"
@@ -276,7 +276,7 @@ const CompanyDetailsTab = ({
             onChange={formik.handleChange}
             value={formik?.values?.pincode}
             placeholder="Zip Code"
-            className="w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+            className="h-11 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
           />
           {formik.touched.pincode && formik.errors.pincode && (
             <div className="error">{formik.errors.pincode}</div>

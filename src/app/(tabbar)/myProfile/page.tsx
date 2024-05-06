@@ -107,11 +107,18 @@ const MyProfile = () => {
             />
             <div className="flex w-full gap-8">
               <div className="w-11/12">
-                <p className="text-xl font-semibold text-meta-purple-1">
-                  {TEXT?.WEBNOVA_INFOTECH}
+                <p className="text-xl font-semibold capitalize text-meta-purple-1">
+                  {session?.data?.user?.role !== USER_ROLE?.EMPLOYEE
+                    ? userDetails?.user_name
+                      ? userDetails?.user_name
+                      : '-'
+                    : userDetails?.company_name
+                      ? userDetails?.company_name
+                      : '-'}
                 </p>
-                <p className="text-sm font-medium text-meta-light-blue-3">
-                  {TEXT?.COMPANY_TYPE}
+                <p className="text-sm font-medium capitalize text-meta-light-blue-3">
+                  {session?.data?.user?.role === USER_ROLE?.EMPLOYEE &&
+                    userDetails?.company_type}
                 </p>
 
                 <div className="border-b-default-1 my-3 w-full border-meta-light-blue-1" />
@@ -188,11 +195,11 @@ const MyProfile = () => {
           />
         ) : (
           <IndividualProfile
-            userDetails={userDetails}
-            languageList={languageList}
-            collegeList={collegeList}
             degreeList={degreeList}
             session={session?.data}
+            userDetails={userDetails}
+            collegeList={collegeList}
+            languageList={languageList}
             getUserDataApiCall={() => getProfileDetails()}
           />
         )}

@@ -91,14 +91,14 @@ const KeySkillTab = ({
           <div className="mt-3 flex w-full flex-col items-start lg:mt-0 lg:w-1/2">
             <div className="border-1 mt-3 flex w-full flex-wrap items-start rounded-xl border border-meta-light-blue-1 py-2 lg:mt-0">
               <MultipleSelectBox
-                className="w-full !border-meta-light-blue-1 "
-                value={formik?.values?.skills}
-                style={MultiboxStyle}
                 name="skills"
                 form={formik}
-                options={skillData}
-                placeholder="Add your Skill"
                 isMulti={true}
+                options={skillData}
+                style={MultiboxStyle}
+                placeholder="Add your Skill"
+                value={formik?.values?.skills}
+                className="w-full !border-meta-light-blue-1 "
               />
             </div>
             {formik.touched.skills && formik.errors.skills && (
@@ -107,12 +107,12 @@ const KeySkillTab = ({
             <div className="mt-4 flex flex-wrap items-start justify-start text-start sm:flex-nowrap">
               {formik?.values?.skills?.map((ele: any, i: any) => {
                 return (
-                  <div className="mb-2 mr-3 flex items-center rounded-lg border-2 border-meta-light-blue-1 px-2 py-2">
+                  <div className="mb-2 mr-3 flex w-max items-center rounded-lg border-2 border-meta-light-blue-1 px-2 py-2">
                     <p className="whitespace-nowrap text-sm font-medium text-meta-light-blue-3">
-                      {ele}
+                      {ele?.subcategory}
                     </p>
                     <div
-                      className="cursor-pointer "
+                      className="cursor-pointer"
                       onClick={() => handleClose(ele)}
                     >
                       <Image

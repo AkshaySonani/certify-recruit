@@ -22,9 +22,9 @@ const SummaryTab = ({
       .then((res) => {
         if (res?.data?.status === 200) {
           getUserDataApiCall();
-          setActivePage(activePage + 1);
-          toast?.success('Successfully Update Profile');
           actions.setSubmitting(false);
+          setActivePage(activePage + 1);
+          toast?.success(res?.data?.message || 'Successfully Update Profile');
         }
       })
       .catch((error) => {
