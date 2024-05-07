@@ -2,11 +2,11 @@
 import * as Yup from 'yup';
 import Image from 'next/image';
 import { useFormik } from 'formik';
-import Api from '@/service/ApiService';
 import { toast } from 'react-toastify';
 import React, { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import Button from '@/Components/Button';
+import Loading from '@/Components/Loading';
 import { useRouter } from 'next/navigation';
 import { EMAIlREGEX, ROUTE, TEXT } from '@/service/Helper';
 
@@ -14,6 +14,8 @@ const Page = () => {
   const router = useRouter();
 
   const [eye, setEye] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .required('Email is required.')
@@ -29,6 +31,7 @@ const Page = () => {
   });
 
   const signInWithEmailAndPassword = async (values: any) => {
+    setLoading(true);
     try {
       const signInResponse = await signIn('signin', {
         ...values,
@@ -36,12 +39,15 @@ const Page = () => {
       });
       console.log('signInResponse', signInResponse);
       if (!signInResponse?.ok) {
+        setLoading(false);
         toast.error(signInResponse?.error);
       } else {
+        setLoading(false);
         router.push('/dashboard');
         toast.success('User successfully logged in');
       }
     } catch (error) {
+      setLoading(false);
       console.log('🚀 ~ signInWithEmailAndPassword ~ error:', error);
       toast.error('Error signing in with email and password. Try again later.');
     }
@@ -86,8 +92,10 @@ const Page = () => {
     enableReinitialize: true,
     onSubmit: signInWithEmailAndPassword,
   });
+
   return (
     <div>
+      <Loading loading={loading} />
       <div className="container mx-auto max-w-6xl">
         <div className="flex justify-center py-20">
           <Image src={'/MainLogo.svg'} alt="MainLogo" width={334} height={56} />
@@ -176,10 +184,7 @@ const Page = () => {
                     {TEXT?.FORGOT_PASSWORD}
                   </span>
                 </div>
-                <Button
-                  title={TEXT?.LOG_IN}
-                  handleClick={() => console.log('click')}
-                />
+                <Button title={TEXT?.LOG_IN} />
                 {/* <button
                   // onClick={() => handleSubmit()}
                   className="rounded-xl w-full h-12 bg-meta-blue-2 border border-meta-light-blue-2 mb-8"

@@ -1,5 +1,5 @@
-import { createModal } from '@/service/Helper';
 import mongoose from 'mongoose';
+import { createModal } from '@/service/Helper';
 
 const individualSchema = new mongoose.Schema({
   profile_summary: {
@@ -12,8 +12,8 @@ const individualSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
   },
   is_fresher: {
+    select: true,
     type: Boolean,
-    default: true,
     require: false,
   },
   user_name: {
@@ -150,18 +150,15 @@ const individualSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
-      role: {
+      company_role: {
         type: String,
+        select: true,
         required: true,
       },
       reason_for_leaving: {
         type: String,
         required: true,
       },
-      // location: {
-      //   type: String,
-      //   required: true,
-      // },
       location: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Cities',
@@ -184,7 +181,7 @@ const individualSchema = new mongoose.Schema({
         required: true,
         validate: {
           validator: (v: any) => {
-            return v >= 1900 && v <= new Date().getFullYear();
+            return v >= 1 && v <= 12;
           },
           message: (props: any) => `${props.value} is not a valid year!`,
         },

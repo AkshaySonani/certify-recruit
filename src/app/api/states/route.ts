@@ -3,11 +3,15 @@ import { connect } from '@/db/mongodb';
 import States from '@/models/states';
 import { NextRequest, NextResponse } from 'next/server';
 
-export const GET = async (req: NextRequest) => {
+export const POST = async (req: NextRequest) => {
+  const { searchText } = await req.json();
+
   try {
     await connect();
 
-    let results = await States.find({});
+    const results = await States.find({
+      name: { $regex: searchText, $options: 'i' },
+    });
 
     return NextResponse.json({
       status: 200,

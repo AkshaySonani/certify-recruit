@@ -43,21 +43,36 @@ const CareerInfoTab = ({
       });
   };
 
+  // const validationSchema = Yup.object().shape({
+  //   total_experiences:
+  //     isFresher === true
+  //       ? Yup.array()
+  //       : Yup.array().of(
+  //           Yup.object().shape({
+  //             month: Yup.string()
+  //               .optional()
+  //               .matches(
+  //                 /(^0?[1-9]$)|(^1[0-2]$)$/,
+  //                 'Invalid Month,insert must between 1 to 12',
+  //               ),
+  //             reason_for_leaving: Yup.string(),
+  //           }),
+  //         ),
+  // });
+
   const validationSchema = Yup.object().shape({
-    total_experiences:
-      isFresher === true
-        ? Yup.array()
-        : Yup.array().of(
-            Yup.object().shape({
-              month: Yup.string()
-                .optional()
-                .matches(
-                  /(^0?[1-9]$)|(^1[0-2]$)$/,
-                  'Invalid Month,insert must between 1 to 12',
-                ),
-              reason_for_leaving: Yup.string(),
-            }),
-          ),
+    total_experiences: Yup.array().of(
+      Yup.object().shape({
+        years: Yup.number()
+          .required('Years is required')
+          .min(0, 'Years cannot be negative')
+          .max(50, 'Years cannot be greater than 50'),
+        month: Yup.number()
+          .required('Month is required')
+          .min(0, 'Month cannot be negative')
+          .max(11, 'Month cannot be greater than 11'),
+      }),
+    ),
   });
 
   const formik: any = useFormik({
@@ -69,12 +84,12 @@ const CareerInfoTab = ({
           ? userDetails?.total_experiences
           : [
               {
-                companyName: '',
-                role: '',
+                years: 0,
+                month: 0,
                 location: null,
+                companyName: '',
+                company_role: '',
                 employmentType: '',
-                years: '',
-                month: '',
                 reason_for_leaving: '',
               },
             ],
@@ -131,6 +146,7 @@ const CareerInfoTab = ({
   const handleFormChange = (index: any, event: any) => {
     let data = [...formik?.values?.total_experiences];
     data[index][event.target.name] = event.target.value;
+    formik.handleChange(event);
     formik?.setFieldValue('total_experiences', data);
   };
 
@@ -204,19 +220,19 @@ const CareerInfoTab = ({
                               onChange={(event) =>
                                 handleFormChange(index, event)
                               }
-                              value={list?.role}
-                              name="role"
+                              value={list?.company_role}
+                              name="company_role"
                               placeholder="Company role"
                               className="w-full rounded-2xl border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                             />
                             {formik?.touched?.total_experiences?.[index]
-                              ?.role &&
+                              ?.company_role &&
                               formik.errors.total_experiences?.[index]
-                                ?.role && (
+                                ?.company_role && (
                                 <div className="error">
                                   {
                                     formik?.errors?.total_experiences?.[index]
-                                      ?.role
+                                      ?.company_role
                                   }
                                 </div>
                               )}
@@ -358,7 +374,7 @@ const CareerInfoTab = ({
                               )}
                           </div>
                         </div>
-                        <div className="mt-1 flex w-1/2  gap-1">
+                        <div className="mt-1 flex w-1/2 gap-1">
                           <div className="w-1/2">
                             <div className="flex  items-center gap-1">
                               <input

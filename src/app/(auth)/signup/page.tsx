@@ -1,10 +1,10 @@
 'use client';
-
-import React, { useContext, useEffect, useState } from 'react';
-import SelectRoleComp from '@/Components/SelectRoleComp';
-import EmployeeComp from '@/Components/EmployeeComp';
-import IndividualComp from '@/Components/IndividualComp';
 import AppContext from '@/context/AppProvider';
+import EmployeeComp from '@/Components/EmployeeComp';
+import React, { useContext, useEffect } from 'react';
+import SelectRoleComp from '@/Components/SelectRoleComp';
+import IndividualComp from '@/Components/IndividualComp';
+
 const Page = () => {
   const context = useContext(AppContext);
   useEffect(() => {

@@ -2,6 +2,7 @@
 import * as Yup from 'yup';
 import Button from './Button';
 import Image from 'next/image';
+import Loading from './Loading';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
 import API from '@/service/ApiService';
@@ -10,8 +11,8 @@ import { useRouter } from 'next/navigation';
 import SignupSuccess from './SignupSuccess';
 import AppContext from '@/context/AppProvider';
 import React, { useContext, useState } from 'react';
-import { EMAIlREGEX, ROUTE, TEXT } from '@/service/Helper';
 import { API_CONSTANT } from '@/constant/ApiConstant';
+import { EMAIlREGEX, ROUTE, TEXT } from '@/service/Helper';
 
 type formValues = {
   email: string;
@@ -21,6 +22,7 @@ const SignupForm = () => {
   const router = useRouter();
   const context = useContext(AppContext);
   const [eye, setEye] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState(false);
 
   const validationSchema = Yup.object().shape({
@@ -41,7 +43,6 @@ const SignupForm = () => {
 
     API.post(API_CONSTANT?.PROFILE, { role: currentUserRole })
       .then((res) => {
-        console.log('🚀 ~ .then ~ res:', res);
         if (res?.data?.status === 200) {
           return;
         } else {
@@ -54,6 +55,7 @@ const SignupForm = () => {
   };
 
   const signUpWithEmailAndPassword = async (values: any) => {
+    setLoading(true);
     try {
       const signUpResponse = await signIn('signup', {
         ...values,
@@ -62,13 +64,16 @@ const SignupForm = () => {
       });
       console.log('signInResponse', signUpResponse);
       if (!signUpResponse?.ok) {
+        setLoading(false);
         toast.error(signUpResponse?.error);
       } else {
+        setLoading(false);
         setSuccessMsg(true);
         onNextUpdateProfileRole();
         toast.success('User successfully register');
       }
     } catch (error) {
+      setLoading(false);
       toast.error('Error signing in with email and password. Try again later.');
     }
   };
@@ -122,6 +127,7 @@ const SignupForm = () => {
 
   return (
     <div>
+      <Loading loading={loading} />
       {successMsg ? (
         <SignupSuccess />
       ) : (

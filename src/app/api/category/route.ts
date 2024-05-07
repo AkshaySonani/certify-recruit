@@ -3,10 +3,13 @@ import { connect } from '@/db/mongodb';
 import Category from '@/models/category';
 import { NextRequest, NextResponse } from 'next/server';
 
-export const GET = async (req: NextRequest) => {
+export const POST = async (req: NextRequest) => {
+  const { searchText } = await req.json();
   try {
     await connect();
-    let results = await Category.find({});
+    const results = await Category.find({
+      subcategory: { $regex: searchText, $options: 'i' },
+    });
     return NextResponse.json({
       status: 200,
       data: results,
@@ -22,25 +25,25 @@ export const GET = async (req: NextRequest) => {
   }
 };
 
-export const POST = async (req: NextRequest) => {
-  try {
-    await connect();
-    const { category, subcategory } = await req.json();
-    const cat = await Category.create({
-      category,
-      subcategory,
-    });
-    return NextResponse.json({
-      status: 200,
-      data: cat,
-    });
-  } catch (error) {
-    return NextResponse.json(
-      {
-        message: 'An error occurred while creating category.',
-        error: error,
-      },
-      { status: 500 },
-    );
-  }
-};
+// export const POST = async (req: NextRequest) => {
+//   try {
+//     await connect();
+//     const { category, subcategory } = await req.json();
+//     const cat = await Category.create({
+//       category,
+//       subcategory,
+//     });
+//     return NextResponse.json({
+//       status: 200,
+//       data: cat,
+//     });
+//   } catch (error) {
+//     return NextResponse.json(
+//       {
+//         message: 'An error occurred while creating category.',
+//         error: error,
+//       },
+//       { status: 500 },
+//     );
+//   }
+// };
