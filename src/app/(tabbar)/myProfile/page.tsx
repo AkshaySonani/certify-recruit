@@ -1,27 +1,27 @@
 'use client';
 import Image from 'next/image';
-import { Fragment, Suspense, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Menu, Transition, Dialog } from '@headlessui/react';
-import { TEXT, USER_ROLE } from '@/service/Helper';
-import { useSession } from 'next-auth/react';
 import API from '@/service/ApiService';
-import { API_CONSTANT } from '@/constant/ApiConstant';
 import { toast } from 'react-toastify';
 import Loader from '@/Components/Loader';
-import EditDetailsDialog from '@/Components/profile/EditDetailsDialog';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { TEXT, USER_ROLE } from '@/service/Helper';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import { Menu, Transition, Dialog } from '@headlessui/react';
+import { Fragment, Suspense, useEffect, useState } from 'react';
 import CompanyProfile from '@/Components/profile/CompanyProfile';
+import EditDetailsDialog from '@/Components/profile/EditDetailsDialog';
 import IndividualProfile from '@/Components/profile/IndividualProfile';
 
 const MyProfile = () => {
   const router = useRouter();
   const session = useSession() as any;
   const [isOpen, setIsOpen] = useState(false);
-  const [degreeList, setDegreeList] = useState([]);
   const [cityData, setCityData] = useState([]);
+  const [degreeList, setDegreeList] = useState([]);
   const [collegeList, setCollegeList] = useState([]);
-  const [languageList, setLanguageList] = useState([]);
   const [userDetails, setUserDetails] = useState({});
+  const [languageList, setLanguageList] = useState([]);
 
   function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ');

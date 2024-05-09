@@ -22,7 +22,7 @@ const CareerInfoTab = ({
   getUserDataApiCall,
 }: any) => {
   const [isFresher, setIsFresher] = useState(userDetails?.is_fresher);
-  const [active, setActive] = useState(userDetails?.is_fresher ? 1 : 2);
+  const [active, setActive] = useState(0);
 
   const handleSubmit = async (values: any, actions: any) => {
     const obj = {
@@ -74,6 +74,11 @@ const CareerInfoTab = ({
       }),
     ),
   });
+
+  useEffect(() => {
+    setActive(formik?.values?.total_experiences?.length > 0 ? 2 : 1);
+    setIsFresher(formik?.values?.total_experiences?.length > 0 ? false : true);
+  }, []);
 
   const formik: any = useFormik({
     initialValues: {
