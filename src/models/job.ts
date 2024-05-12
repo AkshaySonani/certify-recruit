@@ -134,6 +134,20 @@ const jobSchema = new mongoose.Schema({
       required: true,
     },
   ],
+  state: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'States',
+      required: false,
+    },
+  ],
+  country: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Countries',
+      required: false,
+    },
+  ],
   area: {
     type: String,
     required: false,
