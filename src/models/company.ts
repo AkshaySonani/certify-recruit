@@ -79,7 +79,6 @@ const companySchema = new mongoose.Schema({
   },
   pan_number: {
     type: String,
-    unique: true,
     validate: {
       validator: function (v: any) {
         return /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(v);
