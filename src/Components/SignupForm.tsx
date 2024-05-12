@@ -12,7 +12,7 @@ import SignupSuccess from './SignupSuccess';
 import AppContext from '@/context/AppProvider';
 import React, { useContext, useState } from 'react';
 import { API_CONSTANT } from '@/constant/ApiConstant';
-import { EMAIlREGEX, ROUTE, TEXT } from '@/service/Helper';
+import { EMAIlREGEX, ROUTE, TEXT, USER_ROLE } from '@/service/Helper';
 
 type formValues = {
   email: string;
@@ -67,6 +67,10 @@ const SignupForm = () => {
         setLoading(false);
         toast.error(signUpResponse?.error);
       } else {
+        if (context?.currentRole === 'individual') {
+          router.push(ROUTE?.DASHBOARD);
+          setSuccessMsg(false);
+        }
         setLoading(false);
         setSuccessMsg(true);
         onNextUpdateProfileRole();
@@ -128,7 +132,7 @@ const SignupForm = () => {
   return (
     <div>
       <Loading loading={loading} />
-      {successMsg ? (
+      {successMsg && context?.currentRole === USER_ROLE?.EMPLOYEE ? (
         <SignupSuccess />
       ) : (
         <div className="container mx-auto max-w-6xl">
@@ -150,24 +154,30 @@ const SignupForm = () => {
                   <p className="mb-10 text-center text-sm font-medium text-meta-light-blue-3">
                     {TEXT?.YOUR_NEW_JOURNEY_BEGINS_NOW}
                   </p>
-                  <button className="mb-8 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-white text-xl font-semibold text-meta-light-blue-3 hover:bg-meta-gray-2">
-                    <span className="flex items-center justify-center">
-                      <Image
-                        width={20}
-                        height={20}
-                        alt="Google-icon"
-                        src={'/login/GoogleIcon.svg'}
-                      />
-                      <span className="ml-5 text-sm font-medium text-meta-blue-1">
-                        {TEXT?.SIGN_UP_WITH_GOOGLE}
+                  {context?.currentRole === 'individual' && (
+                    <button className="mb-8 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-white text-xl font-semibold text-meta-light-blue-3 hover:bg-meta-gray-2">
+                      <span className="flex items-center justify-center">
+                        <Image
+                          width={20}
+                          height={20}
+                          alt="Google-icon"
+                          src={'/login/GoogleIcon.svg'}
+                        />
+                        <span className="ml-5 text-sm font-medium text-meta-blue-1">
+                          {TEXT?.SIGN_UP_WITH_GOOGLE}
+                        </span>
                       </span>
-                    </span>
-                  </button>
-                  <div className="mb-8 flex items-center justify-center">
-                    <div className="w-14 border-b border-meta-light-blue-2" />
-                    <span className="mx-2 text-xs font-normal">{TEXT?.OR}</span>
-                    <div className="w-14 border-b border-meta-light-blue-2" />
-                  </div>
+                    </button>
+                  )}
+                  {context?.currentRole === 'individual' && (
+                    <div className="mb-8 flex items-center justify-center">
+                      <div className="w-14 border-b border-meta-light-blue-2" />
+                      <span className="mx-2 text-xs font-normal">
+                        {TEXT?.OR}
+                      </span>
+                      <div className="w-14 border-b border-meta-light-blue-2" />
+                    </div>
+                  )}
                   <div className="mb-3">
                     <input
                       value={formik?.values?.email}

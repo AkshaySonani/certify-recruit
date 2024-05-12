@@ -89,7 +89,7 @@ const PreviewDialog = ({ isOpen, setIsOpen, formik }: any) => {
                     {TEXT?.CITY}
                   </p>
                   <div className="rounded-md py-1 pl-4 text-sm font-medium text-black">
-                    {formik?.values?.city.name}
+                    {formik?.values?.city?.name}
                   </div>
                 </div>
 

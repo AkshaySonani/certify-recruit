@@ -6,17 +6,18 @@ const EMAIlREGEX =
 // const EMAIlREGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
 const ROUTE = {
-  SIGN_UP: '/signup',
+  MAIN: '/main',
   LOGIN: '/login',
-  SUCCESSFULL_FORGOT_PASSWORD: '/login/forgotPass/newPass/successful',
-  ACTIVE_JOB: '/dashboard/active_job',
+  SIGN_UP: '/signup',
+  DASHBOARD: '/dashboard',
+  MYPROFILE: '/myProfile',
   HIRED: '/dashboard/hired',
   APPLICANTS: '/job/applicants',
-  EMPLOYMENT_TYPE: '/job_posting/employment_Type',
-  MYPROFILE: '/myProfile',
   QUIZINFO: '/learn&earn/quizInfo',
   QUIZMCQS: '/learn&earn/quizMCQs',
-  MAIN: '/main',
+  ACTIVE_JOB: '/dashboard/active_job',
+  EMPLOYMENT_TYPE: '/job_posting/employment_Type',
+  SUCCESSFULL_FORGOT_PASSWORD: '/login/forgotPass/newPass/successful',
 };
 
 const TEXT = {
@@ -75,6 +76,7 @@ const TEXT = {
   ADD_USER: 'Add User',
   DURATION: 'Duration',
   Join_Now: 'Join Now',
+  COMPLETE: 'Complete',
   FIVE_INTO_FIVE: '5/5',
   HI_THERE: ' Hi there!',
   JOB_TITLE: 'Job title',
@@ -122,6 +124,7 @@ const TEXT = {
   STANDARD_PLAN: 'Standard Plan',
   BUSINESS_PLAN: 'Business Plan',
   DATE_UPLOADED: 'Date Uploaded',
+  GO_TO_PROFILE: 'Go to profile',
   LEARN_AND_EARN: 'Learn & Earn',
   WORKPLACE_TYPE: 'Workplace type',
   RESET_PASSWORD: 'Reset Password',
@@ -155,9 +158,10 @@ const TEXT = {
   START_NOW_ITS_FREE: " Start now - it's free",
   REDIRECT_TO_CALENDLY: 'Redirect to Calendly',
   MAX_TAB_SWITCH_ALLOW: 'Max Tab Switch Allow',
-  DONT_HAVE_AN_ACCOUNT: "Don't have an account? ",
+  COMPLETE_YOUR_PROFILE: 'Complete your profile',
   PICK_WORKING_SCHEDULE: 'Pick working schedule',
   KYC_Compliance_Detail: 'KYC Compliance Detail',
+  DONT_HAVE_AN_ACCOUNT: "Don't have an account? ",
   THANK_YOU_FOR_SIGN_UP: 'Thank you for sign up!',
   TELL_US_ABOUT_THE_ROLE: 'Tell us about the role',
   RESULT_ANNULMENT_TIME: 'Result annulment 9:15 PM',
