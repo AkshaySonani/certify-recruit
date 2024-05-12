@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { TEXT } from '@/service/Helper';
 import { useRouter } from 'next/navigation';
 import { EMP_TYPE_ARR } from '@/constant/Enum';
+import DatePicker from 'react-datepicker';
 import MultipleSelectBox from '../MultipleSelectBox';
 
 const WORK_SCHEDULE = [
@@ -211,7 +212,7 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
           <div className="w-full">
             <label className="text-base font-medium text-meta-purple-1">
               {formik?.values?.salary_pay === 'MONTHLY'
-                ? TEXT?.MONTHLY_RATE
+                ? TEXT?.CTC
                 : TEXT?.HOURLY_RATE}
             </label>
             <input
@@ -251,6 +252,55 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
           <p className="text-sm font-medium text-meta-light-blue-3 sm:text-base">
             {TEXT?.CHOOSE_YOUR_INTERVIEW_TIME_SLOT}
           </p>
+        </div>
+        <div className="flex w-full items-center">
+          <label className="text-base font-medium text-meta-purple-1">
+            Select Date
+          </label>
+          <DatePicker
+            name="date"
+            wrapperClassName="w-full personal-details-date-picker"
+            selected={formik?.values?.interviewTime?.date as any}
+            shouldCloseOnSelect={true}
+            showMonthDropdown
+            showYearDropdown
+            placeholderText="Select date"
+            className="mt-3 w-full rounded-xl border border-meta-light-blue-1 p-3"
+            onChange={(date: any) =>
+              formik?.setFieldValue('interviewTime', {
+                ...formik?.values?.interviewTime,
+                date: date,
+              })
+            }
+          />
+        </div>
+        <div className="flex w-full items-center">
+          <label className="text-base font-medium text-meta-purple-1">
+            Start time
+          </label>
+          {/* <TimePicker
+            onChange={(e: any) =>
+              formik?.setFieldValue('interviewTime', {
+                ...formik?.values?.interviewTime,
+                startTime: e,
+              })
+            }
+            value={formik?.values?.interviewTime?.startTime}
+          /> */}
+        </div>
+        <div className="flex w-full items-center">
+          <label className="text-base font-medium text-meta-purple-1">
+            End time
+          </label>
+          {/* <TimePicker
+            onChange={(e: any) =>
+              formik?.setFieldValue('interviewTime', {
+                ...formik?.values?.interviewTime,
+                endTime: e,
+              })
+            }
+            value={formik?.values?.interviewTime?.endTime}
+          /> */}
         </div>
       </div>
     </div>

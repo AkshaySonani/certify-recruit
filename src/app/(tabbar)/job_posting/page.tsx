@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Checkbox from '@/Components/Checkbox';
 import { useRouter } from 'next/navigation';
 import { ROUTE, TEXT } from '@/service/Helper';
-import { Combobox, Transition } from '@headlessui/react';
+import { Combobox, Menu, Transition } from '@headlessui/react';
 import API from '@/service/ApiService';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import * as Yup from 'yup';
@@ -15,41 +15,30 @@ import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 import PreviewDialog from '../../../Components/Job/PreviewDialog';
 import Spinner from '../../icons/Spinner';
-
-const people = [
-  { _id: '662ccb4a52f81a3100514885', name: 'surat' },
-  { _id: '662ccb4a52f81a3100514885', name: 'Ahemedabad' },
-  { _id: '662ccb4a52f81a3100514885', name: 'Baroda' },
-  { _id: '662ccb4a52f81a3100514885', name: 'Rajkot' },
-  { _id: '662ccb4a52f81a3100514885', name: 'Botad' },
-  { _id: '662ccb4a52f81a3100514885', name: 'pune' },
-];
+import AutoComplete from '@/Components/Autocomplete';
+import useDebounce from '@/hooks/useDebounce';
 
 const WORKPLACE_TYPE = ['ONSITE', 'HYBRID', 'REMOTE'];
 
 const Page = () => {
-  const [cityData, setCityData] = useState([]);
   let [isOpen, setIsOpen] = useState(false);
   const [skillData, setSkillData] = useState([]);
   const [nextPage, setNextPage] = useState(1);
+  const [stateQuery, setStateQuery] = useState('');
+  const [cityQuery, setCityQuery] = useState('');
+  const [cities, setCities] = useState([]);
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const debouncedSearchCity = useDebounce(cityQuery);
+  const debouncedSearchState = useDebounce(stateQuery);
   const session = useSession() as any;
 
-  const [query, setQuery] = useState('');
-  const filteredPeople =
-    query === ''
-      ? people
-      : people.filter((person) =>
-          person.name
-            .toLowerCase()
-            .replace(/\s+/g, '')
-            .includes(query.toLowerCase().replace(/\s+/g, '')),
-        );
-
   useEffect(() => {
-    // getCityDataApi();
     getSkillDataApi();
   }, []);
-
+  function classNames(...classes: any) {
+    return classes.filter(Boolean).join('');
+  }
   const handleSubmit = async (values: any, actions: any) => {
     if (nextPage === 3) {
       let pushArray = [] as any;
@@ -92,6 +81,16 @@ const Page = () => {
           _id: Yup.string().required('city is required'),
         })
         .nonNullable('City is required'),
+      state: Yup.object()
+        .shape({
+          _id: Yup.string().required('State is required'),
+        })
+        .nonNullable('State is required'),
+      country: Yup.object()
+        .shape({
+          _id: Yup.string().required('country is required'),
+        })
+        .nonNullable('country is required'),
 
       // description:Yup.string().required("description is required.")
     }),
@@ -129,26 +128,69 @@ const Page = () => {
       salary_started: '',
       salary_upto: '',
       city: null,
+      state: null,
+      country: null,
       skills: [],
+      interviewTime: {
+        date: null,
+        startTime: '',
+        endTime: '',
+      },
     },
     enableReinitialize: true,
     validationSchema: currentValidationSchema,
     onSubmit: handleSubmit,
   });
 
-  // const getCityDataApi = () => {
-  //   API.get(API_CONSTANT?.CITIES)
-  //     .then((res) => {
-  //       console.log("res",res);
+  useEffect(() => {
+    getCountryApi();
+  }, []);
 
-  //       setCityData(res?.data?.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log("error", error);
+  useEffect(() => {
+    if (debouncedSearchCity !== '') {
+      searchCityApi(debouncedSearchCity);
+    }
+  }, [debouncedSearchCity]);
 
-  //       // toast.error(error?.response?.data?.error);
-  //     });
-  // };
+  useEffect(() => {
+    if (debouncedSearchState !== '') {
+      searchStateApi(debouncedSearchState);
+    }
+  }, [debouncedSearchState]);
+
+  const searchCityApi = (search: any) => {
+    let obj = {
+      searchText: search,
+    };
+    API.post(API_CONSTANT?.CITY, obj)
+      .then((res) => {
+        setCities(res?.data?.data);
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
+  };
+  const searchStateApi = (search: any) => {
+    let obj = {
+      searchText: search,
+    };
+    API.post(API_CONSTANT?.STATES, obj)
+      .then((res) => {
+        setStates(res?.data?.data);
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
+  };
+  const getCountryApi = () => {
+    API.get(API_CONSTANT?.COUNTRY)
+      .then((res) => {
+        setCountries(res?.data?.data);
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
+  };
 
   const getSkillDataApi = () => {
     API.get(API_CONSTANT?.CATEGORY)
@@ -334,130 +376,114 @@ const Page = () => {
               <div className="w-full text-start lg:mr-5 lg:w-1/2">
                 <p className="text-xl font-semibold text-meta-purple-1 sm:text-2xl">
                   {TEXT?.JOB_POSTING_LOCATION}
+                  <span className="text-red-600">*</span>
                 </p>
                 <p className="text-sm font-medium text-meta-light-blue-3 sm:text-base">
                   {TEXT?.WHICH_OPTION_BEST_DESCRIBE_THIS_JOBS_LOCATION}
                 </p>
               </div>
               <div className="w-full lg:w-1/2">
-                <div className="mt-2 lg:mt-0">
-                  <Combobox
-                    value={formik?.values?.city}
-                    onChange={(e) => formik.setFieldValue('city', e)}
-                  >
-                    <div className="relative mt-1">
-                      <div className="relative w-full cursor-default overflow-hidden rounded-lg border border-meta-light-blue-1 bg-white text-left focus:outline-none sm:text-sm">
-                        <Combobox.Input
-                          className="w-full py-3 pl-3 pr-10  text-sm leading-5 text-gray-900 focus:outline-none"
-                          displayValue={(person: any) => person?.name}
-                          placeholder="Select city"
-                          name="city"
-                          onChange={(event) => setQuery(event.target.value)}
-                        />
-                        <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-                          <Image
-                            alt="Icon"
-                            width={14}
-                            height={14}
-                            src={'/dashboard/SelectDown.svg'}
-                          />
-                        </Combobox.Button>
-                      </div>
-                      <Transition
-                        as={Fragment}
-                        leave="transition ease-in duration-100"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
-                        afterLeave={() => setQuery('')}
-                      >
-                        <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                          {filteredPeople.length === 0 && query !== '' ? (
-                            <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
-                              Nothing found.
-                            </div>
-                          ) : (
-                            filteredPeople.map((person) => (
-                              <Combobox.Option
-                                key={person._id}
-                                className={({ active }) =>
-                                  `relative cursor-default select-none py-2 pl-4 pr-4 ${
-                                    active
-                                      ? 'bg-meta-blue-1 text-white'
-                                      : 'text-gray-900'
-                                  }`
-                                }
-                                value={person}
-                              >
-                                {({ selected, active }) => (
-                                  <>
-                                    <span
-                                      className={`block truncate ${
-                                        selected ? 'font-medium' : 'font-normal'
-                                      }`}
-                                    >
-                                      {person.name}
-                                    </span>
-                                    {selected ? (
-                                      <span
-                                        className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                          active
-                                            ? 'text-white'
-                                            : 'text-teal-600'
-                                        }`}
-                                      ></span>
-                                    ) : null}
-                                  </>
+                <div className="relative mt-2 w-full lg:mt-0">
+                  <label className="text-base font-medium text-meta-purple-1">
+                    Country
+                  </label>
+                  <Menu as="div" className="relative  w-full">
+                    <Menu.Button className="relative z-20  flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-[9px] pl-5 pr-[11px] outline-none transition">
+                      {formik?.values?.country === null ? (
+                        <p className="text-meta-gray-1">Select Country</p>
+                      ) : (
+                        <p>{formik?.values?.country?.name}</p>
+                      )}
+                      <Image
+                        alt="Icon"
+                        width={14}
+                        height={14}
+                        src={'/dashboard/SelectDown.svg'}
+                      />
+                    </Menu.Button>
+                    <Transition
+                      as={Fragment}
+                      leave="transition ease-in duration-75"
+                      leaveTo="transform opacity-0 scale-95"
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leaveFrom="transform opacity-100 scale-100"
+                    >
+                      <Menu.Items className="mt-  absolute right-0 z-30 max-h-[200px] w-full origin-top-right divide-y divide-gray-200 overflow-auto rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <div>
+                          {countries?.map((list: any) => {
+                            return (
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <div
+                                    onClick={() => {
+                                      formik.setFieldValue('country', list);
+                                      formik.setFieldValue('city', null);
+                                      formik.setFieldValue('state', null);
+                                    }}
+                                    className={classNames(
+                                      active
+                                        ? 'bg-meta-blue-1 text-white'
+                                        : 'text-gray-900',
+                                      'block px-4 py-2 text-[14px] capitalize hover:text-white',
+                                    )}
+                                  >
+                                    {list?.name}
+                                  </div>
                                 )}
-                              </Combobox.Option>
-                            ))
-                          )}
-                        </Combobox.Options>
-                      </Transition>
-                    </div>
-                  </Combobox>
-                  {formik.touched.city && formik.errors.city && (
-                    <div className="error">{formik.errors.city}</div>
-                  )}
-                  <div className="my-3 flex items-center">
-                    <div className="mr-3">
-                      <label className="text-base font-medium text-meta-purple-1">
-                        {TEXT?.AREA}
-                      </label>
-                      <input
-                        name="area"
-                        onChange={formik.handleChange}
-                        value={formik?.values?.area}
-                        type="text"
-                        placeholder="Type here..."
-                        className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-base font-medium text-meta-purple-1">
-                        {TEXT?.PINCODE}
-                      </label>
-                      <input
-                        name="pincode"
-                        onChange={formik.handleChange}
-                        value={formik?.values?.pincode}
-                        type="text"
-                        placeholder="Type here..."
-                        className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
-                      />
-                    </div>
-                  </div>
-                  <div>
+                              </Menu.Item>
+                            );
+                          })}
+                        </div>
+                      </Menu.Items>
+                    </Transition>
+                    {formik.touched.country && formik.errors.country && (
+                      <div className="error">{formik.errors.country}</div>
+                    )}
+                  </Menu>
+                </div>
+                <div className="mt-3 flex w-full gap-3 ">
+                  <div className="w-1/2">
                     <label className="text-base font-medium text-meta-purple-1">
-                      {TEXT?.STREET_ADDRESS}
+                      State
                     </label>
-                    <input
-                      type="text"
-                      name="street_address"
-                      onChange={formik.handleChange}
-                      value={formik?.values?.street_address}
-                      placeholder="Type here..."
-                      className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+                    <AutoComplete
+                      query={stateQuery}
+                      disabled={formik.values.country === null ? true : false}
+                      name={'state'}
+                      setQuery={setStateQuery}
+                      className="!py-[11.2px]"
+                      placeholder="Search state"
+                      value={formik?.values?.state}
+                      filterArr={states}
+                      handleChange={(e: any) => {
+                        formik.setFieldValue('state', e);
+                      }}
                     />
+                    {formik.touched.state && formik.errors.state && (
+                      <div className="error">{formik.errors.state}</div>
+                    )}
+                  </div>
+                  <div className="w-1/2">
+                    <label className="text-base font-medium text-meta-purple-1">
+                      City
+                    </label>
+                    <AutoComplete
+                      value={formik?.values?.city}
+                      disabled={formik.values.country === null ? true : false}
+                      filterArr={cities}
+                      className="!py-[11.2px]"
+                      query={cityQuery}
+                      setQuery={setCityQuery}
+                      name={'city'}
+                      placeholder="Search city"
+                      handleChange={(e: any) => formik.setFieldValue('city', e)}
+                      searchApi={(e: any) => searchCityApi(e)}
+                    />
+                    {formik.touched.city && formik.errors.city && (
+                      <div className="error">{formik.errors.city}</div>
+                    )}
                   </div>
                 </div>
               </div>
