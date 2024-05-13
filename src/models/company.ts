@@ -33,9 +33,9 @@ const companySchema = new mongoose.Schema({
   },
   profile_count: {
     type: {
-      kyc_details: 0,
-      basic_details: 0,
-      company_details: 0,
+      kyc_details: { type: Number, default: 0 },
+      basic_details: { type: Number, default: 0 },
+      company_details: { type: Number, default: 0 },
     },
   },
   // company_type: {
