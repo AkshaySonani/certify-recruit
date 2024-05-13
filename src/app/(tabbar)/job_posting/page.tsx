@@ -1,31 +1,29 @@
-"use client";
-import React, { useState, Fragment, useEffect } from "react";
-import Image from "next/image";
-import { ROUTE, TEXT } from "@/service/Helper";
-import { Combobox, Menu, Transition } from "@headlessui/react";
-import API from "@/service/ApiService";
-import { API_CONSTANT } from "@/constant/ApiConstant";
-import * as Yup from "yup";
-import { useFormik, Field } from "formik";
-import JobPostingForm2 from "@/Components/Job/JobPostingForm2";
-import JobPostingForm3 from "@/Components/Job/JobPostingForm3";
-import { toast } from "react-toastify";
-import { useSession } from "next-auth/react";
-import PreviewDialog from "../../../Components/Job/PreviewDialog";
-import Spinner from "../../icons/Spinner";
-import AutoComplete from "@/Components/Autocomplete";
-import useDebounce from "@/hooks/useDebounce";
-import { useRouter } from "next/router";
+'use client';
+import React, { useState, Fragment, useEffect } from 'react';
+import Image from 'next/image';
+import { ROUTE, TEXT } from '@/service/Helper';
+import { Combobox, Menu, Transition } from '@headlessui/react';
+import API from '@/service/ApiService';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import * as Yup from 'yup';
+import { useFormik, Field } from 'formik';
+import JobPostingForm2 from '@/Components/Job/JobPostingForm2';
+import JobPostingForm3 from '@/Components/Job/JobPostingForm3';
+import { toast } from 'react-toastify';
+import { useSession } from 'next-auth/react';
+import PreviewDialog from '../../../Components/Job/PreviewDialog';
+import Spinner from '../../icons/Spinner';
+import AutoComplete from '@/Components/Autocomplete';
+import useDebounce from '@/hooks/useDebounce';
 
-const WORKPLACE_TYPE = ["ONSITE", "HYBRID", "REMOTE"];
+const WORKPLACE_TYPE = ['ONSITE', 'HYBRID', 'REMOTE'];
 
 const Page = () => {
-  const router = useRouter();
   let [isOpen, setIsOpen] = useState(false);
   const [skillData, setSkillData] = useState([]);
   const [nextPage, setNextPage] = useState(1);
-  const [stateQuery, setStateQuery] = useState("");
-  const [cityQuery, setCityQuery] = useState("");
+  const [stateQuery, setStateQuery] = useState('');
+  const [cityQuery, setCityQuery] = useState('');
   const [cities, setCities] = useState([]);
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
@@ -34,7 +32,7 @@ const Page = () => {
   const session = useSession() as any;
 
   function classNames(...classes: any) {
-    return classes.filter(Boolean).join("");
+    return classes.filter(Boolean).join('');
   }
   const handleSubmit = async (values: any, actions: any) => {
     if (nextPage === 3) {
@@ -43,19 +41,18 @@ const Page = () => {
         skills: values?.skills.map((el: any) => el?._id),
         working_schedule: values?.working_schedule.map((el: any) => el?.value),
       };
-      console.log("data", data);
+      console.log('data', data);
 
       API.post(API_CONSTANT.JOB, data)
         .then((res) => {
-          router?.push(ROUTE?.JOB);
           toast?.success(
-            res?.data?.message || "Successfully your job is posting"
+            res?.data?.message || 'Successfully your job is posting',
           );
           actions.setSubmitting(false);
         })
         .catch((error) => {
           actions.setSubmitting(false);
-          console.log("error", error);
+          console.log('error', error);
         });
     } else {
       setNextPage(nextPage + 1);
@@ -66,68 +63,68 @@ const Page = () => {
 
   const validationSchema = [
     Yup.object().shape({
-      company_name: Yup.string().required("Company is required."),
-      title: Yup.string().required("Job title is required."),
+      company_name: Yup.string().required('Company is required.'),
+      title: Yup.string().required('Job title is required.'),
       workplace: Yup.array().min(1, `select at least one workplace type`),
       city: Yup.object()
         .shape({
-          _id: Yup.string().required("city is required"),
+          _id: Yup.string().required('city is required'),
         })
-        .nonNullable("City is required"),
+        .nonNullable('City is required'),
       state: Yup.object()
         .shape({
-          _id: Yup.string().required("State is required"),
+          _id: Yup.string().required('State is required'),
         })
-        .nonNullable("State is required"),
+        .nonNullable('State is required'),
       country: Yup.object()
         .shape({
-          _id: Yup.string().required("country is required"),
+          _id: Yup.string().required('country is required'),
         })
-        .nonNullable("country is required"),
+        .nonNullable('country is required'),
 
       // description:Yup.string().required("description is required.")
     }),
     Yup.object().shape({
       working_schedule: Yup.array().min(
         1,
-        `Select at least one working schedule`
+        `Select at least one working schedule`,
       ),
       job_types: Yup.array().min(1, `Select at least one job type`),
     }),
     Yup.object().shape({
       // city: Yup.array().min(1,"City is required."),
-      description: Yup.string().required("Description is required."),
+      description: Yup.string().required('Description is required.'),
     }),
   ];
   const currentValidationSchema = validationSchema[nextPage - 1];
   const formik = useFormik({
     initialValues: {
       is_hiring_manager: false,
-      title: "",
+      title: '',
       company_id: session?.data?.user._id,
-      company_name: "",
-      description: "",
+      company_name: '',
+      description: '',
       workplace: [],
       job_types: [],
-      salary_pay: "HOURLY",
+      salary_pay: 'HOURLY',
       hourly_rate: null,
       salary_negotiable: false,
       vacancy: 1,
       working_schedule: [],
-      area: "",
-      status: "ACTIVE",
-      pincode: "",
-      street_address: "",
-      salary_started: "",
-      salary_upto: "",
+      area: '',
+      status: 'ACTIVE',
+      pincode: '',
+      street_address: '',
+      salary_started: '',
+      salary_upto: '',
       city: null,
       state: null,
       country: null,
       skills: [],
       interviewTime: {
         date: null,
-        startTime: "",
-        endTime: "",
+        startTime: '',
+        endTime: '',
       },
     },
     enableReinitialize: true,
@@ -140,13 +137,13 @@ const Page = () => {
   }, []);
 
   useEffect(() => {
-    if (debouncedSearchCity !== "") {
+    if (debouncedSearchCity !== '') {
       searchCityApi(debouncedSearchCity);
     }
   }, [debouncedSearchCity]);
 
   useEffect(() => {
-    if (debouncedSearchState !== "") {
+    if (debouncedSearchState !== '') {
       searchStateApi(debouncedSearchState);
     }
   }, [debouncedSearchState]);
@@ -160,7 +157,7 @@ const Page = () => {
         setCities(res?.data?.data);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log('error', error);
       });
   };
   const searchStateApi = (search: any) => {
@@ -172,7 +169,7 @@ const Page = () => {
         setStates(res?.data?.data);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log('error', error);
       });
   };
   const getCountryApi = () => {
@@ -181,7 +178,7 @@ const Page = () => {
         setCountries(res?.data?.data);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log('error', error);
       });
   };
 
@@ -203,7 +200,7 @@ const Page = () => {
             width={25}
             height={25}
             alt="Preview"
-            src={"/job/Eye_fill.svg"}
+            src={'/job/Eye_fill.svg'}
           />
           <p className="ml-2 hidden text-lg font-semibold text-meta-blue-1 sm:block sm:text-xl">
             {TEXT?.PREVIEW}
@@ -231,12 +228,12 @@ const Page = () => {
                     id="Yes"
                     type="radio"
                     radioGroup="Salary"
-                    value={"true"}
+                    value={'true'}
                     name="is_hiring_manager"
                     onChange={formik.handleChange}
                     className=""
                   />
-                  <p>{"Yes"}</p>
+                  <p>{'Yes'}</p>
                 </label>
                 <label
                   htmlFor="No"
@@ -250,9 +247,9 @@ const Page = () => {
                     radioGroup="Salary"
                     onChange={formik.handleChange}
                     className=""
-                    value={"false"}
+                    value={'false'}
                   />
-                  <p>{"No"}</p>
+                  <p>{'No'}</p>
                 </label>
               </div>
             </div>
@@ -330,7 +327,7 @@ const Page = () => {
                           <input
                             type="checkbox"
                             id={list}
-                            name={"workplace"}
+                            name={'workplace'}
                             value={list}
                             onChange={formik.handleChange}
                           />
@@ -374,7 +371,7 @@ const Page = () => {
                         alt="Icon"
                         width={14}
                         height={14}
-                        src={"/dashboard/SelectDown.svg"}
+                        src={'/dashboard/SelectDown.svg'}
                       />
                     </Menu.Button>
                     <Transition
@@ -394,15 +391,15 @@ const Page = () => {
                                 {({ active }) => (
                                   <div
                                     onClick={() => {
-                                      formik.setFieldValue("country", list);
-                                      formik.setFieldValue("city", null);
-                                      formik.setFieldValue("state", null);
+                                      formik.setFieldValue('country', list);
+                                      formik.setFieldValue('city', null);
+                                      formik.setFieldValue('state', null);
                                     }}
                                     className={classNames(
                                       active
-                                        ? "bg-meta-blue-1 text-white"
-                                        : "text-gray-900",
-                                      "block px-4 py-2 text-[14px] capitalize hover:text-white"
+                                        ? 'bg-meta-blue-1 text-white'
+                                        : 'text-gray-900',
+                                      'block px-4 py-2 text-[14px] capitalize hover:text-white',
                                     )}
                                   >
                                     {list?.name}
@@ -427,14 +424,14 @@ const Page = () => {
                     <AutoComplete
                       query={stateQuery}
                       disabled={formik.values.country === null ? true : false}
-                      name={"state"}
+                      name={'state'}
                       setQuery={setStateQuery}
                       className="!py-[11.2px]"
                       placeholder="Search state"
                       value={formik?.values?.state}
                       filterArr={states}
                       handleChange={(e: any) => {
-                        formik.setFieldValue("state", e);
+                        formik.setFieldValue('state', e);
                       }}
                     />
                     {formik.touched.state && formik.errors.state && (
@@ -452,9 +449,9 @@ const Page = () => {
                       className="!py-[11.2px]"
                       query={cityQuery}
                       setQuery={setCityQuery}
-                      name={"city"}
+                      name={'city'}
                       placeholder="Search city"
-                      handleChange={(e: any) => formik.setFieldValue("city", e)}
+                      handleChange={(e: any) => formik.setFieldValue('city', e)}
                     />
                     {formik.touched.city && formik.errors.city && (
                       <div className="error">{formik.errors.city}</div>
@@ -470,7 +467,7 @@ const Page = () => {
           <JobPostingForm3 formik={formik} skillData={skillData} />
         )}
         <div
-          className={`"w-full mt-16  flex ${nextPage === 1 ? "justify-end" : "justify-between"}`}
+          className={`"w-full mt-16  flex ${nextPage === 1 ? 'justify-end' : 'justify-between'}`}
         >
           {nextPage !== 1 && (
             <button
@@ -484,7 +481,7 @@ const Page = () => {
 
           <button
             disabled={formik?.isSubmitting}
-            type={"submit"}
+            type={'submit'}
             className={`mb-8 h-12  min-w-48 rounded-lg border border-meta-light-blue-2 bg-meta-blue-1 py-3 text-meta-light-blue-3 transition delay-150 duration-300 ease-in-out will-change-auto hover:bg-hiring-btn-gradient`}
           >
             {formik?.isSubmitting ? (
