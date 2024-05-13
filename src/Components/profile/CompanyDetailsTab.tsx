@@ -1,15 +1,16 @@
-import { TEXT } from "@/service/Helper";
-import API from "@/service/ApiService";
-import { API_CONSTANT } from "@/constant/ApiConstant";
-import * as Yup from "yup";
-import { useFormik, Field } from "formik";
-import AutoComplete from "../Autocomplete";
-import { toast } from "react-toastify";
-import { Fragment, useEffect, useState } from "react";
-import { Menu, Transition } from "@headlessui/react";
-import Image from "next/image";
-import { COMPANY_TYPE } from "@/constant/Enum";
-import useDebounce from "@/hooks/useDebounce";
+import { calculatePercentage, TEXT } from '@/service/Helper';
+import API from '@/service/ApiService';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import * as Yup from 'yup';
+import { useFormik, Field } from 'formik';
+import AutoComplete from '../Autocomplete';
+import { toast } from 'react-toastify';
+import { Fragment, useContext, useEffect, useState } from 'react';
+import { Menu, Transition } from '@headlessui/react';
+import Image from 'next/image';
+import { COMPANY_TYPE } from '@/constant/Enum';
+import useDebounce from '@/hooks/useDebounce';
+import AppContext from '@/context/AppProvider';
 
 const CompanyDetailsTab = ({
   activePage,
@@ -17,30 +18,19 @@ const CompanyDetailsTab = ({
   setActivePage,
   getUserDataApiCall,
 }: any) => {
-  const [stateQuery, setStateQuery] = useState("");
-  const [cityQuery, setCityQuery] = useState("");
+  const [stateQuery, setStateQuery] = useState('');
+  const [cityQuery, setCityQuery] = useState('');
   const [cities, setCities] = useState([]);
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const debouncedSearchCity = useDebounce(cityQuery);
   const debouncedSearchState = useDebounce(stateQuery);
+  const context = useContext(AppContext);
   function classNames(...classes: any) {
-    return classes.filter(Boolean).join("");
+    return classes.filter(Boolean).join('');
   }
 
-  const calculatePercentage = (values: any) => {
-    const tab1Complete = Object.values(values).filter(
-      (val) => val !== ""
-    ).length;
-    const totalFields = Object.keys(values).length;
-    const totalCompleted = tab1Complete;
-    const percentage = (totalCompleted / totalFields) * 33;
-    return percentage.toFixed(2);
-  };
-
   const handleSubmit = async (values: any, actions: any) => {
-    console.log("values", values);
-
     let obj = {
       ...values,
     };
@@ -48,17 +38,18 @@ const CompanyDetailsTab = ({
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
-          console.log("res", res);
-          const test = calculatePercentage(values);
-          console.log("test", test);
-          // getUserDataApiCall();
+          const profileCount = calculatePercentage(values, 33);
+          context?.setUserProfileCount(
+            context?.userProfileCount + Number(profileCount),
+          );
+          getUserDataApiCall();
           setActivePage(activePage + 1);
           actions.setSubmitting(false);
-          toast?.success(res?.data?.message || "Successfully Update Profile");
+          toast?.success(res?.data?.message || 'Successfully Update Profile');
         }
       })
       .catch((error) => {
-        toast.error(error || "Something want wrong");
+        toast.error(error || 'Something want wrong');
       });
   };
 
@@ -69,21 +60,21 @@ const CompanyDetailsTab = ({
     street_address: Yup.string(),
     website_url: Yup.string().matches(
       /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
-      "Invalid Website url."
+      'Invalid Website url.',
     ),
-    pincode: Yup.string().matches(/^[1-9][0-9]{5}$/, "Invalid zipcode."),
+    pincode: Yup.string().matches(/^[1-9][0-9]{5}$/, 'Invalid zipcode.'),
   });
 
   const currentValidationSchema = validationSchema;
 
   const formik: any = useFormik({
     initialValues: {
-      pincode: userDetails?.pincode ?? "",
-      owner: userDetails?.owner ?? "",
-      company_name: userDetails?.company_name ?? "",
-      company_type: userDetails?.company_type ?? "",
-      street_address: userDetails?.street_address ?? "",
-      website_url: userDetails?.website_url ?? "",
+      pincode: userDetails?.pincode ?? '',
+      owner: userDetails?.owner ?? '',
+      company_name: userDetails?.company_name ?? '',
+      company_type: userDetails?.company_type ?? '',
+      street_address: userDetails?.street_address ?? '',
+      website_url: userDetails?.website_url ?? '',
       city: userDetails?.city ?? null,
       state: userDetails?.state ?? null,
       country: userDetails?.country ?? null,
@@ -98,13 +89,13 @@ const CompanyDetailsTab = ({
   }, []);
 
   useEffect(() => {
-    if (debouncedSearchCity !== "") {
+    if (debouncedSearchCity !== '') {
       searchCityApi(debouncedSearchCity);
     }
   }, [debouncedSearchCity]);
 
   useEffect(() => {
-    if (debouncedSearchState !== "") {
+    if (debouncedSearchState !== '') {
       searchStateApi(debouncedSearchState);
     }
   }, [debouncedSearchState]);
@@ -118,7 +109,7 @@ const CompanyDetailsTab = ({
         setCities(res?.data?.data);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log('error', error);
       });
   };
   const searchStateApi = (search: any) => {
@@ -130,7 +121,7 @@ const CompanyDetailsTab = ({
         setStates(res?.data?.data);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log('error', error);
       });
   };
   const getCountryApi = () => {
@@ -139,7 +130,7 @@ const CompanyDetailsTab = ({
         setCountries(res?.data?.data);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log('error', error);
       });
   };
 
@@ -152,15 +143,15 @@ const CompanyDetailsTab = ({
           </label>
           <Menu.Button className="relative z-20 mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
             <p>
-              {formik?.values?.company_type === ""
-                ? "Select Company type"
+              {formik?.values?.company_type === ''
+                ? 'Select Company type'
                 : formik?.values?.company_type}
             </p>
             <Image
               alt="Icon"
               width={14}
               height={14}
-              src={"/dashboard/SelectDown.svg"}
+              src={'/dashboard/SelectDown.svg'}
             />
           </Menu.Button>
           <Transition
@@ -180,13 +171,13 @@ const CompanyDetailsTab = ({
                       {({ active }) => (
                         <div
                           onClick={() =>
-                            formik.setFieldValue("company_type", list)
+                            formik.setFieldValue('company_type', list)
                           }
                           className={classNames(
                             active
-                              ? "bg-meta-blue-1 text-white"
-                              : "text-gray-900",
-                            "block px-4 py-2 text-[14px] capitalize"
+                              ? 'bg-meta-blue-1 text-white'
+                              : 'text-gray-900',
+                            'block px-4 py-2 text-[14px] capitalize',
                           )}
                         >
                           {list}
@@ -296,7 +287,7 @@ const CompanyDetailsTab = ({
                 alt="Icon"
                 width={14}
                 height={14}
-                src={"/dashboard/SelectDown.svg"}
+                src={'/dashboard/SelectDown.svg'}
               />
             </Menu.Button>
             <Transition
@@ -316,15 +307,15 @@ const CompanyDetailsTab = ({
                         {({ active }) => (
                           <div
                             onClick={() => {
-                              formik.setFieldValue("country", list);
-                              formik.setFieldValue("city", null);
-                              formik.setFieldValue("state", null);
+                              formik.setFieldValue('country', list);
+                              formik.setFieldValue('city', null);
+                              formik.setFieldValue('state', null);
                             }}
                             className={classNames(
                               active
-                                ? "bg-meta-blue-1 text-white"
-                                : "text-gray-900",
-                              "block px-4 py-2 text-[14px] capitalize hover:text-white"
+                                ? 'bg-meta-blue-1 text-white'
+                                : 'text-gray-900',
+                              'block px-4 py-2 text-[14px] capitalize hover:text-white',
                             )}
                           >
                             {list?.name}
@@ -347,14 +338,14 @@ const CompanyDetailsTab = ({
           <AutoComplete
             query={stateQuery}
             disabled={formik.values.country === null ? true : false}
-            name={"state"}
+            name={'state'}
             setQuery={setStateQuery}
             className="!py-[11.2px]"
             placeholder="Search state"
             value={formik?.values?.state}
             filterArr={states}
             handleChange={(e: any) => {
-              formik.setFieldValue("state", e);
+              formik.setFieldValue('state', e);
             }}
           />
           {formik.touched.state && formik.errors.state && (
@@ -369,9 +360,9 @@ const CompanyDetailsTab = ({
             className="!py-[11.2px]"
             query={cityQuery}
             setQuery={setCityQuery}
-            name={"city"}
+            name={'city'}
             placeholder="Search city"
-            handleChange={(e: any) => formik.setFieldValue("city", e)}
+            handleChange={(e: any) => formik.setFieldValue('city', e)}
           />
           {formik.touched.city && formik.errors.city && (
             <div className="error">{formik.errors.city}</div>

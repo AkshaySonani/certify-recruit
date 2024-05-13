@@ -1,26 +1,19 @@
-import { TEXT } from "@/service/Helper";
-import API from "@/service/ApiService";
-import { API_CONSTANT } from "@/constant/ApiConstant";
-import * as Yup from "yup";
-import { useFormik, Field } from "formik";
-import AutoComplete from "../Autocomplete";
-import { toast } from "react-toastify";
+import { calculatePercentage, TEXT } from '@/service/Helper';
+import API from '@/service/ApiService';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import * as Yup from 'yup';
+import { useFormik, Field } from 'formik';
+import AutoComplete from '../Autocomplete';
+import { toast } from 'react-toastify';
+import { useContext } from 'react';
+import AppContext from '@/context/AppProvider';
 const KYCDetailsTab = ({
   setActivePage,
   userDetails,
   activePage,
   getUserDataApiCall,
 }: any) => {
-  const calculatePercentage = (values: any) => {
-    const tab1Complete = Object.values(values).filter(
-      (val) => val !== ""
-    ).length;
-    const totalFields = Object.keys(values).length;
-    const totalCompleted = tab1Complete;
-    const percentage = (totalCompleted / totalFields) * 33;
-    return percentage.toFixed(2);
-  };
-
+  const context = useContext(AppContext);
   const handleSubmit = async (values: any, actions: any) => {
     let obj = {
       ...values,
@@ -29,16 +22,18 @@ const KYCDetailsTab = ({
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
-          const test = calculatePercentage(values);
-          console.log("test", test);
+          const profileCount = calculatePercentage(values, 33);
+          context?.setUserProfileCount(
+            context?.userProfileCount + Number(profileCount),
+          );
           setActivePage(1);
           getUserDataApiCall();
           actions.setSubmitting(false);
-          toast?.success(res?.data?.message || "Successfully Update Profile");
+          toast?.success(res?.data?.message || 'Successfully Update Profile');
         }
       })
       .catch((error) => {
-        toast.error(error || "Something want wrong");
+        toast.error(error || 'Something want wrong');
       });
   };
 
@@ -46,7 +41,7 @@ const KYCDetailsTab = ({
     pan_number: Yup.string().matches(
       /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/,
       // /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
-      "Invalid pan number"
+      'Invalid pan number',
     ),
     name_on_pan: Yup.string(),
   });
@@ -55,8 +50,8 @@ const KYCDetailsTab = ({
 
   const formik: any = useFormik({
     initialValues: {
-      pan_number: userDetails?.pan_number ?? "",
-      name_on_pan: userDetails?.name_on_pan ?? "",
+      pan_number: userDetails?.pan_number ?? '',
+      name_on_pan: userDetails?.name_on_pan ?? '',
     },
     enableReinitialize: true,
     validationSchema: currentValidationSchema,
