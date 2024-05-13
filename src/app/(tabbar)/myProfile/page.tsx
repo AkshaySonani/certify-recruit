@@ -1,16 +1,16 @@
-"use client";
-import Image from "next/image";
-import API from "@/service/ApiService";
-import { toast } from "react-toastify";
-import Loader from "@/Components/Loader";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { ROUTE, TEXT, USER_ROLE } from "@/service/Helper";
-import { API_CONSTANT } from "@/constant/ApiConstant";
-import { Fragment, Suspense, useEffect, useState } from "react";
-import CompanyProfile from "@/Components/profile/CompanyProfile";
-import EditDetailsDialog from "@/Components/profile/EditDetailsDialog";
-import IndividualProfile from "@/Components/profile/IndividualProfile";
+'use client';
+import Image from 'next/image';
+import API from '@/service/ApiService';
+import { toast } from 'react-toastify';
+import Loader from '@/Components/Loader';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { ROUTE, TEXT, USER_ROLE } from '@/service/Helper';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import { Fragment, Suspense, useEffect, useState } from 'react';
+import CompanyProfile from '@/Components/profile/CompanyProfile';
+import EditDetailsDialog from '@/Components/profile/EditDetailsDialog';
+import IndividualProfile from '@/Components/profile/IndividualProfile';
 
 const MyProfile = () => {
   const router = useRouter();
@@ -34,7 +34,7 @@ const MyProfile = () => {
         setDegreeList(res?.data?.data);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log('error', error);
         toast.error(error?.response?.data?.error);
       });
   };
@@ -45,7 +45,7 @@ const MyProfile = () => {
         setCollegeList(res?.data?.data);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log('error', error);
         toast.error(error?.response?.data?.error);
       });
   };
@@ -56,7 +56,7 @@ const MyProfile = () => {
         setLanguageList(res?.data?.data);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log('error', error);
         toast.error(error?.response?.data?.error);
       });
   };
@@ -64,11 +64,11 @@ const MyProfile = () => {
   const getProfileDetails = () => {
     API.get(API_CONSTANT?.PROFILE)
       .then((res) => {
-        console.log("res---->Profile", res);
+        console.log('res---->Profile', res);
         setUserDetails(res?.data?.data);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log('error', error);
         toast.error(error?.response?.data?.error);
       });
   };
@@ -79,9 +79,9 @@ const MyProfile = () => {
         <div className="flex items-center justify-between">
           <div
             className="flex cursor-pointer"
-            onClick={() => router?.push("/dashboard")}
+            onClick={() => router?.push('/dashboard')}
           >
-            <Image src={"/BackArrow.svg"} alt="date" width={20} height={20} />
+            <Image src={'/BackArrow.svg'} alt="date" width={20} height={20} />
             <p className="text-5 pl-2 font-semibold text-meta-purple-1">
               {TEXT?.DASHBOARD}
             </p>
@@ -95,13 +95,13 @@ const MyProfile = () => {
             </button>
           </div>
         </div>
-        {/* <div className="mt-4 w-full rounded-2xl bg-meta-light-blue-2 p-10">
+        <div className="mt-4 w-full rounded-2xl bg-meta-light-blue-2 p-10">
           <div className="flex w-full items-center gap-8">
             <Image
               width={109}
               height={135}
               alt="MainLogo"
-              src={"/ProfileLogo.svg"}
+              src={'/ProfileLogo.svg'}
             />
             <div className="flex w-full gap-8">
               <div className="w-11/12">
@@ -109,10 +109,10 @@ const MyProfile = () => {
                   {session?.data?.user?.role !== USER_ROLE?.EMPLOYEE
                     ? userDetails?.user_name
                       ? userDetails?.user_name
-                      : "-"
+                      : '-'
                     : userDetails?.company_name
                       ? userDetails?.company_name
-                      : "-"}
+                      : '-'}
                 </p>
                 <p className="text-sm font-medium capitalize text-meta-light-blue-3">
                   {session?.data?.user?.role === USER_ROLE?.EMPLOYEE &&
@@ -126,14 +126,14 @@ const MyProfile = () => {
                       width={16}
                       height={16}
                       alt="MainLogo"
-                      src={"/location.svg"}
+                      src={'/location.svg'}
                     />
                     <p className="text-xs text-meta-light-blue-3">
                       {userDetails?.current_location
-                        ? userDetails?.current_location === "OUT_OF_USA"
+                        ? userDetails?.current_location === 'OUT_OF_USA'
                           ? TEXT?.OUT_SIDE_USA
                           : TEXT?.USA
-                        : "-"}
+                        : '-'}
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
@@ -141,12 +141,12 @@ const MyProfile = () => {
                       width={16}
                       height={16}
                       alt="MainLogo"
-                      src={"/call.svg"}
+                      src={'/call.svg'}
                     />
                     <p className="text-xs text-meta-light-blue-3">
                       {userDetails?.contact_number
                         ? userDetails?.contact_number
-                        : "-"}
+                        : '-'}
                     </p>
                   </div>
                 </div>
@@ -155,7 +155,7 @@ const MyProfile = () => {
                     width={16}
                     height={16}
                     alt="MainLogo"
-                    src={"/mail.svg"}
+                    src={'/mail.svg'}
                   />
                   <p className="text-xs text-meta-light-blue-3">
                     {session?.data?.user?.email}
@@ -183,7 +183,7 @@ const MyProfile = () => {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
 
         {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
           <CompanyProfile

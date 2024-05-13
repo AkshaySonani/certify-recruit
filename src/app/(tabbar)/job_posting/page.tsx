@@ -41,8 +41,6 @@ const Page = () => {
         skills: values?.skills.map((el: any) => el?._id),
         working_schedule: values?.working_schedule.map((el: any) => el?.value),
       };
-      console.log('data', data);
-
       API.post(API_CONSTANT.JOB, data)
         .then((res) => {
           toast?.success(
