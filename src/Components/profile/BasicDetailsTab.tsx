@@ -15,20 +15,25 @@ const BasicDetails = ({
   getUserDataApiCall,
 }: any) => {
   const context = useContext(AppContext);
+  console.log(context?.userProfileCount);
 
   const handleSubmit = async (values: any, actions: any) => {
     let obj = {
       ...values,
+      profile_count: {
+        ...context?.profileCount,
+        basic_details: 33,
+      },
     };
+    console.log('obj', obj);
 
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
           getUserDataApiCall();
-        context?.setUserProfileCount(
-            context?.userProfileCount + Number(profileCount),
-          );   const profileCount = calculatePercentage(values, 33);
-         
+          // const profileCount = calculatePercentage(values, 33);
+          context?.setUserProfileCount(res?.data?.data?.profile_count);
+
           actions.setSubmitting(false);
           setActivePage(activePage + 1);
           toast?.success(res?.data?.message || 'Successfully Update Profile');

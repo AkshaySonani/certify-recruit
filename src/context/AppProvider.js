@@ -5,7 +5,7 @@ const AppContext = createContext();
 const AppProvider = ({ children }) => {
   const [userData, setUserData] = useState({});
   const [currentRole, setCurrentRole] = useState("");
-  const [userProfileCount, setUserProfileCount] = useState(0);
+  const [userProfileCount, setUserProfileCount] = useState({});
 
   const valueToShare = {
     userData,

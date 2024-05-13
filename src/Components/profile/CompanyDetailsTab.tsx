@@ -33,15 +33,16 @@ const CompanyDetailsTab = ({
   const handleSubmit = async (values: any, actions: any) => {
     let obj = {
       ...values,
+      profile_count: {
+        ...context?.profileCount,
+        company_details: 33,
+      },
     };
 
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
-          const profileCount = calculatePercentage(values, 33);
-          context?.setUserProfileCount(
-            context?.userProfileCount + Number(profileCount),
-          );
+          context?.setUserProfileCount(res?.data?.data?.profile_count);
           getUserDataApiCall();
           setActivePage(activePage + 1);
           actions.setSubmitting(false);

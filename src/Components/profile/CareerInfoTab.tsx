@@ -10,6 +10,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment, useEffect, useState } from 'react';
 import { API_CONSTANT } from '@/constant/ApiConstant';
+import AutoComplete from '../Autocomplete';
+import useDebounce from '@/hooks/useDebounce';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -23,7 +25,9 @@ const CareerInfoTab = ({
 }: any) => {
   const [isFresher, setIsFresher] = useState(userDetails?.is_fresher);
   const [active, setActive] = useState(0);
-
+  const [cityQuery, setCityQuery] = useState('');
+  const [cities, setCities] = useState([]);
+  const debouncedSearchCity = useDebounce(cityQuery);
   const handleSubmit = async (values: any, actions: any) => {
     const obj = {
       ...values,
@@ -43,23 +47,6 @@ const CareerInfoTab = ({
       });
   };
 
-  // const validationSchema = Yup.object().shape({
-  //   total_experiences:
-  //     isFresher === true
-  //       ? Yup.array()
-  //       : Yup.array().of(
-  //           Yup.object().shape({
-  //             month: Yup.string()
-  //               .optional()
-  //               .matches(
-  //                 /(^0?[1-9]$)|(^1[0-2]$)$/,
-  //                 'Invalid Month,insert must between 1 to 12',
-  //               ),
-  //             reason_for_leaving: Yup.string(),
-  //           }),
-  //         ),
-  // });
-
   const validationSchema = Yup.object().shape({
     total_experiences: Yup.array().of(
       Yup.object().shape({
@@ -75,6 +62,23 @@ const CareerInfoTab = ({
     ),
   });
 
+  const searchCityApi = (search: any) => {
+    let obj = {
+      searchText: search,
+    };
+    API.post(API_CONSTANT?.CITIES, obj)
+      .then((res) => {
+        setCities(res?.data?.data);
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
+  };
+  useEffect(() => {
+    if (debouncedSearchCity !== '') {
+      searchCityApi(debouncedSearchCity);
+    }
+  }, [debouncedSearchCity]);
   useEffect(() => {
     setActive(formik?.values?.total_experiences?.length > 0 ? 2 : 1);
     setIsFresher(formik?.values?.total_experiences?.length > 0 ? false : true);
@@ -245,60 +249,19 @@ const CareerInfoTab = ({
                         </div>
                         <div className="mt-1 flex w-full gap-3">
                           <div className="w-1/2">
-                            <Menu as="div" className="relative">
-                              <Menu.Button className="relative mt-2 flex min-h-[50px] w-full appearance-none items-center justify-between rounded-2xl border border-meta-light-blue-1 bg-white py-3 pl-5 pr-[11px] outline-none transition">
-                                <p>
-                                  {list?.location === null
-                                    ? 'Select location'
-                                    : list?.location?.name}
-                                </p>
-                                <Image
-                                  alt="Icon"
-                                  width={14}
-                                  height={14}
-                                  src={'/dashboard/SelectDown.svg'}
-                                />
-                              </Menu.Button>
-                              <Transition
-                                as={Fragment}
-                                leave="transition ease-in duration-75"
-                                leaveTo="transform opacity-0 scale-95"
-                                enter="transition ease-out duration-100"
-                                enterFrom="transform opacity-0 scale-95"
-                                enterTo="transform opacity-100 scale-100"
-                                leaveFrom="transform opacity-100 scale-100"
-                              >
-                                <Menu.Items className="mt- absolute right-0 z-30 w-full origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                  <div>
-                                    {cityData?.map((el: any) => {
-                                      return (
-                                        <Menu.Item>
-                                          {({ active }) => (
-                                            <div
-                                              onClick={() =>
-                                                handleChangeMenu(
-                                                  index,
-                                                  el,
-                                                  'location',
-                                                )
-                                              }
-                                              className={classNames(
-                                                active
-                                                  ? 'bg-meta-blue-1 text-white'
-                                                  : 'text-gray-900',
-                                                'block px-4 py-2 text-[14px] capitalize',
-                                              )}
-                                            >
-                                              {el?.name}
-                                            </div>
-                                          )}
-                                        </Menu.Item>
-                                      );
-                                    })}
-                                  </div>
-                                </Menu.Items>
-                              </Transition>
-                            </Menu>
+                            <AutoComplete
+                              value={list?.location}
+                              filterArr={cities}
+                              className="!py-[11.2px]"
+                              query={cityQuery}
+                              disabled={false}
+                              setQuery={setCityQuery}
+                              name={'location'}
+                              placeholder="Search location"
+                              handleChange={(e: any) =>
+                                handleChangeMenu(index, el, 'location')
+                              }
+                            />
                             {formik?.touched?.total_experiences?.[index]
                               ?.location &&
                               formik.errors.total_experiences?.[index]
