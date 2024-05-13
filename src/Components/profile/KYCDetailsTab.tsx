@@ -18,8 +18,8 @@ const KYCDetailsTab = ({
     let obj = {
       ...values,
       profile_count: {
-        ...context?.profileCount,
-        company_details: 33,
+        ...context?.userProfileCount,
+        kyc_details: 33,
       },
     };
 
@@ -39,12 +39,14 @@ const KYCDetailsTab = ({
   };
 
   const validationSchema = Yup.object().shape({
-    pan_number: Yup.string().matches(
-      /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/,
-      // /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
-      'Invalid pan number',
-    ),
-    name_on_pan: Yup.string(),
+    pan_number: Yup.string()
+      .required('Pan number is required')
+      .matches(
+        /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/,
+        // /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
+        'Invalid pan number',
+      ),
+    name_on_pan: Yup.string().required('Name of pan is required'),
   });
 
   const currentValidationSchema = validationSchema;

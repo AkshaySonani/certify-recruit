@@ -15,13 +15,12 @@ const BasicDetails = ({
   getUserDataApiCall,
 }: any) => {
   const context = useContext(AppContext);
-  console.log(context?.userProfileCount);
 
   const handleSubmit = async (values: any, actions: any) => {
     let obj = {
       ...values,
       profile_count: {
-        ...context?.profileCount,
+        ...context?.userProfileCount,
         basic_details: 33,
       },
     };

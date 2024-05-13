@@ -34,8 +34,8 @@ const CompanyDetailsTab = ({
     let obj = {
       ...values,
       profile_count: {
-        ...context?.profileCount,
-        company_details: 33,
+        ...context?.userProfileCount,
+        company_details: 34,
       },
     };
 
@@ -55,15 +55,34 @@ const CompanyDetailsTab = ({
   };
 
   const validationSchema = Yup.object().shape({
-    company_name: Yup.string(),
-    company_type: Yup.string(),
-    owner: Yup.string(),
-    street_address: Yup.string(),
-    website_url: Yup.string().matches(
-      /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
-      'Invalid Website url.',
-    ),
-    pincode: Yup.string().matches(/^[1-9][0-9]{5}$/, 'Invalid zipcode.'),
+    company_name: Yup.string().required('Company name is required'),
+    company_type: Yup.string().required('Company type is required'),
+    owner: Yup.string().required('owner is required'),
+    street_address: Yup.string().required('Address is required'),
+    website_url: Yup.string()
+      .required('Website url name is required')
+      .matches(
+        /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
+        'Invalid Website url.',
+      ),
+    pincode: Yup.string()
+      .required('zipcode is required')
+      .matches(/^[1-9][0-9]{5}$/, 'Invalid zipcode.'),
+    city: Yup.object()
+      .shape({
+        _id: Yup.string().required('city is required'),
+      })
+      .nonNullable('City is required'),
+    state: Yup.object()
+      .shape({
+        _id: Yup.string().required('State is required'),
+      })
+      .nonNullable('State is required'),
+    country: Yup.object()
+      .shape({
+        _id: Yup.string().required('country is required'),
+      })
+      .nonNullable('country is required'),
   });
 
   const currentValidationSchema = validationSchema;
