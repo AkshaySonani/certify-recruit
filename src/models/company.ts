@@ -31,6 +31,13 @@ const companySchema = new mongoose.Schema({
       'Nidhi Companies',
     ],
   },
+  profile_count: {
+    type: {
+      kyc_details: 0,
+      basic_details: 0,
+      company_details: 0,
+    },
+  },
   // company_type: {
   //   type: mongoose.Schema.Types.ObjectId,
   //   ref: 'Category',
@@ -46,7 +53,6 @@ const companySchema = new mongoose.Schema({
     type: String,
   },
   website_url: {
-    // unique: true,
     type: String,
     validate: {
       validator: function (v: any) {
