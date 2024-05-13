@@ -1,15 +1,19 @@
-'use client';
-import { createContext, useState } from 'react';
+"use client";
+import { createContext, useState } from "react";
 const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
   const [userData, setUserData] = useState({});
-  const [currentRole, setCurrentRole] = useState('');
+  const [currentRole, setCurrentRole] = useState("");
+  const [userProfileCount, setUserProfileCount] = useState(0);
+
   const valueToShare = {
     userData,
     setUserData,
     currentRole,
     setCurrentRole,
+    userProfileCount,
+    setUserProfileCount,
   };
 
   return (

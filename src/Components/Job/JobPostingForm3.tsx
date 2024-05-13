@@ -1,41 +1,100 @@
-'use client';
-import Image from 'next/image';
-import dynamic from 'next/dynamic';
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
-import React, { useState } from 'react';
-import 'react-quill/dist/quill.snow.css';
-import { useRouter } from 'next/navigation';
-import { TEXT } from '@/service/Helper';
-import MultipleSelectBox from '../MultipleSelectBox';
+"use client";
+import Image from "next/image";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import React, { useEffect, useState } from "react";
+import "react-quill/dist/quill.snow.css";
+import { useRouter } from "next/navigation";
+import { TEXT } from "@/service/Helper";
+import MultipleSelectBox from "../MultipleSelectBox";
+import API from "@/service/ApiService";
+import { API_CONSTANT } from "@/constant/ApiConstant";
+import { toast } from "react-toastify";
+import { components } from "react-select";
+import useDebounce from "@/hooks/useDebounce";
 
-const JobPostingForm3 = ({
-  formik,
-  skillData,
-}: {
-  formik: any;
-  skillData: any;
-}) => {
+const JobPostingForm3 = ({ formik }: { formik: any; skillData: any }) => {
   const router = useRouter();
-
   const [hireMultiple, setHireMultiple] = useState(false);
+  const [skillData, setSkillData] = useState([]);
+  const [skillQuery, setSkillQuery] = useState("");
+  const debouncedSearchSkill = useDebounce(skillQuery);
 
   const formattedValue =
     formik?.values?.vacancy < 10
       ? `0${formik?.values?.vacancy}`
       : `${formik?.values?.vacancy}`;
+
   const handleIncrement = () =>
-    formik?.setFieldValue('vacancy', formik?.values?.vacancy + 1);
+    formik?.setFieldValue("vacancy", formik?.values?.vacancy + 1);
+
   const handleDecrement = () =>
     formik?.setFieldValue(
-      'vacancy',
-      formik?.values?.vacancy > 1 ? formik?.values?.vacancy - 1 : 1,
+      "vacancy",
+      formik?.values?.vacancy > 1 ? formik?.values?.vacancy - 1 : 1
     );
+
   const handleClose = (list: any) => {
     const arr = formik?.values?.skills.filter((el: any) => {
       return el !== list;
     });
-    formik?.setFieldValue('skills', arr);
+    formik?.setFieldValue("skills", arr);
   };
+
+  const searchSkillApi = (search: any) => {
+    let obj = {
+      searchText: search,
+    };
+    API.post(API_CONSTANT?.CATEGORY, obj)
+      .then((res) => {
+        let skiilArr = res?.data?.data?.map((list: any) => {
+          return {
+            _id: list?._id,
+            label: list?.subcategory,
+            value: list?.subcategory,
+          };
+        });
+        setSkillData(skiilArr);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+  useEffect(() => {
+    if (debouncedSearchSkill !== "") {
+      searchSkillApi(debouncedSearchSkill);
+    }
+  }, [debouncedSearchSkill]);
+
+  const onSearchSkill = (search: any) => {
+    setSkillQuery(search);
+  };
+
+  const Placeholder = (props: any) => {
+    return <components.Placeholder {...props} />;
+  };
+
+  const DropdownIndicator = (props: any) => {
+    return (
+      <components.DropdownIndicator {...props}>
+        <Image alt="Plus" width={20} height={19} src={"/job/Plus.svg"} />
+      </components.DropdownIndicator>
+    );
+  };
+  const SkillMenuStyle = {
+    control: (base: any, state: any) => ({
+      ...base,
+      border: "2px solid #dce7ff",
+      width: state?.isFocused ? "100%" : "128px",
+      borderRadius: "8px",
+      // This line disable the blue border
+
+      "&:hover": {
+        border: "2px solid #dce7ff",
+      },
+    }),
+  };
+
   return (
     <div>
       <div className="flex h-full w-full flex-wrap items-start justify-between lg:flex-nowrap">
@@ -47,19 +106,25 @@ const JobPostingForm3 = ({
             {TEXT?.TELL_US_ABOUT_THE_ROLE}
           </p>
         </div>
-        <div className="job_html_editor mb-5 mt-3 flex w-full flex-col items-start lg:mt-0 lg:w-1/2">
-          <div>
+        <div className="job_html_editor mt-3 w-full items-start lg:mt-0 lg:w-1/2">
+          <div className="w-full">
             <ReactQuill
               theme="snow"
+              modules={{
+                toolbar: [
+                  ["bold", "italic"],
+                  [{ list: "ordered" }, { list: "bullet" }],
+                ],
+              }}
               value={formik?.values?.description}
               className="!h-full !w-full !rounded-lg"
-              onChange={(e: any) => formik.setFieldValue('description', e)}
+              onChange={(e: any) => formik.setFieldValue("description", e)}
             />
           </div>
+          {formik.touched.description && formik.errors.description && (
+            <div className="error mt-2">{formik.errors.description}</div>
+          )}
         </div>
-        {formik.touched.description && formik.errors.description && (
-          <div className="error mt-2">{formik.errors.description}</div>
-        )}
       </div>
       <div className="my-6 border border-meta-light-blue-1" />
 
@@ -74,23 +139,12 @@ const JobPostingForm3 = ({
         </div>
 
         <div className="mt-3 flex w-full flex-col items-start lg:mt-0 lg:w-1/2">
-          <div className="mt-3 flex w-full flex-wrap items-start lg:mt-0">
-            <MultipleSelectBox
-              name="skills"
-              form={formik}
-              isMulti={true}
-              className="w-full"
-              options={skillData}
-              placeholder="Add Skill."
-              value={formik?.values?.skills}
-            />
-          </div>
           <div className="mt-4 flex flex-wrap items-start justify-start text-start sm:flex-nowrap">
             {formik?.values?.skills?.map((ele: any, i: any) => {
               return (
-                <div className="mb-2 mr-3 flex items-center rounded-lg border-2 border-meta-light-blue-1 px-2 py-1">
+                <div className="mb-2 mr-3 flex items-center rounded-lg border-2 border-meta-light-blue-1 px-2 py-1 h-10">
                   <p className="whitespace-nowrap text-sm font-medium text-meta-light-blue-3">
-                    {ele}
+                    {ele?.label}
                   </p>
                   <div
                     className="cursor-pointer "
@@ -101,12 +155,26 @@ const JobPostingForm3 = ({
                       height={19}
                       alt="Preview"
                       className="ml-3"
-                      src={'/job/Close.svg'}
+                      src={"/job/Close.svg"}
                     />
                   </div>
                 </div>
               );
             })}
+          </div>
+          <div className="mt-3 flex w-full flex-wrap items-start lg:mt-0">
+            <MultipleSelectBox
+              name="skills"
+              form={formik}
+              isMulti={true}
+              style={SkillMenuStyle}
+              className="w-full border-1 border-meta-light-blue-1 "
+              placeholder="Add"
+              options={skillData}
+              value={formik?.values?.skills}
+              onKeyDown={(e: any) => onSearchSkill(e)}
+              components={{ Placeholder, DropdownIndicator }}
+            />
           </div>
         </div>
       </div>
@@ -124,6 +192,7 @@ const JobPostingForm3 = ({
         <div className="mt-3 flex w-full flex-col items-start lg:mt-0 lg:w-1/2">
           <div className="flex min-h-12 w-48 justify-between rounded-lg border-2 border-meta-light-blue-1">
             <button
+              type="button"
               className="w-1/3 px-3"
               disabled={!hireMultiple}
               onClick={handleIncrement}
@@ -132,13 +201,14 @@ const JobPostingForm3 = ({
                 width={25}
                 height={25}
                 alt="Preview"
-                src={'/job/Plus.svg'}
+                src={"/job/Plus.svg"}
               />
             </button>
             <div className="flex w-2/3 items-center justify-center border-x-2 border-x-meta-light-blue-1 text-base font-medium text-meta-light-blue-3">
               <p>{formattedValue}</p>
             </div>
             <button
+              type="button"
               className="w-1/3 px-3"
               disabled={!hireMultiple}
               onClick={handleDecrement}
@@ -147,7 +217,7 @@ const JobPostingForm3 = ({
                 width={25}
                 height={25}
                 alt="Preview"
-                src={'/job/Minus.svg'}
+                src={"/job/Minus.svg"}
               />
             </button>
           </div>
@@ -155,6 +225,7 @@ const JobPostingForm3 = ({
             <input
               type="checkbox"
               id="hire-multiple"
+              className=""
               value={hireMultiple as any}
               onChange={() => setHireMultiple(!hireMultiple)}
             />

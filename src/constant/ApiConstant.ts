@@ -10,6 +10,8 @@ const API_CONSTANT = {
   LANGUAGE: "/language",
   UPLOAD_FILE: "/s3-upload",
   DELETE_RESUME: "/delete-resume",
+  STATES: "/states",
+  COUNTRY: "/country",
 };
 
 export { API_CONSTANT };

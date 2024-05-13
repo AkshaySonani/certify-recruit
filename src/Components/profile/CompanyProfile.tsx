@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { TEXT } from '@/service/Helper';
-import KYCDetailsTab from './KYCDetailsTab';
-import BasicDetails from './BasicDetailsTab';
-import CompanyDetailsTab from './CompanyDetailsTab';
+import { useState } from "react";
+import { TEXT } from "@/service/Helper";
+import KYCDetailsTab from "./KYCDetailsTab";
+import BasicDetails from "./BasicDetailsTab";
+import CompanyDetailsTab from "./CompanyDetailsTab";
 
 const TAB = [
   {
@@ -30,8 +30,8 @@ const CompanyProfile = ({ userDetails, session, getUserDataApiCall }: any) => {
               onClick={() => setActivePage(list.id)}
               className={`cursor-pointer text-sm font-medium ${
                 activePage === list?.id
-                  ? 'text-meta-blue-1'
-                  : 'text-meta-light-blue-3'
+                  ? "text-meta-blue-1"
+                  : "text-meta-light-blue-3"
               }`}
             >
               {list?.label}

@@ -1,32 +1,28 @@
-import Image from 'next/image';
-import MultipleSelectBox from '../MultipleSelectBox';
-import { TEXT } from '@/service/Helper';
-import API from '@/service/ApiService';
-import { API_CONSTANT } from '@/constant/ApiConstant';
-import * as Yup from 'yup';
-import { useFormik, Field } from 'formik';
-import { toast } from 'react-toastify';
-import 'react-datepicker/dist/react-datepicker.css';
-import Button from '../Button';
-
+import Image from "next/image";
+import MultipleSelectBox from "../MultipleSelectBox";
+import { TEXT } from "@/service/Helper";
+import API from "@/service/ApiService";
+import { API_CONSTANT } from "@/constant/ApiConstant";
+import * as Yup from "yup";
+import { useFormik, Field } from "formik";
+import { toast } from "react-toastify";
+import "react-datepicker/dist/react-datepicker.css";
+import Button from "../Button";
+import { useEffect, useState } from "react";
+import useDebounce from "@/hooks/useDebounce";
+import { components } from "react-select";
 const KeySkillTab = ({
   userDetails,
   setActivePage,
   activePage,
-  skillData,
   getUserDataApiCall,
 }: any) => {
+  const [skillData, setSkillData] = useState([]);
+  const [skillQuery, setSkillQuery] = useState("");
+  const debouncedSearchSkill = useDebounce(skillQuery);
   const handleSubmit = async (values: any, actions: any) => {
-    let pushArray = [] as any;
-    skillData?.filter((el: any) => {
-      values?.skills?.map((list: any) => {
-        if (list === el?.value) {
-          pushArray.push({ _id: el?._id });
-        }
-      });
-    });
     const obj = {
-      skills: pushArray,
+      skills: values?.skills.map((el: any) => el?._id),
     };
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
@@ -34,11 +30,11 @@ const KeySkillTab = ({
           getUserDataApiCall();
           actions.setSubmitting(false);
           setActivePage(activePage + 1);
-          toast?.success(res?.data?.message || 'Successfully Update Profile');
+          toast?.success(res?.data?.message || "Successfully Update Profile");
         }
       })
       .catch((error) => {
-        toast.error(error || 'Something want wrong');
+        toast.error(error || "Something want wrong");
       });
   };
 
@@ -59,7 +55,47 @@ const KeySkillTab = ({
     const arr = formik?.values?.skills.filter((el: any) => {
       return el !== list;
     });
-    formik?.setFieldValue('skills', arr);
+    formik?.setFieldValue("skills", arr);
+  };
+  const searchSkillApi = (search: any) => {
+    let obj = {
+      searchText: search,
+    };
+    API.post(API_CONSTANT?.CATEGORY, obj)
+      .then((res) => {
+        let skiilArr = res?.data?.data?.map((list: any) => {
+          return {
+            _id: list?._id,
+            label: list?.subcategory,
+            value: list?.subcategory,
+          };
+        });
+        setSkillData(skiilArr);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+  useEffect(() => {
+    if (debouncedSearchSkill !== "") {
+      searchSkillApi(debouncedSearchSkill);
+    }
+  }, [debouncedSearchSkill]);
+
+  const onSearchSkill = (search: any) => {
+    setSkillQuery(search);
+  };
+
+  const Placeholder = (props: any) => {
+    return <components.Placeholder {...props} />;
+  };
+
+  const DropdownIndicator = (props: any) => {
+    return (
+      <components.DropdownIndicator {...props}>
+        <Image alt="Plus" width={20} height={19} src={"/job/Plus.svg"} />
+      </components.DropdownIndicator>
+    );
   };
 
   const MultiboxStyle = {
@@ -68,10 +104,10 @@ const KeySkillTab = ({
       border: state.isFocused ? 1 : 1,
       // This line disable the blue border
       boxShadow: state.isFocused ? 0 : 0,
-      paddingLeft: '20px',
-      paddingTop: '0px',
-      paddingBottom: '0px',
-      '&:hover': {
+      paddingLeft: "20px",
+      paddingTop: "0px",
+      paddingBottom: "0px",
+      "&:hover": {
         border: state.isFocused ? 0 : 0,
       },
     }),
@@ -99,6 +135,8 @@ const KeySkillTab = ({
                 placeholder="Add your Skill"
                 value={formik?.values?.skills}
                 className="w-full !border-meta-light-blue-1 "
+                onKeyDown={(e: any) => onSearchSkill(e)}
+                components={{ Placeholder, DropdownIndicator }}
               />
             </div>
             {formik.touched.skills && formik.errors.skills && (
@@ -120,7 +158,7 @@ const KeySkillTab = ({
                         height={19}
                         alt="Preview"
                         className="ml-3"
-                        src={'/job/Close.svg'}
+                        src={"/job/Close.svg"}
                       />
                     </div>
                   </div>

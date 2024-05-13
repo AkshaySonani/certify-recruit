@@ -1,53 +1,33 @@
-import { FieldProps } from "formik";
 import React from "react";
 import Select from "react-select";
 
-interface Option {
-  label: string;
-  value: string;
-}
-
 export const MultipleSelectBox = ({
-  className,
-  placeholder,
-  field,
   form,
   name,
+  field,
   style,
   value,
   options,
   isMulti = false,
+  className,
+  onKeyDown,
+  placeholder,
+  components,
 }: any) => {
-  const onChange = (option: any) => {
-    form.setFieldValue(
-      name,
-      isMulti
-        ? (option as Option[]).map((item: Option) => item?.value)
-        : (option as Option).value
-    );
-  };
-
-  const getValue = () => {
-    if (options) {
-      return isMulti
-        ? options.filter((option: any) => value.indexOf(option.value) >= 0)
-        : options.find((option: any) => option.value === value);
-    } else {
-      return isMulti ? [] : ("" as any);
-    }
-  };
-
+  const onChange = (option: any) => form.setFieldValue(name, option);
   return (
     <Select
-      className={className}
-      controlShouldRenderValue={false}
       name={name}
+      value={value}
       styles={style}
-      value={getValue()}
-      onChange={onChange}
-      placeholder={placeholder}
       options={options}
       isMulti={isMulti}
+      onChange={onChange}
+      className={className}
+      components={components}
+      placeholder={placeholder}
+      controlShouldRenderValue={false}
+      onKeyDown={(e) => onKeyDown(e?.target?.value)}
     />
   );
 };

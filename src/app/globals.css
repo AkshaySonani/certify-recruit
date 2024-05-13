@@ -22,7 +22,7 @@
   }
 }
 
-.job_html_editor .quill .ql-container{
+.job_html_editor .quill .ql-container {
   height: 272px !important;
 }
 
@@ -46,7 +46,19 @@
 .react-datepicker-popper {
   z-index: 999 !important;
 }
-
+.job_html_editor .ql-toolbar.ql-snow {
+  border: 1px solid #dce7ff !important;
+  border-radius: 8px !important;
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+.job_html_editor .ql-container.ql-snow {
+  border: 1px solid #dce7ff !important;
+  border-top: 0px !important;
+  border-radius: 8px !important;
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+}
 @keyframes spin {
   from {
     transform: rotate(0deg);

@@ -1,10 +1,12 @@
-import { TEXT } from '@/service/Helper';
-import API from '@/service/ApiService';
-import { API_CONSTANT } from '@/constant/ApiConstant';
-import * as Yup from 'yup';
-import { useFormik, Field } from 'formik';
-import AutoComplete from '../Autocomplete';
-import { toast } from 'react-toastify';
+import { TEXT } from "@/service/Helper";
+import API from "@/service/ApiService";
+import { API_CONSTANT } from "@/constant/ApiConstant";
+import * as Yup from "yup";
+import { useFormik, Field } from "formik";
+import AutoComplete from "../Autocomplete";
+import { toast } from "react-toastify";
+import { useContext } from "react";
+import AppContext from "@/context/AppProvider";
 const BasicDetails = ({
   session,
   activePage,
@@ -12,6 +14,18 @@ const BasicDetails = ({
   setActivePage,
   getUserDataApiCall,
 }: any) => {
+  const context = useContext(AppContext);
+
+  const calculatePercentage = (values: any) => {
+    const tab1Complete = Object.values(values).filter(
+      (val) => val !== ""
+    ).length;
+    const totalFields = Object.keys(values).length;
+    const totalCompleted = tab1Complete;
+    const percentage = (totalCompleted / totalFields) * 33;
+    return percentage.toFixed(2);
+  };
+
   const handleSubmit = async (values: any, actions: any) => {
     let obj = {
       ...values,
@@ -21,33 +35,37 @@ const BasicDetails = ({
       .then((res) => {
         if (res?.data?.status === 200) {
           getUserDataApiCall();
+          const test = calculatePercentage(values);
+          console.log("🚀 ~ .then ~ test:", test);
           actions.setSubmitting(false);
           setActivePage(activePage + 1);
-          toast?.success(res?.data?.message || 'Successfully Update Profile');
+          toast?.success(res?.data?.message || "Successfully Update Profile");
         }
       })
       .catch((error) => {
-        toast.error(error || 'Something want wrong');
+        toast.error(error || "Something want wrong");
       });
   };
 
   const validationSchema = Yup.object().shape({
-    contact_number: Yup.string().matches(
-      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
-      'invalid contact number',
-    ),
-    user_name: Yup.string(),
-    role: Yup.string(),
+    contact_number: Yup.string()
+      .required("Contact number is required")
+      .matches(
+        /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
+        "invalid contact number"
+      ),
+    user_name: Yup.string().required("User name is required"),
+    role: Yup.string().required("Role is required"),
   });
 
   const currentValidationSchema = validationSchema;
 
-  const formik = useFormik({
+  const formik: any = useFormik({
     initialValues: {
-      contact_number: userDetails?.contact_number ?? '',
-      user_name: userDetails?.user_name ?? '',
-      role: userDetails?.role ?? '',
-      contact_email: userDetails?.contact_email ?? '',
+      contact_number: userDetails?.contact_number ?? "",
+      user_name: userDetails?.user_name ?? "",
+      role: userDetails?.role ?? "",
+      contact_email: session?.user?.email ?? "",
     },
     enableReinitialize: true,
     validationSchema: currentValidationSchema,

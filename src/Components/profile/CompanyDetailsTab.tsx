@@ -1,52 +1,46 @@
-import { TEXT } from '@/service/Helper';
-import API from '@/service/ApiService';
-import { API_CONSTANT } from '@/constant/ApiConstant';
-import * as Yup from 'yup';
-import { useFormik, Field } from 'formik';
-import AutoComplete from '../Autocomplete';
-import { toast } from 'react-toastify';
-import { Fragment, useState } from 'react';
-import { Menu, Transition } from '@headlessui/react';
-import Image from 'next/image';
-import { COMPANY_TYPE } from '@/constant/Enum';
-const city = [
-  { _id: '662ccb4a52f81a3100514885', name: 'surat' },
-  { _id: '662a8768683fb48bab4be172', name: 'Ahemedabad' },
-  { _id: '662a8768683fb48bab4be173', name: 'Baroda' },
-  { _id: '662a8768683fb48bab4be174', name: 'Rajkot' },
-  { _id: '662a8768683fb48bab4be175', name: 'Botad' },
-  { _id: '662a8768683fb48bab4be176', name: 'pune' },
-];
+import { TEXT } from "@/service/Helper";
+import API from "@/service/ApiService";
+import { API_CONSTANT } from "@/constant/ApiConstant";
+import * as Yup from "yup";
+import { useFormik, Field } from "formik";
+import AutoComplete from "../Autocomplete";
+import { toast } from "react-toastify";
+import { Fragment, useEffect, useState } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import Image from "next/image";
+import { COMPANY_TYPE } from "@/constant/Enum";
+import useDebounce from "@/hooks/useDebounce";
 
-const Country = [
-  { _id: '662a83d8683fb48bab4bcc70', name: 'India' },
-  { _id: '662a83d8683fb48bab4bcc71', name: 'Canada' },
-  { _id: '662a83d8683fb48bab4bcc72', name: 'Uk' },
-  { _id: '662a83d8683fb48bab4bcc73', name: 'UK' },
-  { _id: '662a83d8683fb48bab4bcc74', name: 'USA' },
-  { _id: '662a83d8683fb48bab4bcc75', name: 'Germany' },
-];
-
-const State = [
-  { _id: '662a873b683fb48bab4bcd70', name: 'Gujarat' },
-  { _id: '662a873b683fb48bab4bcd71', name: 'Maharashtra' },
-  { _id: '662a873b683fb48bab4bcd72', name: 'Bhopal' },
-  { _id: '662a873b683fb48bab4bcd73', name: 'Bamyan' },
-  { _id: '662a873b683fb48bab4bcd74', name: 'Badakhshan' },
-  { _id: '662a873b683fb48bab4bcd75', name: 'La Rioja' },
-];
 const CompanyDetailsTab = ({
   activePage,
   userDetails,
   setActivePage,
   getUserDataApiCall,
 }: any) => {
-  const [query, setQuery] = useState('');
+  const [stateQuery, setStateQuery] = useState("");
+  const [cityQuery, setCityQuery] = useState("");
+  const [cities, setCities] = useState([]);
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const debouncedSearchCity = useDebounce(cityQuery);
+  const debouncedSearchState = useDebounce(stateQuery);
   function classNames(...classes: any) {
-    return classes.filter(Boolean).join('');
+    return classes.filter(Boolean).join("");
   }
 
+  const calculatePercentage = (values: any) => {
+    const tab1Complete = Object.values(values).filter(
+      (val) => val !== ""
+    ).length;
+    const totalFields = Object.keys(values).length;
+    const totalCompleted = tab1Complete;
+    const percentage = (totalCompleted / totalFields) * 33;
+    return percentage.toFixed(2);
+  };
+
   const handleSubmit = async (values: any, actions: any) => {
+    console.log("values", values);
+
     let obj = {
       ...values,
     };
@@ -54,15 +48,17 @@ const CompanyDetailsTab = ({
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
-          console.log('res', res);
-          getUserDataApiCall();
+          console.log("res", res);
+          const test = calculatePercentage(values);
+          console.log("test", test);
+          // getUserDataApiCall();
           setActivePage(activePage + 1);
           actions.setSubmitting(false);
-          toast?.success(res?.data?.message || 'Successfully Update Profile');
+          toast?.success(res?.data?.message || "Successfully Update Profile");
         }
       })
       .catch((error) => {
-        toast.error(error || 'Something want wrong');
+        toast.error(error || "Something want wrong");
       });
   };
 
@@ -73,23 +69,21 @@ const CompanyDetailsTab = ({
     street_address: Yup.string(),
     website_url: Yup.string().matches(
       /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
-      'Invalid Website url.',
+      "Invalid Website url."
     ),
-    pincode: Yup.string().matches(/^[1-9][0-9]{5}$/, 'Invalid zipcode.'),
+    pincode: Yup.string().matches(/^[1-9][0-9]{5}$/, "Invalid zipcode."),
   });
 
   const currentValidationSchema = validationSchema;
 
   const formik: any = useFormik({
     initialValues: {
-      contact_email: userDetails?.contact_email ?? '',
-      description: userDetails?.description ?? '',
-      pincode: userDetails?.pincode ?? '',
-      owner: userDetails?.owner ?? '',
-      company_name: userDetails?.company_name ?? '',
-      company_type: userDetails?.company_type ?? '',
-      street_address: userDetails?.street_address ?? '',
-      website_url: userDetails?.website_url ?? '',
+      pincode: userDetails?.pincode ?? "",
+      owner: userDetails?.owner ?? "",
+      company_name: userDetails?.company_name ?? "",
+      company_type: userDetails?.company_type ?? "",
+      street_address: userDetails?.street_address ?? "",
+      website_url: userDetails?.website_url ?? "",
       city: userDetails?.city ?? null,
       state: userDetails?.state ?? null,
       country: userDetails?.country ?? null,
@@ -98,19 +92,57 @@ const CompanyDetailsTab = ({
     validationSchema: currentValidationSchema,
     onSubmit: handleSubmit,
   });
-  let filteredArr = [];
-  const searchItems = (arr: any) => {
-    filteredArr =
-      query === ''
-        ? arr
-        : arr.filter((list: any) =>
-            list.name
-              .toLowerCase()
-              .replace(/\s+/g, '')
-              .includes(query.toLowerCase().replace(/\s+/g, '')),
-          );
-    return filteredArr;
+
+  useEffect(() => {
+    getCountryApi();
+  }, []);
+
+  useEffect(() => {
+    if (debouncedSearchCity !== "") {
+      searchCityApi(debouncedSearchCity);
+    }
+  }, [debouncedSearchCity]);
+
+  useEffect(() => {
+    if (debouncedSearchState !== "") {
+      searchStateApi(debouncedSearchState);
+    }
+  }, [debouncedSearchState]);
+
+  const searchCityApi = (search: any) => {
+    let obj = {
+      searchText: search,
+    };
+    API.post(API_CONSTANT?.CITIES, obj)
+      .then((res) => {
+        setCities(res?.data?.data);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
   };
+  const searchStateApi = (search: any) => {
+    let obj = {
+      searchText: search,
+    };
+    API.post(API_CONSTANT?.STATES, obj)
+      .then((res) => {
+        setStates(res?.data?.data);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+  const getCountryApi = () => {
+    API.get(API_CONSTANT?.COUNTRY)
+      .then((res) => {
+        setCountries(res?.data?.data);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="mt-5 flex w-full gap-3 pl-9">
@@ -120,15 +152,15 @@ const CompanyDetailsTab = ({
           </label>
           <Menu.Button className="relative z-20 mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
             <p>
-              {formik?.values?.company_type === ''
-                ? 'Select Company type'
+              {formik?.values?.company_type === ""
+                ? "Select Company type"
                 : formik?.values?.company_type}
             </p>
             <Image
               alt="Icon"
               width={14}
               height={14}
-              src={'/dashboard/SelectDown.svg'}
+              src={"/dashboard/SelectDown.svg"}
             />
           </Menu.Button>
           <Transition
@@ -148,13 +180,13 @@ const CompanyDetailsTab = ({
                       {({ active }) => (
                         <div
                           onClick={() =>
-                            formik.setFieldValue('company_type', list)
+                            formik.setFieldValue("company_type", list)
                           }
                           className={classNames(
                             active
-                              ? 'bg-meta-blue-1 text-white'
-                              : 'text-gray-900',
-                            'block px-4 py-2 text-[14px] capitalize',
+                              ? "bg-meta-blue-1 text-white"
+                              : "text-gray-900",
+                            "block px-4 py-2 text-[14px] capitalize"
                           )}
                         >
                           {list}
@@ -238,36 +270,6 @@ const CompanyDetailsTab = ({
           <div className="error">{formik.errors.street_address}</div>
         )}
       </div>
-      <div className="mt-3 flex w-full gap-3 pl-9">
-        <div className="w-1/2">
-          <AutoComplete
-            query={query}
-            name={'state'}
-            setQuery={setQuery}
-            placeholder="Search state"
-            value={formik?.values?.state}
-            filterArr={searchItems(State)}
-            handleChange={(e: any) => formik.setFieldValue('state', e)}
-          />
-          {formik.touched.state && formik.errors.state && (
-            <div className="error">{formik.errors.state}</div>
-          )}
-        </div>
-        <div className="w-1/2">
-          <AutoComplete
-            value={formik?.values?.city}
-            filterArr={searchItems(city)}
-            query={query}
-            setQuery={setQuery}
-            name={'city'}
-            placeholder="Search city"
-            handleChange={(e: any) => formik.setFieldValue('city', e)}
-          />
-          {formik.touched.city && formik.errors.city && (
-            <div className="error">{formik.errors.city}</div>
-          )}
-        </div>
-      </div>
       <div className="mt-3 flex w-full items-center gap-3 pl-9">
         <div className="w-1/2">
           <input
@@ -283,20 +285,100 @@ const CompanyDetailsTab = ({
           )}
         </div>
         <div className="relative w-1/2">
+          <Menu as="div" className="relative  w-full">
+            <Menu.Button className="relative z-20  flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-[9px] pl-5 pr-[11px] outline-none transition">
+              {formik?.values?.country === null ? (
+                <p className="text-meta-gray-1">Select Country</p>
+              ) : (
+                <p>{formik?.values?.country?.name as any}</p>
+              )}
+              <Image
+                alt="Icon"
+                width={14}
+                height={14}
+                src={"/dashboard/SelectDown.svg"}
+              />
+            </Menu.Button>
+            <Transition
+              as={Fragment}
+              leave="transition ease-in duration-75"
+              leaveTo="transform opacity-0 scale-95"
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leaveFrom="transform opacity-100 scale-100"
+            >
+              <Menu.Items className="mt-  absolute right-0 z-30 max-h-[200px] w-full origin-top-right divide-y divide-gray-200 overflow-auto rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div>
+                  {countries?.map((list: any) => {
+                    return (
+                      <Menu.Item>
+                        {({ active }) => (
+                          <div
+                            onClick={() => {
+                              formik.setFieldValue("country", list);
+                              formik.setFieldValue("city", null);
+                              formik.setFieldValue("state", null);
+                            }}
+                            className={classNames(
+                              active
+                                ? "bg-meta-blue-1 text-white"
+                                : "text-gray-900",
+                              "block px-4 py-2 text-[14px] capitalize hover:text-white"
+                            )}
+                          >
+                            {list?.name}
+                          </div>
+                        )}
+                      </Menu.Item>
+                    );
+                  })}
+                </div>
+              </Menu.Items>
+            </Transition>
+            {formik.touched.country && formik.errors.country && (
+              <div className="error">{formik.errors.country}</div>
+            )}
+          </Menu>
+        </div>
+      </div>
+      <div className="mt-3 flex w-full gap-3 pl-9">
+        <div className="w-1/2">
           <AutoComplete
-            value={formik?.values?.country}
-            filterArr={searchItems(Country)}
-            query={query}
-            setQuery={setQuery}
-            name={'country'}
-            placeholder="Search Country"
-            handleChange={(e: any) => formik.setFieldValue('country', e)}
+            query={stateQuery}
+            disabled={formik.values.country === null ? true : false}
+            name={"state"}
+            setQuery={setStateQuery}
+            className="!py-[11.2px]"
+            placeholder="Search state"
+            value={formik?.values?.state}
+            filterArr={states}
+            handleChange={(e: any) => {
+              formik.setFieldValue("state", e);
+            }}
           />
-          {formik.touched.country && formik.errors.country && (
-            <div className="error">{formik.errors.country}</div>
+          {formik.touched.state && formik.errors.state && (
+            <div className="error">{formik.errors.state}</div>
+          )}
+        </div>
+        <div className="w-1/2">
+          <AutoComplete
+            value={formik?.values?.city}
+            disabled={formik.values.country === null ? true : false}
+            filterArr={cities}
+            className="!py-[11.2px]"
+            query={cityQuery}
+            setQuery={setCityQuery}
+            name={"city"}
+            placeholder="Search city"
+            handleChange={(e: any) => formik.setFieldValue("city", e)}
+          />
+          {formik.touched.city && formik.errors.city && (
+            <div className="error">{formik.errors.city}</div>
           )}
         </div>
       </div>
+
       <div className="mt-8 flex w-full justify-end">
         <button
           type="submit"
