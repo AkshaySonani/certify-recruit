@@ -37,6 +37,7 @@ export const POST = async (req: NextRequest) => {
         company_name,
         company_type,
         contact_email,
+        profile_count,
         contact_number,
         street_address,
       } = await req.json();
