@@ -57,6 +57,7 @@ export const POST = async (req: NextRequest) => {
       name_on_pan && (reqData.name_on_pan = name_on_pan);
       company_name && (reqData.company_name = company_name);
       company_type && (reqData.company_type = company_type);
+      profile_count && (reqData.profile_count = profile_count);
       contact_email && (reqData.contact_email = contact_email);
       contact_number && (reqData.contact_number = contact_number);
       street_address && (reqData.street_address = street_address);
