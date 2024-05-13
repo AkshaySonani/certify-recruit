@@ -38,7 +38,6 @@ function classNames(...classes: any) {
 const Page = (data: any) => {
   const router = useRouter();
   const session = useSession();
-
   const context = useContext(AppContext);
 
   const navigateHandler = (title: string) => {
@@ -49,7 +48,10 @@ const Page = (data: any) => {
     }
   };
 
-  let PROFILE_COUNT = 99;
+  const percentage =
+    context?.userProfileCount?.basic_details +
+    context?.userProfileCount?.company_details +
+    context?.userProfileCount?.kyc_details;
 
   return (
     <div>
@@ -57,7 +59,7 @@ const Page = (data: any) => {
         {TEXT?.DASHBOARD}
       </div>
       <div>
-        {PROFILE_COUNT === 100 && (
+        {percentage === 100 && (
           <div className="rounded-3xl bg-[url('/dashboard/sertificateBG.svg')] bg-cover bg-no-repeat p-4">
             <div>
               <div className="text-xl font-medium text-white">
@@ -138,15 +140,15 @@ const Page = (data: any) => {
             })}
           </div>
         )}
-        {PROFILE_COUNT === 100 && (
+        {percentage === 100 && (
           <div className="mt-8 text-xl font-semibold text-meta-purple-1">
             {TEXT?.RECENTLY_JOB_POST}
           </div>
         )}
 
-        {PROFILE_COUNT !== 100 && <CompleteProfile />}
+        {percentage !== 100 && <CompleteProfile />}
 
-        {PROFILE_COUNT === 100 &&
+        {percentage === 100 &&
           Array.from({ length: 3 }).map((_, index) => {
             return (
               <div className="mt-5">

@@ -1,3 +1,4 @@
+import { Icons } from '@/svg';
 import mongoose from 'mongoose';
 
 const EMAIlREGEX =
@@ -6,25 +7,23 @@ const EMAIlREGEX =
 // const EMAIlREGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
 const ROUTE = {
-  SIGN_UP: '/signup',
+  JOB: '/job',
+  MAIN: '/main',
   LOGIN: '/login',
-  SUCCESSFULL_FORGOT_PASSWORD: '/login/forgotPass/newPass/successful',
-  ACTIVE_JOB: '/dashboard/active_job',
-  HIRED: '/dashboard/hired',
-  APPLICANTS: '/job/applicants',
-  EMPLOYMENT_TYPE: '/job_posting/employment_Type',
+  SIGN_UP: '/signup',
   MYPROFILE: '/myProfile',
+  HIRED: '/dashboard/hired',
+  SEARCH_CVS: '/search_CVs',
+  APPLICANTS: '/job/applicants',
   QUIZINFO: '/learn&earn/quizInfo',
   QUIZMCQS: '/learn&earn/quizMCQs',
-  MAIN: '/main',
-  JOB: '/job',
-  SEARCH_CVS: '/search_CVs',
+  ACTIVE_JOB: '/dashboard/active_job',
+  EMPLOYMENT_TYPE: '/job_posting/employment_Type',
+  SUCCESSFULL_FORGOT_PASSWORD: '/login/forgotPass/newPass/successful',
 };
 
 const TEXT = {
   UPLOAD: 'Upload',
-  POST: 'Post',
-  CTC: 'CTC',
   OR: 'or',
   USA: 'Usa',
   CSS: 'Css',
@@ -62,6 +61,7 @@ const TEXT = {
   SKILLS: 'Skills',
   Hiring: 'Hiring',
   YEARLY: 'Yearly',
+  LOG_OUT: 'Log out',
   SIGN_UP: 'Sign up',
   PREVIEW: 'Preview',
   MONTHLY: 'Monthly',
@@ -79,6 +79,7 @@ const TEXT = {
   ADD_USER: 'Add User',
   DURATION: 'Duration',
   Join_Now: 'Join Now',
+  COMPLETE: 'Complete',
   FIVE_INTO_FIVE: '5/5',
   HI_THERE: ' Hi there!',
   JOB_TITLE: 'Job title',
@@ -111,6 +112,7 @@ const TEXT = {
   QUIZ_DETAIL: 'Quiz Detail',
   Get_Started: 'Get Started!',
   OUT_SIDE_USA: 'Outside USA',
+  EDIT_PROFILE: 'Edit profile',
   MONTHLY_RATE: 'Monthly rate',
   SUCCESSFULLY: 'Successfully',
   COMPANY_INFO: 'Company Info',
@@ -126,6 +128,7 @@ const TEXT = {
   STANDARD_PLAN: 'Standard Plan',
   BUSINESS_PLAN: 'Business Plan',
   DATE_UPLOADED: 'Date Uploaded',
+  GO_TO_PROFILE: 'Go to profile',
   LEARN_AND_EARN: 'Learn & Earn',
   WORKPLACE_TYPE: 'Workplace type',
   RESET_PASSWORD: 'Reset Password',
@@ -159,9 +162,10 @@ const TEXT = {
   START_NOW_ITS_FREE: " Start now - it's free",
   REDIRECT_TO_CALENDLY: 'Redirect to Calendly',
   MAX_TAB_SWITCH_ALLOW: 'Max Tab Switch Allow',
-  DONT_HAVE_AN_ACCOUNT: "Don't have an account? ",
+  COMPLETE_YOUR_PROFILE: 'Complete your profile',
   PICK_WORKING_SCHEDULE: 'Pick working schedule',
   KYC_Compliance_Detail: 'KYC Compliance Detail',
+  DONT_HAVE_AN_ACCOUNT: "Don't have an account? ",
   THANK_YOU_FOR_SIGN_UP: 'Thank you for sign up!',
   TELL_US_ABOUT_THE_ROLE: 'Tell us about the role',
   RESULT_ANNULMENT_TIME: 'Result annulment 9:15 PM',
@@ -214,53 +218,37 @@ const USER_ROLE = {
   INDIVIDUAL: 'individual',
 };
 
-const SIDE_BAR_DATA = [
-  {
-    path: 'dashboard',
-    title: 'Dashboard',
-    icon: '/sidebarIcon/dashboard.svg',
-  },
-  {
-    path: 'job_posting',
-    title: 'Job Posting',
-    icon: '/sidebarIcon/jobPosting.svg',
-  },
-  {
-    path: 'job',
-    title: 'Job',
-    icon: '/sidebarIcon/jobPosting.svg',
-  },
-  {
-    path: 'pricing',
-    title: 'Pricing',
-    icon: '/sidebarIcon/pricing.svg',
-  },
-  {
-    path: 'search_CVs',
-    title: 'Search CVs',
-    icon: '/sidebarIcon/dashboard.svg',
-  },
-  {
-    path: 'users',
-    title: 'Users',
-    icon: '/sidebarIcon/dashboard.svg',
-  },
-  {
-    path: 'company_info',
-    title: 'Company info',
-    icon: '/sidebarIcon/dashboard.svg',
-  },
-  {
-    path: 'earn_badge',
-    title: 'Earn Badge',
-    icon: '/sidebarIcon/dashboard.svg',
-  },
-  {
-    path: 'learn&earn',
-    title: 'Learn & Earn',
-    icon: '/sidebarIcon/dashboard.svg',
-  },
-];
+const SIDE_BAR_DATA = {
+  admin: [],
+  employee: [
+    {
+      path: 'dashboard',
+      title: 'Dashboard',
+      icon: Icons.Dashboard,
+    },
+    {
+      path: 'job',
+      title: 'Job',
+      icon: Icons.Job,
+    },
+    {
+      icon: Icons.Learn,
+      path: 'learn&earn',
+      title: 'Learn & Earn',
+    },
+    {
+      path: 'certification',
+      title: 'Certification',
+      icon: Icons.Certificate,
+    },
+    {
+      path: 'pricing',
+      title: 'Pricing',
+      icon: Icons.Pricing,
+    },
+  ],
+  individual: [],
+};
 
 const createModal = (name: string, schema: any) =>
   mongoose.models?.[name] || mongoose.model(name, schema);

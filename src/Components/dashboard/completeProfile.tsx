@@ -1,13 +1,18 @@
-import React from "react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { ROUTE, TEXT } from "@/service/Helper";
-import "react-circular-progressbar/dist/styles.css";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import Image from 'next/image';
+import React, { useContext } from 'react';
+import { useRouter } from 'next/navigation';
+import { ROUTE, TEXT } from '@/service/Helper';
+import AppContext from '@/context/AppProvider';
+import 'react-circular-progressbar/dist/styles.css';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
 const CompleteProfile = () => {
-  const percentage = 33;
   const router = useRouter();
+  const context = useContext(AppContext);
+  const percentage =
+    context?.userProfileCount?.basic_details +
+    context?.userProfileCount?.company_details +
+    context?.userProfileCount?.kyc_details;
 
   return (
     <div className="md:relative">
@@ -21,7 +26,7 @@ const CompleteProfile = () => {
               width={90}
               alt="avatar"
               height={90}
-              src={"/sidebarIcon/profile.svg"}
+              src={'/sidebarIcon/profile.svg'}
               className="absolute top-0 rounded-full p-0.5"
             />
 
@@ -29,13 +34,9 @@ const CompleteProfile = () => {
               <CircularProgressbar
                 value={percentage}
                 styles={buildStyles({
-                  // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
-                  strokeLinecap: "butt",
-                  // How long animation takes to go from one percentage to another, in seconds
+                  strokeLinecap: 'butt',
+                  trailColor: '#d6d6d6',
                   pathTransitionDuration: 0.5,
-                  // Colors
-                  trailColor: "#d6d6d6",
-                  backgroundColor: "#3e98c7",
                 })}
               />
             </div>
@@ -48,7 +49,7 @@ const CompleteProfile = () => {
           onClick={() => router.push(ROUTE?.MYPROFILE)}
           className="cursor-pointer text-sm font-medium text-meta-blue-2 md:text-base"
         >
-          {TEXT?.GO_TO_PROFILE}{" "}
+          {TEXT?.GO_TO_PROFILE}{' '}
           <span className="text-sm font-bold md:text-base">&#8594;</span>
         </div>
       </div>
@@ -57,7 +58,7 @@ const CompleteProfile = () => {
           alt="Icon"
           width={191}
           height={190}
-          src={"/dashboard/logo.svg"}
+          src={'/dashboard/logo.svg'}
           className="rounded-full p-0.5"
         />
       </div>
