@@ -64,7 +64,7 @@ const CareerInfoTab = ({
         : Yup.array().of(
             Yup.object().shape({
               companyName: Yup.string().required('Company name is required'),
-              role: Yup.string().required('Role is required'),
+              company_role: Yup.string().required('Role is required'),
               location: Yup.object().nonNullable('location is required'),
               employmentType: Yup.string().required('Emp type is required'),
               years: Yup.number()
@@ -75,7 +75,9 @@ const CareerInfoTab = ({
                 .required('Month is required')
                 .min(0, 'Month cannot be negative')
                 .max(11, 'Month cannot be greater than 11'),
-              reason_for_leaving: Yup.string(),
+              reason_for_leaving: Yup.string().required(
+                'Reason of leaving is required',
+              ),
             }),
           ),
   });
@@ -125,7 +127,6 @@ const CareerInfoTab = ({
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
   });
-
   const EXPERIENCE_TYPE = [
     {
       id: 1,
@@ -159,7 +160,7 @@ const CareerInfoTab = ({
       ...formik?.values?.total_experiences,
       {
         companyName: '',
-        role: '',
+        company_role: '',
         location: null,
         employmentType: '',
         years: '',
