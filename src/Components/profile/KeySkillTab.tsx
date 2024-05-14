@@ -1,16 +1,17 @@
-import Image from "next/image";
-import MultipleSelectBox from "../MultipleSelectBox";
-import { TEXT } from "@/service/Helper";
-import API from "@/service/ApiService";
-import { API_CONSTANT } from "@/constant/ApiConstant";
-import * as Yup from "yup";
-import { useFormik, Field } from "formik";
-import { toast } from "react-toastify";
-import "react-datepicker/dist/react-datepicker.css";
-import Button from "../Button";
-import { useEffect, useState } from "react";
-import useDebounce from "@/hooks/useDebounce";
-import { components } from "react-select";
+import Image from 'next/image';
+import MultipleSelectBox from '../MultipleSelectBox';
+import { TEXT } from '@/service/Helper';
+import API from '@/service/ApiService';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import * as Yup from 'yup';
+import { useFormik, Field } from 'formik';
+import { toast } from 'react-toastify';
+import 'react-datepicker/dist/react-datepicker.css';
+import Button from '../Button';
+import { useContext, useEffect, useState } from 'react';
+import useDebounce from '@/hooks/useDebounce';
+import { components } from 'react-select';
+import AppContext from '@/context/AppProvider';
 const KeySkillTab = ({
   userDetails,
   setActivePage,
@@ -18,33 +19,47 @@ const KeySkillTab = ({
   getUserDataApiCall,
 }: any) => {
   const [skillData, setSkillData] = useState([]);
-  const [skillQuery, setSkillQuery] = useState("");
+  const [skillQuery, setSkillQuery] = useState('');
   const debouncedSearchSkill = useDebounce(skillQuery);
+  const context = useContext(AppContext);
   const handleSubmit = async (values: any, actions: any) => {
     const obj = {
       skills: values?.skills.map((el: any) => el?._id),
+      profile_count: {
+        ...context?.userProfileCount,
+        skill_details: 16.66,
+      },
     };
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
           getUserDataApiCall();
+          context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);
           setActivePage(activePage + 1);
-          toast?.success(res?.data?.message || "Successfully Update Profile");
+          toast?.success(res?.data?.message || 'Successfully Update Profile');
         }
       })
       .catch((error) => {
-        toast.error(error || "Something want wrong");
+        toast.error(error || 'Something want wrong');
       });
   };
 
   const validationSchema = Yup.object().shape({
-    skills: Yup.array(),
+    skills: Yup.array().min(1, `select at least one skill`),
   });
 
   const formik: any = useFormik({
     initialValues: {
-      skills: userDetails?.skills ?? [],
+      skills: userDetails?.skills
+        ? userDetails?.skills?.map((list: any) => {
+            return {
+              _id: list?._id,
+              label: list?.subcategory,
+              value: list?.subcategory,
+            };
+          })
+        : [],
     },
     enableReinitialize: true,
     validationSchema: validationSchema,
@@ -55,7 +70,7 @@ const KeySkillTab = ({
     const arr = formik?.values?.skills.filter((el: any) => {
       return el !== list;
     });
-    formik?.setFieldValue("skills", arr);
+    formik?.setFieldValue('skills', arr);
   };
   const searchSkillApi = (search: any) => {
     let obj = {
@@ -73,11 +88,11 @@ const KeySkillTab = ({
         setSkillData(skiilArr);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log('error', error);
       });
   };
   useEffect(() => {
-    if (debouncedSearchSkill !== "") {
+    if (debouncedSearchSkill !== '') {
       searchSkillApi(debouncedSearchSkill);
     }
   }, [debouncedSearchSkill]);
@@ -93,7 +108,7 @@ const KeySkillTab = ({
   const DropdownIndicator = (props: any) => {
     return (
       <components.DropdownIndicator {...props}>
-        <Image alt="Plus" width={20} height={19} src={"/job/Plus.svg"} />
+        <Image alt="Plus" width={20} height={19} src={'/job/Plus.svg'} />
       </components.DropdownIndicator>
     );
   };
@@ -104,10 +119,10 @@ const KeySkillTab = ({
       border: state.isFocused ? 1 : 1,
       // This line disable the blue border
       boxShadow: state.isFocused ? 0 : 0,
-      paddingLeft: "20px",
-      paddingTop: "0px",
-      paddingBottom: "0px",
-      "&:hover": {
+      paddingLeft: '20px',
+      paddingTop: '0px',
+      paddingBottom: '0px',
+      '&:hover': {
         border: state.isFocused ? 0 : 0,
       },
     }),
@@ -147,7 +162,7 @@ const KeySkillTab = ({
                 return (
                   <div className="mb-2 mr-3 flex w-max items-center rounded-lg border-2 border-meta-light-blue-1 px-2 py-2">
                     <p className="whitespace-nowrap text-sm font-medium text-meta-light-blue-3">
-                      {ele?.subcategory}
+                      {ele?.label}
                     </p>
                     <div
                       className="cursor-pointer"
@@ -158,7 +173,7 @@ const KeySkillTab = ({
                         height={19}
                         alt="Preview"
                         className="ml-3"
-                        src={"/job/Close.svg"}
+                        src={'/job/Close.svg'}
                       />
                     </div>
                   </div>

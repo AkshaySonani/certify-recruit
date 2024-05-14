@@ -24,8 +24,6 @@ const BasicDetails = ({
         basic_details: 33,
       },
     };
-    console.log('obj', obj);
-
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {

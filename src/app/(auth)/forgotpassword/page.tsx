@@ -51,7 +51,7 @@ const Page = () => {
 
               <button className="mb-8 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-meta-blue-2">
                 <span
-                  onClick={() => router.push('/login/forgotPass/newPass')}
+                  onClick={() => router.push('/resetpassword')}
                   className="flex justify-center text-sm font-medium text-white"
                 >
                   {TEXT?.SEND}

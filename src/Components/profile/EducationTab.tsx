@@ -3,7 +3,7 @@ import { TEXT } from '@/service/Helper';
 import { Menu, Transition } from '@headlessui/react';
 import moment from 'moment';
 import Image from 'next/image';
-import { Fragment } from 'react';
+import { Fragment, useContext } from 'react';
 import { useFormik, Field } from 'formik';
 import DatePicker from 'react-datepicker';
 import * as Yup from 'yup';
@@ -11,6 +11,7 @@ import API from '@/service/ApiService';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { toast } from 'react-toastify';
 import Button from '../Button';
+import AppContext from '@/context/AppProvider';
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
@@ -23,14 +24,20 @@ const EducationTab = ({
   degreeList,
   getUserDataApiCall,
 }: any) => {
+  const context = useContext(AppContext);
   const handleSubmit = async (values: any, actions: any) => {
     const obj = {
       ...values,
+      profile_count: {
+        ...context?.userProfileCount,
+        education_details: 16.66,
+      },
     };
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
           getUserDataApiCall();
+          context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);
           setActivePage(activePage + 1);
           toast?.success(res?.data?.message || 'Successfully Update Profile');
@@ -42,11 +49,13 @@ const EducationTab = ({
   };
 
   const validationSchema = Yup.object().shape({
-    highest_education: Yup.string(),
-    // completion_date: Yup.object().shape({
-    //   year: Yup.string(),
-    //   month: Yup.string(),
-    // }),
+    college_school_name: Yup.object().nonNullable(`College name is required.`),
+    degree: Yup.object().nonNullable(`Degree is required.`),
+    highest_education: Yup.string().required(`Please select highest education`),
+    completion_date: Yup.object().shape({
+      year: Yup.string().required('Year is required'),
+      month: Yup.string().required('Month is required'),
+    }),
   });
 
   const formik: any = useFormik({

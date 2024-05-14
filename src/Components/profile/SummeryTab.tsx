@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import { TEXT } from '@/service/Helper';
 import API from '@/service/ApiService';
 import { API_CONSTANT } from '@/constant/ApiConstant';
@@ -7,6 +7,7 @@ import { useFormik, Field } from 'formik';
 import { toast } from 'react-toastify';
 import 'react-datepicker/dist/react-datepicker.css';
 import Button from '../Button';
+import AppContext from '@/context/AppProvider';
 
 const SummaryTab = ({
   userDetails,
@@ -14,14 +15,20 @@ const SummaryTab = ({
   activePage,
   getUserDataApiCall,
 }: any) => {
+  const context = useContext(AppContext);
   const handleSubmit = async (values: any, actions: any) => {
     const obj = {
       ...values,
+      profile_count: {
+        ...context?.userProfileCount,
+        summary_details: 16.66,
+      },
     };
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
           getUserDataApiCall();
+          context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);
           setActivePage(activePage + 1);
           toast?.success(res?.data?.message || 'Successfully Update Profile');
@@ -32,7 +39,9 @@ const SummaryTab = ({
       });
   };
 
-  const validationSchema = Yup.object().shape({});
+  const validationSchema = Yup.object().shape({
+    profile_summary: Yup.string().required('Profile summary is required.'),
+  });
 
   const formik = useFormik({
     initialValues: {

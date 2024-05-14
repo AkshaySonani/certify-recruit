@@ -8,10 +8,11 @@ import { useFormik, Field } from 'formik';
 import { EMP_TYPE_ARR } from '@/constant/Enum';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Menu, Transition } from '@headlessui/react';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import AutoComplete from '../Autocomplete';
 import useDebounce from '@/hooks/useDebounce';
+import AppContext from '@/context/AppProvider';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -28,9 +29,14 @@ const CareerInfoTab = ({
   const [cityQuery, setCityQuery] = useState('');
   const [cities, setCities] = useState([]);
   const debouncedSearchCity = useDebounce(cityQuery);
+  const context = useContext(AppContext);
   const handleSubmit = async (values: any, actions: any) => {
     const obj = {
       ...values,
+      profile_count: {
+        ...context?.userProfileCount,
+        career_details: 16.66,
+      },
     };
 
     API.post(API_CONSTANT?.PROFILE, obj)
@@ -38,6 +44,7 @@ const CareerInfoTab = ({
         if (res?.data?.status === 200) {
           setActivePage(1);
           getUserDataApiCall();
+          context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);
           toast?.success(res?.data?.message || 'Successfully Update Profile');
         }
@@ -48,18 +55,29 @@ const CareerInfoTab = ({
   };
 
   const validationSchema = Yup.object().shape({
-    total_experiences: Yup.array().of(
-      Yup.object().shape({
-        years: Yup.number()
-          .required('Years is required')
-          .min(0, 'Years cannot be negative')
-          .max(50, 'Years cannot be greater than 50'),
-        month: Yup.number()
-          .required('Month is required')
-          .min(0, 'Month cannot be negative')
-          .max(11, 'Month cannot be greater than 11'),
-      }),
+    expected_salary_start_at: Yup.string().required(
+      'Expected salary is required',
     ),
+    total_experiences:
+      isFresher === true
+        ? Yup.array()
+        : Yup.array().of(
+            Yup.object().shape({
+              companyName: Yup.string().required('Company name is required'),
+              role: Yup.string().required('Role is required'),
+              location: Yup.object().nonNullable('location is required'),
+              employmentType: Yup.string().required('Emp type is required'),
+              years: Yup.number()
+                .required('Years is required')
+                .min(0, 'Years cannot be negative')
+                .max(50, 'Years cannot be greater than 50'),
+              month: Yup.number()
+                .required('Month is required')
+                .min(0, 'Month cannot be negative')
+                .max(11, 'Month cannot be greater than 11'),
+              reason_for_leaving: Yup.string(),
+            }),
+          ),
   });
 
   const searchCityApi = (search: any) => {
@@ -259,7 +277,7 @@ const CareerInfoTab = ({
                               name={'location'}
                               placeholder="Search location"
                               handleChange={(e: any) =>
-                                handleChangeMenu(index, el, 'location')
+                                handleChangeMenu(index, e, 'location')
                               }
                             />
                             {formik?.touched?.total_experiences?.[index]

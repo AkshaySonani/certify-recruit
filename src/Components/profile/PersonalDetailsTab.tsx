@@ -1,7 +1,7 @@
 import { GENDER, PROFICIENCY } from '@/constant/Enum';
 import { Menu, Transition } from '@headlessui/react';
 import Image from 'next/image';
-import { Fragment } from 'react';
+import { Fragment, useContext } from 'react';
 import DatePicker from 'react-datepicker';
 import { TEXT } from '@/service/Helper';
 import API from '@/service/ApiService';
@@ -11,6 +11,7 @@ import { useFormik, Field } from 'formik';
 import { toast } from 'react-toastify';
 import 'react-datepicker/dist/react-datepicker.css';
 import Button from '../Button';
+import AppContext from '@/context/AppProvider';
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
@@ -21,14 +22,20 @@ const PersonalDetailsTab = ({
   activePage,
   getUserDataApiCall,
 }: any) => {
+  const context = useContext(AppContext);
   const handleSubmit = async (values: any, actions: any) => {
     const obj = {
       ...values,
+      profile_count: {
+        ...context?.userProfileCount,
+        personal_details: 16.66,
+      },
     };
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
           getUserDataApiCall();
+          context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);
           setActivePage(activePage + 1);
           toast?.success(res?.data?.message || 'Successfully Update Profile');
@@ -40,12 +47,12 @@ const PersonalDetailsTab = ({
   };
 
   const validationSchema = Yup.object().shape({
-    gender: Yup.string(),
-    date_of_birth: Yup.string(),
+    gender: Yup.string().required(`Gender is required.`),
+    date_of_birth: Yup.string().required(`Date of birth is required.`),
     languages: Yup.array().of(
       Yup.object().shape({
-        language: Yup.object().nullable(),
-        proficiency: Yup.string(),
+        language: Yup.object().nonNullable('Language is required'),
+        proficiency: Yup.string().required('Proficiency is required'),
       }),
     ),
   });

@@ -3,10 +3,11 @@ import Button from '../Button';
 import { useFormik } from 'formik';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { TEXT } from '@/service/Helper';
 import { useDropzone } from 'react-dropzone';
 import { API_CONSTANT } from '@/constant/ApiConstant';
+import AppContext from '@/context/AppProvider';
 
 const UploadResumeTab = ({
   userDetails,
@@ -14,6 +15,7 @@ const UploadResumeTab = ({
   activePage,
   getUserDataApiCall,
 }: any) => {
+  const context = useContext(AppContext);
   const [files, setFiles] = useState([]);
   const [fileName, setFileName] = useState('');
 
@@ -52,9 +54,16 @@ const UploadResumeTab = ({
             file_id: Date.now() + 1000 * 50,
           };
 
-          API.post(API_CONSTANT?.PROFILE, { resume: obj })
+          API.post(API_CONSTANT?.PROFILE, {
+            resume: obj,
+            profile_count: {
+              ...context?.userProfileCount,
+              resume_details: 16.66,
+            },
+          })
             .then((res) => {
               if (res?.data?.status === 200) {
+                context?.setUserProfileCount(res?.data?.data?.profile_count);
                 setFileName('');
                 // actions.setSubmitting(false);
                 // setActivePage(activePage + 1);

@@ -98,7 +98,7 @@ const Page = () => {
 
               <button
                 className="mb-8 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-meta-light-blue-1 text-meta-purple-1 hover:bg-meta-blue-2 hover:text-white"
-                onClick={() => router.push(ROUTE?.SUCCESSFULL_FORGOT_PASSWORD)}
+                // onClick={() => router.push(ROUTE?.SUCCESSFULL_FORGOT_PASSWORD)}
               >
                 <span className="flex justify-center text-sm font-medium">
                   {TEXT?.RESET_PASSWORD}
