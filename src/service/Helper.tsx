@@ -11,6 +11,8 @@ const ROUTE = {
   MAIN: '/main',
   LOGIN: '/login',
   SIGN_UP: '/signup',
+  PRICING: '/pricing',
+  DASHBOARD: '/dashboard',
   MYPROFILE: '/myProfile',
   HIRED: '/dashboard/hired',
   SEARCH_CVS: '/search_CVs',
@@ -62,6 +64,7 @@ const TEXT = {
   SKILLS: 'Skills',
   Hiring: 'Hiring',
   YEARLY: 'Yearly',
+  PRICING: 'Pricing',
   LOG_OUT: 'Log out',
   SIGN_UP: 'Sign up',
   PREVIEW: 'Preview',
@@ -248,7 +251,28 @@ const SIDE_BAR_DATA = {
       icon: Icons.Pricing,
     },
   ],
-  individual: [],
+  individual: [
+    {
+      path: 'dashboard',
+      title: 'Dashboard',
+      icon: Icons.Dashboard,
+    },
+    {
+      path: 'job_posting',
+      title: 'Job Posting',
+      icon: Icons.Job,
+    },
+    {
+      path: 'job',
+      title: 'Job',
+      icon: Icons.Job,
+    },
+    {
+      path: 'pricing',
+      title: 'Pricing',
+      icon: Icons.Pricing,
+    },
+  ],
 };
 
 const createModal = (name: string, schema: any) =>

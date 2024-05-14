@@ -1,11 +1,13 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { useSession } from 'next-auth/react';
+import Pricing from '@/svg/Pricing';
+import Spinner from '../icons/Spinner';
 import AppContext from '@/context/AppProvider';
 import { Menu, Transition } from '@headlessui/react';
+import { signOut, useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { Fragment, useContext, useState } from 'react';
-import { ROUTE, SIDE_BAR_DATA, TEXT } from '@/service/Helper';
+import { ROUTE, SIDE_BAR_DATA, TEXT, USER_ROLE } from '@/service/Helper';
 
 const Sidebar = () => {
   const router = useRouter();
@@ -17,12 +19,25 @@ const Sidebar = () => {
   const activeTabCss = (path: string) =>
     pathname.split('/')[1] === path
       ? 'bg-meta-blue-2 text-white dark:bg-meta-4'
-      : '';
+      : percentage !== 100
+        ? 'text-meta-gray-1'
+        : '';
 
-  const percentage =
-    context?.userProfileCount?.basic_details +
-    context?.userProfileCount?.company_details +
-    context?.userProfileCount?.kyc_details;
+  let percentage = 0;
+  if (session?.data?.user?.role === USER_ROLE?.EMPLOYEE) {
+    percentage =
+      context?.userProfileCount?.basic_details +
+      context?.userProfileCount?.company_details +
+      context?.userProfileCount?.kyc_details;
+  } else {
+    percentage =
+      context?.userProfileCount?.career_details +
+      context?.userProfileCount?.education_details +
+      context?.userProfileCount?.personal_details +
+      context?.userProfileCount?.resume_details +
+      context?.userProfileCount?.skill_details +
+      context?.userProfileCount?.summary_details;
+  }
 
   return (
     <aside
@@ -58,46 +73,55 @@ const Sidebar = () => {
             />
           </button>
         </div>
-
-        <nav className="no-scrollbar flex flex-col overflow-y-auto px-3 duration-300 ease-linear sm:px-4 lg:px-5">
-          <ul className="mb-6 flex flex-col gap-1.5">
-            {SIDE_BAR_DATA[session?.data?.user?.role]?.map((e) => (
-              <li key={e.title}>
-                <button
-                  type="button"
-                  disabled={
-                    percentage !== 100 && pathname.split('/')[1] === 'dashboard'
-                      ? false
-                      : true
-                  }
-                  onClick={() =>
-                    percentage === 100 && router.push('/' + e.path)
-                  }
-                  className={
-                    activeTabCss(e.path) +
-                    `${open ? ' justify-center lg:justify-normal' : 'justify-start'} text-bodydark1 hover:bg-graydark dark:hover:bg-meta-4 group relative flex w-full items-center gap-2.5 rounded-lg py-2.5 font-medium duration-300 ease-in-out sm:px-4`
-                  }
-                >
-                  <e.icon
-                    width={20}
-                    height={20}
-                    color={
-                      pathname.split('/')[1] === e?.path ? 'white' : '#49556F'
+        {session?.data?.user?.role !== undefined ? (
+          <nav className="no-scrollbar flex flex-col overflow-y-auto px-3 duration-300 ease-linear sm:px-4 lg:px-5">
+            <ul className="mb-6 flex flex-col gap-1.5">
+              {SIDE_BAR_DATA[session?.data?.user?.role]?.map((e) => (
+                <li key={e.title}>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      percentage === 100 && router.push('/' + e.path)
                     }
-                  />
-                  <p className={`${open ? 'hidden lg:block' : 'block'}`}>
-                    {e.title}
-                  </p>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </nav>
+                    className={
+                      activeTabCss(e.path) +
+                      `${open ? ' justify-center lg:justify-normal' : 'justify-start'} hover:bg-graydark dark:hover:bg-meta-4 group relative flex w-full items-center gap-2.5 rounded-lg py-2.5 font-medium duration-300 ease-in-out sm:px-4`
+                    }
+                  >
+                    <e.icon
+                      width={20}
+                      height={20}
+                      color={
+                        pathname.split('/')[1] === e?.path
+                          ? 'white'
+                          : percentage !== 100
+                            ? '#B9B9B9'
+                            : '#49556F'
+                      }
+                    />
+                    <p className={`${open ? 'hidden lg:block' : 'block'}`}>
+                      {e.title}
+                    </p>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ) : (
+          <div className="flex h-full items-center justify-center">
+            <Spinner
+              className="spinner"
+              width="32px"
+              height="32px"
+              color="black"
+            />
+          </div>
+        )}
       </div>
       <div className="relative inline-block text-left">
         <Menu as="div">
           <Menu.Button className="inline-flex w-full justify-center lg:justify-normal">
-            <div className="mb-8 flex lg:px-6">
+            <div className="mb-5 flex lg:px-6">
               <div className="flex items-center">
                 <div className={`${open ? 'px-0' : ''} px-2 sm:px-4`}>
                   <Image
@@ -124,7 +148,7 @@ const Sidebar = () => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="absolute -top-2 right-0 w-60 origin-top-right -translate-y-full transform divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Menu.Items className="absolute -top-2 right-0 w-full origin-top-right -translate-y-full transform divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none lg:w-60">
               <div className="px-1 py-1">
                 <Menu.Item>
                   {({ active }) => (
@@ -132,9 +156,17 @@ const Sidebar = () => {
                       onClick={() => router.push(ROUTE?.MYPROFILE)}
                       className={`${
                         active ? 'bg-meta-blue-1 text-white' : 'text-gray-900'
-                      } group flex w-full items-center rounded-md px-2 py-2 text-sm font-medium`}
+                      } group flex w-full items-center justify-center rounded-md px-2 py-2 text-sm font-medium lg:justify-normal`}
                     >
-                      {TEXT?.EDIT_PROFILE}
+                      <Image
+                        width={30}
+                        height={30}
+                        alt="EditUser"
+                        src={'/sidebarIcon/EditUser.svg'}
+                        className="block transition ease-in-out group-hover:invert lg:hidden"
+                      />
+
+                      <p className="hidden lg:block">{TEXT?.EDIT_PROFILE}</p>
                     </button>
                   )}
                 </Menu.Item>
@@ -143,9 +175,16 @@ const Sidebar = () => {
                     <button
                       className={`${
                         active ? 'bg-meta-blue-1 text-white' : 'text-gray-900'
-                      } group flex w-full items-center rounded-md px-2 py-2 text-sm font-medium`}
+                      } group flex w-full items-center justify-center rounded-md px-2 py-2 text-sm font-medium lg:justify-normal`}
                     >
-                      {TEXT?.RESET_PASSWORD}
+                      <Image
+                        width={30}
+                        height={30}
+                        alt="ResetPassword"
+                        src={'/sidebarIcon/ResetPassword.svg'}
+                        className="block transition ease-in-out group-hover:invert lg:hidden"
+                      />
+                      <p className="hidden lg:block">{TEXT?.RESET_PASSWORD}</p>
                     </button>
                   )}
                 </Menu.Item>
@@ -154,11 +193,19 @@ const Sidebar = () => {
                 <Menu.Item>
                   {({ active }) => (
                     <button
+                      onClick={() => signOut()}
                       className={`${
                         active ? 'bg-meta-blue-1 text-white' : 'text-gray-900'
-                      } group flex w-full items-center rounded-md px-2 py-2 text-sm font-medium`}
+                      } group flex w-full items-center justify-center rounded-md px-2 py-2 text-sm font-medium lg:justify-normal`}
                     >
-                      {TEXT?.LOG_OUT}
+                      <Image
+                        width={30}
+                        height={30}
+                        alt="logout"
+                        src={'/sidebarIcon/Logout.svg'}
+                        className="block transition ease-in-out group-hover:invert lg:hidden"
+                      />
+                      <p className="hidden lg:block">{TEXT?.LOG_OUT}</p>
                     </button>
                   )}
                 </Menu.Item>
@@ -166,6 +213,22 @@ const Sidebar = () => {
             </Menu.Items>
           </Transition>
         </Menu>
+        <div className="px-4">
+          <button
+            onClick={() => percentage === 100 && router.push(ROUTE?.PRICING)}
+            type="button"
+            className={`${percentage === 100 ? 'bg-hiring-btn-gradient text-white' : 'bg-meta-gray-1 text-black'} mb-4 flex w-full items-center justify-center rounded-lg p-3 font-medium lg:justify-normal`}
+          >
+            <div className="lg:mr-2">
+              <Pricing
+                width={20}
+                height={20}
+                color={percentage === 100 ? 'white' : 'black'}
+              />
+            </div>
+            <p className="hidden pl-2 lg:block">{TEXT?.PRICING}</p>
+          </button>
+        </div>
       </div>
     </aside>
   );

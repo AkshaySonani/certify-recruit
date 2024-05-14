@@ -1,19 +1,32 @@
 import Image from 'next/image';
 import React, { useContext } from 'react';
 import { useRouter } from 'next/navigation';
-import { ROUTE, TEXT } from '@/service/Helper';
+import { useSession } from 'next-auth/react';
 import AppContext from '@/context/AppProvider';
 import 'react-circular-progressbar/dist/styles.css';
+import { ROUTE, TEXT, USER_ROLE } from '@/service/Helper';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
 const CompleteProfile = () => {
   const router = useRouter();
+  const session = useSession();
   const context = useContext(AppContext);
-  const percentage =
-    context?.userProfileCount?.basic_details +
-    context?.userProfileCount?.company_details +
-    context?.userProfileCount?.kyc_details;
 
+  let percentage = 0;
+  if (session?.data?.user?.role === USER_ROLE?.EMPLOYEE) {
+    percentage =
+      context?.userProfileCount?.basic_details +
+      context?.userProfileCount?.company_details +
+      context?.userProfileCount?.kyc_details;
+  } else {
+    percentage =
+      context?.userProfileCount?.career_details +
+      context?.userProfileCount?.education_details +
+      context?.userProfileCount?.personal_details +
+      context?.userProfileCount?.resume_details +
+      context?.userProfileCount?.skill_details +
+      context?.userProfileCount?.summary_details;
+  }
   return (
     <div className="md:relative">
       <div className="mt-8 flex max-h-80 flex-col items-center justify-center rounded-xl bg-meta-gray-2 p-3 md:p-8">
@@ -24,15 +37,15 @@ const CompleteProfile = () => {
           <div className="relative h-24 w-24">
             <Image
               width={90}
-              alt="avatar"
               height={90}
+              alt="avatar"
               src={'/sidebarIcon/profile.svg'}
               className="absolute top-0 rounded-full p-0.5"
             />
 
             <div className="absolute">
               <CircularProgressbar
-                value={percentage}
+                value={percentage ? percentage : 0}
                 styles={buildStyles({
                   strokeLinecap: 'butt',
                   trailColor: '#d6d6d6',
@@ -43,7 +56,7 @@ const CompleteProfile = () => {
           </div>
         </div>
         <p className="mb-1 text-base font-medium lowercase text-meta-light-blue-3 md:mb-5 md:text-lg">
-          {percentage}% {TEXT?.COMPLETE}
+          {percentage ? percentage : 0}% {TEXT?.COMPLETE}
         </p>
         <div
           onClick={() => router.push(ROUTE?.MYPROFILE)}

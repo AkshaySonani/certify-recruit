@@ -20,6 +20,13 @@ const jobSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  interviewTime: {
+    type: {
+      date: { type: String, default: null },
+      endTime: { type: String, default: '' },
+      startTime: { type: String, default: '' },
+    },
+  },
   // requirements: {
   //   type: String,
   //   required: false, // change false to true when create category schema
