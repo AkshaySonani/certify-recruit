@@ -25,6 +25,7 @@ const ROUTE = {
 const TEXT = {
   UPLOAD: 'Upload',
   OR: 'or',
+  CTC: 'CTC',
   USA: 'Usa',
   CSS: 'Css',
   SEND: 'Send',

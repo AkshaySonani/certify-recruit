@@ -1,27 +1,28 @@
-"use client";
-import React from "react";
-import Image from "next/image";
-import { TEXT } from "@/service/Helper";
-import { useRouter } from "next/navigation";
-import { EMP_TYPE_ARR } from "@/constant/Enum";
-import DatePicker from "react-datepicker";
-import MultipleSelectBox from "../MultipleSelectBox";
+'use client';
+import React from 'react';
+import Image from 'next/image';
+import { TEXT } from '@/service/Helper';
+import { useRouter } from 'next/navigation';
+import { EMP_TYPE_ARR } from '@/constant/Enum';
+import MultipleSelectBox from '../MultipleSelectBox';
+import DatePicker from 'react-multi-date-picker';
+import TimePicker from 'react-multi-date-picker/plugins/time_picker';
 
 const WORK_SCHEDULE = [
   {
     id: 1,
-    value: "Monday to Friday",
-    label: "Monday to Friday",
+    value: 'Monday to Friday',
+    label: 'Monday to Friday',
   },
   {
     id: 2,
-    value: "Weekend availability",
-    label: "Weekend availability",
+    value: 'Weekend availability',
+    label: 'Weekend availability',
   },
   {
     id: 3,
-    value: "Day shift",
-    label: "Day shift",
+    value: 'Day shift',
+    label: 'Day shift',
   },
 ];
 
@@ -32,8 +33,8 @@ const style = {
 
     // This line disable the blue border
     boxShadow: state.isFocused ? 0 : 0,
-    paddingLeft: "20px",
-    "&:hover": {
+    paddingLeft: '20px',
+    '&:hover': {
       border: state.isFocused ? 0 : 0,
     },
   }),
@@ -45,8 +46,10 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
     const arr = formik?.values?.working_schedule.filter((el: any) => {
       return el !== list;
     });
-    formik?.setFieldValue("working_schedule", arr);
+    formik?.setFieldValue('working_schedule', arr);
   };
+
+  console.log('formik', formik?.values);
 
   return (
     <div className="">
@@ -72,7 +75,7 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
                       id={list}
                       value={list}
                       type="checkbox"
-                      name={"job_types"}
+                      name={'job_types'}
                       onChange={formik.handleChange}
                     />
                     <p className="pl-3 capitalize">{list}</p>
@@ -99,7 +102,7 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
         </div>
         <div className="mt-3 flex w-full flex-col lg:mt-0 lg:w-1/2">
           <div
-            className={`border-stroke flex w-full min-w-64 appearance-none items-center justify-between h-12 rounded-lg border px-1 border-meta-light-blue-1  outline-none transition focus:border-meta-blue-1 active:border-meta-blue-1`}
+            className={`border-stroke flex h-12 w-full min-w-64 appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 px-1  outline-none transition focus:border-meta-blue-1 active:border-meta-blue-1`}
           >
             <div className="relative flex w-full items-center">
               <MultipleSelectBox
@@ -117,7 +120,7 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
                   alt="Icon"
                   width={14}
                   height={14}
-                  src={"/job/Clock.svg"}
+                  src={'/job/Clock.svg'}
                 />
               </div>
             </div>
@@ -130,7 +133,7 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
           <div className="mt-4 flex flex-wrap items-center text-start sm:flex-nowrap">
             {formik?.values?.working_schedule?.map((ele: any, i: any) => {
               return (
-                <div className="mb-2 mr-3 flex items-center rounded-lg border-2 border-meta-light-blue-1 px-2 py-1 h-10">
+                <div className="mb-2 mr-3 flex h-10 items-center rounded-lg border-2 border-meta-light-blue-1 px-2 py-1">
                   <p className="whitespace-nowrap text-sm font-medium text-meta-light-blue-3">
                     {ele?.label}
                   </p>
@@ -143,7 +146,7 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
                       height={19}
                       alt="Preview"
                       className="ml-3"
-                      src={"/job/Close.svg"}
+                      src={'/job/Close.svg'}
                     />
                   </div>
                 </div>
@@ -170,12 +173,12 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
                 id="hour"
                 type="radio"
                 name="salary_pay"
-                value={"MONTHLY"}
+                value={'MONTHLY'}
                 radioGroup="Salary"
                 className="ml-2 mt-2"
                 onChange={formik.handleChange}
                 checked={
-                  formik?.values?.salary_pay === "MONTHLY" ? true : false
+                  formik?.values?.salary_pay === 'MONTHLY' ? true : false
                 }
               />
               <label className="mb-6 flex flex-col items-center" htmlFor="hour">
@@ -183,7 +186,7 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
                   width={20}
                   height={20}
                   alt="clock-icon"
-                  src={"/job/Clock.svg"}
+                  src={'/job/Clock.svg'}
                 />
                 <p>{TEXT?.MONTHLY}</p>
               </label>
@@ -192,12 +195,12 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
               <input
                 id="month"
                 type="radio"
-                value={"HOURLY"}
+                value={'HOURLY'}
                 name="salary_pay"
                 radioGroup="Salary"
                 className="ml-2 mt-2"
                 onChange={formik.handleChange}
-                checked={formik?.values?.salary_pay === "HOURLY" ? true : false}
+                checked={formik?.values?.salary_pay === 'HOURLY' ? true : false}
               />
               <label
                 htmlFor="month"
@@ -207,7 +210,7 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
                   width={20}
                   height={20}
                   alt="clock-icon"
-                  src={"/job/Clock.svg"}
+                  src={'/job/Clock.svg'}
                 />
                 <p>{TEXT?.HOURLY}</p>
               </label>
@@ -216,7 +219,7 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
 
           <div className="w-full">
             <label className="text-base font-medium text-meta-purple-1">
-              {formik?.values?.salary_pay === "MONTHLY"
+              {formik?.values?.salary_pay === 'MONTHLY'
                 ? TEXT?.CTC
                 : TEXT?.HOURLY_RATE}
             </label>
@@ -237,11 +240,11 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
                 <input
                   type="checkbox"
                   id="checkboxLabelOne"
-                  name={"salary_negotiable"}
+                  name={'salary_negotiable'}
                   onChange={formik.handleChange}
                   value={formik?.values?.salary_negotiable}
                 />
-                <p className="pl-3">{"Salary is negotiable"}</p>
+                <p className="pl-3">{'Salary is negotiable'}</p>
               </label>
             </div>
           </div>
@@ -258,37 +261,92 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
             {TEXT?.CHOOSE_YOUR_INTERVIEW_TIME_SLOT}
           </p>
         </div>
-        {/* <div className="flex w-full items-center">
+        <div className="mt-4 w-full">
           <label className="text-base font-medium text-meta-purple-1">
-            Select Date
+            Date
           </label>
           <DatePicker
-            name="date"
-            wrapperClassName="w-full personal-details-date-picker"
-            selected={formik?.values?.interviewTime?.date as any}
-            shouldCloseOnSelect={true}
-            showMonthDropdown
-            showYearDropdown
-            placeholderText="Select date"
-            className="mt-3 w-full rounded-xl border border-meta-light-blue-1 p-3"
-            onChange={(date: any) =>
-              formik?.setFieldValue("interviewTime", {
+            format="YYYY-MM-DD"
+            containerStyle={{ width: '100%' }}
+            value={formik?.values?.interviewTime?.date}
+            onChange={(date) =>
+              formik.setFieldValue('interviewTime', {
                 ...formik?.values?.interviewTime,
-                date: date,
+                date: date?.format('YYYY-MM-DD'),
               })
             }
+            placeholder="Select Interview date"
+            style={{
+              height: 38,
+              width: '100%',
+              borderColor: '#DCE7FF',
+              borderRadius: 8,
+              paddingLeft: 10,
+              marginTop: 4,
+            }}
           />
         </div>
-        <div className="flex w-full items-center">
-          <label className="text-base font-medium text-meta-purple-1">
-            Start time
-          </label>
+        <div className="mt-3 flex w-full items-center gap-4 lg:mt-0 lg:w-1/2">
+          <div className="mt-4 w-full">
+            <label className="text-base font-medium text-meta-purple-1">
+              Start time
+            </label>
+            <DatePicker
+              disableDayPicker
+              format="HH:mm:ss"
+              value={formik?.values?.interviewTime?.startTime}
+              containerStyle={{ width: '100%' }}
+              onChange={(time) => {
+                formik.setFieldValue('interviewTime', {
+                  ...formik?.values?.interviewTime,
+                  startTime: time?.format('HH:mm:ss'),
+                });
+              }}
+              placeholder="Select start time"
+              style={{
+                height: 38,
+                width: '100%',
+                borderColor: '#DCE7FF',
+                borderRadius: 8,
+                paddingLeft: 10,
+                marginTop: 4,
+              }}
+              plugins={[
+                <TimePicker position="bottom" hStep={2} mStep={3} sStep={4} />,
+              ]}
+            />
+          </div>
+
+          <div className="mt-4 w-full">
+            <label className="text-base font-medium text-meta-purple-1">
+              End time
+            </label>
+            <DatePicker
+              disableDayPicker
+              format="HH:mm:ss"
+              value={formik?.values?.interviewTime?.endTime}
+              containerStyle={{ width: '100%' }}
+              placeholder="Select end time"
+              onChange={(time) => {
+                formik.setFieldValue('interviewTime', {
+                  ...formik?.values?.interviewTime,
+                  endTime: time?.format('HH:mm:ss'),
+                });
+              }}
+              style={{
+                height: 38,
+                width: '100%',
+                borderColor: '#DCE7FF',
+                borderRadius: 8,
+                paddingLeft: 10,
+                marginTop: 4,
+              }}
+              plugins={[
+                <TimePicker position="bottom" hStep={2} mStep={3} sStep={4} />,
+              ]}
+            />
+          </div>
         </div>
-        <div className="flex w-full items-center">
-          <label className="text-base font-medium text-meta-purple-1">
-            End time
-          </label>
-        </div> */}
       </div>
     </div>
   );

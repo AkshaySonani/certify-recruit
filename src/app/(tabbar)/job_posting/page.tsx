@@ -206,7 +206,7 @@ const Page = () => {
         </div>
       </div>
       <form onSubmit={formik.handleSubmit}>
-        {nextPage === 1 ? (
+        {/* {nextPage === 1 ? (
           <div>
             <div className="flex w-full flex-wrap items-center justify-between lg:flex-nowrap">
               <div className="w-full text-start lg:mr-5 lg:w-1/2">
@@ -459,11 +459,11 @@ const Page = () => {
               </div>
             </div>
           </div>
-        ) : nextPage === 2 ? (
-          <JobPostingForm2 formik={formik} />
-        ) : (
+        ) : nextPage === 2 ? ( */}
+        <JobPostingForm2 formik={formik} />
+        {/* ) : (
           <JobPostingForm3 formik={formik} skillData={skillData} />
-        )}
+        )} */}
         <div
           className={`"w-full mt-16  flex ${nextPage === 1 ? 'justify-end' : 'justify-between'}`}
         >

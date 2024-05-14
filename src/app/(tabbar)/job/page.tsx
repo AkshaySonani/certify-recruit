@@ -3,7 +3,7 @@ import Image from "next/image";
 import Select from "@/Components/Select";
 import { useRouter } from "next/navigation";
 import Checkbox from "@/Components/Checkbox";
-import DatePicker from "react-multi-date-picker";
+import  from "react-multi-date-picker";
 import React, { Fragment, useState } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
 import { TEXT } from "@/service/Helper";
