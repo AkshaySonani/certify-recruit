@@ -99,6 +99,7 @@ export const POST = async (req: NextRequest) => {
         languages,
         is_fresher,
         company_name,
+        profile_count,
         date_of_birth,
         contact_number,
         completion_date,
@@ -121,6 +122,7 @@ export const POST = async (req: NextRequest) => {
       languages && (reqData.languages = languages);
       is_fresher && (reqData.is_fresher = is_fresher);
       company_name && (reqData.company_name = company_name);
+      profile_count && (reqData.profile_count = profile_count);
       date_of_birth && (reqData.date_of_birth = date_of_birth);
       contact_number && (reqData.contact_number = contact_number);
       completion_date && (reqData.completion_date = completion_date);

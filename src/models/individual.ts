@@ -20,6 +20,16 @@ const individualSchema = new mongoose.Schema({
     type: String,
     require: false,
   },
+  profile_count: {
+    type: {
+      skill_details: { type: Number, default: 0 },
+      resume_details: { type: Number, default: 0 },
+      career_details: { type: Number, default: 0 },
+      summary_details: { type: Number, default: 0 },
+      personal_details: { type: Number, default: 0 },
+      education_details: { type: Number, default: 0 },
+    },
+  },
   resume: {
     type: [
       {
