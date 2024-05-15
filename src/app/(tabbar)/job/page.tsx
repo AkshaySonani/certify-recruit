@@ -1,54 +1,54 @@
-"use client";
-import Image from "next/image";
-import Select from "@/Components/Select";
-import { useRouter } from "next/navigation";
-import Checkbox from "@/Components/Checkbox";
-import  from "react-multi-date-picker";
-import React, { Fragment, useState } from "react";
-import { Menu, Popover, Transition } from "@headlessui/react";
-import { TEXT } from "@/service/Helper";
+'use client';
+import Image from 'next/image';
+import Select from '@/Components/Select';
+import { useRouter } from 'next/navigation';
+import Checkbox from '@/Components/Checkbox';
+import DatePicker from 'react-multi-date-picker';
+import React, { Fragment, useState } from 'react';
+import { Menu, Popover, Transition } from '@headlessui/react';
+import { TEXT } from '@/service/Helper';
 
 const jobs = [
-  { title: "Applicants", count: 50 },
-  { title: "Awaiting", count: 10 },
-  { title: "Contacting", count: 20 },
-  { title: "Hired", count: 10 },
+  { title: 'Applicants', count: 50 },
+  { title: 'Awaiting', count: 10 },
+  { title: 'Contacting', count: 20 },
+  { title: 'Hired', count: 10 },
 ];
 
 const SelectOption = [
-  { label: "Select ...", value: "" },
-  { label: "Open", value: "Open" },
-  { label: "Paused", value: "Paused" },
-  { label: "Closed", value: "Closed" },
+  { label: 'Select ...', value: '' },
+  { label: 'Open', value: 'Open' },
+  { label: 'Paused', value: 'Paused' },
+  { label: 'Closed', value: 'Closed' },
 ];
 
 function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ');
 }
 
 const Page = () => {
   const router = useRouter();
-  const [dateRange, setDateRange] = useState(["2024-01-01", "2024-12-31"]);
+  const [dateRange, setDateRange] = useState(['2024-01-01', '2024-12-31']);
 
   const jobHandler = (title: string) => {
-    if (title === "Applicants") {
-      router.push("/job/applicants");
-    } else if (title === "Awaiting") {
-      router.push("/job/awaiting");
-    } else if (title === "Contacting") {
-      router.push("/job/contacting");
-    } else if (title === "Hired") {
-      router.push("/job/hired");
+    if (title === 'Applicants') {
+      router.push('/job/applicants');
+    } else if (title === 'Awaiting') {
+      router.push('/job/awaiting');
+    } else if (title === 'Contacting') {
+      router.push('/job/contacting');
+    } else if (title === 'Hired') {
+      router.push('/job/hired');
     }
   };
 
   return (
     <div>
       <div>
-        <div className="text-meta-purple-1 font-semibold text-2xl">
+        <div className="text-2xl font-semibold text-meta-purple-1">
           {TEXT?.JOBS}
         </div>
-        <div className="flex gap-6 mt-5 mb-10 justify-center items-center">
+        <div className="mb-10 mt-5 flex items-center justify-center gap-6">
           <div className="w-2/4">
             <Popover className="relative">
               <Popover.Button className="absolute left-3 top-4">
@@ -56,23 +56,23 @@ const Page = () => {
                   alt="date"
                   width={19}
                   height={15}
-                  src={"/dashboard/filter.svg"}
+                  src={'/dashboard/filter.svg'}
                 />
               </Popover.Button>
               <input
                 type="text"
                 placeholder="Search..."
-                className="w-full h-12 rounded-lg border border-meta-light-blue-1 bg-transparent px-12  text-black outline-none transition focus:border-primary active:border-primary"
+                className="focus:border-primary active:border-primary h-12 w-full rounded-lg border border-meta-light-blue-1  bg-transparent px-12 text-black outline-none transition"
               />
               <div className="absolute right-3 top-[9px]">
                 <Image
                   alt="date"
                   width={19}
                   height={19}
-                  src={"/dashboard/search.svg"}
+                  src={'/dashboard/search.svg'}
                 />
               </div>
-              <Popover.Panel className="absolute w-full z-10 mt-2 bg-white rounded-xl shadow-xl border border-meta-light-blue-1 p-4">
+              <Popover.Panel className="absolute z-10 mt-2 w-full rounded-xl border border-meta-light-blue-1 bg-white p-4 shadow-xl">
                 <div className="w-full">
                   <label className="text-base font-medium text-meta-purple-1">
                     {TEXT?.JOB_TITLE}
@@ -80,30 +80,30 @@ const Page = () => {
                   <input
                     type="text"
                     placeholder="Job title search here..."
-                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
+                    className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                   />
                 </div>
-                <div className="w-full mt-4">
+                <div className="mt-4 w-full">
                   <label className="text-base font-medium text-meta-purple-1">
                     {TEXT?.LOCATION}
                   </label>
                   <input
                     type="text"
                     placeholder="Type location here..."
-                    className="w-full rounded-lg border border-meta-light-blue-1 focus:border-meta-light-blue-3 mt-1 px-5 py-3"
+                    className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                   />
                 </div>
-                <div className="w-full mt-4">
+                <div className="mt-4 w-full">
                   <label className="text-base font-medium text-meta-purple-1">
                     {TEXT?.DATE_POSTED}
                   </label>
                   <DatePicker
                     range
                     format="YYYY-MM-DD"
-                    minDate={new Date("01-01-2014")}
-                    maxDate={new Date("12-31-2024")}
+                    minDate={new Date('01-01-2014')}
+                    maxDate={new Date('12-31-2024')}
                     placeholder="YYYY-MM-DD - YYYY-MM-DD"
-                    containerStyle={{ width: "100%" }}
+                    containerStyle={{ width: '100%' }}
                     onChange={(dateObjects: any) => {
                       if (dateObjects?.[1]?.toString()) {
                         setDateRange((e) => [
@@ -114,23 +114,23 @@ const Page = () => {
                     }}
                     style={{
                       height: 48,
-                      width: "100%",
+                      width: '100%',
                       borderRadius: 8,
                       paddingLeft: 20,
                       marginTop: 4,
                     }}
                   />
                 </div>
-                <div className="flex justify-between items-center w-full mt-4">
+                <div className="mt-4 flex w-full items-center justify-between">
                   <div>
                     <Checkbox
-                      label={"Set as default"}
-                      className="text-meta-light-blue-3 text-base font-medium"
+                      label={'Set as default'}
+                      className="text-base font-medium text-meta-light-blue-3"
                     />
                   </div>
                   <div>
-                    <button className="rounded-xl w-28 h-12 bg-meta-light-blue-1 border border-meta-light-blue-2 ml-5">
-                      <span className="flex justify-center font-medium text-sm text-meta-light-blue-3">
+                    <button className="ml-5 h-12 w-28 rounded-xl border border-meta-light-blue-2 bg-meta-light-blue-1">
+                      <span className="flex justify-center text-sm font-medium text-meta-light-blue-3">
                         {TEXT?.DONE}
                       </span>
                     </button>
@@ -145,9 +145,9 @@ const Page = () => {
                 range
                 format="YYYY-MM-DD"
                 placeholder="Select Dates"
-                minDate={new Date("01-01-2014")}
-                maxDate={new Date("12-31-2024")}
-                containerStyle={{ width: "100%" }}
+                minDate={new Date('01-01-2014')}
+                maxDate={new Date('12-31-2024')}
+                containerStyle={{ width: '100%' }}
                 onChange={(dateObjects: any) => {
                   if (dateObjects?.[1]?.toString()) {
                     setDateRange((e) => [
@@ -159,9 +159,9 @@ const Page = () => {
                 style={{
                   height: 35,
                   fontSize: 12,
-                  width: "100%",
+                  width: '100%',
                   borderRadius: 8,
-                  borderColor: "#DCE7FF",
+                  borderColor: '#DCE7FF',
                 }}
               />
               <div className="absolute right-2 top-2">
@@ -169,12 +169,12 @@ const Page = () => {
                   alt="date"
                   width={24}
                   height={24}
-                  src={"/dashboard/date.svg"}
+                  src={'/dashboard/date.svg'}
                 />
               </div>
             </div>
-            <button className="rounded-xl w-full max-w-64 min-w-36 h-12 bg-meta-blue-1 border border-meta-light-blue-2 ml-5">
-              <span className="flex justify-center font-medium text-sm text-white">
+            <button className="ml-5 h-12 w-full min-w-36 max-w-64 rounded-xl border border-meta-light-blue-2 bg-meta-blue-1">
+              <span className="flex justify-center text-sm font-medium text-white">
                 {TEXT?.JOB_POST}
               </span>
             </button>
@@ -184,21 +184,21 @@ const Page = () => {
         {Array.from({ length: 3 }).map((_, index) => {
           return (
             <div className="mt-5">
-              <div className="p-5 bg-meta-gray-2 rounded-2xl">
+              <div className="rounded-2xl bg-meta-gray-2 p-5">
                 <div className="flex justify-between">
                   <div className="flex">
                     <div className="mt-1">
                       <Checkbox />
                     </div>
                     <div className="">
-                      <div className="text-meta-purple-1 font-semibold text-xl">
+                      <div className="text-xl font-semibold text-meta-purple-1">
                         {TEXT?.USER_INTERFACE_EXPERT}
-                        <div className="text-meta-light-blue-3 font-medium text-base">
+                        <div className="text-base font-medium text-meta-light-blue-3">
                           {TEXT?.CITY_NAMES}
                         </div>
                       </div>
                     </div>
-                    <p className="text-meta-light-blue-3 font-medium text-base ml-2 mt-1">
+                    <p className="ml-2 mt-1 text-base font-medium text-meta-light-blue-3">
                       {TEXT?.TWO_WEEKS_AGO}
                     </p>
                   </div>
@@ -209,12 +209,12 @@ const Page = () => {
                     {/* ---------------------------- */}
                     <Menu as="div" className="relative ml-10">
                       <div>
-                        <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-base focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2">
+                        <Menu.Button className="focus:ring-secondary flex max-w-xs items-center rounded-full bg-white text-base focus:outline-none focus:ring-2 focus:ring-offset-2">
                           <Image
                             width={4}
                             alt="Icon"
                             height={20}
-                            src={"/dashboard/threeDot.svg"}
+                            src={'/dashboard/threeDot.svg'}
                           />
                         </Menu.Button>
                       </div>
@@ -234,9 +234,9 @@ const Page = () => {
                                 <a
                                   className={classNames(
                                     active
-                                      ? "bg-gray-100 text-gray-900"
-                                      : "text-gray-700",
-                                    "block px-4 py-2 text-base"
+                                      ? 'bg-gray-100 text-gray-900'
+                                      : 'text-gray-700',
+                                    'block px-4 py-2 text-base',
                                   )}
                                 >
                                   {TEXT?.EDIT}
@@ -250,9 +250,9 @@ const Page = () => {
                                 <a
                                   className={classNames(
                                     active
-                                      ? "bg-gray-100 text-gray-900"
-                                      : "text-gray-700",
-                                    "block px-4 py-2 text-base"
+                                      ? 'bg-gray-100 text-gray-900'
+                                      : 'text-gray-700',
+                                    'block px-4 py-2 text-base',
                                   )}
                                 >
                                   {TEXT?.DELETE}
@@ -266,9 +266,9 @@ const Page = () => {
                                 <a
                                   className={classNames(
                                     active
-                                      ? "bg-gray-100 text-gray-900"
-                                      : "text-gray-700",
-                                    "block px-4 py-2 text-base"
+                                      ? 'bg-gray-100 text-gray-900'
+                                      : 'text-gray-700',
+                                    'block px-4 py-2 text-base',
                                   )}
                                 >
                                   {TEXT?.VIEW}
@@ -282,9 +282,9 @@ const Page = () => {
                                 <a
                                   className={classNames(
                                     active
-                                      ? "bg-gray-100 text-gray-900"
-                                      : "text-gray-700",
-                                    "block px-4 py-2 text-base"
+                                      ? 'bg-gray-100 text-gray-900'
+                                      : 'text-gray-700',
+                                    'block px-4 py-2 text-base',
                                   )}
                                 >
                                   {TEXT?.JOB_DETAILS}
@@ -298,18 +298,18 @@ const Page = () => {
                     {/* ---------------------------- */}
                   </div>
                 </div>
-                <div className="flex gap-4 mt-8">
+                <div className="mt-8 flex gap-4">
                   {jobs.map((item) => {
                     return (
                       <div
                         onClick={() => jobHandler(item.title)}
-                        className=" p-5 bg-white rounded-2xl w-1/4 cursor-pointer"
+                        className=" w-1/4 cursor-pointer rounded-2xl bg-white p-5"
                       >
-                        <div className="flex flex-col justify-center items-center">
-                          <p className="font-semibold text-meta-blue-1 text-xl mb-2">
+                        <div className="flex flex-col items-center justify-center">
+                          <p className="mb-2 text-xl font-semibold text-meta-blue-1">
                             {item.count}
                           </p>
-                          <p className="text-meta-light-blue-3 font-medium text-base">
+                          <p className="text-base font-medium text-meta-light-blue-3">
                             {item.title}
                           </p>
                         </div>
