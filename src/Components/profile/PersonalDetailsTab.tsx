@@ -2,14 +2,14 @@ import { GENDER, PROFICIENCY } from '@/constant/Enum';
 import { Menu, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import { Fragment, useContext } from 'react';
-import DatePicker from 'react-datepicker';
+
 import { TEXT } from '@/service/Helper';
 import API from '@/service/ApiService';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import * as Yup from 'yup';
 import { useFormik, Field } from 'formik';
 import { toast } from 'react-toastify';
-import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from 'react-multi-date-picker';
 import Button from '../Button';
 import AppContext from '@/context/AppProvider';
 function classNames(...classes: any) {
@@ -121,19 +121,29 @@ const PersonalDetailsTab = ({
           <label className="text-base font-medium text-meta-purple-1">
             Date of birth
           </label>
-          <DatePicker
-            name="date_of_birth"
-            wrapperClassName="w-full personal-details-date-picker"
-            selected={formik?.values?.date_of_birth as any}
-            shouldCloseOnSelect={true}
-            showMonthDropdown
-            showYearDropdown
-            placeholderText="Select date of birth"
-            className="mt-3 w-full rounded-xl border border-meta-light-blue-1 p-3"
-            onChange={(date: any) =>
-              formik?.setFieldValue('date_of_birth', date)
-            }
-          />
+          <div className="w-full">
+            <DatePicker
+              format="YYYY-MM-DD"
+              containerStyle={{ width: '100%' }}
+              onOpenPickNewDate={false}
+              value={formik?.values?.date_of_birth}
+              onChange={(date: any) => {
+                formik.setFieldValue(
+                  'date_of_birth',
+                  date?.format('YYYY-MM-DD'),
+                );
+              }}
+              placeholder="Select date of birth"
+              style={{
+                height: 48,
+                width: '100%',
+                borderColor: '#DCE7FF',
+                borderRadius: 8,
+                paddingLeft: 10,
+                marginTop: 4,
+              }}
+            />
+          </div>
           {formik.touched.date_of_birth && formik.errors.date_of_birth && (
             <div className="error">{formik.errors.date_of_birth}</div>
           )}
@@ -145,7 +155,7 @@ const PersonalDetailsTab = ({
           </label>
           {formik?.values?.languages?.map((list: any, i: any) => {
             return (
-              <div className="relative flex w-full gap-3 ">
+              <div className="relative flex w-full items-center gap-3 ">
                 <div className="w-1/2">
                   <Menu as="div" className="relative w-full">
                     <Menu.Button className="relative mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
@@ -268,7 +278,7 @@ const PersonalDetailsTab = ({
                 </div>
                 {i !== 0 && (
                   <div
-                    className="absolute -right-8  cursor-pointer lg:bottom-4"
+                    className={`absolute -right-8  cursor-pointer`}
                     onClick={() => handleRemove(list)}
                   >
                     <Image

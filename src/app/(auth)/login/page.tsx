@@ -97,9 +97,9 @@ const Page = () => {
     <div>
       <Loading loading={loading} />
       <div className="container mx-auto max-w-6xl">
-        <div className="flex justify-center py-20">
+        {/* <div className="flex justify-center py-20">
           <Image src={'/MainLogo.svg'} alt="MainLogo" width={334} height={56} />
-        </div>
+        </div> */}
 
         <div className="bg-[url('/_Compound.svg')]">
           <form onSubmit={formik.handleSubmit}>
@@ -185,14 +185,6 @@ const Page = () => {
                   </span>
                 </div>
                 <Button title={TEXT?.LOG_IN} />
-                {/* <button
-                  // onClick={() => handleSubmit()}
-                  className="rounded-xl w-full h-12 bg-meta-blue-2 border border-meta-light-blue-2 mb-8"
-                >
-                  <span className="flex justify-center font-medium text-sm text-white">
-                    {TEXT?.LOG_IN}
-                  </span>
-                </button> */}
 
                 <div className="flex items-center justify-center text-sm font-medium text-meta-light-blue-3">
                   <span>

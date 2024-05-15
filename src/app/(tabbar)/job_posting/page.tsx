@@ -30,16 +30,23 @@ const Page = () => {
   const debouncedSearchCity = useDebounce(cityQuery);
   const debouncedSearchState = useDebounce(stateQuery);
   const session = useSession() as any;
-
   function classNames(...classes: any) {
     return classes.filter(Boolean).join('');
   }
   const handleSubmit = async (values: any, actions: any) => {
     if (nextPage === 3) {
+      let startTime = `${values?.interviewTime?.startTime?.hour}:${values?.interviewTime?.startTime?.minute}:${values?.interviewTime?.startTime?.second}`;
+      let endTime = `${values?.interviewTime?.endTime?.hour}:${values?.interviewTime?.endTime?.minute}:${values?.interviewTime?.endTime?.second}`;
+
       const data = {
         ...values,
         skills: values?.skills.map((el: any) => el?._id),
         working_schedule: values?.working_schedule.map((el: any) => el?.value),
+        interviewTime: {
+          ...values?.interviewTime,
+          startTime: startTime,
+          endTime: endTime,
+        },
       };
       API.post(API_CONSTANT.JOB, data)
         .then((res) => {

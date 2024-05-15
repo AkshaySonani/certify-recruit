@@ -3,7 +3,7 @@ import { TEXT } from '@/service/Helper';
 import { Menu, Transition } from '@headlessui/react';
 import moment from 'moment';
 import Image from 'next/image';
-import { Fragment, useContext } from 'react';
+import { Fragment, useContext, useState } from 'react';
 import { useFormik, Field } from 'formik';
 import DatePicker from 'react-datepicker';
 import * as Yup from 'yup';
@@ -12,6 +12,7 @@ import { API_CONSTANT } from '@/constant/ApiConstant';
 import { toast } from 'react-toastify';
 import Button from '../Button';
 import AppContext from '@/context/AppProvider';
+import 'react-datepicker/dist/react-datepicker.css';
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
@@ -50,8 +51,15 @@ const EducationTab = ({
 
   const validationSchema = Yup.object().shape({
     college_school_name: Yup.object().nonNullable(`College name is required.`),
-    degree: Yup.object().nonNullable(`Degree is required.`),
-    highest_education: Yup.string().required(`Please select highest education`),
+    highest_education: Yup.string()
+      .required(`Please select highest education`)
+      .typeError('You must specify a number'),
+    degree: Yup.object().when('highest_education', {
+      is: 'GRADUATE',
+      then: () => Yup.object().nonNullable(`Degree is required.`),
+      otherwise: () => Yup.string().notRequired().nullable(),
+    }),
+
     completion_date: Yup.object().shape({
       year: Yup.string().required('Year is required'),
       month: Yup.string().required('Month is required'),
@@ -72,6 +80,9 @@ const EducationTab = ({
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
   });
+
+  console.log('formik', formik?.values?.completion_date);
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="mt-5  w-full  pl-9">
@@ -83,9 +94,12 @@ const EducationTab = ({
             return (
               <div
                 className={`cursor-pointer rounded-3xl border border-meta-light-blue-1 px-3 py-2  text-sm ${list?.value === formik?.values?.highest_education ? 'bg-meta-blue-1 text-white ' : 'bg-white text-meta-light-blue-3'}`}
-                onClick={() =>
-                  formik.setFieldValue('highest_education', list?.value)
-                }
+                onClick={() => {
+                  formik.setFieldValue('highest_education', list?.value);
+                  if (list?.value !== 'GRADUATE') {
+                    formik?.setErrors('degree', '');
+                  }
+                }}
               >
                 {list?.label}
               </div>
@@ -100,7 +114,7 @@ const EducationTab = ({
         <div className="mt-[10px] w-full">
           <Menu as="div" className="relative w-full">
             <label className="text-base font-medium text-meta-purple-1">
-              College name
+              School / College name
             </label>
             <Menu.Button className="relative mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
               <p>
@@ -156,62 +170,66 @@ const EducationTab = ({
               )}
           </Menu>
         </div>
-        <div className="mt-5 flex ">
-          <Menu as="div" className="relative w-full">
-            <label className="text-base font-medium text-meta-purple-1">
-              Degree
-            </label>
-            <Menu.Button className="relative mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
-              <p>
-                {formik?.values?.degree === null
-                  ? 'Select your degree '
-                  : formik?.values?.degree?.name}
-              </p>
-              <Image
-                alt="Icon"
-                width={14}
-                height={14}
-                src={'/dashboard/SelectDown.svg'}
-              />
-            </Menu.Button>
-            <Transition
-              as={Fragment}
-              leave="transition ease-in duration-75"
-              leaveTo="transform opacity-0 scale-95"
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leaveFrom="transform opacity-100 scale-100"
-            >
-              <Menu.Items className="mt- absolute right-0 z-30 w-full origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div>
-                  {degreeList?.map((list: any) => {
-                    return (
-                      <Menu.Item>
-                        {({ active }) => (
-                          <div
-                            onClick={() => formik.setFieldValue('degree', list)}
-                            className={classNames(
-                              active
-                                ? 'bg-meta-blue-1 text-white'
-                                : 'text-gray-900',
-                              'block px-4 py-2 text-[14px] capitalize',
-                            )}
-                          >
-                            {list?.name}
-                          </div>
-                        )}
-                      </Menu.Item>
-                    );
-                  })}
-                </div>
-              </Menu.Items>
-            </Transition>
-            {formik.touched.degree && formik.errors.degree && (
-              <div className="error">{formik.errors.degree}</div>
-            )}
-          </Menu>
-        </div>
+        {formik?.values?.highest_education === 'GRADUATE' && (
+          <div className="mt-5 flex ">
+            <Menu as="div" className="relative w-full">
+              <label className="text-base font-medium text-meta-purple-1">
+                Degree
+              </label>
+              <Menu.Button className="relative mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
+                <p>
+                  {formik?.values?.degree === null
+                    ? 'Select your degree '
+                    : formik?.values?.degree?.name}
+                </p>
+                <Image
+                  alt="Icon"
+                  width={14}
+                  height={14}
+                  src={'/dashboard/SelectDown.svg'}
+                />
+              </Menu.Button>
+              <Transition
+                as={Fragment}
+                leave="transition ease-in duration-75"
+                leaveTo="transform opacity-0 scale-95"
+                enter="transition ease-out duration-100"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leaveFrom="transform opacity-100 scale-100"
+              >
+                <Menu.Items className="mt- absolute right-0 z-30 w-full origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <div>
+                    {degreeList?.map((list: any) => {
+                      return (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <div
+                              onClick={() =>
+                                formik.setFieldValue('degree', list)
+                              }
+                              className={classNames(
+                                active
+                                  ? 'bg-meta-blue-1 text-white'
+                                  : 'text-gray-900',
+                                'block px-4 py-2 text-[14px] capitalize',
+                              )}
+                            >
+                              {list?.name}
+                            </div>
+                          )}
+                        </Menu.Item>
+                      );
+                    })}
+                  </div>
+                </Menu.Items>
+              </Transition>
+              {formik.touched.degree && formik.errors.degree && (
+                <div className="error">{formik.errors.degree}</div>
+              )}
+            </Menu>
+          </div>
+        )}
 
         <div className="mt-5 ">
           <label className="text-base font-medium text-meta-purple-1">
@@ -220,25 +238,23 @@ const EducationTab = ({
           <div className="mt-3 flex w-full gap-3">
             <div className="w-1/2">
               <DatePicker
-                value={formik?.values?.completion_date?.month as any}
+                value={String(formik?.values?.completion_date?.month as any)}
                 wrapperClassName="w-full"
-                // selected={formik?.values?.completion_date?.month as any}
-                // renderMonthContent={renderMonthContent}
                 showMonthYearPicker
                 className="w-full rounded-xl border border-meta-light-blue-1 p-3"
                 dateFormat="MMMM"
                 placeholderText="Select Month"
-                onChange={(date) => {
+                onChange={(date: any) => {
                   {
                     formik?.setFieldValue('completion_date', {
                       ...formik?.values?.completion_date,
-                      month: moment(date).format('MMMM'),
+                      month: String(moment(date).format('MMMM')),
                     });
                   }
                 }}
               />
               {formik?.touched?.completion_date?.month &&
-                formik.errors.completion_date?.year && (
+                formik.errors.completion_date?.month && (
                   <div className="error">
                     {formik.errors.completion_date?.month}
                   </div>
@@ -257,7 +273,7 @@ const EducationTab = ({
                 dateFormat="YYYY"
                 placeholderText="Select Year"
                 className="w-full rounded-xl border border-meta-light-blue-1 p-3"
-                onChange={(date) => {
+                onChange={(date: any) => {
                   {
                     formik?.setFieldValue('completion_date', {
                       ...formik?.values?.completion_date,

@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation';
 import { EMP_TYPE_ARR } from '@/constant/Enum';
 import MultipleSelectBox from '../MultipleSelectBox';
 import DatePicker from 'react-multi-date-picker';
-import TimePicker from 'react-multi-date-picker/plugins/time_picker';
-
+import TimePicker from 'react-multi-date-picker/plugins/analog_time_picker';
+import moment from 'moment';
 const WORK_SCHEDULE = [
   {
     id: 1,
@@ -48,8 +48,6 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
     });
     formik?.setFieldValue('working_schedule', arr);
   };
-
-  console.log('formik', formik?.values);
 
   return (
     <div className="">
@@ -261,90 +259,96 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
             {TEXT?.CHOOSE_YOUR_INTERVIEW_TIME_SLOT}
           </p>
         </div>
-        <div className="mt-4 w-full">
-          <label className="text-base font-medium text-meta-purple-1">
-            Date
-          </label>
-          <DatePicker
-            format="YYYY-MM-DD"
-            containerStyle={{ width: '100%' }}
-            value={formik?.values?.interviewTime?.date}
-            onChange={(date) =>
-              formik.setFieldValue('interviewTime', {
-                ...formik?.values?.interviewTime,
-                date: date?.format('YYYY-MM-DD'),
-              })
-            }
-            placeholder="Select Interview date"
-            style={{
-              height: 38,
-              width: '100%',
-              borderColor: '#DCE7FF',
-              borderRadius: 8,
-              paddingLeft: 10,
-              marginTop: 4,
-            }}
-          />
-        </div>
-        <div className="mt-3 flex w-full items-center gap-4 lg:mt-0 lg:w-1/2">
+        <div className="w-full">
           <div className="mt-4 w-full">
             <label className="text-base font-medium text-meta-purple-1">
-              Start time
+              Date
             </label>
             <DatePicker
-              disableDayPicker
-              format="HH:mm:ss"
-              value={formik?.values?.interviewTime?.startTime}
+              format="YYYY-MM-DD"
+              onOpenPickNewDate={false}
               containerStyle={{ width: '100%' }}
-              onChange={(time) => {
+              value={formik?.values?.interviewTime?.date}
+              onChange={(date) =>
                 formik.setFieldValue('interviewTime', {
                   ...formik?.values?.interviewTime,
-                  startTime: time?.format('HH:mm:ss'),
-                });
-              }}
-              placeholder="Select start time"
+                  date: date?.format('YYYY-MM-DD'),
+                })
+              }
+              placeholder="Select Interview date"
               style={{
-                height: 38,
+                height: 48,
                 width: '100%',
                 borderColor: '#DCE7FF',
                 borderRadius: 8,
                 paddingLeft: 10,
                 marginTop: 4,
               }}
-              plugins={[
-                <TimePicker position="bottom" hStep={2} mStep={3} sStep={4} />,
-              ]}
             />
           </div>
+          <div className="mt-3 flex w-full items-center gap-4 lg:mt-0">
+            <div className="mt-4 w-full">
+              <label className="text-base font-medium text-meta-purple-1">
+                Start time
+              </label>
+              <DatePicker
+                disableDayPicker
+                format="HH:mm:ss"
+                value={formik?.values?.interviewTime?.startTime}
+                containerStyle={{ width: '100%' }}
+                onChange={(time: any) => {
+                  formik.setFieldValue('interviewTime', {
+                    ...formik?.values?.interviewTime,
+                    startTime: time,
+                  });
+                }}
+                placeholder="Select start time"
+                style={{
+                  height: 48,
+                  width: '100%',
+                  borderColor: '#DCE7FF',
+                  borderRadius: 8,
+                  paddingLeft: 10,
+                  marginTop: 4,
+                }}
+                plugins={[<TimePicker position="bottom" format="HH:mm:ss" />]}
+              />
+            </div>
 
-          <div className="mt-4 w-full">
-            <label className="text-base font-medium text-meta-purple-1">
-              End time
-            </label>
-            <DatePicker
-              disableDayPicker
-              format="HH:mm:ss"
-              value={formik?.values?.interviewTime?.endTime}
-              containerStyle={{ width: '100%' }}
-              placeholder="Select end time"
-              onChange={(time) => {
-                formik.setFieldValue('interviewTime', {
-                  ...formik?.values?.interviewTime,
-                  endTime: time?.format('HH:mm:ss'),
-                });
-              }}
-              style={{
-                height: 38,
-                width: '100%',
-                borderColor: '#DCE7FF',
-                borderRadius: 8,
-                paddingLeft: 10,
-                marginTop: 4,
-              }}
-              plugins={[
-                <TimePicker position="bottom" hStep={2} mStep={3} sStep={4} />,
-              ]}
-            />
+            <div className="mt-4 w-full">
+              <label className="text-base font-medium text-meta-purple-1">
+                End time
+              </label>
+              <DatePicker
+                disableDayPicker
+                format="HH:mm:ss"
+                value={formik?.values?.interviewTime?.endTime}
+                containerStyle={{ width: '100%' }}
+                placeholder="Select end time"
+                onChange={(time) => {
+                  formik.setFieldValue('interviewTime', {
+                    ...formik?.values?.interviewTime,
+                    endTime: time,
+                  });
+                }}
+                style={{
+                  height: 48,
+                  width: '100%',
+                  borderColor: '#DCE7FF',
+                  borderRadius: 8,
+                  paddingLeft: 10,
+                  marginTop: 4,
+                }}
+                plugins={[
+                  <TimePicker
+                    position="bottom"
+                    hStep={2}
+                    mStep={3}
+                    sStep={4}
+                  />,
+                ]}
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -62,7 +62,6 @@ const SignupForm = () => {
         redirect: false,
         role: context.currentRole,
       });
-      console.log('signInResponse', signUpResponse);
       if (!signUpResponse?.ok) {
         setLoading(false);
         toast.error(signUpResponse?.error);

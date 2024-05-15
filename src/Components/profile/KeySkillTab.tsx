@@ -46,7 +46,9 @@ const KeySkillTab = ({
   };
 
   const validationSchema = Yup.object().shape({
-    skills: Yup.array().min(1, `select at least one skill`),
+    skills: Yup.array()
+      .min(1, `select at least one skill`)
+      .max(10, 'select maximum 10 skills'),
   });
 
   const formik: any = useFormik({

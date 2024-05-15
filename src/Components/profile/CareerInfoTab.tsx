@@ -35,7 +35,7 @@ const CareerInfoTab = ({
       ...values,
       profile_count: {
         ...context?.userProfileCount,
-        career_details: 16.66,
+        career_details: 17,
       },
     };
 
@@ -94,15 +94,12 @@ const CareerInfoTab = ({
         console.log('error', error);
       });
   };
+
   useEffect(() => {
     if (debouncedSearchCity !== '') {
       searchCityApi(debouncedSearchCity);
     }
   }, [debouncedSearchCity]);
-  useEffect(() => {
-    setActive(formik?.values?.total_experiences?.length > 0 ? 2 : 1);
-    setIsFresher(formik?.values?.total_experiences?.length > 0 ? false : true);
-  }, []);
 
   const formik: any = useFormik({
     initialValues: {
@@ -127,6 +124,12 @@ const CareerInfoTab = ({
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
   });
+
+  useEffect(() => {
+    setActive(formik?.values?.total_experiences?.length > 0 ? 2 : 1);
+    setIsFresher(formik?.values?.total_experiences?.length > 0 ? false : true);
+  }, []);
+
   const EXPERIENCE_TYPE = [
     {
       id: 1,
@@ -266,12 +269,12 @@ const CareerInfoTab = ({
                               )}
                           </div>
                         </div>
-                        <div className="mt-1 flex w-full gap-3">
+                        <div className="mt-2 flex w-full gap-3">
                           <div className="w-1/2">
                             <AutoComplete
                               value={list?.location}
                               filterArr={cities}
-                              className="!py-[11.2px]"
+                              className="!mt-2 h-[50px] !rounded-2xl !pl-[5px]"
                               query={cityQuery}
                               disabled={false}
                               setQuery={setCityQuery}
@@ -295,7 +298,7 @@ const CareerInfoTab = ({
                           </div>
                           <div className="w-1/2">
                             <Menu as="div" className="relative">
-                              <Menu.Button className="relative mt-2 flex min-h-[50px] w-full appearance-none items-center justify-between rounded-2xl border border-meta-light-blue-1 bg-white py-3 pl-5 pr-[11px] outline-none transition">
+                              <Menu.Button className="relative mt-2 flex min-h-[50px] w-full appearance-none items-center justify-between rounded-2xl border border-meta-light-blue-1 bg-white py-3 pl-4 pr-[11px] outline-none transition">
                                 <p>
                                   {list?.employmentType === ''
                                     ? 'Select your employment type'
@@ -317,7 +320,7 @@ const CareerInfoTab = ({
                                 enterTo="transform opacity-100 scale-100"
                                 leaveFrom="transform opacity-100 scale-100"
                               >
-                                <Menu.Items className="mt- absolute right-0 z-30 w-full origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                <Menu.Items className="mt- absolute right-0 z-30 w-full origin-top-right divide-y divide-gray-200 rounded-md bg-white  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                   <div>
                                     {EMP_TYPE_ARR?.map((el: any) => {
                                       return (
@@ -335,7 +338,7 @@ const CareerInfoTab = ({
                                                 active
                                                   ? 'bg-meta-blue-1 text-white'
                                                   : 'text-gray-900',
-                                                'block px-4 py-2 text-[14px] capitalize',
+                                                'lo block px-4 py-2 text-[14px] capitalize',
                                               )}
                                             >
                                               {el}
@@ -371,7 +374,7 @@ const CareerInfoTab = ({
                                 }
                                 value={list?.years}
                                 name="years"
-                                className="mt-2 w-1/2 rounded-2xl border border-meta-light-blue-1 py-3 pl-2 focus:border-meta-light-blue-3"
+                                className="mt-2 w-1/2 rounded-2xl border border-meta-light-blue-1 py-3 pl-4 focus:border-meta-light-blue-3"
                               />
                               <div className="w-1/2 pt-1 text-base font-medium text-meta-purple-1">
                                 Years
@@ -398,7 +401,7 @@ const CareerInfoTab = ({
                                 }
                                 value={list?.month}
                                 name="month"
-                                className="mt-2 w-1/2 rounded-2xl border border-meta-light-blue-1 py-3  pl-2 focus:border-meta-light-blue-3"
+                                className="mt-2 w-1/2 rounded-2xl border border-meta-light-blue-1 py-3  pl-4 focus:border-meta-light-blue-3"
                               />
                               <div className="w-1/2  pt-1 text-base font-medium text-meta-purple-1">
                                 Month

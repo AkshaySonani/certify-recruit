@@ -1,11 +1,11 @@
-import "./globals.css";
-import AuthProvider from "./Providers";
-import { Inter } from "next/font/google";
-const inter = Inter({ subsets: ["latin"] });
-import { getServerSession } from "next-auth";
-import "react-toastify/dist/ReactToastify.css";
-import { AppProvider } from "@/context/AppProvider";
-import { ToastContainer, toast } from "react-toastify";
+import './globals.css';
+import AuthProvider from './Providers';
+import { Inter } from 'next/font/google';
+const inter = Inter({ subsets: ['latin'] });
+import { getServerSession } from 'next-auth';
+import 'react-toastify/dist/ReactToastify.css';
+import { AppProvider } from '@/context/AppProvider';
+import { ToastContainer, toast } from 'react-toastify';
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",

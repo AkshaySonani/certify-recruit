@@ -28,6 +28,7 @@ const TEXT = {
   UPLOAD: 'Upload',
   OR: 'or',
   CTC: 'CTC',
+  POST: 'Post',
   USA: 'Usa',
   CSS: 'Css',
   SEND: 'Send',
