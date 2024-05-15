@@ -81,8 +81,6 @@ const EducationTab = ({
     onSubmit: handleSubmit,
   });
 
-  console.log('formik', formik?.values?.completion_date);
-
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="mt-5  w-full  pl-9">
