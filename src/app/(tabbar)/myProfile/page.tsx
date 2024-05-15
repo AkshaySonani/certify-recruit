@@ -5,21 +5,25 @@ import { toast } from 'react-toastify';
 import Loader from '@/Components/Loader';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { ROUTE, TEXT, USER_ROLE } from '@/service/Helper';
+import AppContext from '@/context/AppProvider';
 import { API_CONSTANT } from '@/constant/ApiConstant';
-import { Fragment, Suspense, useEffect, useState } from 'react';
+import { ROUTE, TEXT, USER_ROLE } from '@/service/Helper';
 import CompanyProfile from '@/Components/profile/CompanyProfile';
+import { Suspense, useContext, useEffect, useState } from 'react';
+import ProfileSkeleton from '@/Components/profile/ProfileSkeleton';
 import EditDetailsDialog from '@/Components/profile/EditDetailsDialog';
 import IndividualProfile from '@/Components/profile/IndividualProfile';
+import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 
 const MyProfile = () => {
   const router = useRouter();
   const session = useSession() as any;
+  const context = useContext(AppContext);
   const [isOpen, setIsOpen] = useState(false);
   const [degreeList, setDegreeList] = useState([]);
   const [collegeList, setCollegeList] = useState([]);
-  const [userDetails, setUserDetails] = useState<any>({});
   const [languageList, setLanguageList] = useState([]);
+  const [userDetails, setUserDetails] = useState<any>({});
 
   useEffect(() => {
     getDegreeList();
@@ -34,7 +38,6 @@ const MyProfile = () => {
         setDegreeList(res?.data?.data);
       })
       .catch((error) => {
-        console.log('error', error);
         toast.error(error?.response?.data?.error);
       });
   };
@@ -45,7 +48,6 @@ const MyProfile = () => {
         setCollegeList(res?.data?.data);
       })
       .catch((error) => {
-        console.log('error', error);
         toast.error(error?.response?.data?.error);
       });
   };
@@ -56,7 +58,6 @@ const MyProfile = () => {
         setLanguageList(res?.data?.data);
       })
       .catch((error) => {
-        console.log('error', error);
         toast.error(error?.response?.data?.error);
       });
   };
@@ -67,10 +68,25 @@ const MyProfile = () => {
         setUserDetails(res?.data?.data);
       })
       .catch((error) => {
-        console.log('error', error);
         toast.error(error?.response?.data?.error);
       });
   };
+
+  let percentage = 0;
+  if (session?.data?.user?.role === USER_ROLE?.EMPLOYEE) {
+    percentage =
+      context?.userProfileCount?.basic_details +
+      context?.userProfileCount?.company_details +
+      context?.userProfileCount?.kyc_details;
+  } else {
+    percentage =
+      context?.userProfileCount?.career_details +
+      context?.userProfileCount?.education_details +
+      context?.userProfileCount?.personal_details +
+      context?.userProfileCount?.resume_details +
+      context?.userProfileCount?.skill_details +
+      context?.userProfileCount?.summary_details;
+  }
 
   return (
     <Suspense fallback={<Loader />}>
@@ -94,94 +110,111 @@ const MyProfile = () => {
             </button>
           </div>
         </div>
-        <div className="mt-4 w-full rounded-2xl bg-meta-light-blue-2 p-10">
-          <div className="flex w-full items-center gap-8">
-            <Image
-              width={109}
-              height={135}
-              alt="MainLogo"
-              src={'/ProfileLogo.svg'}
-            />
-            <div className="flex w-full gap-8">
-              <div className="w-11/12">
-                <p className="text-xl font-semibold capitalize text-meta-purple-1">
-                  {session?.data?.user?.role !== USER_ROLE?.EMPLOYEE
-                    ? userDetails?.user_name
-                      ? userDetails?.user_name
-                      : '-'
-                    : userDetails?.company_name
-                      ? userDetails?.company_name
-                      : '-'}
-                </p>
-                <p className="text-sm font-medium capitalize text-meta-light-blue-3">
-                  {session?.data?.user?.role === USER_ROLE?.EMPLOYEE &&
-                    userDetails?.company_type}
-                </p>
 
-                <div className="border-b-default-1 my-3 w-full border-meta-light-blue-1" />
-                <div className="flex w-1/2 justify-between">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <Image
-                      width={16}
-                      height={16}
-                      alt="MainLogo"
-                      src={'/location.svg'}
-                    />
-                    <p className="text-xs text-meta-light-blue-3">
-                      {userDetails?.current_location
-                        ? userDetails?.current_location === 'OUT_OF_USA'
-                          ? TEXT?.OUT_SIDE_USA
-                          : TEXT?.USA
-                        : '-'}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Image
-                      width={16}
-                      height={16}
-                      alt="MainLogo"
-                      src={'/call.svg'}
-                    />
-                    <p className="text-xs text-meta-light-blue-3">
-                      {userDetails?.contact_number
-                        ? userDetails?.contact_number
-                        : '-'}
-                    </p>
-                  </div>
-                </div>
-                <div className="mt-3 flex items-center gap-2">
-                  <Image
-                    width={16}
-                    height={16}
-                    alt="MainLogo"
-                    src={'/mail.svg'}
-                  />
-                  <p className="text-xs text-meta-light-blue-3">
-                    {session?.data?.user?.email}
-                  </p>
-                </div>
+        <div className="mt-4 w-full rounded-2xl bg-meta-light-blue-2 p-10">
+          {Object.keys(userDetails)?.length === 0 ? (
+            <ProfileSkeleton />
+          ) : (
+            <div className="flex w-full items-center gap-8">
+              <div className="relative h-24 w-24">
+                <Image
+                  width={73}
+                  height={73}
+                  alt="avatar"
+                  src={'/sidebarIcon/profile.svg'}
+                  className="absolute right-[6px] top-[5px] rounded-full p-0.5"
+                />
+                <CircularProgressbar
+                  value={percentage ? percentage : 0}
+                  styles={buildStyles({
+                    pathColor: '#34A853',
+                    strokeLinecap: 'butt',
+                    trailColor: '#d6d6d6',
+                    pathTransitionDuration: 0.5,
+                  })}
+                />
               </div>
-              {session?.data?.user?.role !== USER_ROLE?.EMPLOYEE && (
-                <div
-                  onClick={() => setIsOpen(true)}
-                  className="cursor-pointer text-base font-medium text-meta-blue-1"
-                >
-                  {TEXT?.EDIT}
+              <div className="flex w-full gap-8">
+                <div className="w-11/12">
+                  <p className="text-xl font-semibold capitalize text-meta-purple-1">
+                    {session?.data?.user?.role !== USER_ROLE?.EMPLOYEE
+                      ? userDetails?.user_name
+                        ? userDetails?.user_name
+                        : '-'
+                      : userDetails?.company_name
+                        ? userDetails?.company_name
+                        : '-'}
+                  </p>
+                  <p className="text-sm font-medium capitalize text-meta-light-blue-3">
+                    {session?.data?.user?.role === USER_ROLE?.EMPLOYEE &&
+                      userDetails?.company_type}
+                  </p>
+
+                  <div className="border-b-default-1 my-3 w-full border-meta-light-blue-1" />
+                  <div className="flex w-1/2 justify-between">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Image
+                        width={16}
+                        height={16}
+                        alt="MainLogo"
+                        src={'/location.svg'}
+                      />
+                      <p className="text-xs text-meta-light-blue-3">
+                        {userDetails?.current_location
+                          ? userDetails?.current_location === 'OUT_OF_USA'
+                            ? TEXT?.OUT_SIDE_USA
+                            : TEXT?.USA
+                          : '-'}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Image
+                        width={16}
+                        height={16}
+                        alt="MainLogo"
+                        src={'/call.svg'}
+                      />
+                      <p className="text-xs text-meta-light-blue-3">
+                        {userDetails?.contact_number
+                          ? userDetails?.contact_number
+                          : '-'}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mt-3 flex items-center gap-2">
+                    <Image
+                      width={16}
+                      height={16}
+                      alt="MainLogo"
+                      src={'/mail.svg'}
+                    />
+                    <p className="text-xs text-meta-light-blue-3">
+                      {session?.data?.user?.email}
+                    </p>
+                  </div>
                 </div>
-              )}
-              <div>
-                {isOpen && (
-                  <EditDetailsDialog
-                    isOpen={isOpen}
-                    setIsOpen={setIsOpen}
-                    session={session?.data}
-                    userDetails={userDetails}
-                    getUserDataApiCall={() => getProfileDetails()}
-                  />
+                {session?.data?.user?.role !== USER_ROLE?.EMPLOYEE && (
+                  <div
+                    onClick={() => setIsOpen(true)}
+                    className="cursor-pointer text-base font-medium text-meta-blue-1"
+                  >
+                    {TEXT?.EDIT}
+                  </div>
                 )}
+                <div>
+                  {isOpen && (
+                    <EditDetailsDialog
+                      isOpen={isOpen}
+                      setIsOpen={setIsOpen}
+                      session={session?.data}
+                      userDetails={userDetails}
+                      getUserDataApiCall={() => getProfileDetails()}
+                    />
+                  )}
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
 
         {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (

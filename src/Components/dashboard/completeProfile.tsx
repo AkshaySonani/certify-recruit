@@ -38,7 +38,7 @@ const CompleteProfile = () => {
             <Image
               width={90}
               height={90}
-              alt="avatar"
+              alt="profile photo"
               src={'/sidebarIcon/profile.svg'}
               className="absolute top-0 rounded-full p-0.5"
             />
@@ -47,6 +47,7 @@ const CompleteProfile = () => {
               <CircularProgressbar
                 value={percentage ? percentage : 0}
                 styles={buildStyles({
+                  pathColor: '#34A853',
                   strokeLinecap: 'butt',
                   trailColor: '#d6d6d6',
                   pathTransitionDuration: 0.5,

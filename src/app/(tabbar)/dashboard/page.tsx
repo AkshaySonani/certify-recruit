@@ -48,10 +48,21 @@ const Page = (data: any) => {
     }
   };
 
-  const percentage =
-    context?.userProfileCount?.basic_details +
-    context?.userProfileCount?.company_details +
-    context?.userProfileCount?.kyc_details;
+  let percentage = 0;
+  if (session?.data?.user?.role === USER_ROLE?.EMPLOYEE) {
+    percentage =
+      context?.userProfileCount?.basic_details +
+      context?.userProfileCount?.company_details +
+      context?.userProfileCount?.kyc_details;
+  } else {
+    percentage =
+      context?.userProfileCount?.career_details +
+      context?.userProfileCount?.education_details +
+      context?.userProfileCount?.personal_details +
+      context?.userProfileCount?.resume_details +
+      context?.userProfileCount?.skill_details +
+      context?.userProfileCount?.summary_details;
+  }
 
   return (
     <div>

@@ -5,14 +5,14 @@ import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
 import { TEXT } from '@/service/Helper';
 import { useFormik, Field } from 'formik';
-import { EMP_TYPE_ARR } from '@/constant/Enum';
-import 'react-datepicker/dist/react-datepicker.css';
-import { Menu, Transition } from '@headlessui/react';
-import { Fragment, useContext, useEffect, useState } from 'react';
-import { API_CONSTANT } from '@/constant/ApiConstant';
 import AutoComplete from '../Autocomplete';
 import useDebounce from '@/hooks/useDebounce';
+import { EMP_TYPE_ARR } from '@/constant/Enum';
 import AppContext from '@/context/AppProvider';
+import 'react-datepicker/dist/react-datepicker.css';
+import { Menu, Transition } from '@headlessui/react';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import { Fragment, useContext, useEffect, useState } from 'react';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -24,18 +24,19 @@ const CareerInfoTab = ({
   activePage,
   getUserDataApiCall,
 }: any) => {
-  const [isFresher, setIsFresher] = useState(userDetails?.is_fresher);
-  const [active, setActive] = useState(0);
-  const [cityQuery, setCityQuery] = useState('');
-  const [cities, setCities] = useState([]);
-  const debouncedSearchCity = useDebounce(cityQuery);
   const context = useContext(AppContext);
+  const [active, setActive] = useState(0);
+  const [cities, setCities] = useState([]);
+  const [cityQuery, setCityQuery] = useState('');
+  const debouncedSearchCity = useDebounce(cityQuery);
+  const [isFresher, setIsFresher] = useState(userDetails?.is_fresher);
+
   const handleSubmit = async (values: any, actions: any) => {
     const obj = {
       ...values,
       profile_count: {
         ...context?.userProfileCount,
-        career_details: 17,
+        career_details: 16.7,
       },
     };
 
@@ -91,7 +92,7 @@ const CareerInfoTab = ({
         setCities(res?.data?.data);
       })
       .catch((error) => {
-        console.log('error', error);
+        toast.error(error || 'Something want wrong');
       });
   };
 
