@@ -14,16 +14,24 @@ const jobApplicationSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'accepted', 'rejected'],
-    default: 'pending',
+    default: '',
+    validate: {
+      validator: (value: any) => {
+        // If value is empty string, it's valid
+        if (value === '') return true;
+        // Otherwise, check if the value is one of the enum options
+        return ['Awaiting', 'Contacting', 'Hired'].includes(value);
+      },
+      message: 'Invalid status value',
+    },
   },
-  cover_letter: {
-    type: String,
-    required: true,
-  },
-  preferred_timing: {
-    type: String,
-  },
+  // cover_letter: {
+  //   type: String,
+  //   required: true,
+  // },
+  // preferred_timing: {
+  //   type: String,
+  // },
 });
 
 jobApplicationSchema.set('timestamps', true);

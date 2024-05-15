@@ -91,13 +91,51 @@ export const GET = async (req: NextResponse) => {
       status: 401,
     });
   }
+
+  // const testUser = {
+  //   _id: {
+  //     $oid: '663a60bc6cd07b256a1f10fd',
+  //   },
+  //   email: 'Test@gmail.com',
+  //   status: 'active',
+  //   password: '$2a$06$kXNHDvSlmr4coEZsChrKr.o0Opl/7./v9ncpCs7qZmJSulfMp7fGi',
+  //   premium_level: 0,
+  //   // role: 'admin',
+  //   role: 'employee',
+  //   profile_picture: '',
+  //   phone: '',
+  //   createdAt: {
+  //     $date: '2024-05-07T17:11:24.804Z',
+  //   },
+  //   updatedAt: {
+  //     $date: '2024-05-07T17:11:24.804Z',
+  //   },
+  //   __v: 0,
+  // };
+
   try {
     await connect();
-    let results = await Job.find({});
-    return NextResponse.json({
-      status: 200,
-      data: results,
-    });
+    let results;
+    // if (testUser?.role === 'employee') {
+    //   results = await Job.find({ company_id: testUser?._id?.$oid })
+    if (session?.user?.role === 'employee') {
+      results = await Job.find({ company_id: session?.user?._id })
+        .populate({ path: 'city' })
+        .populate({ path: 'state' })
+        .populate({ path: 'country' });
+
+      return NextResponse.json({
+        totalApplicants: results?.length,
+        status: 200,
+        data: results,
+      });
+    } else {
+      results = await Job.find({});
+      return NextResponse.json({
+        status: 200,
+        data: results,
+      });
+    }
   } catch (error) {
     return NextResponse.json(
       {
