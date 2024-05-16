@@ -16,12 +16,13 @@ export const POST = async (req: NextRequest) => {
 
   try {
     await connect();
-    const { user_id, job_id, status } = await req.json();
+    const { user_id, job_id, status, user_cv } = await req.json();
 
     const newJob = await JobApplication.create({
       user_id,
       job_id,
       status,
+      user_cv,
     });
     return NextResponse.json({
       status: 201,
