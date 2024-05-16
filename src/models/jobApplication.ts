@@ -25,6 +25,11 @@ const jobApplicationSchema = new mongoose.Schema({
       message: 'Invalid status value',
     },
   },
+  resume: [
+    {
+      type: String,
+    },
+  ],
   // cover_letter: {
   //   type: String,
   //   required: true,
