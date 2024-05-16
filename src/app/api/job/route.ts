@@ -1,9 +1,10 @@
 'use server';
 import Job from '@/models/job';
+import mongoose from 'mongoose';
 import { connect } from '@/db/mongodb';
 import { getServerSession } from 'next-auth';
-import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '@/service/AuthOptions';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const POST = async (req: NextRequest) => {
   const session = await getServerSession(authOptions);
@@ -94,18 +95,85 @@ export const GET = async (req: NextResponse) => {
 
   try {
     await connect();
-    let results = await Job.find({})
-      .populate({ path: 'city' })
-      .populate({ path: 'state' })
-      .populate({ path: 'country' });
-    return NextResponse.json({
-      status: 200,
-      data: results,
-    });
+    let results;
+    if (session?.user?.role === 'employee') {
+      results = await Job.aggregate([
+        {
+          $match: {
+            company_id: new mongoose.Types.ObjectId(session?.user?._id),
+          },
+        },
+        {
+          $lookup: {
+            from: 'jobapplications',
+            localField: '_id',
+            foreignField: 'job_id',
+            as: 'applicants',
+          },
+        },
+        {
+          $lookup: {
+            from: 'states',
+            localField: 'state',
+            foreignField: '_id',
+            as: 'state_info',
+          },
+        },
+        {
+          $lookup: {
+            from: 'countries',
+            localField: 'country',
+            foreignField: '_id',
+            as: 'country_info',
+          },
+        },
+        {
+          $lookup: {
+            from: 'cities',
+            localField: 'city',
+            foreignField: '_id',
+            as: 'city_info',
+          },
+        },
+        {
+          $addFields: {
+            city: {
+              _id: { $arrayElemAt: ['$city_info._id', 0] },
+              name: { $arrayElemAt: ['$city_info.name', 0] },
+            },
+            state: {
+              _id: { $arrayElemAt: ['$state_info._id', 0] },
+              name: { $arrayElemAt: ['$state_info.name', 0] },
+            },
+            country: {
+              _id: { $arrayElemAt: ['$country_info._id', 0] },
+              name: { $arrayElemAt: ['$country_info.name', 0] },
+            },
+          },
+        },
+        {
+          $project: {
+            city_info: 0,
+            state_info: 0,
+            country_info: 0,
+          },
+        },
+      ]);
+      return NextResponse.json({
+        status: 200,
+        data: results,
+      });
+    } else {
+      results = await Job.find({});
+      return NextResponse.json({
+        status: 200,
+        data: results,
+      });
+    }
   } catch (error) {
     return NextResponse.json(
       {
-        message: 'An error occurred while fetching category.',
+        message: 'An error occurred while fetching jobs.',
         error: error,
       },
       { status: 500 },
