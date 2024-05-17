@@ -1,16 +1,17 @@
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import API from '@/service/ApiService';
+import { TEXT } from '@/service/Helper';
 import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import { Fragment, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'react-toastify';
-const ApplyJob = ({ jobId }: any) => {
+const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
   const [OpenUploadModal, setOpenUploadModal] = useState(false);
-  const [files, setFiles] = useState([]);
-  const [fileName, setFileName] = useState('');
+  const [successModal, setSuccessModal] = useState(false);
+  const [allFiles, setAllFiles] = useState<any>([]);
   const [userDetails, setUserDetails] = useState<any>({});
-  const [select, setSelect] = useState('');
+  const [select, setSelect] = useState<any>('');
   const { getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
     accept: {
@@ -18,22 +19,18 @@ const ApplyJob = ({ jobId }: any) => {
     },
 
     onDrop: (acceptedFiles: any) => {
-      if (fileName == '') {
-        toast?.error('Please add file name');
-      } else {
-        setFiles([...files, acceptedFiles[0]]);
-      }
+      const NewFormData = new FormData();
+      NewFormData.append('file', acceptedFiles[0]);
+      const input = NewFormData.get('file');
+      setAllFiles([...allFiles, input]);
     },
   });
-  console.log('files', files);
 
   const getUserCVList = () => {
-    console.log('hello');
-
     API.get(API_CONSTANT?.PROFILE)
       .then((res: any) => {
         setUserDetails(res?.data?.data);
-        setFiles(res?.data?.data?.resume);
+        setAllFiles(res?.data?.data?.resume);
       })
       .catch((error: any) => {
         toast.error(error?.response?.data?.error);
@@ -42,13 +39,96 @@ const ApplyJob = ({ jobId }: any) => {
   useEffect(() => {
     getUserCVList();
   }, []);
+  const UploadFileOnBucket = async (file: any) => {
+    const NewFormData = new FormData();
+    NewFormData.append('file', file);
+    API.post(API_CONSTANT?.UPLOAD_FILE, NewFormData)
+      .then((res) => {
+        if (res?.data?.success) {
+          const obj = {
+            file_name: file?.name?.split('.')[0],
+            file_url: res?.data?.fileName,
+            file_id: Date.now() + 1000 * 50,
+          };
 
+          API.post(API_CONSTANT?.PROFILE, {
+            resume: obj,
+          })
+            .then((res) => {
+              if (res?.data?.status === 200) {
+                setSelect(obj);
+                setOpenUploadModal(false);
+              }
+            })
+            .catch((error) => {
+              console.log('error', error);
+              toast?.error(error);
+            });
+        } else {
+          toast.error(
+            res?.data?.error || 'Your resume are not upload please try again',
+          );
+        }
+      })
+      .catch((error) => {
+        toast.error(error || 'Something want wrong');
+      });
+  };
+
+  const _onApply = () => {
+    if (select?._id) {
+      setOpenUploadModal(false);
+    } else {
+      UploadFileOnBucket(select);
+    }
+  };
+  const removeFile = (fileToRemove: any) => {
+    let obj: any = {
+      resumeId: fileToRemove?._id,
+    };
+    API.post(API_CONSTANT?.DELETE_RESUME, obj)
+      .then((res) => {
+        if (res?.data?.status === 200) {
+          toast?.success(res?.data?.message);
+
+          setSelect('');
+        }
+      })
+      .catch((error) => {
+        toast?.error(error);
+      });
+  };
+  const _onSubmit = () => {
+    if (select === '') {
+      toast?.error('Please upload resume');
+    } else {
+      const obj = {
+        user_id: userDetails?._id,
+        job_id: jobApplyId,
+        status: '',
+        user_cv: [select],
+      };
+      API.post(API_CONSTANT?.JOB_APPLY, obj)
+        .then((res) => {
+          if (res?.status === 200) {
+            setSuccessModal(true);
+            setSelect('');
+          }
+        })
+        .catch((error) => {
+          toast?.error(error);
+        });
+    }
+  };
   return (
     <div>
       <div className="mt-5 flex flex-col">
         <div
           className="mt-7 flex w-full cursor-pointer items-center justify-center rounded-lg border-[2px] border-dashed border-meta-light-blue-1 p-8"
-          onClick={() => setOpenUploadModal(true)}
+          onClick={() => {
+            setOpenUploadModal(true);
+            setSelect('');
+          }}
         >
           <section className="text-center text-lg">
             <Image
@@ -67,6 +147,61 @@ const ApplyJob = ({ jobId }: any) => {
             </p>
           </section>
         </div>
+      </div>
+      <div>
+        {!OpenUploadModal && select && (
+          <div
+            key={select?.file_id}
+            className="mt-5 flex cursor-pointer items-center justify-between rounded-md bg-meta-gray-2 p-4"
+          >
+            <div
+              className="flex items-center"
+              onClick={() => window.open(select?.file_url, '_blank')}
+            >
+              <Image
+                alt="file"
+                width={22}
+                height={22}
+                src={'/sidebarIcon/jobPosting.svg'}
+              />
+              <p className="test-meta-light-blue-3 ml-3 text-sm font-medium">
+                {select?.file_name}
+              </p>
+            </div>
+
+            <Image
+              width={22}
+              height={22}
+              alt="remove"
+              src={'CloseIcon.svg'}
+              className="cursor-pointer"
+              onClick={(e) => {
+                e.stopPropagation();
+                removeFile(select);
+              }}
+            />
+          </div>
+        )}
+      </div>
+      <div className={`"w-full mt-16  flex justify-between`}>
+        <button
+          type="button"
+          onClick={() => setJobApplyId('')}
+          className="mb-8 min-w-full rounded-lg border border-meta-light-blue-1 text-base font-medium text-meta-light-blue-3 sm:mb-8 sm:min-w-48"
+        >
+          {TEXT?.BACK}
+        </button>
+
+        <button
+          onClick={() => _onSubmit()}
+          className={`mb-8 h-12  min-w-48 rounded-lg border border-meta-light-blue-2 bg-meta-blue-1 py-3 text-meta-light-blue-3 transition delay-150 duration-300 ease-in-out will-change-auto hover:bg-hiring-btn-gradient`}
+        >
+          <span
+            className={`flex justify-center text-sm font-medium text-white`}
+          >
+            Continue
+          </span>
+        </button>
       </div>
       <Transition appear show={OpenUploadModal} as={Fragment}>
         <Dialog as="div" onClose={() => setOpenUploadModal(false)}>
@@ -112,17 +247,6 @@ const ApplyJob = ({ jobId }: any) => {
                     />
                   </div>
                   <div className="mt-5 flex flex-col">
-                    <div>
-                      <input
-                        type="text"
-                        value={fileName}
-                        autoFocus={true}
-                        name="website_url"
-                        placeholder="Enter file name"
-                        onChange={(e) => setFileName(e?.target?.value)}
-                        className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3  focus:border-meta-light-blue-1 focus:outline-none"
-                      />
-                    </div>
                     <div className=" mt-7 flex w-full cursor-pointer items-center justify-center rounded-lg border-[2px] border-dashed border-meta-light-blue-1 p-8">
                       <section className="text-center text-lg">
                         <div {...getRootProps({ className: 'dropzone' })}>
@@ -148,14 +272,14 @@ const ApplyJob = ({ jobId }: any) => {
                       </section>
                     </div>
                     <div className="mt-3 h-36 overflow-auto">
-                      {files.length !== 0 &&
-                        files &&
-                        files?.map((ele: any) => {
+                      {allFiles.length !== 0 &&
+                        allFiles &&
+                        allFiles?.map((ele: any) => {
                           return (
                             <div
                               onClick={
                                 () => {
-                                  if (select) {
+                                  if (select?._id === ele?._id) {
                                     setSelect('');
                                   } else {
                                     setSelect(ele);
@@ -174,7 +298,7 @@ const ApplyJob = ({ jobId }: any) => {
                                   src={'/sidebarIcon/jobPosting.svg'}
                                 />
                                 <p className="test-meta-light-blue-3 ml-3 text-sm font-medium">
-                                  {ele?.file_name}
+                                  {ele?.file_name || ele?.name}
                                 </p>
                               </div>
                               {select?._id === ele?._id ? (
@@ -191,10 +315,69 @@ const ApplyJob = ({ jobId }: any) => {
                         })}
                     </div>
                     <div className="mt-8 flex w-full justify-end">
-                      <button className="w-36 rounded-lg bg-meta-blue-1 py-2 text-base text-white">
+                      <button
+                        onClick={() => _onApply()}
+                        className="w-36 rounded-lg bg-meta-blue-1 py-2 text-base text-white"
+                      >
                         APPLY
                       </button>
                     </div>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+      <Transition appear show={successModal} as={Fragment}>
+        <Dialog as="div" onClose={() => setSuccessModal(false)}>
+          <Transition.Child
+            as={Fragment}
+            leaveTo="opacity-0"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leaveFrom="opacity-100"
+            leave="ease-in duration-200"
+            enter="ease-out duration-300"
+          >
+            <div className="fixed inset-0 bg-black/25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center text-center">
+              <Transition.Child
+                as={Fragment}
+                leave="ease-in duration-200"
+                leaveTo="opacity-0 scale-95"
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leaveFrom="opacity-100 scale-100"
+              >
+                <Dialog.Panel className="w-full max-w-lg transform rounded-2xl bg-white p-3 text-left align-middle shadow-xl transition-all">
+                  <div className="mt-4 h-[87px]">
+                    <Image
+                      width={123}
+                      height={127}
+                      alt="UploadLogo"
+                      src={'/job/jobApplySuccess.svg'}
+                      className="mx-auto"
+                    />
+                  </div>
+                  <div className="flex w-full flex-col items-center justify-center">
+                    <p className="text-center text-lg font-semibold text-meta-purple-1">
+                      Job Apply Successfully
+                    </p>
+                    <p className="mt-5 w-[70%] text-center text-sm text-meta-light-blue-3">
+                      Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry.
+                    </p>
+                    <p
+                      onClick={() => setJobApplyId('')}
+                      className="my-5 cursor-pointer text-sm font-medium text-meta-blue-1 underline"
+                    >
+                      View Apply Job
+                    </p>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

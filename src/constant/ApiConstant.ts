@@ -12,6 +12,8 @@ const API_CONSTANT = {
   DELETE_RESUME: '/delete-resume',
   STATES: '/states',
   COUNTRY: '/country',
+  JOB_APPLY: '/job-apply',
+  JOB_SEARCH: '/job-search',
 };
 
 export { API_CONSTANT };
