@@ -19,15 +19,15 @@ export const POST = async (req: NextRequest) => {
   try {
     await connect();
 
-    let obj;
+    let obj = {};
     if (city !== null) {
-      obj = { city: new mongoose.Types.ObjectId(city) };
+      obj = { ...obj, city: new mongoose.Types.ObjectId(city) };
     }
     if (jobTitle !== '') {
-      obj = { title: { $regex: jobTitle, $options: 'i' } };
+      obj = { ...obj, title: { $regex: jobTitle, $options: 'i' } };
     }
     if (postedDate !== null) {
-      obj = { createdAt: { $gte: new Date(postedDate) } };
+      obj = { ...obj, createdAt: { $gte: new Date(postedDate) } };
     }
 
     const results = await Job.find(obj)
