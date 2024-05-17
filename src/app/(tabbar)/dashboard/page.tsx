@@ -70,7 +70,7 @@ const Page = (data: any) => {
         {TEXT?.DASHBOARD}
       </div>
       <div>
-        {percentage === 100 && (
+        {percentage >= 100 && (
           <div className="rounded-3xl bg-[url('/dashboard/sertificateBG.svg')] bg-cover bg-no-repeat p-4">
             <div>
               <div className="text-xl font-medium text-white">
@@ -151,15 +151,15 @@ const Page = (data: any) => {
             })}
           </div>
         )}
-        {percentage === 100 && (
+        {percentage >= 100 && (
           <div className="mt-8 text-xl font-semibold text-meta-purple-1">
             {TEXT?.RECENTLY_JOB_POST}
           </div>
         )}
 
-        {percentage !== 100 && <CompleteProfile />}
+        {percentage <= 100 && <CompleteProfile />}
 
-        {percentage === 100 &&
+        {percentage >= 100 &&
           Array.from({ length: 3 }).map((_, index) => {
             return (
               <div className="mt-5">

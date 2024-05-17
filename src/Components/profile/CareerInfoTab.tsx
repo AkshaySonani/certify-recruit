@@ -232,7 +232,7 @@ const CareerInfoTab = ({
                               value={list?.companyName}
                               name="companyName"
                               placeholder="Company name"
-                              className=" w-full rounded-2xl border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+                              className="w-full rounded-2xl border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
                             />
                             {formik?.touched?.total_experiences?.[index]
                               ?.companyName &&
@@ -255,7 +255,7 @@ const CareerInfoTab = ({
                               value={list?.company_role}
                               name="company_role"
                               placeholder="Company role"
-                              className="w-full rounded-2xl border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+                              className="w-full rounded-2xl border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
                             />
                             {formik?.touched?.total_experiences?.[index]
                               ?.company_role &&
@@ -375,7 +375,7 @@ const CareerInfoTab = ({
                                 }
                                 value={list?.years}
                                 name="years"
-                                className="mt-2 w-1/2 rounded-2xl border border-meta-light-blue-1 py-3 pl-4 focus:border-meta-light-blue-3"
+                                className="mt-2 w-1/2 rounded-2xl border border-meta-light-blue-1 py-3 pl-4 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
                               />
                               <div className="w-1/2 pt-1 text-base font-medium text-meta-purple-1">
                                 Years
@@ -402,7 +402,7 @@ const CareerInfoTab = ({
                                 }
                                 value={list?.month}
                                 name="month"
-                                className="mt-2 w-1/2 rounded-2xl border border-meta-light-blue-1 py-3  pl-4 focus:border-meta-light-blue-3"
+                                className="mt-2 w-1/2 rounded-2xl border border-meta-light-blue-1 py-3 pl-4  focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
                               />
                               <div className="w-1/2  pt-1 text-base font-medium text-meta-purple-1">
                                 Month
@@ -431,7 +431,7 @@ const CareerInfoTab = ({
                             value={list?.reason_for_leaving}
                             name="reason_for_leaving"
                             placeholder="Type here"
-                            className="mt-2 w-full rounded-2xl border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+                            className="mt-2 w-full rounded-2xl border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
                           />
                           {formik?.touched?.total_experiences?.[index]
                             ?.reason_for_leaving &&
@@ -482,7 +482,7 @@ const CareerInfoTab = ({
                 onChange={formik.handleChange}
                 type="number"
                 placeholder="Expected salary"
-                className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+                className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
               />
               {formik.touched.expected_salary_start_at &&
                 formik.errors.expected_salary_start_at && (

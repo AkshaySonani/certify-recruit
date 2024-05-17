@@ -66,12 +66,12 @@ const SummaryTab = ({
             than 50 characters.
           </p>
           <textarea
-            value={formik?.values?.profile_summary}
+            rows={4}
+            placeholder="Summery"
             name="profile_summary"
             onChange={formik.handleChange}
-            placeholder="Summery"
-            rows={4}
-            className="mt-2 w-full rounded-2xl border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+            value={formik?.values?.profile_summary}
+            className="mt-2 w-full rounded-2xl border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
           />
           {formik.touched.profile_summary && formik.errors.profile_summary && (
             <div className="error">

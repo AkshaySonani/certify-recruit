@@ -239,7 +239,7 @@ const EducationTab = ({
                 value={String(formik?.values?.completion_date?.month as any)}
                 wrapperClassName="w-full"
                 showMonthYearPicker
-                className="w-full rounded-xl border border-meta-light-blue-1 p-3"
+                className="w-full rounded-xl border border-meta-light-blue-1 p-3 focus:outline-meta-light-blue-1"
                 dateFormat="MMMM"
                 placeholderText="Select Month"
                 onChange={(date: any) => {
@@ -270,7 +270,7 @@ const EducationTab = ({
                 shouldCloseOnSelect={true}
                 dateFormat="YYYY"
                 placeholderText="Select Year"
-                className="w-full rounded-xl border border-meta-light-blue-1 p-3"
+                className="w-full rounded-xl border border-meta-light-blue-1 p-3 focus:outline-meta-light-blue-1"
                 onChange={(date: any) => {
                   {
                     formik?.setFieldValue('completion_date', {

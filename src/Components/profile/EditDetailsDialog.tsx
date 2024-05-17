@@ -98,7 +98,7 @@ const EditDetailsDialog = ({
                 <Dialog.Panel className="w-full max-w-3xl transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
-                    className=" border-b-default-1 relative flex items-start border-meta-light-blue-1 p-8 text-xl font-semibold leading-6 text-meta-purple-1"
+                    className="border-b-default-1 relative flex items-start border-meta-light-blue-1 p-8 text-xl font-semibold leading-6 text-meta-purple-1"
                   >
                     {TEXT?.BASIC_DETAIL}
                   </Dialog.Title>
@@ -113,7 +113,7 @@ const EditDetailsDialog = ({
                             name="user_name"
                             onChange={formik?.handleChange}
                             value={formik?.values?.user_name}
-                            className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+                            className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
                           />
                         </div>
                         <div className="w-1/2">
@@ -124,7 +124,7 @@ const EditDetailsDialog = ({
                             value={formik?.values?.email}
                             readOnly
                             placeholder="Email"
-                            className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+                            className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
                           />
                         </div>
                       </div>
@@ -136,7 +136,7 @@ const EditDetailsDialog = ({
                           name="contact_number"
                           onChange={formik?.handleChange}
                           placeholder={TEXT?.PHONE_NUMBER}
-                          className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+                          className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
                         />
                       </div>
                       <div className="mt-3 w-full">
@@ -147,7 +147,7 @@ const EditDetailsDialog = ({
                           value={formik?.values?.role}
                           onChange={formik?.handleChange}
                           placeholder={TEXT?.ROLE}
-                          className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+                          className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
                         />
                       </div>
 
@@ -161,7 +161,7 @@ const EditDetailsDialog = ({
                               value={totalYears}
                               readOnly
                               placeholder={'Year'}
-                              className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+                              className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
                             />
                           </div>
                           <div className="w-1/2">
@@ -171,7 +171,7 @@ const EditDetailsDialog = ({
                               value={totalMonths}
                               readOnly
                               placeholder={'Month'}
-                              className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+                              className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
                             />
                           </div>
                         </div>

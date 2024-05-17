@@ -19,7 +19,7 @@ const Sidebar = () => {
   const activeTabCss = (path: string) =>
     pathname.split('/')[1] === path
       ? 'bg-meta-blue-2 text-white dark:bg-meta-4'
-      : percentage !== 100
+      : percentage <= 99
         ? 'text-meta-gray-1'
         : '';
 
@@ -81,7 +81,7 @@ const Sidebar = () => {
                   <button
                     type="button"
                     onClick={() =>
-                      percentage === 100 && router.push('/' + e.path)
+                      percentage >= 100 && router.push('/' + e.path)
                     }
                     className={
                       activeTabCss(e.path) +
@@ -94,7 +94,7 @@ const Sidebar = () => {
                       color={
                         pathname.split('/')[1] === e?.path
                           ? 'white'
-                          : percentage !== 100
+                          : percentage <= 99
                             ? '#B9B9B9'
                             : '#49556F'
                       }
@@ -215,15 +215,15 @@ const Sidebar = () => {
         </Menu>
         <div className="px-4">
           <button
-            onClick={() => percentage === 100 && router.push(ROUTE?.PRICING)}
+            onClick={() => percentage >= 100 && router.push(ROUTE?.PRICING)}
             type="button"
-            className={`${percentage === 100 ? 'bg-hiring-btn-gradient text-white' : 'bg-meta-gray-1 text-black'} mb-4 flex w-full items-center justify-center rounded-lg p-3 font-medium lg:justify-normal`}
+            className={`${percentage >= 100 ? 'bg-hiring-btn-gradient text-white' : 'bg-meta-gray-1 text-black'} mb-4 flex w-full items-center justify-center rounded-lg p-3 font-medium lg:justify-normal`}
           >
             <div className="lg:mr-2">
               <Pricing
                 width={20}
                 height={20}
-                color={percentage === 100 ? 'white' : 'black'}
+                color={percentage >= 100 ? 'white' : 'black'}
               />
             </div>
             <p className="hidden pl-2 lg:block">{TEXT?.PRICING}</p>

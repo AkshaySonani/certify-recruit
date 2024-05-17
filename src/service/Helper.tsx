@@ -225,7 +225,7 @@ const USER_ROLE = {
 
 const SIDE_BAR_DATA = {
   admin: [],
-  employee: [
+  individual: [
     {
       path: 'dashboard',
       title: 'Dashboard',
@@ -252,7 +252,7 @@ const SIDE_BAR_DATA = {
       icon: Icons.Pricing,
     },
   ],
-  individual: [
+  employee: [
     {
       path: 'dashboard',
       title: 'Dashboard',

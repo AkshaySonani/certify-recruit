@@ -278,7 +278,7 @@ const PersonalDetailsTab = ({
                 </div>
                 {i !== 0 && (
                   <div
-                    className={`absolute -right-8  cursor-pointer`}
+                    className={`${formik?.errors?.languages?.[i]?.proficiency ? 'bottom-[34px]' : 'bottom-4'} absolute -right-8  cursor-pointer`}
                     onClick={() => handleRemove(list)}
                   >
                     <Image
