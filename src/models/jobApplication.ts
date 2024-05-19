@@ -14,7 +14,7 @@ const jobApplicationSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: '',
+    default: 'Applicants',
     validate: {
       validator: (value: any) => {
         // If value is empty string, it's valid

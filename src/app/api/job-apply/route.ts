@@ -16,17 +16,31 @@ export const POST = async (req: NextRequest) => {
 
   try {
     await connect();
-    const { user_id, job_id, status, user_cv } = await req.json();
+    const { user_id, job_id, status, user_cv, applicant_id } = await req.json();
 
-    const newJob = await JobApplication.create({
+    const existingApplication = await JobApplication.findOne({
       user_id,
       job_id,
-      status,
+    });
+    if (existingApplication) {
+      return NextResponse.json(
+        {
+          message: 'You have already applied for this job.',
+          status: 400,
+        },
+        { status: 400 },
+      );
+    }
+
+    const newJobApplication = await JobApplication.create({
+      user_id,
+      job_id,
       user_cv,
     });
+
     return NextResponse.json({
       status: 201,
-      data: newJob,
+      data: newJobApplication,
       message: 'Job apply successfully',
     });
   } catch (error) {

@@ -15,7 +15,7 @@ export const POST = async (req: NextRequest) => {
     });
   }
 
-  const { jobTitle, city, postedDate } = await req.json();
+  const { jobTitle, city, endDate, startDate } = await req.json();
   try {
     await connect();
 
@@ -26,8 +26,11 @@ export const POST = async (req: NextRequest) => {
     if (jobTitle !== '') {
       obj = { ...obj, title: { $regex: jobTitle, $options: 'i' } };
     }
-    if (postedDate !== null) {
-      obj = { ...obj, createdAt: { $gte: new Date(postedDate) } };
+    if (startDate !== null || endDate !== null) {
+      obj = {
+        ...obj,
+        createdAt: { $gte: new Date(startDate), $lte: new Date(endDate) },
+      };
     }
 
     const results = await Job.find(obj)
