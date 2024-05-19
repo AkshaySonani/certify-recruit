@@ -16,6 +16,8 @@ const ROUTE = {
   MYPROFILE: '/myProfile',
   HIRED: '/dashboard/hired',
   SEARCH_CVS: '/search_CVs',
+  JOb_POST: '/job_posting',
+  JOb_DETAILS: 'job/details',
   APPLICANTS: '/job/applicants',
   QUIZINFO: '/learn&earn/quizInfo',
   QUIZMCQS: '/learn&earn/quizMCQs',

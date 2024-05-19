@@ -12,7 +12,7 @@ import API from '@/service/ApiService';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import ApplyJob from './applyJob';
 
-const IndividualJob = () => {
+const           IndividualJob = () => {
   const [cities, setCities] = useState([]);
   const [jobList, setJobList] = useState([]);
   const [cityFilter, setCityFilter] = useState('');

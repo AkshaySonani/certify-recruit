@@ -61,6 +61,10 @@ const COMPLETION_DATE = {
   12: "December",
 };
 
+const JOB_STATUS=[
+  "open","paused",'closed'
+]
+
 export {
   PROFICIENCY,
   EMP_TYPE_ARR,
@@ -69,4 +73,5 @@ export {
   CURRENT_LOCATION,
   COMPLETION_DATE,
   COMPANY_TYPE,
+  JOB_STATUS
 };
