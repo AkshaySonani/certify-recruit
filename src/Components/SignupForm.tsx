@@ -158,7 +158,6 @@ const SignupForm = () => {
                       type="button"
                       onClick={() => {
                         signIn();
-                        console.log('--------click--------');
                       }}
                       className="mb-8 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-white text-xl font-semibold text-meta-light-blue-3 hover:bg-meta-gray-2"
                     >

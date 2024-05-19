@@ -41,12 +41,13 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
   }, []);
   const UploadFileOnBucket = async (file: any) => {
     const NewFormData = new FormData();
-    NewFormData.append('file', file);
+    NewFormData.append('file', file?.ele);
+
     API.post(API_CONSTANT?.UPLOAD_FILE, NewFormData)
       .then((res) => {
         if (res?.data?.success) {
           const obj = {
-            file_name: file?.name?.split('.')[0],
+            file_name: file?.ele?.name?.split('.')[0],
             file_url: res?.data?.fileName,
             file_id: Date.now() + 1000 * 50,
           };
@@ -56,7 +57,7 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
           })
             .then((res) => {
               if (res?.data?.status === 200) {
-                setSelect(obj);
+                setSelect({ ele: obj });
                 setOpenUploadModal(false);
               }
             })
@@ -76,21 +77,26 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
   };
 
   const _onApply = () => {
-    if (select?._id) {
-      setOpenUploadModal(false);
+    if (select === '') {
+      toast?.error('Please select at least resume');
     } else {
-      UploadFileOnBucket(select);
+      if (select?.ele?._id) {
+        console.log();
+        setOpenUploadModal(false);
+      } else {
+        UploadFileOnBucket(select);
+      }
     }
   };
   const removeFile = (fileToRemove: any) => {
     let obj: any = {
-      resumeId: fileToRemove?._id,
+      resumeId: fileToRemove?._id || String(fileToRemove?.file_id),
     };
     API.post(API_CONSTANT?.DELETE_RESUME, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
+          getUserCVList();
           toast?.success(res?.data?.message);
-
           setSelect('');
         }
       })
@@ -106,7 +112,7 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
         user_id: userDetails?._id,
         job_id: jobApplyId,
         status: '',
-        user_cv: [select],
+        user_cv: [select?.ele],
       };
       API.post(API_CONSTANT?.JOB_APPLY, obj)
         .then((res) => {
@@ -120,6 +126,7 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
         });
     }
   };
+
   return (
     <div>
       <div className="mt-5 flex flex-col">
@@ -151,12 +158,12 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
       <div>
         {!OpenUploadModal && select && (
           <div
-            key={select?.file_id}
+            key={select?.ele?.file_id}
             className="mt-5 flex cursor-pointer items-center justify-between rounded-md bg-meta-gray-2 p-4"
           >
             <div
               className="flex items-center"
-              onClick={() => window.open(select?.file_url, '_blank')}
+              onClick={() => window.open(select?.ele?.file_url, '_blank')}
             >
               <Image
                 alt="file"
@@ -165,7 +172,7 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
                 src={'/sidebarIcon/jobPosting.svg'}
               />
               <p className="test-meta-light-blue-3 ml-3 text-sm font-medium">
-                {select?.file_name}
+                {select?.ele?.file_name}
               </p>
             </div>
 
@@ -177,7 +184,7 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
               className="cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
-                removeFile(select);
+                removeFile(select?.ele);
               }}
             />
           </div>
@@ -204,7 +211,12 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
         </button>
       </div>
       <Transition appear show={OpenUploadModal} as={Fragment}>
-        <Dialog as="div" onClose={() => setOpenUploadModal(false)}>
+        <Dialog
+          as="div"
+          onClose={() => {
+            setOpenUploadModal(false);
+          }}
+        >
           <Transition.Child
             as={Fragment}
             leaveTo="opacity-0"
@@ -274,21 +286,21 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
                     <div className="mt-3 h-36 overflow-auto">
                       {allFiles.length !== 0 &&
                         allFiles &&
-                        allFiles?.map((ele: any) => {
+                        allFiles?.map((ele: any, i: any) => {
                           return (
                             <div
                               onClick={
                                 () => {
-                                  if (select?._id === ele?._id) {
+                                  if (select?.index === i) {
                                     setSelect('');
                                   } else {
-                                    setSelect(ele);
+                                    setSelect({ ele, index: i });
                                   }
                                 }
                                 // window.open(ele?.file_url, '_blank')
                               }
                               key={ele?.file_id}
-                              className={`${select?._id === ele?._id ? 'border-2 border-meta-blue-1' : ''} mt-5 flex cursor-pointer items-center justify-between rounded-md bg-meta-gray-2 p-4`}
+                              className={`${select?.index === i ? 'border-2 border-meta-blue-1' : ''} mt-5 flex cursor-pointer items-center justify-between rounded-md bg-meta-gray-2 p-4`}
                             >
                               <div className="flex items-center">
                                 <Image
@@ -301,7 +313,7 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
                                   {ele?.file_name || ele?.name}
                                 </p>
                               </div>
-                              {select?._id === ele?._id ? (
+                              {select?.index === i ? (
                                 <div className="text-base font-bold text-meta-blue-1">
                                   UnSelect
                                 </div>
@@ -330,7 +342,14 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
         </Dialog>
       </Transition>
       <Transition appear show={successModal} as={Fragment}>
-        <Dialog as="div" onClose={() => setSuccessModal(false)}>
+        <Dialog
+          as="div"
+          onClose={() => {
+            setOpenUploadModal(false),
+              setSuccessModal(false),
+              setJobApplyId('');
+          }}
+        >
           <Transition.Child
             as={Fragment}
             leaveTo="opacity-0"

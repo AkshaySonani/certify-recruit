@@ -14,6 +14,7 @@ const API_CONSTANT = {
   COUNTRY: '/country',
   JOB_APPLY: '/job-apply',
   JOB_SEARCH: '/job-search',
+  JOB_DETAILS: '/job-details',
 };
 
 export { API_CONSTANT };

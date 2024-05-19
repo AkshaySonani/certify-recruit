@@ -20,6 +20,7 @@ const IndividualJob = () => {
   const [jobApplyId, setJobApplyId] = useState('');
   const [cityQuery, setCityQuery] = useState('');
   const debouncedSearchCity = useDebounce(cityQuery);
+  const router = useRouter();
   const searchCityApi = (search: any) => {
     let obj = {
       searchText: search,
@@ -62,7 +63,6 @@ const IndividualJob = () => {
       postedDate: null,
       jobTitle: jobSearch,
     };
-    console.log('obj', obj);
 
     API.post(API_CONSTANT?.JOB_SEARCH, obj)
       .then((res: any) => {
@@ -318,7 +318,10 @@ const IndividualJob = () => {
               {jobList?.length !== 0 ? (
                 jobList?.map((list: any) => {
                   return (
-                    <div className="my-3 rounded-xl bg-meta-gray-2 p-2">
+                    <div
+                      className="my-3 cursor-pointer rounded-xl bg-meta-gray-2 p-2"
+                      onClick={() => router.push(`/job/details/${list._id}`)}
+                    >
                       <div className="flex justify-between">
                         <div>
                           <div className="flex items-center">
@@ -352,7 +355,10 @@ const IndividualJob = () => {
                             />
                           </button>
                           <button
-                            onClick={() => _onJobApply(list?._id)}
+                            onClick={(e) => {
+                              e?.stopPropagation();
+                              _onJobApply(list?._id);
+                            }}
                             className="flex w-[140px] items-center justify-between rounded-lg border border-meta-light-blue-1 bg-white p-3"
                           >
                             <p className="text-sm font-bold text-meta-purple-1">
@@ -416,7 +422,9 @@ const IndividualJob = () => {
                   );
                 })
               ) : (
-                <div>No Jobs available</div>
+                <div className="flex w-full items-center justify-center font-semibold text-meta-purple-1">
+                  No Jobs available
+                </div>
               )}
             </div>
           </>
