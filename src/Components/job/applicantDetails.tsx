@@ -72,7 +72,7 @@ const ApplicantStatus = [
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
-const Page = () => {
+function ApplicantDetails({ id }: any) {
   const [dateRange, setDateRange] = useState(['2024-01-01', '2024-12-31']);
 
   return (
@@ -354,6 +354,6 @@ const Page = () => {
       </div>
     </div>
   );
-};
+}
 
-export default Page;
+export default ApplicantDetails;

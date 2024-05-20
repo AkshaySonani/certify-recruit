@@ -81,7 +81,6 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
       toast?.error('Please select at least resume');
     } else {
       if (select?.ele?._id) {
-        console.log();
         setOpenUploadModal(false);
       } else {
         UploadFileOnBucket(select);
@@ -111,18 +110,20 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
       const obj = {
         user_id: userDetails?._id,
         job_id: jobApplyId,
-        status: '',
         user_cv: [select?.ele],
       };
       API.post(API_CONSTANT?.JOB_APPLY, obj)
-        .then((res) => {
+        .then((res: any) => {
           if (res?.status === 200) {
             setSuccessModal(true);
             setSelect('');
+          } else {
+            toast.error(res?.message);
           }
         })
         .catch((error) => {
-          toast?.error(error);
+          console.log('error', error);
+          toast?.error(error?.response?.data?.message);
         });
     }
   };

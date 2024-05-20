@@ -174,7 +174,7 @@ export default function Page({ params }: { params: { id: string } }) {
             </div>
             <div className="mt-5 ">
               <p className="text-base font-bold text-meta-purple-1">
-                Roles and Responsibility
+                Important Notes:
               </p>
               <div className="mt-5 text-sm text-meta-light-blue-3">
                 <div
@@ -182,21 +182,6 @@ export default function Page({ params }: { params: { id: string } }) {
                     __html: jobDetails?.description,
                   }}
                 ></div>
-              </div>
-            </div>
-
-            <div className="mt-5 ">
-              <p className="text-base font-bold text-meta-purple-1">
-                Important Notes:
-              </p>
-              <div className="mt-5 text-sm text-meta-light-blue-3">
-                <p>
-                  {' '}
-                  Lorem Ipsum isimply dummy text of the printing and typesetting
-                  industry Lorem Ipsum has been the industrys standard dummy
-                  text ever since the 1500 when an unknown printer took a galley
-                  of type and scrambled it to make a type specimen book
-                </p>
               </div>
             </div>
           </div>

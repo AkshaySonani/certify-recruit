@@ -74,6 +74,9 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
                       value={list}
                       type="checkbox"
                       name={'job_types'}
+                      checked={
+                        formik?.values?.job_types?.includes(list) ? true : false
+                      }
                       onChange={formik.handleChange}
                     />
                     <p className="pl-3 capitalize">{list}</p>

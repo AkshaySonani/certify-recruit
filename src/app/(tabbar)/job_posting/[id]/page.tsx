@@ -2,8 +2,12 @@
 import React from 'react';
 import JobPostingFormMain from '@/Components/Job_posting/jobPostingFormMain';
 
-const Page = () => {
-  return <JobPostingFormMain />;
-};
+function Page({ params }: { params: { id: string } }) {
+  return (
+    <div>
+      <JobPostingFormMain id={params?.id} />
+    </div>
+  );
+}
 
 export default Page;

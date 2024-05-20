@@ -1,14 +1,12 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import React, { Fragment, useState } from 'react';
-import { Menu, Popover, Transition } from '@headlessui/react';
 import { TEXT, USER_ROLE } from '@/service/Helper';
 import IndividualJob from '@/Components/job/individual_job';
 import { useSession } from 'next-auth/react';
 import EmployeeJob from '@/Components/job/employee_job';
 
 const Page = () => {
-  const router = useRouter();
   const session = useSession();
 
   return (

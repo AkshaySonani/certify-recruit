@@ -12,7 +12,7 @@ import API from '@/service/ApiService';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import ApplyJob from './applyJob';
 
-const           IndividualJob = () => {
+const IndividualJob = () => {
   const [cities, setCities] = useState([]);
   const [jobList, setJobList] = useState([]);
   const [cityFilter, setCityFilter] = useState('');
@@ -60,7 +60,8 @@ const           IndividualJob = () => {
   const _applyFilter = () => {
     const obj = {
       city: cityFilter ? cityFilter?._id : null,
-      postedDate: null,
+      startDate: null,
+      endDate: null,
       jobTitle: jobSearch,
     };
 
