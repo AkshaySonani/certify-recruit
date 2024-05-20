@@ -16,7 +16,7 @@ export const POST = async (req: NextRequest) => {
 
   try {
     await connect();
-    const { user_id, job_id, status, user_cv, applicant_id } = await req.json();
+    const { user_id, job_id, user_cv } = await req.json();
 
     const existingApplication = await JobApplication.findOne({
       user_id,

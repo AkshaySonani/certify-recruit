@@ -14,16 +14,8 @@ const jobApplicationSchema = new mongoose.Schema({
   },
   status: {
     type: String,
+    enum: ['Applicants', 'Awaiting', 'Contacting', 'Hired'],
     default: 'Applicants',
-    validate: {
-      validator: (value: any) => {
-        // If value is empty string, it's valid
-        if (value === '') return true;
-        // Otherwise, check if the value is one of the enum options
-        return ['Awaiting', 'Contacting', 'Hired'].includes(value);
-      },
-      message: 'Invalid status value',
-    },
   },
   user_cv: {
     type: [Object],
