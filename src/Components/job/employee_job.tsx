@@ -12,33 +12,39 @@ import useDebounce from '@/hooks/useDebounce';
 import AutoComplete from '../Autocomplete';
 import { JOB_STATUS } from '@/constant/Enum';
 import { toast } from 'react-toastify';
+import Spinner from '@/app/icons/Spinner';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
 const actionMenuItems = ['Edit', 'Delete', 'View JobDetails'];
 const EmployeeJob = () => {
+  const router = useRouter();
   const [cities, setCities] = useState([]);
   const [jobList, setJobList] = useState([]);
-  const [cityFilter, setCityFilter] = useState('');
   const [jobSearch, setJobSearch] = useState('');
+  const [cityQuery, setCityQuery] = useState('');
+  const [jobStatus, setJobStatus] = useState('');
+  const [cityFilter, setCityFilter] = useState('');
+  const [isSpinner, setIsSpinner] = useState(false);
+  const debouncedSearchCity = useDebounce(cityQuery);
   const [date, setDate] = useState({
     startDate: null,
     endDate: null,
   });
-  const [cityQuery, setCityQuery] = useState('');
-  const [jobStatus, setJobStatus] = useState('');
-  const debouncedSearchCity = useDebounce(cityQuery);
-  const router = useRouter();
+
   const searchCityApi = (search: any) => {
+    setIsSpinner(true);
     let obj = {
       searchText: search,
     };
     API.post(API_CONSTANT?.CITIES, obj)
       .then((res: any) => {
+        setIsSpinner(false);
         setCities(res?.data?.data);
       })
       .catch((error) => {
+        setIsSpinner(false);
         console.log('error', error);
       });
   };
@@ -49,20 +55,22 @@ const EmployeeJob = () => {
     }
   }, [debouncedSearchCity]);
 
-  const getJobApi = () => {
-    API.get(API_CONSTANT?.JOB)
-      .then((res: any) => {
-        console.log('job', res?.data?.data);
-        setJobList(res?.data?.data);
-      })
-      .catch((error: any) => {
-        console.log('error', error);
-      });
-  };
-
   useEffect(() => {
     getJobApi();
   }, []);
+
+  const getJobApi = () => {
+    setIsSpinner(true);
+    API.get(API_CONSTANT?.JOB)
+      .then((res: any) => {
+        setIsSpinner(false);
+        setJobList(res?.data?.data);
+      })
+      .catch((error: any) => {
+        setIsSpinner(false);
+        console.log('error', error);
+      });
+  };
 
   const _applyFilter = () => {
     const obj = {
@@ -111,6 +119,7 @@ const EmployeeJob = () => {
       router.push(`${ROUTE?.JOb_DETAILS}/${job?._id}`);
     }
   };
+
   const updateStatusApi = (val: any, id: any) => {
     const data = {
       status: val,
@@ -203,7 +212,7 @@ const EmployeeJob = () => {
                           startDate: dt?.format('YYYY-MM-DD'),
                         });
                       }}
-                      placeholder="Select Start date"
+                      placeholder="Start date"
                       style={{
                         height: 38,
                         width: '100%',
@@ -225,7 +234,7 @@ const EmployeeJob = () => {
                           endDate: dt?.format('YYYY-MM-DD'),
                         });
                       }}
-                      placeholder="Select Start date"
+                      placeholder="Start date"
                       style={{
                         height: 38,
                         width: '100%',
@@ -244,26 +253,26 @@ const EmployeeJob = () => {
                       className="text-base font-medium text-meta-light-blue-3"
                     />
                   </div>
-                  <div className="flex">
+                </div>
+                <div className="mt-2 flex w-full items-center justify-end">
+                  <button
+                    onClick={() => clearFilter()}
+                    className="w-max rounded-lg border border-meta-light-blue-2 bg-meta-light-blue-1 px-3 py-2"
+                  >
+                    <span className="flex justify-center text-sm font-medium text-meta-light-blue-3">
+                      Clear
+                    </span>
+                  </button>
+
+                  <div>
                     <button
-                      onClick={() => clearFilter()}
-                      className="ml-5 h-12 w-28 rounded-xl border border-meta-light-blue-2 bg-meta-light-blue-1"
+                      onClick={() => _applyFilter()}
+                      className="ml-2 w-max rounded-lg border border-meta-light-blue-2 bg-meta-light-blue-1 px-3 py-2"
                     >
                       <span className="flex justify-center text-sm font-medium text-meta-light-blue-3">
-                        Clear
+                        {TEXT?.DONE}
                       </span>
                     </button>
-
-                    <div>
-                      <button
-                        onClick={() => _applyFilter()}
-                        className="ml-5 h-12 w-28 rounded-xl border border-meta-light-blue-2 bg-meta-light-blue-1"
-                      >
-                        <span className="flex justify-center text-sm font-medium text-meta-light-blue-3">
-                          {TEXT?.DONE}
-                        </span>
-                      </button>
-                    </div>
                   </div>
                 </div>
               </Popover.Panel>
@@ -323,7 +332,18 @@ const EmployeeJob = () => {
           </div>
         </div>
 
-        {jobList?.length !== 0 ? (
+        {isSpinner ? (
+          <div>
+            <div className="flex h-full items-center justify-center">
+              <Spinner
+                width="32px"
+                height="32px"
+                color="#3751F2"
+                className="spinner"
+              />
+            </div>
+          </div>
+        ) : jobList?.length !== 0 ? (
           jobList?.map((list: any, index) => {
             return (
               <div className="mt-5">

@@ -11,6 +11,7 @@ import useDebounce from '@/hooks/useDebounce';
 import API from '@/service/ApiService';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import ApplyJob from './applyJob';
+import Spinner from '@/app/icons/Spinner';
 
 const IndividualJob = () => {
   const [cities, setCities] = useState([]);
@@ -19,6 +20,7 @@ const IndividualJob = () => {
   const [jobSearch, setJobSearch] = useState('');
   const [jobApplyId, setJobApplyId] = useState('');
   const [cityQuery, setCityQuery] = useState('');
+  const [isSpinner, setIsSpinner] = useState(false);
   const debouncedSearchCity = useDebounce(cityQuery);
   const router = useRouter();
   const searchCityApi = (search: any) => {
@@ -40,11 +42,14 @@ const IndividualJob = () => {
   }, [debouncedSearchCity]);
 
   const getJobApi = () => {
+    setIsSpinner(true);
     API.get(API_CONSTANT?.JOB)
       .then((res: any) => {
+        setIsSpinner(false);
         setJobList(res?.data?.data);
       })
       .catch((error) => {
+        setIsSpinner(false);
         console.log('error', error);
       });
   };
@@ -58,6 +63,7 @@ const IndividualJob = () => {
   };
 
   const _applyFilter = () => {
+    setIsSpinner(true);
     const obj = {
       city: cityFilter ? cityFilter?._id : null,
       startDate: null,
@@ -67,9 +73,11 @@ const IndividualJob = () => {
 
     API.post(API_CONSTANT?.JOB_SEARCH, obj)
       .then((res: any) => {
+        setIsSpinner(false);
         setJobList(res?.data?.data);
       })
       .catch((error) => {
+        setIsSpinner(false);
         console.log('error', error);
       });
   };
@@ -316,7 +324,18 @@ const IndividualJob = () => {
               </div>
             </div>
             <div className="mt-5">
-              {jobList?.length !== 0 ? (
+              {isSpinner ? (
+                <div>
+                  <div className="flex h-full items-center justify-center">
+                    <Spinner
+                      width="32px"
+                      height="32px"
+                      color="#3751F2"
+                      className="spinner"
+                    />
+                  </div>
+                </div>
+              ) : jobList?.length !== 0 ? (
                 jobList?.map((list: any) => {
                   return (
                     <div

@@ -80,9 +80,9 @@ const Sidebar = () => {
                 <li key={e.title}>
                   <button
                     type="button"
-                    onClick={() =>
-                      percentage >= 100 && router.push('/' + e.path)
-                    }
+                    onClick={() => {
+                      percentage >= 100 && router.push('/' + e.path);
+                    }}
                     className={
                       activeTabCss(e.path) +
                       `${open ? ' justify-center lg:justify-normal' : 'justify-start'} hover:bg-graydark dark:hover:bg-meta-4 group relative flex w-full items-center gap-2.5 rounded-lg py-2.5 font-medium duration-300 ease-in-out sm:px-4`
@@ -110,10 +110,10 @@ const Sidebar = () => {
         ) : (
           <div className="flex h-full items-center justify-center">
             <Spinner
-              className="spinner"
               width="32px"
               height="32px"
-              color="black"
+              color="#3751F2"
+              className="spinner"
             />
           </div>
         )}

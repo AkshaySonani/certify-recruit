@@ -1,3 +1,4 @@
+import Spinner from '@/app/icons/Spinner';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import API from '@/service/ApiService';
 import { TEXT } from '@/service/Helper';
@@ -9,6 +10,7 @@ import { toast } from 'react-toastify';
 const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
   const [OpenUploadModal, setOpenUploadModal] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
+  const [isSpinner, setIsSpinner] = useState(false);
   const [allFiles, setAllFiles] = useState<any>([]);
   const [userDetails, setUserDetails] = useState<any>({});
   const [select, setSelect] = useState<any>('');
@@ -107,6 +109,7 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
     if (select === '') {
       toast?.error('Please upload resume');
     } else {
+      setIsSpinner(true);
       const obj = {
         user_id: userDetails?._id,
         job_id: jobApplyId,
@@ -115,13 +118,16 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
       API.post(API_CONSTANT?.JOB_APPLY, obj)
         .then((res: any) => {
           if (res?.status === 200) {
+            setIsSpinner(false);
             setSuccessModal(true);
             setSelect('');
           } else {
+            setIsSpinner(false);
             toast.error(res?.message);
           }
         })
         .catch((error) => {
+          setIsSpinner(false);
           console.log('error', error);
           toast?.error(error?.response?.data?.message);
         });
@@ -202,13 +208,22 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
 
         <button
           onClick={() => _onSubmit()}
-          className={`mb-8 h-12  min-w-48 rounded-lg border border-meta-light-blue-2 bg-meta-blue-1 py-3 text-meta-light-blue-3 transition delay-150 duration-300 ease-in-out will-change-auto hover:bg-hiring-btn-gradient`}
+          className={`mb-8 h-12 min-w-48 rounded-lg border border-meta-light-blue-2 bg-meta-blue-1 py-3 text-meta-light-blue-3 transition delay-150 duration-300 ease-in-out will-change-auto hover:bg-hiring-btn-gradient`}
         >
-          <span
-            className={`flex justify-center text-sm font-medium text-white`}
-          >
-            Continue
-          </span>
+          <div className={`flex justify-center text-sm font-medium text-white`}>
+            {isSpinner ? (
+              <div className="mb-3">
+                <Spinner
+                  width="25px"
+                  height="25px"
+                  color="white"
+                  className="spinner"
+                />
+              </div>
+            ) : (
+              <span>Continue</span>
+            )}
+          </div>
         </button>
       </div>
       <Transition appear show={OpenUploadModal} as={Fragment}>
