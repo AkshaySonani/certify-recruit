@@ -1,79 +1,74 @@
 'use client';
 import Image from 'next/image';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import Select from '@/Components/Select';
 import Checkbox from '@/Components/Checkbox';
 import DatePicker from 'react-multi-date-picker';
 import { TEXT } from '@/service/Helper';
 import { Menu, Popover, Transition } from '@headlessui/react';
-const tableData = [
-  {
-    name: 'Kate Tanner',
-    Designation: 'UI/UX Designer',
-    Experience: '6+ years',
-    Date: '16/02/2024',
-    Status: 'Available',
-  },
-  {
-    name: 'April Curtis',
-    Designation: 'UI/UX Designer',
-    Experience: '5.5+ years',
-    Date: '10/02/2024',
-    Status: 'Hired',
-  },
-  {
-    name: 'Sledge Hammer',
-    Designation: 'UI/UX Designer',
-    Experience: '5.5+ years',
-    Date: '16/02/2024',
-    Status: 'Available',
-  },
-  {
-    name: 'B.A. Baracus',
-    Designation: 'UI/UX Designer',
-    Experience: '5+ years',
-    Date: '12/02/2024',
-    Status: 'Available',
-  },
-  {
-    name: 'Mike Torello',
-    Designation: 'UI/UX Designer',
-    Experience: '4+ years',
-    Date: '06/02/2024',
-    Status: 'Available',
-  },
-  {
-    name: 'Dori Doreau',
-    Designation: 'UI/UX Designer',
-    Experience: '4+ years',
-    Date: '16/02/2024',
-    Status: 'Hired',
-  },
-  {
-    name: 'Murdock',
-    Designation: 'UI/UX Designer',
-    Experience: '6+ years',
-    Date: '15/02/2024',
-    Status: 'Available',
-  },
-  {
-    name: 'Lynn Tanner',
-    Designation: 'UI/UX Designer',
-    Experience: '5+ years',
-    Date: '16/02/2024',
-    Status: 'Hired',
-  },
-];
-const ApplicantStatus = [
-  { status: 'Awaiting' },
-  { status: 'Hired' },
-  { status: 'Contacting' },
-];
+import API from '@/service/ApiService';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import { APPLICANT_STATUS } from '@/constant/Enum';
+import { toast } from 'react-toastify';
+import moment from 'moment';
+
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
-function ApplicantDetails({ id }: any) {
-  const [dateRange, setDateRange] = useState(['2024-01-01', '2024-12-31']);
+
+function ApplicantDetails({ id, status }: any) {
+  const [data, setData] = useState<any>([]);
+
+  const getJobApi = () => {
+    if (id) {
+      API.post(API_CONSTANT?.JOB_DETAILS, {
+        job_id: id,
+      })
+        .then((res: any) => {
+          const response = res?.data?.data?.[0]?.applicants?.filter((d) => {
+            return d?.status === status;
+          });
+          setData(response);
+        })
+        .catch((error: any) => {
+          console.log('error', error);
+        });
+    }
+  };
+
+  useEffect(() => {
+    getJobApi();
+  }, []);
+
+  const statusUpdateApi = (id: any, status: any) => {
+    console.log('id', id, status);
+
+    API.post(API_CONSTANT?.UPDATE_APPLY_JOB, {
+      applicant_id: id,
+      status: status,
+    })
+      .then((res: any) => {
+        if (res?.data?.status) {
+          toast.success(res?.data?.message);
+          getJobApi();
+        }
+      })
+      .catch((error: any) => {
+        console.log('error', error);
+      });
+  };
+  function calculateTotalExperience() {
+    userDetails?.total_experiences?.forEach((experience: any) => {
+      totalYears += experience.years;
+      totalMonths += experience.month;
+    });
+
+    // Adjust totalMonths to years if it's more than 12
+    totalYears += Math.floor(totalMonths / 12);
+    totalMonths %= 12;
+
+    return { totalYears, totalMonths };
+  }
 
   return (
     <div>
@@ -181,14 +176,6 @@ function ApplicantDetails({ id }: any) {
                 minDate={new Date('01-01-2014')}
                 maxDate={new Date('12-31-2024')}
                 containerStyle={{ width: '100%' }}
-                onChange={(dateObjects: any) => {
-                  if (dateObjects?.[1]?.toString()) {
-                    setDateRange((e) => [
-                      dateObjects?.[0]?.toString(),
-                      dateObjects?.[1]?.toString(),
-                    ]);
-                  }
-                }}
                 style={{
                   height: 35,
                   fontSize: 12,
@@ -218,11 +205,7 @@ function ApplicantDetails({ id }: any) {
                   {TEXT?.NAME}
                 </div>
               </th>
-              <th className="px-6 py-4">
-                <div className="text-base font-medium text-meta-light-blue-3">
-                  {TEXT?.DESIGNATION}
-                </div>
-              </th>
+
               <th className="px-6 py-4">
                 <div className="text-base font-medium text-meta-light-blue-3">
                   {TEXT?.EXPERIENCE}
@@ -247,7 +230,15 @@ function ApplicantDetails({ id }: any) {
             </tr>
           </thead>
           <tbody>
-            {tableData.map((item) => {
+            {data.map((item: any) => {
+              let totalYears = 0;
+              let totalMonths = 0;
+              item?.user_info?.total_experiences?.forEach((experience: any) => {
+                totalYears += experience.years;
+                totalMonths += experience.month;
+              });
+              totalYears += Math.floor(totalMonths / 12);
+              totalMonths %= 12;
               return (
                 <tr>
                   <td className="px-6 py-4 text-gray-500">
@@ -259,28 +250,23 @@ function ApplicantDetails({ id }: any) {
                         src={'/dashboard/photo.svg'}
                       />
                       <div className="pl-4 text-base font-medium text-meta-purple-1">
-                        {item.name}
+                        {item?.name}
+                      </div>
+                    </div>
+                  </td>
+
+                  <td className="px-6 py-4 text-gray-500">
+                    <div>
+                      <div className="text-base font-medium text-meta-purple-1">
+                        {totalYears} Year
+                        {totalMonths !== 0 ? `,${totalMonths} month` : ''}
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 text-gray-500">
                     <div>
                       <div className="text-base font-medium text-meta-purple-1">
-                        {item.Designation}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-gray-500">
-                    <div>
-                      <div className="text-base font-medium text-meta-purple-1">
-                        {item.Experience}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-gray-500">
-                    <div>
-                      <div className="text-base font-medium text-meta-purple-1">
-                        {item.Date}
+                        {moment(item?.createdAt).format('DD/MM/YY')}
                       </div>
                     </div>
                   </td>
@@ -288,8 +274,8 @@ function ApplicantDetails({ id }: any) {
                     <div className="flex items-center">
                       <Menu as="div" className="relative w-full">
                         <Menu.Button className="relative  flex w-full appearance-none items-center justify-between  py-2   outline-none transition">
-                          <p className="font-me capitalize text-meta-purple-1">
-                            {item?.Status}
+                          <p className="text-base font-medium text-meta-purple-1">
+                            {item?.status}
                           </p>
                         </Menu.Button>
                         <Transition
@@ -301,14 +287,16 @@ function ApplicantDetails({ id }: any) {
                           enterTo="transform opacity-100 scale-100"
                           leaveFrom="transform opacity-100 scale-100"
                         >
-                          <Menu.Items className="absolute right-0 z-30 max-h-[200px] w-full origin-top-right divide-y divide-gray-200 overflow-auto rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <Menu.Items className="absolute right-0 z-30 max-h-[200px] w-full min-w-36 origin-top-right divide-y divide-gray-200 overflow-auto rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <div>
-                              {ApplicantStatus?.map((el: any) => {
+                              {APPLICANT_STATUS?.map((el: any) => {
                                 return (
                                   <Menu.Item>
                                     {({ active }) => (
                                       <div
-                                        // onClick={() => setJobStatus(el)}
+                                        onClick={() =>
+                                          statusUpdateApi(item?._id, el)
+                                        }
                                         className={classNames(
                                           active
                                             ? 'bg-meta-blue-1 text-white'
@@ -316,7 +304,7 @@ function ApplicantDetails({ id }: any) {
                                           'block px-4 py-2 text-sm capitalize',
                                         )}
                                       >
-                                        {el?.status}
+                                        {el}
                                       </div>
                                     )}
                                   </Menu.Item>

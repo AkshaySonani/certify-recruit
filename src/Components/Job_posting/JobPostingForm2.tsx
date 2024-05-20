@@ -103,7 +103,7 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
         </div>
         <div className="mt-3 flex w-full flex-col lg:mt-0 lg:w-1/2">
           <div
-            className={`border-stroke flex h-12 w-full min-w-64 appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 px-1  outline-none transition focus:border-meta-blue-1 active:border-meta-blue-1`}
+            className={`flex  w-full min-w-64 appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1  px-1  outline-none transition focus:border-meta-blue-1 active:border-meta-blue-1`}
           >
             <div className="relative flex w-full items-center">
               <MultipleSelectBox
@@ -128,7 +128,7 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
           </div>
           {formik.touched.working_schedule &&
             formik.errors.working_schedule && (
-              <div className="error">{formik.errors.working_schedule}</div>
+              <div className="error">{formik?.errors?.working_schedule}</div>
             )}
 
           <div className="mt-4 flex flex-wrap items-center text-start sm:flex-nowrap">

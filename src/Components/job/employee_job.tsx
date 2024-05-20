@@ -99,8 +99,9 @@ const EmployeeJob = () => {
       const obj: any = {
         job_id: job._id,
       };
-      API.delete(API_CONSTANT.JOB, obj)
+      API.post(API_CONSTANT.JOB_DELETE, obj)
         .then((res: any) => {
+          getJobApi();
           toast?.success('Job delete successfully');
         })
         .catch((error) => {
@@ -190,7 +191,7 @@ const EmployeeJob = () => {
                   <label className="text-base font-medium text-meta-purple-1">
                     {TEXT?.DATE_POSTED}
                   </label>
-                  <div className="flex items-center">
+                  <div className="flex  items-center">
                     <DatePicker
                       format="YYYY-MM-DD"
                       containerStyle={{ width: '100%' }}
@@ -204,7 +205,7 @@ const EmployeeJob = () => {
                       }}
                       placeholder="Select Start date"
                       style={{
-                        height: 48,
+                        height: 38,
                         width: '100%',
                         borderColor: '#DCE7FF',
                         borderRadius: 8,
@@ -226,7 +227,7 @@ const EmployeeJob = () => {
                       }}
                       placeholder="Select Start date"
                       style={{
-                        height: 48,
+                        height: 38,
                         width: '100%',
                         borderColor: '#DCE7FF',
                         borderRadius: 8,
@@ -282,12 +283,12 @@ const EmployeeJob = () => {
               }}
               placeholder="Select Start date"
               style={{
-                height: 48,
+                height: 37,
                 width: '100%',
                 borderColor: '#DCE7FF',
                 borderRadius: 8,
                 paddingLeft: 10,
-                marginTop: 4,
+                marginTop: 0,
               }}
             />
             <label className="mx-2">To</label>
@@ -304,19 +305,19 @@ const EmployeeJob = () => {
               }}
               placeholder="Select Start date"
               style={{
-                height: 48,
+                height: 37,
                 width: '100%',
                 borderColor: '#DCE7FF',
                 borderRadius: 8,
                 paddingLeft: 10,
-                marginTop: 4,
+                marginTop: 0,
               }}
             />
           </div>
           <div className="flex  items-center">
             <button className="ml-5 h-12 w-full min-w-36 max-w-64 rounded-xl border border-meta-light-blue-2 bg-meta-blue-1">
               <span className="flex justify-center text-sm font-medium text-white">
-                {TEXT?.JOB_POST}
+                Job Search
               </span>
             </button>
           </div>
@@ -450,7 +451,11 @@ const EmployeeJob = () => {
                     >
                       <div className="flex flex-col items-center justify-center">
                         <p className="mb-2 text-xl font-semibold text-meta-blue-1">
-                          {list?.applicants?.length}
+                          {
+                            list?.applicants?.filter(
+                              (value: any) => value.status === 'Applicants',
+                            ).length
+                          }
                         </p>
                         <p className="text-base font-medium text-meta-light-blue-3">
                           Applicants
@@ -465,7 +470,11 @@ const EmployeeJob = () => {
                     >
                       <div className="flex flex-col items-center justify-center">
                         <p className="mb-2 text-xl font-semibold text-meta-blue-1">
-                          0
+                          {
+                            list?.applicants?.filter(
+                              (value: any) => value.status === 'Awaiting',
+                            ).length
+                          }
                         </p>
                         <p className="text-base font-medium text-meta-light-blue-3">
                           Awaiting
@@ -480,7 +489,11 @@ const EmployeeJob = () => {
                     >
                       <div className="flex flex-col items-center justify-center">
                         <p className="mb-2 text-xl font-semibold text-meta-blue-1">
-                          0
+                          {
+                            list?.applicants?.filter(
+                              (value: any) => value.status === 'Contacting',
+                            ).length
+                          }
                         </p>
                         <p className="text-base font-medium text-meta-light-blue-3">
                           Contacting
@@ -495,7 +508,11 @@ const EmployeeJob = () => {
                     >
                       <div className="flex flex-col items-center justify-center">
                         <p className="mb-2 text-xl font-semibold text-meta-blue-1">
-                          0
+                          {
+                            list?.applicants?.filter(
+                              (value: any) => value.status === 'Hired',
+                            ).length
+                          }
                         </p>
                         <p className="text-base font-medium text-meta-light-blue-3">
                           Hired

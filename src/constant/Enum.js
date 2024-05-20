@@ -63,6 +63,7 @@ const COMPLETION_DATE = {
 
 const JOB_STATUS = ['PENDING', 'ACTIVE', 'CLOSED'];
 
+const APPLICANT_STATUS=['Applicants', 'Awaiting', 'Contacting', 'Hired']
 export {
   PROFICIENCY,
   EMP_TYPE_ARR,
@@ -72,4 +73,6 @@ export {
   COMPLETION_DATE,
   COMPANY_TYPE,
   JOB_STATUS,
+  APPLICANT_STATUS,
+
 };

@@ -15,6 +15,8 @@ const API_CONSTANT = {
   JOB_APPLY: '/job-apply',
   JOB_SEARCH: '/job-search',
   JOB_DETAILS: '/job-details',
+  JOB_DELETE:'/delete-job',
+  UPDATE_APPLY_JOB:"/update-apply-job"
 };
 
 export { API_CONSTANT };

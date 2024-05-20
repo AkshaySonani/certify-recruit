@@ -16,6 +16,7 @@ import AutoComplete from '@/Components/Autocomplete';
 import useDebounce from '@/hooks/useDebounce';
 import Spinner from '@/app/icons/Spinner';
 import PreviewDialog from '@/Components/Job_posting/PreviewDialog';
+import { WORK_SCHEDULE } from '@/constant/Enum';
 
 const WORKPLACE_TYPE = ['ONSITE', 'HYBRID', 'REMOTE'];
 
@@ -68,11 +69,18 @@ function JobPostingFormMain({ id }: any) {
           endTime: endTime,
         },
       };
+      if (id) {
+        data.job_id = id;
+      }
       API.post(API_CONSTANT.JOB, data)
         .then((res) => {
-          toast?.success(
-            res?.data?.message || 'Successfully your job is posting',
-          );
+          if (id) {
+            toast?.success('Job updated Successfully');
+          } else {
+            toast?.success(
+              res?.data?.message || 'Successfully your job is posting',
+            );
+          }
           actions.setSubmitting(false);
         })
         .catch((error) => {
@@ -134,7 +142,15 @@ function JobPostingFormMain({ id }: any) {
       hourly_rate: jobDetails?.hourly_rate ?? null,
       salary_negotiable: jobDetails?.salary_negotiable ?? false,
       vacancy: jobDetails?.vacancy ?? 1,
-      working_schedule: jobDetails?.working_schedule ?? [],
+      working_schedule: jobDetails?.working_schedule
+        ? jobDetails?.working_schedule?.map((list: any, i: any) => {
+            return {
+              _id: i + 1,
+              label: list,
+              value: list,
+            };
+          })
+        : [],
       area: jobDetails?.area ?? '',
       status: jobDetails?.status ?? 'ACTIVE',
       pincode: jobDetails?.pincode ?? '',
@@ -144,7 +160,15 @@ function JobPostingFormMain({ id }: any) {
       city: jobDetails?.city?.[0] ?? null,
       state: jobDetails?.state?.[0] ?? null,
       country: jobDetails?.country?.[0] ?? null,
-      skills: jobDetails?.skills ?? [],
+      skills: jobDetails?.skills
+        ? jobDetails?.skills?.map((list: any) => {
+            return {
+              _id: list?._id,
+              label: list?.subcategory,
+              value: list?.subcategory,
+            };
+          })
+        : [],
       interviewTime: jobDetails?.interviewTime ?? {
         date: null,
         startTime: '',
@@ -267,7 +291,6 @@ function JobPostingFormMain({ id }: any) {
                 >
                   <input
                     id="No"
-                    defaultChecked
                     name="is_hiring_manager"
                     type="radio"
                     radioGroup="Salary"
@@ -356,7 +379,7 @@ function JobPostingFormMain({ id }: any) {
                             name={'workplace'}
                             value={list}
                             checked={
-                              formik?.values?.workplace.includes(2)
+                              formik?.values?.workplace.includes(list)
                                 ? true
                                 : false
                             }
