@@ -1,17 +1,18 @@
-import Image from 'next/image';
-import MultipleSelectBox from '../MultipleSelectBox';
-import { TEXT } from '@/service/Helper';
-import API from '@/service/ApiService';
-import { API_CONSTANT } from '@/constant/ApiConstant';
 import * as Yup from 'yup';
-import { useFormik, Field } from 'formik';
-import { toast } from 'react-toastify';
-import 'react-datepicker/dist/react-datepicker.css';
+import Image from 'next/image';
 import Button from '../Button';
-import { useContext, useEffect, useState } from 'react';
-import useDebounce from '@/hooks/useDebounce';
+import API from '@/service/ApiService';
+import { toast } from 'react-toastify';
+import { TEXT } from '@/service/Helper';
+import { useFormik, Field } from 'formik';
 import { components } from 'react-select';
+import useDebounce from '@/hooks/useDebounce';
 import AppContext from '@/context/AppProvider';
+import 'react-datepicker/dist/react-datepicker.css';
+import MultipleSelectBox from '../MultipleSelectBox';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import { useContext, useEffect, useState } from 'react';
+
 const KeySkillTab = ({
   userDetails,
   setActivePage,
@@ -74,6 +75,7 @@ const KeySkillTab = ({
     });
     formik?.setFieldValue('skills', arr);
   };
+
   const searchSkillApi = (search: any) => {
     let obj = {
       searchText: search,
@@ -93,6 +95,7 @@ const KeySkillTab = ({
         console.log('error', error);
       });
   };
+
   useEffect(() => {
     if (debouncedSearchSkill !== '') {
       searchSkillApi(debouncedSearchSkill);
@@ -129,6 +132,7 @@ const KeySkillTab = ({
       },
     }),
   };
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="mt-5 flex w-full gap-3 pl-9">
@@ -151,8 +155,8 @@ const KeySkillTab = ({
                 style={MultiboxStyle}
                 placeholder="Add your Skill"
                 value={formik?.values?.skills}
-                className="w-full !border-meta-light-blue-1 "
                 onKeyDown={(e: any) => onSearchSkill(e)}
+                className="w-full !border-meta-light-blue-1"
                 components={{ Placeholder, DropdownIndicator }}
               />
             </div>

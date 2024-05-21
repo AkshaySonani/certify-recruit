@@ -3,6 +3,7 @@ import Image from 'next/image';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
 import Loader from '@/Components/Loader';
+import Spinner from '@/app/icons/Spinner';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import AppContext from '@/context/AppProvider';
@@ -10,7 +11,6 @@ import { API_CONSTANT } from '@/constant/ApiConstant';
 import { ROUTE, TEXT, USER_ROLE } from '@/service/Helper';
 import CompanyProfile from '@/Components/profile/CompanyProfile';
 import { Suspense, useContext, useEffect, useState } from 'react';
-import ProfileSkeleton from '@/Components/profile/ProfileSkeleton';
 import EditDetailsDialog from '@/Components/profile/EditDetailsDialog';
 import IndividualProfile from '@/Components/profile/IndividualProfile';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
@@ -90,31 +90,36 @@ const MyProfile = () => {
 
   return (
     <Suspense fallback={<Loader />}>
-      <div className="m-auto w-4/5 max-w-[1200px]">
-        <div className="flex items-center justify-between">
-          <div
-            className="flex cursor-pointer"
-            onClick={() => router?.push('/dashboard')}
-          >
-            <Image src={'/BackArrow.svg'} alt="date" width={20} height={20} />
-            <p className="text-5 pl-2 font-semibold text-meta-purple-1">
-              {TEXT?.DASHBOARD}
-            </p>
-          </div>
-          <div>
-            <button
-              className="w-32 rounded-lg bg-hiring-btn-gradient py-3 text-sm font-semibold text-white"
-              onClick={() => router?.push(ROUTE?.SEARCH_CVS)}
+      {Object.keys(userDetails)?.length === 0 ? (
+        <Spinner
+          width="32px"
+          height="32px"
+          color="#3751F2"
+          className="spinner"
+        />
+      ) : (
+        <div className="m-auto w-4/5 max-w-[1200px]">
+          <div className="flex items-center justify-between">
+            <div
+              className="flex cursor-pointer"
+              onClick={() => router?.push('/dashboard')}
             >
-              {TEXT?.Hiring}
-            </button>
+              <Image src={'/BackArrow.svg'} alt="date" width={20} height={20} />
+              <p className="text-5 pl-2 font-semibold text-meta-purple-1">
+                {TEXT?.DASHBOARD}
+              </p>
+            </div>
+            <div>
+              <button
+                className="w-32 rounded-lg bg-hiring-btn-gradient py-3 text-sm font-semibold text-white"
+                onClick={() => router?.push(ROUTE?.SEARCH_CVS)}
+              >
+                {TEXT?.Hiring}
+              </button>
+            </div>
           </div>
-        </div>
 
-        <div className="mt-4 w-full rounded-2xl bg-meta-light-blue-2 p-10">
-          {Object.keys(userDetails)?.length === 0 ? (
-            <ProfileSkeleton />
-          ) : (
+          <div className="mt-4 w-full rounded-2xl bg-meta-light-blue-2 p-10">
             <div className="flex w-full items-center gap-8">
               <div className="relative h-24 w-24">
                 <Image
@@ -214,26 +219,26 @@ const MyProfile = () => {
                 </div>
               </div>
             </div>
+          </div>
+
+          {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
+            <CompanyProfile
+              session={session?.data}
+              userDetails={userDetails}
+              getUserDataApiCall={() => getProfileDetails()}
+            />
+          ) : (
+            <IndividualProfile
+              degreeList={degreeList}
+              session={session?.data}
+              userDetails={userDetails}
+              collegeList={collegeList}
+              languageList={languageList}
+              getUserDataApiCall={() => getProfileDetails()}
+            />
           )}
         </div>
-
-        {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
-          <CompanyProfile
-            session={session?.data}
-            userDetails={userDetails}
-            getUserDataApiCall={() => getProfileDetails()}
-          />
-        ) : (
-          <IndividualProfile
-            degreeList={degreeList}
-            session={session?.data}
-            userDetails={userDetails}
-            collegeList={collegeList}
-            languageList={languageList}
-            getUserDataApiCall={() => getProfileDetails()}
-          />
-        )}
-      </div>
+      )}
     </Suspense>
   );
 };

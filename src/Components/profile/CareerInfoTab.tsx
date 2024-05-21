@@ -13,6 +13,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Menu, Transition } from '@headlessui/react';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { Fragment, useContext, useEffect, useState } from 'react';
+import Spinner from '@/app/icons/Spinner';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -28,10 +29,12 @@ const CareerInfoTab = ({
   const [active, setActive] = useState(0);
   const [cities, setCities] = useState([]);
   const [cityQuery, setCityQuery] = useState('');
+  const [isSpinner, setIsSpinner] = useState(false);
   const debouncedSearchCity = useDebounce(cityQuery);
   const [isFresher, setIsFresher] = useState(userDetails?.is_fresher);
 
   const handleSubmit = async (values: any, actions: any) => {
+    setIsSpinner(true);
     const obj = {
       ...values,
       profile_count: {
@@ -43,6 +46,7 @@ const CareerInfoTab = ({
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
+          setIsSpinner(false);
           setActivePage(1);
           getUserDataApiCall();
           context?.setUserProfileCount(res?.data?.data?.profile_count);
@@ -51,6 +55,7 @@ const CareerInfoTab = ({
         }
       })
       .catch((error) => {
+        setIsSpinner(false);
         toast.error(error || 'Something want wrong');
       });
   };
@@ -495,11 +500,22 @@ const CareerInfoTab = ({
         </div>
       </div>
       <div className="mt-8 flex w-full justify-end">
-        <Button
-          title={TEXT?.SAVE}
-          titleClass="!text-base !text-white"
-          btnClass="!w-36 !rounded-lg !bg-meta-blue-1 !py-2"
-        />
+        {isSpinner ? (
+          <div className="w-36 rounded-lg bg-meta-blue-1 py-2">
+            <Spinner
+              width="32px"
+              height="32px"
+              color="white"
+              className="spinner"
+            />
+          </div>
+        ) : (
+          <Button
+            title={TEXT?.SAVE}
+            titleClass="!text-base !text-white"
+            btnClass="!w-36 !rounded-lg !bg-meta-blue-1 !py-2"
+          />
+        )}
       </div>
       {/* <div className="mt-8 flex w-full justify-end">
         <button
