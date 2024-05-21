@@ -71,14 +71,20 @@ export const POST = async (req: NextRequest) => {
     is_hiring_manager && (reqData.is_hiring_manager = is_hiring_manager);
     salary_negotiable && (reqData.salary_negotiable = salary_negotiable);
 
-    const updatedJob = await Job.findOneAndUpdate({ _id: job_id }, reqData, {
-      upsert: true,
-      new: true,
-    });
+    let job;
+
+    if (job_id) {
+      job = await Job.findOneAndUpdate({ _id: job_id }, reqData, {
+        upsert: true,
+        new: true,
+      });
+    } else {
+      job = await Job.create(reqData);
+    }
 
     return NextResponse.json({
       status: 201,
-      data: updatedJob,
+      data: job,
       message: 'Job crate successfully',
     });
   } catch (error) {

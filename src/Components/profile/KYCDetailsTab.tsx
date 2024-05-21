@@ -77,7 +77,7 @@ const KYCDetailsTab = ({
             placeholder="Pan number"
             onChange={formik.handleChange}
             value={formik?.values?.pan_number?.toUpperCase()}
-            className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+            className="mt-2 w-full rounded-lg border border-meta-light-blue-1 p-3 focus:border-meta-light-blue-3"
           />
           {formik.touched.pan_number && formik.errors.pan_number && (
             <div className="error">{formik.errors.pan_number}</div>
@@ -93,7 +93,7 @@ const KYCDetailsTab = ({
             onChange={formik.handleChange}
             value={formik?.values?.name_on_pan}
             placeholder="Name of pan"
-            className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+            className="mt-2 w-full rounded-lg border border-meta-light-blue-1 p-3 focus:border-meta-light-blue-3"
           />
           {formik.touched.name_on_pan && formik.errors.name_on_pan && (
             <div className="error">{formik.errors.name_on_pan}</div>

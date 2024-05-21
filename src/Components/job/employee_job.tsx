@@ -1,18 +1,18 @@
 'use client';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import DatePicker from 'react-multi-date-picker';
-import React, { Fragment, useEffect, useState } from 'react';
-import { Menu, Popover, Transition } from '@headlessui/react';
-import { ROUTE, TEXT } from '@/service/Helper';
+import Button from '../Button';
 import API from '@/service/ApiService';
-import { API_CONSTANT } from '@/constant/ApiConstant';
-import useDebounce from '@/hooks/useDebounce';
-import AutoComplete from '../Autocomplete';
-import { JOB_STATUS } from '@/constant/Enum';
 import { toast } from 'react-toastify';
 import Spinner from '@/app/icons/Spinner';
-import Button from '../Button';
+import AutoComplete from '../Autocomplete';
+import { useRouter } from 'next/navigation';
+import { JOB_STATUS } from '@/constant/Enum';
+import useDebounce from '@/hooks/useDebounce';
+import { ROUTE, TEXT } from '@/service/Helper';
+import DatePicker from 'react-multi-date-picker';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Menu, Popover, Transition } from '@headlessui/react';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -583,7 +583,7 @@ const EmployeeJob = () => {
             );
           })
         ) : (
-          <div className="mt-5 flex h-screen w-full items-center justify-center font-semibold text-meta-purple-1">
+          <div className="mt-5 flex w-full items-center justify-center font-semibold text-meta-purple-1">
             No Jobs available
           </div>
         )}

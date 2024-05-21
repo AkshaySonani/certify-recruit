@@ -157,7 +157,7 @@ const Page = (data: any) => {
           </div>
         )}
 
-        {percentage < 100 && <CompleteProfile />}
+        {percentage !== 100 && <CompleteProfile />}
 
         {percentage >= 100 &&
           Array.from({ length: 3 }).map((_, index) => {

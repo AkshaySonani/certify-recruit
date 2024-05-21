@@ -161,7 +161,7 @@ const CompanyDetailsTab = ({
           <label className="text-base font-medium text-meta-purple-1">
             {TEXT?.COMPANY_TYPE}
           </label>
-          <Menu.Button className="relative z-20 mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
+          <Menu.Button className="relative z-20 mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 p-3 pr-[11px] outline-none transition">
             <p>
               {formik?.values?.company_type === ''
                 ? 'Select Company type'
@@ -224,7 +224,7 @@ const CompanyDetailsTab = ({
             value={formik?.values?.company_name}
             name="company_name"
             placeholder="Company name"
-            className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+            className="mt-2 w-full rounded-lg border border-meta-light-blue-1 p-3 focus:border-meta-light-blue-3"
           />
           {formik.touched.company_name && formik.errors.company_name && (
             <div className="error">{formik.errors.company_name}</div>
@@ -242,7 +242,7 @@ const CompanyDetailsTab = ({
             value={formik?.values?.website_url}
             name="website_url"
             placeholder="Website url"
-            className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+            className="mt-2 w-full rounded-lg border border-meta-light-blue-1 p-3 focus:border-meta-light-blue-3"
           />
           {formik.touched.website_url && formik.errors.website_url && (
             <div className="error">{formik.errors.website_url}</div>
@@ -258,7 +258,7 @@ const CompanyDetailsTab = ({
             name="owner"
             type="text"
             placeholder="owner name"
-            className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+            className="mt-2 w-full rounded-lg border border-meta-light-blue-1 p-3 focus:border-meta-light-blue-3"
           />
           {formik.touched.owner && formik.errors.owner && (
             <div className="error">{formik.errors.owner}</div>
@@ -275,7 +275,7 @@ const CompanyDetailsTab = ({
           name="street_address"
           type="text"
           placeholder="Street address"
-          className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+          className="mt-2 w-full rounded-lg border border-meta-light-blue-1 p-3 focus:border-meta-light-blue-3"
         />
         {formik.touched.street_address && formik.errors.street_address && (
           <div className="error">{formik.errors.street_address}</div>
@@ -289,7 +289,7 @@ const CompanyDetailsTab = ({
             onChange={formik.handleChange}
             value={formik?.values?.pincode}
             placeholder="Zip Code"
-            className="h-11 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+            className="h-11 w-full rounded-lg border border-meta-light-blue-1 p-3 focus:border-meta-light-blue-3"
           />
           {formik.touched.pincode && formik.errors.pincode && (
             <div className="error">{formik.errors.pincode}</div>
@@ -297,7 +297,7 @@ const CompanyDetailsTab = ({
         </div>
         <div className="relative w-1/2">
           <Menu as="div" className="relative  w-full">
-            <Menu.Button className="relative z-20  flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-[9px] pl-5 pr-[11px] outline-none transition">
+            <Menu.Button className="relative z-20  flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 p-3 py-[9px] outline-none transition">
               {formik?.values?.country === null ? (
                 <p className="text-meta-gray-1">Select Country</p>
               ) : (
@@ -360,7 +360,7 @@ const CompanyDetailsTab = ({
             disabled={formik.values.country === null ? true : false}
             name={'state'}
             setQuery={setStateQuery}
-            className="!py-[11.2px]"
+            // className="!py-[11.2px]"
             placeholder="Search state"
             value={formik?.values?.state}
             filterArr={states}
@@ -377,7 +377,7 @@ const CompanyDetailsTab = ({
             value={formik?.values?.city}
             disabled={formik.values.country === null ? true : false}
             filterArr={cities}
-            className="!py-[11.2px]"
+            // className="!py-[11.2px]"
             query={cityQuery}
             setQuery={setCityQuery}
             name={'city'}

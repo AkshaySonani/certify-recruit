@@ -80,7 +80,7 @@ const BasicDetails = ({
             onChange={formik.handleChange}
             type="text"
             placeholder="Username"
-            className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+            className="mt-2 w-full rounded-lg border border-meta-light-blue-1 p-3 focus:border-meta-light-blue-3"
           />
           {formik.touched.user_name && formik.errors.user_name && (
             <div className="error">{formik.errors.user_name}</div>
@@ -97,7 +97,7 @@ const BasicDetails = ({
             name="contact_email"
             onChange={formik.handleChange}
             placeholder="email"
-            className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+            className="mt-2 w-full rounded-lg border border-meta-light-blue-1 p-3 focus:border-meta-light-blue-3"
           />
         </div>
       </div>
@@ -112,7 +112,7 @@ const BasicDetails = ({
             value={formik?.values?.role}
             name="role"
             placeholder="Company role"
-            className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+            className="mt-2 w-full rounded-lg border border-meta-light-blue-1 p-3 focus:border-meta-light-blue-3"
           />
           {formik.touched.role && formik.errors.role && (
             <div className="error">{formik.errors.role}</div>
@@ -128,7 +128,7 @@ const BasicDetails = ({
             value={formik?.values?.contact_number}
             name="contact_number"
             placeholder="Contact number"
-            className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+            className="mt-2 w-full rounded-lg border border-meta-light-blue-1 p-3 focus:border-meta-light-blue-3"
           />
           {formik.touched.contact_number && formik.errors.contact_number && (
             <div className="error">{formik.errors.contact_number}</div>
