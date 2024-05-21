@@ -17,6 +17,7 @@ import useDebounce from '@/hooks/useDebounce';
 import Spinner from '@/app/icons/Spinner';
 import PreviewDialog from '@/Components/Job_posting/PreviewDialog';
 import { WORK_SCHEDULE } from '@/constant/Enum';
+import { format } from 'path';
 
 const WORKPLACE_TYPE = ['ONSITE', 'HYBRID', 'REMOTE'];
 
@@ -43,6 +44,8 @@ function JobPostingFormMain({ id }: any) {
         job_id: id,
       })
         .then((res: any) => {
+          console.log('res', res?.data?.data[0]);
+
           setJobDetails(res?.data?.data[0]);
         })
         .catch((error) => {
@@ -56,19 +59,18 @@ function JobPostingFormMain({ id }: any) {
   }, []);
   const handleSubmit = async (values: any, actions: any) => {
     if (nextPage === 3) {
-      let startTime = `${values?.interviewTime?.startTime?.hour}:${values?.interviewTime?.startTime?.minute}:${values?.interviewTime?.startTime?.second}`;
-      let endTime = `${values?.interviewTime?.endTime?.hour}:${values?.interviewTime?.endTime?.minute}:${values?.interviewTime?.endTime?.second}`;
-
       const data = {
         ...values,
         skills: values?.skills.map((el: any) => el?._id),
         working_schedule: values?.working_schedule.map((el: any) => el?.value),
-        interviewTime: {
-          ...values?.interviewTime,
-          startTime: startTime,
-          endTime: endTime,
-        },
+        // interviewTime: {
+        //   ...values?.interviewTime,
+        //   startTime: startTime,
+        //   endTime: endTime,
+        // },
       };
+      console.log('data', data);
+
       if (id) {
         data.job_id = id;
       }
@@ -113,8 +115,6 @@ function JobPostingFormMain({ id }: any) {
           _id: Yup.string().required('country is required'),
         })
         .nonNullable('country is required'),
-
-      // description:Yup.string().required("description is required.")
     }),
     Yup.object().shape({
       working_schedule: Yup.array().min(
@@ -169,11 +169,17 @@ function JobPostingFormMain({ id }: any) {
             };
           })
         : [],
-      interviewTime: jobDetails?.interviewTime ?? {
-        date: null,
-        startTime: '',
-        endTime: '',
-      },
+      interviewTime: jobDetails?.interviewTime
+        ? {
+            date: jobDetails?.interviewTime?.date,
+            startTime: jobDetails?.interviewTime?.startTime,
+            endTime: jobDetails?.interviewTime?.endTime,
+          }
+        : {
+            date: null,
+            startTime: '',
+            endTime: '',
+          },
     },
     enableReinitialize: true,
     validationSchema: currentValidationSchema,
@@ -234,8 +240,6 @@ function JobPostingFormMain({ id }: any) {
     setNextPage(nextPage - 1);
   };
 
-  console.log('formik', formik?.values);
-
   return (
     <div>
       <div className="mb-10 flex items-center justify-between">
@@ -278,9 +282,15 @@ function JobPostingFormMain({ id }: any) {
                     id="Yes"
                     type="radio"
                     radioGroup="Salary"
-                    value={'true'}
                     name="is_hiring_manager"
-                    onChange={formik.handleChange}
+                    value={String(formik?.values?.is_hiring_manager)}
+                    checked={formik?.values?.is_hiring_manager ? true : false}
+                    onChange={(e) => {
+                      formik.setFieldValue(
+                        'is_hiring_manager',
+                        e?.target?.checked === true,
+                      );
+                    }}
                     className=""
                   />
                   <p>{'Yes'}</p>
@@ -294,9 +304,15 @@ function JobPostingFormMain({ id }: any) {
                     name="is_hiring_manager"
                     type="radio"
                     radioGroup="Salary"
-                    onChange={formik.handleChange}
+                    value={String(formik?.values?.is_hiring_manager)}
+                    checked={formik?.values?.is_hiring_manager ? false : true}
                     className=""
-                    value={'false'}
+                    onChange={(e) => {
+                      formik.setFieldValue(
+                        'is_hiring_manager',
+                        e?.target?.checked === false,
+                      );
+                    }}
                   />
                   <p>{'No'}</p>
                 </label>

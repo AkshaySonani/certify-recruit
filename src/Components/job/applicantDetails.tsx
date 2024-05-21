@@ -57,18 +57,18 @@ function ApplicantDetails({ id, status }: any) {
         console.log('error', error);
       });
   };
-  function calculateTotalExperience() {
-    userDetails?.total_experiences?.forEach((experience: any) => {
-      totalYears += experience.years;
-      totalMonths += experience.month;
-    });
+  const downLoadResume = async (imageSrc: any) => {
+    const image = await fetch(imageSrc);
+    const imageBlog = await image.blob();
+    const imageURL = URL.createObjectURL(imageBlog);
 
-    // Adjust totalMonths to years if it's more than 12
-    totalYears += Math.floor(totalMonths / 12);
-    totalMonths %= 12;
-
-    return { totalYears, totalMonths };
-  }
+    const link = document.createElement('a');
+    link.href = imageURL;
+    link.download = 'image file name here';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <div>
@@ -76,8 +76,8 @@ function ApplicantDetails({ id, status }: any) {
         <div className="text-2xl font-semibold text-meta-purple-1">
           {TEXT?.APPLICANT}
         </div>
-        <div className="mb-10 mt-5 flex items-center justify-center gap-6">
-          <div className="w-2/4">
+        <div className="mb-10 mt-5 flex items-center justify-start gap-6">
+          <div className="w-2/5 max-w-[400px]">
             <Popover className="relative">
               <Popover.Button className="absolute left-3 top-4">
                 <Image
@@ -92,7 +92,7 @@ function ApplicantDetails({ id, status }: any) {
                 placeholder="Search..."
                 className="focus:border-primary active:border-primary h-12 w-full rounded-lg border border-meta-light-blue-1  bg-transparent px-12 text-black outline-none transition"
               />
-              <div className="absolute right-3 top-[9px]">
+              <div className="absolute right-3 top-0 py-[14px]">
                 <Image
                   alt="date"
                   width={19}
@@ -132,14 +132,6 @@ function ApplicantDetails({ id, status }: any) {
                     maxDate={new Date('12-31-2024')}
                     placeholder="YYYY-MM-DD - YYYY-MM-DD"
                     containerStyle={{ width: '100%' }}
-                    onChange={(dateObjects: any) => {
-                      if (dateObjects?.[1]?.toString()) {
-                        setDateRange((e) => [
-                          dateObjects?.[0]?.toString(),
-                          dateObjects?.[1]?.toString(),
-                        ]);
-                      }
-                    }}
                     style={{
                       height: 48,
                       width: '100%',
@@ -167,36 +159,9 @@ function ApplicantDetails({ id, status }: any) {
               </Popover.Panel>
             </Popover>
           </div>
-          <div className="flex w-2/4 items-center">
-            <div className="relative w-full">
-              <DatePicker
-                range
-                format="YYYY-MM-DD"
-                placeholder="Select Dates"
-                minDate={new Date('01-01-2014')}
-                maxDate={new Date('12-31-2024')}
-                containerStyle={{ width: '100%' }}
-                style={{
-                  height: 35,
-                  fontSize: 12,
-                  width: '100%',
-                  borderRadius: 8,
-                  borderColor: '#DCE7FF',
-                }}
-              />
-              <div className="absolute right-2 top-2">
-                <Image
-                  alt="date"
-                  width={24}
-                  height={24}
-                  src={'/dashboard/date.svg'}
-                />
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-      <div>
+      <div className="h-screen">
         <table className="w-full text-left text-sm">
           <thead className="border-b border-meta-light-blue-1 shadow-inner">
             <tr>
@@ -318,20 +283,34 @@ function ApplicantDetails({ id, status }: any) {
                   </td>
                   <td className="px-6 py-4 text-gray-500">
                     <div className="flex justify-end">
-                      <Image
-                        alt="Icon"
-                        width={21}
-                        height={21}
-                        className="mx-4"
-                        src={'/sidebarIcon/jobPosting.svg'}
-                      />
-                      <Image
-                        alt="Icon"
-                        width={21}
-                        height={21}
-                        className="mx-4"
-                        src={'/dashboard/download.svg'}
-                      />
+                      <div
+                        className="cursor-pointer"
+                        onClick={() =>
+                          window.open(item?.user_cv?.[0]?.file_url, '_blank')
+                        }
+                      >
+                        <Image
+                          alt="Icon"
+                          width={21}
+                          height={21}
+                          className="mx-4"
+                          src={'/sidebarIcon/jobPosting.svg'}
+                        />
+                      </div>
+                      <div
+                        className="cursor-pointer"
+                        onClick={() =>
+                          downLoadResume(item?.user_cv?.[0]?.file_url)
+                        }
+                      >
+                        <Image
+                          alt="Icon"
+                          width={21}
+                          height={21}
+                          className="mx-4"
+                          src={'/dashboard/download.svg'}
+                        />
+                      </div>
                     </div>
                   </td>
                 </tr>

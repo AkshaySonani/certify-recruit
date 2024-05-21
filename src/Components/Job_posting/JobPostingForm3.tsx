@@ -13,7 +13,7 @@ import { toast } from 'react-toastify';
 import { components } from 'react-select';
 import useDebounce from '@/hooks/useDebounce';
 
-const JobPostingForm3 = ({ formik }: { formik: any; skillData: any }) => {
+const JobPostingForm3 = ({ formik }: { formik: any }) => {
   const router = useRouter();
   const [hireMultiple, setHireMultiple] = useState(false);
   const [skillData, setSkillData] = useState([]);

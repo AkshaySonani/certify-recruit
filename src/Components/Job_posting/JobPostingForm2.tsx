@@ -6,8 +6,6 @@ import { useRouter } from 'next/navigation';
 import { EMP_TYPE_ARR } from '@/constant/Enum';
 import MultipleSelectBox from '../MultipleSelectBox';
 import DatePicker from 'react-multi-date-picker';
-import TimePicker from 'react-multi-date-picker/plugins/analog_time_picker';
-import moment from 'moment';
 const WORK_SCHEDULE = [
   {
     id: 1,
@@ -48,6 +46,8 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
     });
     formik?.setFieldValue('working_schedule', arr);
   };
+
+  console.log('formik', formik?.values?.interviewTime);
 
   return (
     <div className="">
@@ -244,6 +244,7 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
                   name={'salary_negotiable'}
                   onChange={formik.handleChange}
                   value={formik?.values?.salary_negotiable}
+                  checked={formik?.values?.salary_negotiable ? true : false}
                 />
                 <p className="pl-3">{'Salary is negotiable'}</p>
               </label>
@@ -272,12 +273,12 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
               onOpenPickNewDate={false}
               containerStyle={{ width: '100%' }}
               value={formik?.values?.interviewTime?.date}
-              onChange={(date) =>
+              onChange={(date: any) => {
                 formik.setFieldValue('interviewTime', {
                   ...formik?.values?.interviewTime,
-                  date: date?.format('YYYY-MM-DD'),
-                })
-              }
+                  date: date?.toDate(),
+                });
+              }}
               placeholder="Select Interview date"
               style={{
                 height: 48,
@@ -294,63 +295,40 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
               <label className="text-base font-medium text-meta-purple-1">
                 Start time
               </label>
-              <DatePicker
-                disableDayPicker
-                format="HH:mm:ss"
-                value={formik?.values?.interviewTime?.startTime}
-                containerStyle={{ width: '100%' }}
-                onChange={(time: any) => {
-                  formik.setFieldValue('interviewTime', {
-                    ...formik?.values?.interviewTime,
-                    startTime: time,
-                  });
-                }}
-                placeholder="Select start time"
-                style={{
-                  height: 48,
-                  width: '100%',
-                  borderColor: '#DCE7FF',
-                  borderRadius: 8,
-                  paddingLeft: 10,
-                  marginTop: 4,
-                }}
-                plugins={[<TimePicker position="bottom" format="HH:mm:ss" />]}
-              />
+              <div className="relative">
+                <input
+                  type="time"
+                  id="starttime"
+                  className="mt-1 w-full rounded-lg border border-meta-light-blue-1 py-[10px] pl-5 pr-3 focus:border-meta-light-blue-3"
+                  value={formik?.values?.interviewTime?.startTime}
+                  onChange={(e: any) => {
+                    formik.setFieldValue('interviewTime', {
+                      ...formik?.values?.interviewTime,
+                      startTime: e?.target?.value,
+                    });
+                  }}
+                />
+              </div>
             </div>
 
             <div className="mt-4 w-full">
               <label className="text-base font-medium text-meta-purple-1">
                 End time
               </label>
-              <DatePicker
-                disableDayPicker
-                format="HH:mm:ss"
-                value={formik?.values?.interviewTime?.endTime}
-                containerStyle={{ width: '100%' }}
-                placeholder="Select end time"
-                onChange={(time) => {
-                  formik.setFieldValue('interviewTime', {
-                    ...formik?.values?.interviewTime,
-                    endTime: time,
-                  });
-                }}
-                style={{
-                  height: 48,
-                  width: '100%',
-                  borderColor: '#DCE7FF',
-                  borderRadius: 8,
-                  paddingLeft: 10,
-                  marginTop: 4,
-                }}
-                plugins={[
-                  <TimePicker
-                    position="bottom"
-                    hStep={2}
-                    mStep={3}
-                    sStep={4}
-                  />,
-                ]}
-              />
+              <div className="relative">
+                <input
+                  type="time"
+                  id="endtime"
+                  className="mt-1 w-full rounded-lg border border-meta-light-blue-1 py-[10px] pl-5 pr-3 focus:border-meta-light-blue-3"
+                  value={formik?.values?.interviewTime?.endTime}
+                  onChange={(e: any) => {
+                    formik.setFieldValue('interviewTime', {
+                      ...formik?.values?.interviewTime,
+                      endTime: e?.target?.value,
+                    });
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>

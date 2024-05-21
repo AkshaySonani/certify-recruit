@@ -54,6 +54,12 @@ const individualSchema = new mongoose.Schema({
           required: true,
           type: mongoose.Schema.Types.ObjectId,
         },
+        addedAt: {
+          type: Date,
+          select: true,
+          required: true,
+          default: new Date(),
+        },
       },
     ],
     required: false,

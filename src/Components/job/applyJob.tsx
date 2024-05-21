@@ -10,7 +10,10 @@ import { toast } from 'react-toastify';
 const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
   const [OpenUploadModal, setOpenUploadModal] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
-  const [isSpinner, setIsSpinner] = useState(false);
+  const [isSpinner, setIsSpinner] = useState<any>({
+    apply: false,
+    continue: false,
+  });
   const [allFiles, setAllFiles] = useState<any>([]);
   const [userDetails, setUserDetails] = useState<any>({});
   const [select, setSelect] = useState<any>('');
@@ -28,23 +31,33 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
     },
   });
 
-  const getUserCVList = () => {
+  const getUserCVList = (set: any) => {
     API.get(API_CONSTANT?.PROFILE)
       .then((res: any) => {
         setUserDetails(res?.data?.data);
+        if (set) {
+          var maxDate = res?.data?.data?.resume.reduce(function (
+            a: any,
+            b: any,
+          ) {
+            return a?.addedAt > b?.addedAt ? a : b;
+          });
+          setSelect({ ele: maxDate });
+        }
         setAllFiles(res?.data?.data?.resume);
       })
       .catch((error: any) => {
         toast.error(error?.response?.data?.error);
       });
   };
+
   useEffect(() => {
+    //@ts-ignore
     getUserCVList();
   }, []);
   const UploadFileOnBucket = async (file: any) => {
     const NewFormData = new FormData();
     NewFormData.append('file', file?.ele);
-
     API.post(API_CONSTANT?.UPLOAD_FILE, NewFormData)
       .then((res) => {
         if (res?.data?.success) {
@@ -59,15 +72,18 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
           })
             .then((res) => {
               if (res?.data?.status === 200) {
-                setSelect({ ele: obj });
+                getUserCVList('set');
+                setIsSpinner({ apply: false });
                 setOpenUploadModal(false);
               }
             })
             .catch((error) => {
+              setIsSpinner({ apply: false });
               console.log('error', error);
               toast?.error(error);
             });
         } else {
+          setIsSpinner({ apply: false });
           toast.error(
             res?.data?.error || 'Your resume are not upload please try again',
           );
@@ -82,9 +98,12 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
     if (select === '') {
       toast?.error('Please select at least resume');
     } else {
+      setIsSpinner({ apply: true });
       if (select?.ele?._id) {
+        setIsSpinner({ apply: false });
         setOpenUploadModal(false);
       } else {
+        setIsSpinner({ apply: true });
         UploadFileOnBucket(select);
       }
     }
@@ -96,6 +115,7 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
     API.post(API_CONSTANT?.DELETE_RESUME, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
+          //@ts-ignore
           getUserCVList();
           toast?.success(res?.data?.message);
           setSelect('');
@@ -109,7 +129,7 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
     if (select === '') {
       toast?.error('Please upload resume');
     } else {
-      setIsSpinner(true);
+      setIsSpinner({ continue: true });
       const obj = {
         user_id: userDetails?._id,
         job_id: jobApplyId,
@@ -118,16 +138,16 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
       API.post(API_CONSTANT?.JOB_APPLY, obj)
         .then((res: any) => {
           if (res?.status === 200) {
-            setIsSpinner(false);
+            setIsSpinner({ continue: false });
             setSuccessModal(true);
             setSelect('');
           } else {
-            setIsSpinner(false);
+            setIsSpinner({ continue: false });
             toast.error(res?.message);
           }
         })
         .catch((error) => {
-          setIsSpinner(false);
+          setIsSpinner({ continue: false });
           console.log('error', error);
           toast?.error(error?.response?.data?.message);
         });
@@ -136,6 +156,7 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
 
   return (
     <div>
+      <div className="text-2xl font-semibold text-meta-purple-1">Upload CV</div>
       <div className="mt-5 flex flex-col">
         <div
           className="mt-7 flex w-full cursor-pointer items-center justify-center rounded-lg border-[2px] border-dashed border-meta-light-blue-1 p-8"
@@ -211,7 +232,7 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
           className={`mb-8 h-12 min-w-48 rounded-lg border border-meta-light-blue-2 bg-meta-blue-1 py-3 text-meta-light-blue-3 transition delay-150 duration-300 ease-in-out will-change-auto hover:bg-hiring-btn-gradient`}
         >
           <div className={`flex justify-center text-sm font-medium text-white`}>
-            {isSpinner ? (
+            {isSpinner?.continue ? (
               <div className="mb-3">
                 <Spinner
                   width="25px"
@@ -274,7 +295,7 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
                       src={'CloseIcon.svg'}
                     />
                   </div>
-                  <div className="mt-5 flex flex-col">
+                  <div className=" flex flex-col">
                     <div className=" mt-7 flex w-full cursor-pointer items-center justify-center rounded-lg border-[2px] border-dashed border-meta-light-blue-1 p-8">
                       <section className="text-center text-lg">
                         <div {...getRootProps({ className: 'dropzone' })}>
@@ -305,16 +326,13 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
                         allFiles?.map((ele: any, i: any) => {
                           return (
                             <div
-                              onClick={
-                                () => {
-                                  if (select?.index === i) {
-                                    setSelect('');
-                                  } else {
-                                    setSelect({ ele, index: i });
-                                  }
+                              onClick={() => {
+                                if (select?.index === i) {
+                                  setSelect('');
+                                } else {
+                                  setSelect({ ele, index: i });
                                 }
-                                // window.open(ele?.file_url, '_blank')
-                              }
+                              }}
                               key={ele?.file_id}
                               className={`${select?.index === i ? 'border-2 border-meta-blue-1' : ''} mt-5 flex cursor-pointer items-center justify-between rounded-md bg-meta-gray-2 p-4`}
                             >
@@ -345,9 +363,25 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
                     <div className="mt-8 flex w-full justify-end">
                       <button
                         onClick={() => _onApply()}
-                        className="w-36 rounded-lg bg-meta-blue-1 py-2 text-base text-white"
+                        disabled={isSpinner?.apply ? true : false}
+                        className={` w-32 rounded-lg border border-meta-light-blue-2 bg-meta-blue-1 py-2 text-meta-light-blue-3 transition delay-150 duration-300 ease-in-out will-change-auto hover:bg-hiring-btn-gradient`}
                       >
-                        APPLY
+                        <div
+                          className={`flex justify-center text-sm font-medium text-white`}
+                        >
+                          {isSpinner?.apply ? (
+                            <div className="">
+                              <Spinner
+                                width="25px"
+                                height="25px"
+                                color="white"
+                                className="spinner"
+                              />
+                            </div>
+                          ) : (
+                            <span>Continue</span>
+                          )}
+                        </div>
                       </button>
                     </div>
                   </div>
@@ -361,9 +395,8 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
         <Dialog
           as="div"
           onClose={() => {
-            setOpenUploadModal(false),
-              setSuccessModal(false),
-              setJobApplyId('');
+            setOpenUploadModal(false), setIsSpinner(false);
+            setSuccessModal(false), setJobApplyId('');
           }}
         >
           <Transition.Child

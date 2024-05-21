@@ -13,6 +13,7 @@ import AutoComplete from '../Autocomplete';
 import { JOB_STATUS } from '@/constant/Enum';
 import { toast } from 'react-toastify';
 import Spinner from '@/app/icons/Spinner';
+import Button from '../Button';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -27,6 +28,7 @@ const EmployeeJob = () => {
   const [jobStatus, setJobStatus] = useState('');
   const [cityFilter, setCityFilter] = useState('');
   const [isSpinner, setIsSpinner] = useState(false);
+  const [isDefault, setIsDefault] = useState(false);
   const debouncedSearchCity = useDebounce(cityQuery);
   const [date, setDate] = useState({
     startDate: null,
@@ -79,8 +81,6 @@ const EmployeeJob = () => {
       endDate: date?.endDate ? date?.endDate : null,
       jobTitle: jobSearch,
     };
-    console.log('obj', obj);
-
     API.post(API_CONSTANT?.JOB_SEARCH, obj)
       .then((res: any) => {
         setJobList(res?.data?.data);
@@ -116,7 +116,7 @@ const EmployeeJob = () => {
           console.log('error', error);
         });
     } else {
-      router.push(`${ROUTE?.JOb_DETAILS}/${job?._id}`);
+      router.push(`${ROUTE?.JOb_DETAILS}/${job._id}`);
     }
   };
 
@@ -140,7 +140,7 @@ const EmployeeJob = () => {
         <div className="text-2xl font-semibold text-meta-purple-1">
           {TEXT?.JOBS}
         </div>
-        <div className="mb-10 mt-5 flex items-center justify-between gap-6">
+        <div className="mb-10 mt-5 flex items-center  gap-6">
           <div className="w-2/4">
             <Popover className="relative">
               <Popover.Button className="absolute left-3 top-4">
@@ -214,7 +214,7 @@ const EmployeeJob = () => {
                       }}
                       placeholder="Start date"
                       style={{
-                        height: 38,
+                        height: 48,
                         width: '100%',
                         borderColor: '#DCE7FF',
                         borderRadius: 8,
@@ -236,7 +236,7 @@ const EmployeeJob = () => {
                       }}
                       placeholder="Start date"
                       style={{
-                        height: 38,
+                        height: 48,
                         width: '100%',
                         borderColor: '#DCE7FF',
                         borderRadius: 8,
@@ -248,10 +248,23 @@ const EmployeeJob = () => {
                 </div>
                 <div className="mt-4 flex w-full items-center justify-between">
                   <div>
-                    <Checkbox
-                      label={'Set as default'}
-                      className="text-base font-medium text-meta-light-blue-3"
-                    />
+                    <label
+                      htmlFor={'default'}
+                      className={`flex cursor-pointer select-none items-center `}
+                    >
+                      <input
+                        id={'default'}
+                        value={isDefault}
+                        class="!h-4 !w-4"
+                        type="checkbox"
+                        name={'job_types'}
+                        checked={isDefault ? true : false}
+                        onChange={(e) => setIsDefault(e?.target?.checked)}
+                      />
+                      <label className="pl-3 text-base font-medium text-meta-purple-1">
+                        Set as Default
+                      </label>
+                    </label>
                   </div>
                 </div>
                 <div className="mt-2 flex w-full items-center justify-end">
@@ -278,57 +291,79 @@ const EmployeeJob = () => {
               </Popover.Panel>
             </Popover>
           </div>
-          <div className="flex items-center">
-            <DatePicker
-              format="YYYY-MM-DD"
-              containerStyle={{ width: '100%' }}
-              onOpenPickNewDate={false}
-              value={date?.startDate}
-              onChange={(dt: any) => {
-                setDate({
-                  ...date,
-                  startDate: dt?.format('YYYY-MM-DD'),
-                });
-              }}
-              placeholder="Select Start date"
-              style={{
-                height: 37,
-                width: '100%',
-                borderColor: '#DCE7FF',
-                borderRadius: 8,
-                paddingLeft: 10,
-                marginTop: 0,
-              }}
-            />
+          <div className="flex w-1/2 items-center ">
+            <div className="relative w-[150px] lg:w-[200px]">
+              <div className="absolute right-2 top-3">
+                <Image
+                  alt="date"
+                  width={24}
+                  height={24}
+                  src={'/dashboard/date.svg'}
+                />
+              </div>
+              <DatePicker
+                format="YYYY-MM-DD"
+                containerStyle={{ width: '100%' }}
+                onOpenPickNewDate={false}
+                value={date?.startDate}
+                onChange={(dt: any) => {
+                  setDate({
+                    ...date,
+                    startDate: dt?.format('YYYY-MM-DD'),
+                  });
+                }}
+                placeholder="Start date"
+                style={{
+                  height: 48,
+                  width: '100%',
+                  borderColor: '#DCE7FF',
+                  borderRadius: 8,
+                  paddingLeft: 10,
+                  marginTop: 0,
+                }}
+              />
+            </div>
+
             <label className="mx-2">To</label>
-            <DatePicker
-              format="YYYY-MM-DD"
-              containerStyle={{ width: '100%' }}
-              onOpenPickNewDate={false}
-              value={date?.endDate}
-              onChange={(dt: any) => {
-                setDate({
-                  ...date,
-                  endDate: dt?.format('YYYY-MM-DD'),
-                });
-              }}
-              placeholder="Select Start date"
-              style={{
-                height: 37,
-                width: '100%',
-                borderColor: '#DCE7FF',
-                borderRadius: 8,
-                paddingLeft: 10,
-                marginTop: 0,
-              }}
-            />
+            <div className="relative w-[150px] lg:w-[200px]">
+              <div className="absolute right-2 top-3">
+                <Image
+                  alt="date"
+                  width={24}
+                  height={24}
+                  src={'/dashboard/date.svg'}
+                />
+              </div>
+              <DatePicker
+                format="YYYY-MM-DD"
+                containerStyle={{ width: '100%' }}
+                onOpenPickNewDate={false}
+                value={date?.endDate}
+                onChange={(dt: any) => {
+                  setDate({
+                    ...date,
+                    endDate: dt?.format('YYYY-MM-DD'),
+                  });
+                }}
+                placeholder="End date"
+                style={{
+                  height: 48,
+                  width: '100%',
+                  borderColor: '#DCE7FF',
+                  borderRadius: 8,
+                  paddingLeft: 10,
+                  marginTop: 0,
+                }}
+              />
+            </div>
           </div>
-          <div className="flex  items-center">
-            <button className="ml-5 h-12 w-full min-w-36 max-w-64 rounded-xl border border-meta-light-blue-2 bg-meta-blue-1">
-              <span className="flex justify-center text-sm font-medium text-white">
-                Job Search
-              </span>
-            </button>
+          <div className="flex  w-1/3 max-w-[130px] items-center ">
+            <Button
+              title={'Job Search'}
+              btnClass="h-12 w-full !mb-0"
+              handleClick={() => _applyFilter}
+              titleClass="flex justify-center text-sm font-medium text-white"
+            />
           </div>
         </div>
 
@@ -349,21 +384,22 @@ const EmployeeJob = () => {
               <div className="mt-5">
                 <div className="rounded-2xl bg-meta-gray-2 p-5">
                   <div className="flex justify-between">
-                    <div className="flex">
-                      <div className="">
+                    <div>
+                      <div className="flex">
                         <div className="text-xl font-semibold text-meta-purple-1">
                           {list?.title}
-                          <div className="text-base font-medium text-meta-light-blue-3">
-                            {list?.city?.[0]?.name},
-                            {list?.state?.[0]?.name ?? 'Gujarat'},
-                            {list?.country?.[0]?.name ?? ''}
-                          </div>
                         </div>
+                        <p className="ml-2 mt-1 text-base font-medium text-meta-light-blue-3">
+                          {TEXT?.TWO_WEEKS_AGO}
+                        </p>
                       </div>
-                      <p className="ml-2 mt-1 text-base font-medium text-meta-light-blue-3">
-                        {TEXT?.TWO_WEEKS_AGO}
-                      </p>
+                      <div className="text-base font-medium text-meta-light-blue-3">
+                        {list?.city?.[0]?.name},
+                        {list?.state?.[0]?.name ?? 'Gujarat'},
+                        {list?.country?.[0]?.name ?? ''}
+                      </div>
                     </div>
+
                     <div className="flex items-center">
                       <Menu as="div" className="relative w-44">
                         <Menu.Button className="relative  flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-2 pl-5 pr-[11px] outline-none transition">

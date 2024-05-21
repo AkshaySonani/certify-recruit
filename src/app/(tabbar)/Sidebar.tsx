@@ -49,7 +49,7 @@ const Sidebar = () => {
         <div
           className={`${open ? 'justify-center px-5' : 'justify-start px-8'} py-5.5 lg:py-6.5 my-10 flex w-full items-center gap-2 lg:w-max`}
         >
-          <Link href="/" className={`hidden lg:block`}>
+          {/* <Link href="/" className={`hidden lg:block`}>
             <Image
               priority
               alt="Logo"
@@ -57,7 +57,7 @@ const Sidebar = () => {
               height={33}
               src={'/MainLogo.svg'}
             />
-          </Link>
+          </Link> */}
 
           <button
             aria-controls="sidebar"

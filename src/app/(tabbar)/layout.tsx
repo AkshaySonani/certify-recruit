@@ -32,7 +32,7 @@ export default function RootLayout({
     <>
       {!isFullScreenRoute(pathname) ? (
         <div className="relative flex w-full ">
-          <Sidebar />
+          {/* <Sidebar /> */}
           <main className="w-full overflow-x-auto p-10">{children}</main>
         </div>
       ) : (

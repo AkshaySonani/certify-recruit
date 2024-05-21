@@ -2,7 +2,7 @@
 import ApplyJob from '@/Components/job/applyJob';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import API from '@/service/ApiService';
-import { TEXT } from '@/service/Helper';
+import moment from 'moment';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
@@ -32,6 +32,7 @@ export default function Page({ params }: { params: { id: string } }) {
   useEffect(() => {
     getJobApi();
   }, []);
+
   return (
     <>
       {jobApplyId !== '' ? (
@@ -51,8 +52,8 @@ export default function Page({ params }: { params: { id: string } }) {
                   <p className="ml-1 text-lg font-semibold text-meta-purple-1">
                     - Fresher
                   </p>
-                  <p className="ml-2 mt-1 text-sm font-bold text-meta-light-blue-3">
-                    30 min ago
+                  <p className="ml-2  text-sm font-bold text-meta-light-blue-3">
+                    {moment(jobDetails?.createdAt).fromNow()}
                   </p>
                 </div>
                 <div className="flex items-center">
