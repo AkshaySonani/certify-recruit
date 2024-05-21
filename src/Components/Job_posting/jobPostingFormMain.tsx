@@ -45,8 +45,6 @@ function JobPostingFormMain({ id }: any) {
         job_id: id,
       })
         .then((res: any) => {
-          console.log('res', res?.data?.data[0]);
-
           setJobDetails(res?.data?.data[0]);
         })
         .catch((error) => {
@@ -65,13 +63,7 @@ function JobPostingFormMain({ id }: any) {
         ...values,
         skills: values?.skills.map((el: any) => el?._id),
         working_schedule: values?.working_schedule.map((el: any) => el?.value),
-        // interviewTime: {
-        //   ...values?.interviewTime,
-        //   startTime: startTime,
-        //   endTime: endTime,
-        // },
       };
-      console.log('data', data);
 
       if (id) {
         data.job_id = id;

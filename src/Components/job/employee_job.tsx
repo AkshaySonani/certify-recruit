@@ -1,7 +1,6 @@
 'use client';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import Checkbox from '@/Components/Checkbox';
 import DatePicker from 'react-multi-date-picker';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Menu, Popover, Transition } from '@headlessui/react';
@@ -26,7 +25,7 @@ const EmployeeJob = () => {
   const [jobSearch, setJobSearch] = useState('');
   const [cityQuery, setCityQuery] = useState('');
   const [jobStatus, setJobStatus] = useState('');
-  const [cityFilter, setCityFilter] = useState('');
+  const [cityFilter, setCityFilter] = useState<any>('');
   const [isSpinner, setIsSpinner] = useState(false);
   const [isDefault, setIsDefault] = useState(false);
   const debouncedSearchCity = useDebounce(cityQuery);
@@ -257,7 +256,7 @@ const EmployeeJob = () => {
                     >
                       <input
                         id={'default'}
-                        value={isDefault}
+                        value={String(isDefault)}
                         class="!h-4 !w-4"
                         type="checkbox"
                         name={'job_types'}

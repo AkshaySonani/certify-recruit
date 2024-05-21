@@ -47,8 +47,6 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
     formik?.setFieldValue('working_schedule', arr);
   };
 
-  console.log('formik', formik?.values?.interviewTime);
-
   return (
     <div className="">
       <div className="flex w-full flex-wrap justify-between lg:flex-nowrap">

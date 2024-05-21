@@ -1,7 +1,6 @@
 'use client';
 import Image from 'next/image';
 import React, { Fragment, useEffect, useState } from 'react';
-import Select from '@/Components/Select';
 import Checkbox from '@/Components/Checkbox';
 import DatePicker from 'react-multi-date-picker';
 import { TEXT } from '@/service/Helper';
@@ -41,8 +40,6 @@ function ApplicantDetails({ id, status }: any) {
   }, []);
 
   const statusUpdateApi = (id: any, status: any) => {
-    console.log('id', id, status);
-
     API.post(API_CONSTANT?.UPDATE_APPLY_JOB, {
       applicant_id: id,
       status: status,
