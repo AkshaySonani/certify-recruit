@@ -5,6 +5,7 @@ import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
 import { TEXT } from '@/service/Helper';
 import { useFormik, Field } from 'formik';
+import Spinner from '@/app/icons/Spinner';
 import AutoComplete from '../Autocomplete';
 import useDebounce from '@/hooks/useDebounce';
 import { EMP_TYPE_ARR } from '@/constant/Enum';
@@ -13,7 +14,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Menu, Transition } from '@headlessui/react';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { Fragment, useContext, useEffect, useState } from 'react';
-import Spinner from '@/app/icons/Spinner';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -199,7 +199,7 @@ const CareerInfoTab = ({
             Marketing, Oracle, Java etc. We will send you job recommendations
             based on these skills. each skill is separated by a comma.
           </p>
-          <div className="mt-3 flex w-full  items-center justify-center gap-2 lg:mt-0">
+          <div className="mt-3 flex w-full items-center justify-center gap-2 lg:mt-0">
             {EXPERIENCE_TYPE?.map((list) => {
               return (
                 <div
@@ -237,7 +237,7 @@ const CareerInfoTab = ({
                               value={list?.companyName}
                               name="companyName"
                               placeholder="Company name"
-                              className="w-full rounded-2xl border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
+                              className="w-full rounded-2xl border border-meta-light-blue-1 px-3 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
                             />
                             {formik?.touched?.total_experiences?.[index]
                               ?.companyName &&
@@ -260,7 +260,7 @@ const CareerInfoTab = ({
                               value={list?.company_role}
                               name="company_role"
                               placeholder="Company role"
-                              className="w-full rounded-2xl border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
+                              className="w-full rounded-2xl border border-meta-light-blue-1 px-3 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
                             />
                             {formik?.touched?.total_experiences?.[index]
                               ?.company_role &&
@@ -280,7 +280,7 @@ const CareerInfoTab = ({
                             <AutoComplete
                               value={list?.location}
                               filterArr={cities}
-                              className="!mt-2 h-[50px] !rounded-2xl !pl-[5px]"
+                              className="!mt-2 h-[50px] !rounded-2xl"
                               query={cityQuery}
                               disabled={false}
                               setQuery={setCityQuery}
@@ -304,7 +304,7 @@ const CareerInfoTab = ({
                           </div>
                           <div className="w-1/2">
                             <Menu as="div" className="relative">
-                              <Menu.Button className="relative mt-2 flex min-h-[50px] w-full appearance-none items-center justify-between rounded-2xl border border-meta-light-blue-1 bg-white py-3 pl-4 pr-[11px] outline-none transition">
+                              <Menu.Button className="relative mt-2 flex min-h-[50px] w-full appearance-none items-center justify-between rounded-2xl border border-meta-light-blue-1 bg-white px-3 py-3 outline-none transition">
                                 <p>
                                   {list?.employmentType === ''
                                     ? 'Select your employment type'
@@ -380,7 +380,7 @@ const CareerInfoTab = ({
                                 }
                                 value={list?.years}
                                 name="years"
-                                className="mt-2 w-1/2 rounded-2xl border border-meta-light-blue-1 py-3 pl-4 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
+                                className="mt-2 w-1/2 rounded-2xl border border-meta-light-blue-1 px-3 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
                               />
                               <div className="w-1/2 pt-1 text-base font-medium text-meta-purple-1">
                                 Years
@@ -407,7 +407,7 @@ const CareerInfoTab = ({
                                 }
                                 value={list?.month}
                                 name="month"
-                                className="mt-2 w-1/2 rounded-2xl border border-meta-light-blue-1 py-3 pl-4  focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
+                                className="mt-2 w-1/2 rounded-2xl border border-meta-light-blue-1 px-3 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
                               />
                               <div className="w-1/2  pt-1 text-base font-medium text-meta-purple-1">
                                 Month
@@ -436,7 +436,7 @@ const CareerInfoTab = ({
                             value={list?.reason_for_leaving}
                             name="reason_for_leaving"
                             placeholder="Type here"
-                            className="mt-2 w-full rounded-2xl border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
+                            className="p-3focus:border-meta-light-blue-3 mt-2 w-full rounded-2xl border border-meta-light-blue-1 p-3 focus:outline-meta-light-blue-1"
                           />
                           {formik?.touched?.total_experiences?.[index]
                             ?.reason_for_leaving &&

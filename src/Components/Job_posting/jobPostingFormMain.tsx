@@ -30,6 +30,7 @@ function JobPostingFormMain({ id }: any) {
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [jobDetails, setJobDetails] = useState<any>({});
+  const [isSpinner, setIsSpinner] = useState(false);
   const debouncedSearchCity = useDebounce(cityQuery);
   const debouncedSearchState = useDebounce(stateQuery);
   const session = useSession() as any;
@@ -59,6 +60,7 @@ function JobPostingFormMain({ id }: any) {
   }, []);
   const handleSubmit = async (values: any, actions: any) => {
     if (nextPage === 3) {
+      setIsSpinner(true);
       const data = {
         ...values,
         skills: values?.skills.map((el: any) => el?._id),
@@ -76,6 +78,7 @@ function JobPostingFormMain({ id }: any) {
       }
       API.post(API_CONSTANT.JOB, data)
         .then((res) => {
+          setIsSpinner(false);
           if (id) {
             toast?.success('Job updated Successfully');
           } else {
@@ -86,6 +89,7 @@ function JobPostingFormMain({ id }: any) {
           actions.setSubmitting(false);
         })
         .catch((error) => {
+          setIsSpinner(false);
           actions.setSubmitting(false);
         });
     } else {
@@ -336,7 +340,7 @@ function JobPostingFormMain({ id }: any) {
                   onChange={formik.handleChange}
                   value={formik?.values?.company_name}
                   placeholder="Type here..."
-                  className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+                  className="mt-1 w-full rounded-lg border border-meta-light-blue-1 p-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
                 />
                 {formik.touched.company_name && formik.errors.company_name && (
                   <div className="error">{formik.errors.company_name}</div>
@@ -361,7 +365,7 @@ function JobPostingFormMain({ id }: any) {
                   onChange={formik.handleChange}
                   value={formik?.values?.title}
                   placeholder="Type here..."
-                  className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+                  className="mt-1 w-full rounded-lg border border-meta-light-blue-1 p-3 focus:outline-meta-light-blue-1"
                 />
                 {formik.touched.title && formik.errors.title && (
                   <div className="error">{formik.errors.title}</div>
@@ -560,7 +564,15 @@ function JobPostingFormMain({ id }: any) {
               <span
                 className={`flex justify-center text-sm font-medium text-white`}
               >
-                {nextPage === 3 ? TEXT?.POST : TEXT?.NEXT}
+                {nextPage === 3 ? (
+                  isSpinner ? (
+                    <Spinner width="25px" height="25px" className="spinner" />
+                  ) : (
+                    TEXT?.POST
+                  )
+                ) : (
+                  TEXT?.NEXT
+                )}
               </span>
             )}
           </button>

@@ -1,12 +1,13 @@
-import { calculatePercentage, TEXT } from '@/service/Helper';
-import API from '@/service/ApiService';
-import { API_CONSTANT } from '@/constant/ApiConstant';
 import * as Yup from 'yup';
+import { useContext } from 'react';
+import API from '@/service/ApiService';
+import { toast } from 'react-toastify';
 import { useFormik, Field } from 'formik';
 import AutoComplete from '../Autocomplete';
-import { toast } from 'react-toastify';
-import { useContext } from 'react';
 import AppContext from '@/context/AppProvider';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import { calculatePercentage, TEXT } from '@/service/Helper';
+
 const KYCDetailsTab = ({
   setActivePage,
   userDetails,

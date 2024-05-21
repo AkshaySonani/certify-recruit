@@ -75,6 +75,7 @@ const EmployeeJob = () => {
   };
 
   const _applyFilter = () => {
+    setIsSpinner(true);
     const obj = {
       city: cityFilter ? cityFilter?._id : null,
       startDate: date?.startDate ? date?.startDate : null,
@@ -83,9 +84,11 @@ const EmployeeJob = () => {
     };
     API.post(API_CONSTANT?.JOB_SEARCH, obj)
       .then((res: any) => {
+        setIsSpinner(false);
         setJobList(res?.data?.data);
       })
       .catch((error) => {
+        setIsSpinner(false);
         console.log('error', error);
       });
   };
@@ -361,7 +364,7 @@ const EmployeeJob = () => {
             <Button
               title={'Job Search'}
               btnClass="h-12 w-full !mb-0"
-              handleClick={() => _applyFilter}
+              handleClick={() => _applyFilter()}
               titleClass="flex justify-center text-sm font-medium text-white"
             />
           </div>

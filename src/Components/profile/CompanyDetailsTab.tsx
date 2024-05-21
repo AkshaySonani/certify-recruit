@@ -1,16 +1,16 @@
-import { calculatePercentage, TEXT } from '@/service/Helper';
-import API from '@/service/ApiService';
-import { API_CONSTANT } from '@/constant/ApiConstant';
 import * as Yup from 'yup';
+import Image from 'next/image';
+import API from '@/service/ApiService';
+import { toast } from 'react-toastify';
 import { useFormik, Field } from 'formik';
 import AutoComplete from '../Autocomplete';
-import { toast } from 'react-toastify';
-import { Fragment, useContext, useEffect, useState } from 'react';
-import { Menu, Transition } from '@headlessui/react';
-import Image from 'next/image';
-import { COMPANY_TYPE } from '@/constant/Enum';
 import useDebounce from '@/hooks/useDebounce';
+import { COMPANY_TYPE } from '@/constant/Enum';
 import AppContext from '@/context/AppProvider';
+import { Menu, Transition } from '@headlessui/react';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import { calculatePercentage, TEXT } from '@/service/Helper';
+import { Fragment, useContext, useEffect, useState } from 'react';
 
 const CompanyDetailsTab = ({
   activePage,

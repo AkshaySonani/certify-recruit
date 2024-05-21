@@ -1,11 +1,11 @@
-import { Fragment, useEffect, useState } from 'react';
-import 'react-datepicker/dist/react-datepicker.css';
-import EducationTab from './EducationTab';
-import KeySkillTab from './KeySkillTab';
-import UploadResumeTab from './UploadResumeTab';
 import SummaryTab from './SummeryTab';
-import PersonalDetailsTab from './PersonalDetailsTab';
+import KeySkillTab from './KeySkillTab';
+import EducationTab from './EducationTab';
 import CareerInfoTab from './CareerInfoTab';
+import UploadResumeTab from './UploadResumeTab';
+import 'react-datepicker/dist/react-datepicker.css';
+import { Fragment, useEffect, useState } from 'react';
+import PersonalDetailsTab from './PersonalDetailsTab';
 
 const page = [
   { id: 1, page: 'Profile Summary' },

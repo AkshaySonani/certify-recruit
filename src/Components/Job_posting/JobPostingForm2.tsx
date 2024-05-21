@@ -229,7 +229,7 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
               name="hourly_rate"
               onChange={formik.handleChange}
               value={formik?.values?.hourly_rate}
-              className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+              className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:outline-meta-light-blue-1"
             />
             <div className="my-4 border border-meta-light-blue-1" />
 
@@ -299,7 +299,7 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
                 <input
                   type="time"
                   id="starttime"
-                  className="mt-1 w-full rounded-lg border border-meta-light-blue-1 py-[10px] pl-5 pr-3 focus:border-meta-light-blue-3"
+                  className="mt-1 w-full rounded-lg border border-meta-light-blue-1 py-[10px] pl-5 pr-3 focus:outline-meta-light-blue-1"
                   value={formik?.values?.interviewTime?.startTime}
                   onChange={(e: any) => {
                     formik.setFieldValue('interviewTime', {
@@ -319,7 +319,7 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
                 <input
                   type="time"
                   id="endtime"
-                  className="mt-1 w-full rounded-lg border border-meta-light-blue-1 py-[10px] pl-5 pr-3 focus:border-meta-light-blue-3"
+                  className="mt-1 w-full rounded-lg border border-meta-light-blue-1 py-[10px] pl-5 pr-3 focus:outline-meta-light-blue-1"
                   value={formik?.values?.interviewTime?.endTime}
                   onChange={(e: any) => {
                     formik.setFieldValue('interviewTime', {

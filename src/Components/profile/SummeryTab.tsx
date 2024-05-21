@@ -1,13 +1,13 @@
-import { Fragment, useContext, useEffect, useState } from 'react';
-import { TEXT } from '@/service/Helper';
-import API from '@/service/ApiService';
-import { API_CONSTANT } from '@/constant/ApiConstant';
 import * as Yup from 'yup';
-import { useFormik, Field } from 'formik';
-import { toast } from 'react-toastify';
-import 'react-datepicker/dist/react-datepicker.css';
 import Button from '../Button';
+import API from '@/service/ApiService';
+import { toast } from 'react-toastify';
+import { TEXT } from '@/service/Helper';
+import { useFormik, Field } from 'formik';
 import AppContext from '@/context/AppProvider';
+import 'react-datepicker/dist/react-datepicker.css';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import { Fragment, useContext, useEffect, useState } from 'react';
 
 const SummaryTab = ({
   userDetails,
@@ -71,7 +71,7 @@ const SummaryTab = ({
             name="profile_summary"
             onChange={formik.handleChange}
             value={formik?.values?.profile_summary}
-            className="mt-2 w-full rounded-2xl border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
+            className="w-full rounded-2xl border border-meta-light-blue-1 p-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
           />
           {formik.touched.profile_summary && formik.errors.profile_summary && (
             <div className="error">

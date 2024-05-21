@@ -1,18 +1,19 @@
-import { HIGH_EDUCATION } from '@/constant/Enum';
-import { TEXT } from '@/service/Helper';
-import { Menu, Transition } from '@headlessui/react';
+import * as Yup from 'yup';
 import moment from 'moment';
 import Image from 'next/image';
-import { Fragment, useContext, useState } from 'react';
+import Button from '../Button';
+import API from '@/service/ApiService';
+import { toast } from 'react-toastify';
+import { TEXT } from '@/service/Helper';
 import { useFormik, Field } from 'formik';
 import DatePicker from 'react-datepicker';
-import * as Yup from 'yup';
-import API from '@/service/ApiService';
-import { API_CONSTANT } from '@/constant/ApiConstant';
-import { toast } from 'react-toastify';
-import Button from '../Button';
 import AppContext from '@/context/AppProvider';
+import { HIGH_EDUCATION } from '@/constant/Enum';
 import 'react-datepicker/dist/react-datepicker.css';
+import { Menu, Transition } from '@headlessui/react';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import { Fragment, useContext, useState } from 'react';
+
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
@@ -114,7 +115,7 @@ const EducationTab = ({
             <label className="text-base font-medium text-meta-purple-1">
               School / College name
             </label>
-            <Menu.Button className="relative mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
+            <Menu.Button className="relative mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 px-3 py-3 outline-none transition">
               <p>
                 {formik?.values?.college_school_name === null
                   ? 'Select your college '
@@ -174,7 +175,7 @@ const EducationTab = ({
               <label className="text-base font-medium text-meta-purple-1">
                 Degree
               </label>
-              <Menu.Button className="relative mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
+              <Menu.Button className="relative mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 px-3 py-3 outline-none transition">
                 <p>
                   {formik?.values?.degree === null
                     ? 'Select your degree '

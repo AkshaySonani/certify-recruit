@@ -3,11 +3,11 @@ import Button from '../Button';
 import { useFormik } from 'formik';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
-import React, { useContext, useState } from 'react';
 import { TEXT } from '@/service/Helper';
 import { useDropzone } from 'react-dropzone';
-import { API_CONSTANT } from '@/constant/ApiConstant';
 import AppContext from '@/context/AppProvider';
+import React, { useContext, useState } from 'react';
+import { API_CONSTANT } from '@/constant/ApiConstant';
 
 const UploadResumeTab = ({
   userDetails,
@@ -133,7 +133,7 @@ const UploadResumeTab = ({
             </p>
           </div>
         </div>
-        <div className="mt-5 flex flex-col">
+        <div className="flex flex-col">
           <div>
             <input
               type="text"
@@ -142,10 +142,10 @@ const UploadResumeTab = ({
               name="website_url"
               placeholder="Enter file name"
               onChange={(e) => setFileName(e?.target?.value)}
-              className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3  focus:border-meta-light-blue-1 focus:outline-none"
+              className="w-full rounded-lg border border-meta-light-blue-1 p-3  focus:border-meta-light-blue-1 focus:outline-none"
             />
           </div>
-          <div className="mt-7 flex w-full cursor-pointer items-center justify-center rounded-lg border-[2px] border-dashed border-meta-light-blue-1 p-8">
+          <div className="mt-3 flex w-full cursor-pointer items-center justify-center rounded-lg border-[2px] border-dashed border-meta-light-blue-1 p-8">
             <section className="text-center text-lg">
               <div {...getRootProps({ className: 'dropzone' })}>
                 <input {...getInputProps()} multiple={false} />

@@ -124,7 +124,8 @@ const KeySkillTab = ({
       border: state.isFocused ? 1 : 1,
       // This line disable the blue border
       boxShadow: state.isFocused ? 0 : 0,
-      paddingLeft: '20px',
+      // paddingLeft: '20px',
+      paddingRight: '2px',
       paddingTop: '0px',
       paddingBottom: '0px',
       '&:hover': {

@@ -1,17 +1,18 @@
 'use client';
+import moment from 'moment';
 import Image from 'next/image';
+import ApplyJob from './applyJob';
+import API from '@/service/ApiService';
+import { TEXT } from '@/service/Helper';
 import Select from '@/Components/Select';
+import Spinner from '@/app/icons/Spinner';
+import AutoComplete from '../Autocomplete';
 import { useRouter } from 'next/navigation';
 import Checkbox from '@/Components/Checkbox';
+import useDebounce from '@/hooks/useDebounce';
+import { API_CONSTANT } from '@/constant/ApiConstant';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Menu, Popover, Transition } from '@headlessui/react';
-import { TEXT } from '@/service/Helper';
-import AutoComplete from '../Autocomplete';
-import useDebounce from '@/hooks/useDebounce';
-import API from '@/service/ApiService';
-import { API_CONSTANT } from '@/constant/ApiConstant';
-import ApplyJob from './applyJob';
-import Spinner from '@/app/icons/Spinner';
 
 const IndividualJob = () => {
   const [cities, setCities] = useState([]);
@@ -352,7 +353,7 @@ const IndividualJob = () => {
                               - Fresher
                             </p>
                             <p className="ml-2 mt-1 text-sm font-bold text-meta-light-blue-3">
-                              30 min ago
+                              {moment(list?.createdAt).fromNow()}
                             </p>
                           </div>
                           <div className="flex items-center">

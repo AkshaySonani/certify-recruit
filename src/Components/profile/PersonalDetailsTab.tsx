@@ -1,17 +1,17 @@
-import { GENDER, PROFICIENCY } from '@/constant/Enum';
-import { Menu, Transition } from '@headlessui/react';
-import Image from 'next/image';
-import { Fragment, useContext } from 'react';
-
-import { TEXT } from '@/service/Helper';
-import API from '@/service/ApiService';
-import { API_CONSTANT } from '@/constant/ApiConstant';
 import * as Yup from 'yup';
-import { useFormik, Field } from 'formik';
-import { toast } from 'react-toastify';
-import DatePicker from 'react-multi-date-picker';
+import Image from 'next/image';
 import Button from '../Button';
+import API from '@/service/ApiService';
+import { toast } from 'react-toastify';
+import { TEXT } from '@/service/Helper';
+import { useFormik, Field } from 'formik';
+import { Fragment, useContext } from 'react';
 import AppContext from '@/context/AppProvider';
+import DatePicker from 'react-multi-date-picker';
+import { Menu, Transition } from '@headlessui/react';
+import { GENDER, PROFICIENCY } from '@/constant/Enum';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
@@ -97,11 +97,11 @@ const PersonalDetailsTab = ({
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <div className="mt-5  w-full  pl-9">
+      <div className="mt-5 w-full pl-9">
         <label className="text-base font-medium text-meta-purple-1">
           Gender
         </label>
-        <div className="mt-2 flex gap-3 pt-1">
+        <div className="flex gap-3 pt-1">
           {GENDER?.map((list: any) => {
             return (
               <div
@@ -117,7 +117,7 @@ const PersonalDetailsTab = ({
           <div className="error">{formik.errors.gender}</div>
         )}
 
-        <div className="mt-5 w-full">
+        <div className="mt-3 w-full">
           <label className="text-base font-medium text-meta-purple-1">
             Date of birth
           </label>
@@ -158,7 +158,7 @@ const PersonalDetailsTab = ({
               <div className="relative flex w-full items-center gap-3 ">
                 <div className="w-1/2">
                   <Menu as="div" className="relative w-full">
-                    <Menu.Button className="relative mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
+                    <Menu.Button className="relative mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 px-3 py-3 outline-none transition">
                       <p>
                         {list?.language === null
                           ? 'Select your language'
@@ -216,7 +216,7 @@ const PersonalDetailsTab = ({
                 </div>
                 <div className="w-1/2">
                   <Menu as="div" className="relative w-full">
-                    <Menu.Button className="relative mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-3 pl-5 pr-[11px] outline-none transition">
+                    <Menu.Button className="relative mt-2 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 px-3 py-3 outline-none transition">
                       <p>
                         {list?.proficiency === ''
                           ? 'Select your Proficiency '
