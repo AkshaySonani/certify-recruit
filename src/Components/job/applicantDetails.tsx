@@ -193,6 +193,8 @@ function ApplicantDetails({ id, status }: any) {
           </thead>
           <tbody>
             {data.map((item: any) => {
+              console.log(item);
+
               let totalYears = 0;
               let totalMonths = 0;
               item?.user_info?.total_experiences?.forEach((experience: any) => {
@@ -212,7 +214,7 @@ function ApplicantDetails({ id, status }: any) {
                         src={'/dashboard/photo.svg'}
                       />
                       <div className="pl-4 text-base font-medium text-meta-purple-1">
-                        {item?.name}
+                        {item?.user_info?.user_name}
                       </div>
                     </div>
                   </td>

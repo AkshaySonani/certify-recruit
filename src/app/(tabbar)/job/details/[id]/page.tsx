@@ -2,7 +2,9 @@
 import ApplyJob from '@/Components/job/applyJob';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import API from '@/service/ApiService';
+import { USER_ROLE } from '@/service/Helper';
 import moment from 'moment';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
@@ -10,7 +12,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const [jobApplyId, setJobApplyId] = useState('');
   const [jobDetails, setJobDetails] = useState<any>({});
   const list = {};
-
+  const session = useSession<any>();
   const _onJobApply = (id: any) => {
     setJobApplyId(id);
   };
@@ -80,20 +82,22 @@ export default function Page({ params }: { params: { id: string } }) {
                     src={'/job/bookmark.svg'}
                   />
                 </button>
-                <button
-                  onClick={() => _onJobApply(jobDetails?._id)}
-                  className="flex w-[140px] items-center justify-between rounded-lg border border-meta-light-blue-1 bg-white p-3"
-                >
-                  <p className="text-sm font-bold text-meta-purple-1">
-                    Apply Now
-                  </p>
-                  <Image
-                    alt="date"
-                    width={14}
-                    height={14}
-                    src={'/job/share.svg'}
-                  />
-                </button>
+                {session?.data?.user?.role === USER_ROLE?.INDIVIDUAL && (
+                  <button
+                    onClick={() => _onJobApply(jobDetails?._id)}
+                    className="flex w-[140px] items-center justify-between rounded-lg border border-meta-light-blue-1 bg-white p-3"
+                  >
+                    <p className="text-sm font-bold text-meta-purple-1">
+                      Apply Now
+                    </p>
+                    <Image
+                      alt="date"
+                      width={14}
+                      height={14}
+                      src={'/job/share.svg'}
+                    />
+                  </button>
+                )}
               </div>
             </div>
             <div className="mt-5 flex items-center gap-3">
@@ -170,7 +174,8 @@ export default function Page({ params }: { params: { id: string } }) {
                 Location:
               </p>
               <p className="pl-1 pt-1 text-sm font-medium text-meta-light-blue-3">
-                {list?.city?.[0]?.name},{list?.state?.[0]?.name ?? 'Gujarat'}
+                {jobDetails?.city?.[0]?.name},
+                {jobDetails?.state?.[0]?.name ?? 'Gujarat'}
               </p>
             </div>
             <div className="mt-5 ">

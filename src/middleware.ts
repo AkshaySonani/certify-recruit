@@ -58,5 +58,6 @@ export const config = {
     '/dashboard',
     '/myProfile',
     '/job_posting',
+    '/job',
   ],
 };

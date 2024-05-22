@@ -38,6 +38,7 @@ const EditDetailsDialog = ({
       /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
       'invalid contact number',
     ),
+    user_name: Yup.string().required('Username is required'),
   });
 
   const formik = useFormik({
@@ -106,7 +107,7 @@ const EditDetailsDialog = ({
                     <div className="w-full p-8 pt-0">
                       <div className="flex items-center justify-between">
                         <div className="mr-3 w-1/2">
-                          <label>{TEXT?.FULL_NAME}</label>
+                          <label>UserName</label>
                           <input
                             type="text"
                             placeholder="Username"
@@ -115,6 +116,12 @@ const EditDetailsDialog = ({
                             value={formik?.values?.user_name}
                             className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
                           />
+                          {formik.touched.user_name &&
+                            formik.errors.user_name && (
+                              <div className="error">
+                                {formik.errors.user_name}
+                              </div>
+                            )}
                         </div>
                         <div className="w-1/2">
                           <label>{TEXT?.EMAIL}</label>
@@ -138,6 +145,12 @@ const EditDetailsDialog = ({
                           placeholder={TEXT?.PHONE_NUMBER}
                           className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
                         />
+                        {formik.touched.contact_number &&
+                          formik.errors.contact_number && (
+                            <div className="error">
+                              {formik.errors.contact_number}
+                            </div>
+                          )}
                       </div>
                       <div className="mt-3 w-full">
                         <label>{TEXT?.ROLE}</label>
