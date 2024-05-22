@@ -16,7 +16,7 @@ export default function RootLayout({
   const getProfileDetails = () => {
     API.get(API_CONSTANT?.PROFILE)
       .then((res: any) => {
-        context?.setUserProfileCount(res?.data?.data.profile_count);
+        context?.setUserProfileCount(res?.data?.data?.profile_count);
       })
       .catch((error) => {
         console.log('error', error);

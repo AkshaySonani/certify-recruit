@@ -1,10 +1,10 @@
+import { useState } from 'react';
 import SummaryTab from './SummeryTab';
 import KeySkillTab from './KeySkillTab';
 import EducationTab from './EducationTab';
 import CareerInfoTab from './CareerInfoTab';
 import UploadResumeTab from './UploadResumeTab';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Fragment, useEffect, useState } from 'react';
 import PersonalDetailsTab from './PersonalDetailsTab';
 
 const page = [
@@ -65,38 +65,32 @@ const IndividualProfile = ({
           />
         )}
         {activePage === page[2]?.id && (
-          <>
-            <KeySkillTab
-              setActivePage={setActivePage}
-              userDetails={userDetails}
-              activePage={activePage}
-              getUserDataApiCall={getUserDataApiCall}
-            />
-          </>
+          <KeySkillTab
+            setActivePage={setActivePage}
+            userDetails={userDetails}
+            activePage={activePage}
+            getUserDataApiCall={getUserDataApiCall}
+          />
         )}
 
         {activePage === page[3]?.id && (
-          <>
-            <EducationTab
-              setActivePage={setActivePage}
-              userDetails={userDetails}
-              activePage={activePage}
-              degreeList={degreeList}
-              collegeList={collegeList}
-              getUserDataApiCall={getUserDataApiCall}
-            />
-          </>
+          <EducationTab
+            setActivePage={setActivePage}
+            userDetails={userDetails}
+            activePage={activePage}
+            degreeList={degreeList}
+            collegeList={collegeList}
+            getUserDataApiCall={getUserDataApiCall}
+          />
         )}
         {activePage === page[4]?.id && (
-          <>
-            <PersonalDetailsTab
-              languageList={languageList}
-              setActivePage={setActivePage}
-              userDetails={userDetails}
-              activePage={activePage}
-              getUserDataApiCall={getUserDataApiCall}
-            />
-          </>
+          <PersonalDetailsTab
+            languageList={languageList}
+            setActivePage={setActivePage}
+            userDetails={userDetails}
+            activePage={activePage}
+            getUserDataApiCall={getUserDataApiCall}
+          />
         )}
         {activePage === page[5]?.id && (
           <CareerInfoTab

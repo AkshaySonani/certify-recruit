@@ -58,7 +58,7 @@ const UploadResumeTab = ({
             resume: obj,
             profile_count: {
               ...context?.userProfileCount,
-              resume_details: 16.66,
+              resume_details: 16,
             },
           })
             .then((res) => {

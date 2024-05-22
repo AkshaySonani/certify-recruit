@@ -32,7 +32,7 @@ const EducationTab = ({
       ...values,
       profile_count: {
         ...context?.userProfileCount,
-        education_details: 16.66,
+        education_details: 16,
       },
     };
     API.post(API_CONSTANT?.PROFILE, obj)

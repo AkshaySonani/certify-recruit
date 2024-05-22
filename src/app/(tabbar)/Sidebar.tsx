@@ -6,7 +6,7 @@ import AppContext from '@/context/AppProvider';
 import { Menu, Transition } from '@headlessui/react';
 import { signOut, useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
-import React, { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import { ROUTE, SIDE_BAR_DATA, TEXT, USER_ROLE } from '@/service/Helper';
 
 const Sidebar = () => {
@@ -14,7 +14,9 @@ const Sidebar = () => {
   const session = useSession();
   const pathname = usePathname();
   const context = useContext(AppContext);
+
   const [open, setOpen] = useState(true);
+  const [percentage, setPercentage] = useState(0);
 
   const activeTabCss = (path: string) =>
     pathname.split('/')[1] === path
@@ -23,21 +25,36 @@ const Sidebar = () => {
         ? 'text-meta-gray-1'
         : '';
 
-  let percentage = 0;
-  if (session?.data?.user?.role === USER_ROLE?.EMPLOYEE) {
-    percentage =
-      context?.userProfileCount?.basic_details +
-      context?.userProfileCount?.company_details +
-      context?.userProfileCount?.kyc_details;
-  } else {
-    percentage =
-      context?.userProfileCount?.career_details +
-      context?.userProfileCount?.education_details +
-      context?.userProfileCount?.personal_details +
-      context?.userProfileCount?.resume_details +
-      context?.userProfileCount?.skill_details +
-      context?.userProfileCount?.summary_details;
-  }
+  useEffect(() => {
+    // if (
+    //   Object?.keys(context?.userProfileCount)?.length !== 0 &&
+    //   context?.userProfileCount !== undefined
+    // ) {
+    //   handlePercentage();
+    // }
+    handlePercentage();
+  }, [context?.userProfileCount]);
+
+  const handlePercentage = () => {
+    if (context?.userProfileCount && context?.userProfileCount !== undefined) {
+      if (session?.data?.user?.role === USER_ROLE?.EMPLOYEE) {
+        setPercentage(
+          context?.userProfileCount?.basic_details +
+            context?.userProfileCount?.company_details +
+            context?.userProfileCount?.kyc_details,
+        );
+      } else {
+        setPercentage(
+          context?.userProfileCount?.career_details +
+            context?.userProfileCount?.education_details +
+            context?.userProfileCount?.personal_details +
+            context?.userProfileCount?.resume_details +
+            context?.userProfileCount?.skill_details +
+            context?.userProfileCount?.summary_details,
+        );
+      }
+    }
+  };
 
   return (
     <aside
