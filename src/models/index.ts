@@ -6,6 +6,7 @@ export * from './cities';
 export * from './states';
 export * from './company';
 export * from './degrees';
+export * from './question';
 export * from './collages';
 export * from './category';
 export * from './language';
