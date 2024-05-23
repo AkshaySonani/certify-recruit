@@ -28,6 +28,8 @@ const ROUTE = {
   JOB_APPLICANTS: '/job/applicants',
   JOB_CONTACTING: '/job/contacting',
   JOB_HIRED: '/job/hired',
+  CHOOSE_CATEGORY: '/certification/chooseCategories',
+  EXAM: '/exam',
 };
 
 const TEXT = {

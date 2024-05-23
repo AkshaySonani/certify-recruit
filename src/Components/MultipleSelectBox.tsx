@@ -1,5 +1,5 @@
-import React from "react";
-import Select from "react-select";
+import React from 'react';
+import Select from 'react-select';
 
 export const MultipleSelectBox = ({
   form,
@@ -13,8 +13,10 @@ export const MultipleSelectBox = ({
   onKeyDown,
   placeholder,
   components,
+  handleChange,
 }: any) => {
-  const onChange = (option: any) => form.setFieldValue(name, option);
+  const onChange = (option: any) =>
+    form ? form.setFieldValue(name, option) : handleChange(option);
   return (
     <Select
       name={name}
