@@ -1,5 +1,7 @@
+'use client';
 import { Icons } from '@/svg';
 import mongoose from 'mongoose';
+import { useEffect } from 'react';
 
 const EMAIlREGEX =
   /^[a-zA-Z0-9]+([._-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-]?[a-zA-Z0-9]+)*\.[a-zA-Z]{2,}$/g;

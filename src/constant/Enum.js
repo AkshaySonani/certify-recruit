@@ -63,7 +63,20 @@ const COMPLETION_DATE = {
 
 const JOB_STATUS = ['PENDING', 'ACTIVE', 'CLOSED'];
 
-const APPLICANT_STATUS=['Applicants', 'Awaiting', 'Contacting', 'Hired']
+const APPLICANT_STATUS = ['Applicants', 'Awaiting', 'Contacting', 'Hired'];
+
+const QUESTION_STATUS = [
+  { id: 1, status: 'Default', color: 'bg-meta-gray-2' },
+  { id: 2, status: 'Not Answered', color: 'bg-meta-brown-1' },
+  { id: 3, status: 'Answered', color: 'bg-meta-green-1' },
+  { id: 4, status: 'Marked for Review', color: 'bg-meta-red-1' },
+
+  {
+    id: 5,
+    status: 'Answered & Marked for Review ',
+    color: 'bg-meta-purple-2',
+  },
+];
 export {
   PROFICIENCY,
   EMP_TYPE_ARR,
@@ -74,5 +87,5 @@ export {
   COMPANY_TYPE,
   JOB_STATUS,
   APPLICANT_STATUS,
-
+  QUESTION_STATUS,
 };
