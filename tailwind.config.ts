@@ -13,7 +13,7 @@ const config: Config = {
         // "text/paragraph": "#49556F",
         // "element/primary": "#EFF4FF",
         // "stroke/secondary": "#DCE7FF",
-        'meta-red': { 1: '#EA4335' },
+        'meta-red': { 1: '#EA4335', 2: '#FF0C0C' },
         'meta-green': { 1: '#34A853' },
         'meta-brown': { 1: '#A8000C' },
         'meta-blue': { 1: '#013BB7', 2: '#3751F2' },

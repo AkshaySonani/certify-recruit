@@ -6,6 +6,8 @@ import { TEXT } from '@/service/Helper';
 import { toast } from 'react-toastify';
 import usePersistState from '@/hooks/usePersistState';
 import { QUESTION_STATUS } from '@/constant/Enum';
+import FinishExamDialog from '@/Components/exam/FinishExamDialog';
+import ResultComp from '@/Components/exam/ResultComp';
 
 const EXAM_DURATION = 1800;
 const EXAM_STATUS = {
@@ -111,6 +113,7 @@ const Page = () => {
     'CurrentQuestion',
   );
   const [answerSheet, setAnswerSheet] = usePersistState([], 'answerSheet');
+  const [finishExamModal, setFinishExamModal] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<any>('');
   const [questionSheet, setQuestinSheet] = useState(EXAM_QUESTIONS);
   const secondsToDisplay = secondsRemaining % 60;
@@ -126,6 +129,8 @@ const Page = () => {
       } else {
         toast.error('Time is over');
         setExamStatus(EXAM_STATUS.STOPPED);
+        setSelectedAnswer('');
+        setAnswerSheet([]);
       }
     },
     examStatus === EXAM_STATUS.STARTED ? 1000 : null,
@@ -150,7 +155,8 @@ const Page = () => {
       }
       setSelectedAnswer('');
     } else {
-      setCurrentQuestion(0);
+      setFinishExamModal(true);
+      setCurrentQuestion(CurrentQuestion);
     }
   };
 
@@ -232,7 +238,7 @@ const Page = () => {
         </div>
       </div>
       <div className="mt-8 flex w-full gap-3">
-        <div className="w-2/4 rounded-2xl border border-meta-light-blue-2 p-5">
+        <div className="w-2/4 rounded-2xl border border-meta-light-blue-2 bg-hiring-btn-gradient p-5">
           <div className="flex justify-center ">
             <p className="text-meta-purple text-lg font-semibold">
               {TEXT?.QUIZ_DETAIL}{' '}
@@ -240,52 +246,54 @@ const Page = () => {
           </div>
           <div className="mt-6 flex justify-between">
             <div className="w-2/3">
-              <p className="text-sm font-medium text-meta-gray-1">
+              <p className="text-sm font-medium text-meta-light-blue-2">
                 {TEXT?.NAME}
               </p>
-              <p className="text-sm font-medium">
+              <p className="text-sm font-medium text-meta-purple-1">
                 Certify Recruit Certification exam
               </p>
             </div>
             <div className="w-2/3">
-              <p className="text-sm font-medium text-meta-gray-1">
+              <p className="text-sm font-medium text-meta-light-blue-2">
                 {TEXT?.START_DATE_TIME}
               </p>
-              <p className="text-sm font-medium">2024-03-05 08:00:00</p>
+              <p className="text-sm font-medium text-meta-purple-1">
+                2024-03-05 08:00:00
+              </p>
             </div>
           </div>
           <div className="mt-6 flex justify-between">
             <div className="w-2/3">
-              <p className="text-sm font-medium text-meta-gray-1">
+              <p className="text-sm font-medium text-meta-light-blue-2">
                 {TEXT?.MARKS_PER_QUESTION}
               </p>
-              <p className="text-sm font-medium">1</p>
+              <p className="text-sm font-medium text-meta-purple-1">1</p>
             </div>
             <div className="w-2/3">
-              <p className="text-sm font-medium text-meta-gray-1">
+              <p className="text-sm font-medium text-meta-light-blue-2">
                 {TEXT?.MAX_TAB_SWITCH_ALLOW}
               </p>
-              <p className="text-sm font-medium">3</p>
+              <p className="text-sm font-medium text-meta-purple-1">3</p>
             </div>
           </div>
           <div className="mt-6 flex justify-between">
             <div className="w-2/3">
-              <p className="text-sm font-medium text-meta-gray-1">
+              <p className="text-sm font-medium text-meta-light-blue-2">
                 {TEXT?.DURATION}
               </p>
-              <p className="text-sm font-medium">05 Min</p>
+              <p className="text-sm font-medium text-meta-purple-1">05 Min</p>
             </div>
             <div className="w-2/3">
-              <p className="text-sm font-medium text-meta-gray-1">
+              <p className="text-sm font-medium text-meta-light-blue-2">
                 {TEXT?.NEGATIVE_MARKS_PER_QUESTION}
               </p>
-              <p className="text-sm font-medium">0</p>
+              <p className="text-sm font-medium text-meta-purple-1">0</p>
             </div>
           </div>
         </div>
         <div className="w-2/4 rounded-2xl border border-meta-light-blue-2 p-5">
           <div className="flex justify-center ">
-            <p className="text-meta-purple text-lg font-semibold">
+            <p className="text-lg font-semibold text-meta-purple-1">
               {TEXT?.QUESTION_PALETTE}{' '}
             </p>
           </div>
@@ -393,7 +401,12 @@ const Page = () => {
           </span>
         </button>
       </div>
+      <FinishExamDialog
+        isOpen={finishExamModal}
+        setIsOpen={setFinishExamModal}
+      />
     </div>
+    // <ResultComp />
   );
 };
 
