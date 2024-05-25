@@ -287,6 +287,14 @@ const SIDE_BAR_DATA = {
 const createModal = (name: string, schema: any) =>
   mongoose.models?.[name] || mongoose.model(name, schema);
 
+const shuffleData = (data: any) => {
+  for (let i = data.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [data[i], data[j]] = [data[j], data[i]];
+  }
+  return data;
+};
+
 const calculatePercentage = (values: any, pr: any) => {
   const tab1Complete = Object.values(values).filter((val) => val !== '').length;
   const totalFields = Object.keys(values).length;
@@ -298,9 +306,10 @@ const calculatePercentage = (values: any, pr: any) => {
 export {
   TEXT,
   ROUTE,
-  EMAIlREGEX,
   USER_ROLE,
-  SIDE_BAR_DATA,
+  EMAIlREGEX,
+  shuffleData,
   createModal,
+  SIDE_BAR_DATA,
   calculatePercentage,
 };
