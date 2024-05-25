@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import User from '@/models/user';
+import { USER_ROLE } from './Helper';
 import { connect } from '@/db/mongodb';
 import Company from '@/models/company';
 import { AuthOptions } from 'next-auth';
@@ -7,6 +8,7 @@ import Individual from '@/models/individual';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
+var currentUser: any;
 export const authOptions: AuthOptions = {
   providers: [
     // SignUp
@@ -108,27 +110,34 @@ export const authOptions: AuthOptions = {
         return true;
       }
 
-      // if (account.provider === "google") {
-      //   try {
-      //     const { name, email } = user;
-      //     await connect();
-      //     const ifUserExists = await User.findOne({ email });
-      //     if (ifUserExists) {
-      //       return user;
-      //     }
-      //     const newUser = new User({
-      //       name: name,
-      //       email: email,
-      //     });
-      //     const res = await newUser.save();
-      //     if (res.status === 200 || res.status === 201) {
-      //       console.log(res);
-      //       return user;
-      //     }
-      //   } catch (err) {
-      //     console.log(err);
-      //   }
-      // }
+      if (account.provider === 'google') {
+        try {
+          const { name, email } = user;
+          await connect();
+          const ifUserExists = await User.findOne({ email });
+          if (ifUserExists) {
+            return user;
+          }
+          const newUser = await User.create({
+            email: email,
+            password: null,
+            role: USER_ROLE?.INDIVIDUAL,
+          });
+
+          await Individual.create({
+            user_ref_id: newUser?._id,
+          });
+          currentUser = newUser;
+          const res = await newUser.save();
+          if (res.status === 200 || res.status === 201) {
+            return newUser;
+          }
+        } catch (err) {
+          console.log(err);
+          return err;
+        }
+        return true;
+      }
     },
     async jwt({ token, user }: any) {
       if (user?._id) {
@@ -138,6 +147,9 @@ export const authOptions: AuthOptions = {
         token.phone = user.phone;
         token.status = user.status;
         token.profile_picture = user.profile_picture;
+      } else if (!token.role && !token._id) {
+        token._id = currentUser?._id;
+        token.role = USER_ROLE?.INDIVIDUAL; // Default role if not set
       }
       return token;
     },
@@ -149,6 +161,9 @@ export const authOptions: AuthOptions = {
         session.user.phone = token.phone;
         session.user.status = token.status;
         session.user.profile_picture = token.profile_picture;
+      } else if (!session.user.role && !session.user._id) {
+        session.user._id = currentUser?._id;
+        session.user.role = USER_ROLE?.INDIVIDUAL; // Default role if not set
       }
       return session;
     },

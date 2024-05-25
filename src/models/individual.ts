@@ -29,6 +29,14 @@ const individualSchema = new mongoose.Schema({
       personal_details: { type: Number, default: 0 },
       education_details: { type: Number, default: 0 },
     },
+    default: {
+      skill_details: 0,
+      resume_details: 0,
+      career_details: 0,
+      summary_details: 0,
+      personal_details: 0,
+      education_details: 0,
+    },
   },
   resume: {
     type: [
