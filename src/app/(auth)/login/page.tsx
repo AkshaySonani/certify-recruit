@@ -111,7 +111,11 @@ const Page = () => {
                 <p className="mb-10 text-center text-sm font-medium text-meta-light-blue-3">
                   {TEXT?.WELCOME_BACK_TO_CERTIFY}
                 </p>
-                <button className="mb-8 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-white text-xl font-semibold text-meta-light-blue-3 hover:bg-meta-gray-2">
+                <button
+                  type="button"
+                  onClick={() => signIn('google')}
+                  className="mb-8 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-white text-xl font-semibold text-meta-light-blue-3 hover:bg-meta-gray-2"
+                >
                   <span className="flex justify-center">
                     <Image
                       width={20}

@@ -114,9 +114,11 @@ export const authOptions: AuthOptions = {
         try {
           const { name, email } = user;
           await connect();
-          const ifUserExists = await User.findOne({ email });
-          if (ifUserExists) {
-            return user;
+          const existingUser = await User.findOne({ email: user.email });
+
+          if (existingUser) {
+            currentUser = existingUser;
+            return true;
           }
           const newUser = await User.create({
             email: email,
@@ -133,8 +135,7 @@ export const authOptions: AuthOptions = {
             return newUser;
           }
         } catch (err) {
-          console.log(err);
-          return err;
+          throw new Error(`Error: ${err}`);
         }
         return true;
       }

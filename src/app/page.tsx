@@ -1,3 +1,4 @@
+import Certificate from '@/Components/Certificate/certificate';
 import Image from 'next/image';
 
 export default function Home() {
@@ -7,6 +8,9 @@ export default function Home() {
         {/* <div className="flex justify-center py-20">
           <Image src={"/MainLogo.svg"} alt="MainLogo" width={334} height={56} />
         </div> */}
+        <div className="flex min-h-screen items-center justify-center">
+          <Certificate />
+        </div>
       </div>
     </div>
   );
