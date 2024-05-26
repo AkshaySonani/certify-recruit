@@ -5,7 +5,8 @@ import { useReducer } from 'react';
 import { useRouter } from 'next/navigation';
 import { ROUTE } from '@/service/Helper';
 
-const ResultComp = () => {
+const ResultComp = ({ results }: any) => {
+  console.log('results', results);
   const router = useRouter();
   return (
     <div>

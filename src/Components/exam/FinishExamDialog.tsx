@@ -2,7 +2,13 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import Button from '../Button';
 
-const FinishExamDialog = ({ isOpen, setIsOpen, allAnswer = false }: any) => {
+const FinishExamDialog = ({
+  isOpen,
+  setIsOpen,
+  allAnswer,
+  handleFinishExam,
+  handleBackToExam,
+}: any) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -25,7 +31,7 @@ const FinishExamDialog = ({ isOpen, setIsOpen, allAnswer = false }: any) => {
                 {allAnswer ? (
                   <div>
                     <div className=" w-full">
-                      <p className="text-meta-red-2 text-center text-xl font-extrabold ">
+                      <p className="text-center text-xl font-extrabold text-meta-red-2 ">
                         Not Answered
                       </p>
                       <p className="my-5 px-10 text-center text-base font-medium text-meta-purple-1">
@@ -36,7 +42,7 @@ const FinishExamDialog = ({ isOpen, setIsOpen, allAnswer = false }: any) => {
                     <div className="mt-5 flex  w-full  items-center justify-between gap-4">
                       <button
                         type="button"
-                        //   onClick={handlePrevious}
+                        onClick={() => handleFinishExam()}
                         className=" h-[37px] w-1/2  rounded-lg border border-meta-light-blue-1 text-base font-medium text-meta-light-blue-3 "
                       >
                         Finish
@@ -44,7 +50,7 @@ const FinishExamDialog = ({ isOpen, setIsOpen, allAnswer = false }: any) => {
                       <Button
                         title={'Back to test'}
                         btnClass="!h-[37px] !mb-0 !w-1/2"
-                        //   handleClick={() => router?.push(ROUTE?.EXAM)}
+                        handleClick={() => handleBackToExam()}
                       />
                     </div>
                   </div>
@@ -62,7 +68,7 @@ const FinishExamDialog = ({ isOpen, setIsOpen, allAnswer = false }: any) => {
                     <div className="mt-5 flex  w-full  items-center justify-between gap-4">
                       <button
                         type="button"
-                        //   onClick={handlePrevious}
+                        onClick={() => handleBackToExam()}
                         className=" h-[37px] w-1/2  rounded-lg border border-meta-light-blue-1 text-base font-medium text-meta-light-blue-3 "
                       >
                         Cancel
@@ -70,7 +76,7 @@ const FinishExamDialog = ({ isOpen, setIsOpen, allAnswer = false }: any) => {
                       <Button
                         title={'Finish'}
                         btnClass="!h-[37px] !mb-0 !w-1/2"
-                        //   handleClick={() => router?.push(ROUTE?.EXAM)}
+                        handleClick={() => handleFinishExam()}
                       />
                     </div>
                   </div>

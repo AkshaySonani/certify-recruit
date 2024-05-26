@@ -3,6 +3,7 @@ import Button from '@/Components/Button';
 import MultipleSelectBox from '@/Components/MultipleSelectBox';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import useDebounce from '@/hooks/useDebounce';
+import usePersistState from '@/hooks/usePersistState';
 import API from '@/service/ApiService';
 import { ROUTE, TEXT } from '@/service/Helper';
 import { Dialog, Transition } from '@headlessui/react';
@@ -10,10 +11,11 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Fragment, useEffect, useState } from 'react';
 import { components } from 'react-select';
+import { toast } from 'react-toastify';
 
 export default function Page() {
   const router = useRouter();
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = usePersistState([], 'category');
   const [skillData, setSkillData] = useState([]);
   const [skillQuery, setSkillQuery] = useState('');
   const [JoinConfirmModal, setJoinConfirmModal] = useState(false);
@@ -35,6 +37,10 @@ export default function Page() {
       },
     }),
   };
+
+  useEffect(() => {
+    setCategories([]);
+  }, []);
   const searchSkillApi = (search: any) => {
     let obj = {
       searchText: search,
@@ -74,8 +80,22 @@ export default function Page() {
       </components.DropdownIndicator>
     );
   };
-  console.log('joinNow', joinNow);
+  const onContinue = () => {
+    if (categories?.length === 0) {
+      toast.error('Select at least one category');
+    } else {
+      setJoinConfirmModal(true);
+    }
+  };
 
+  const confirmMeeting = () => {
+    if (joinNow === true) {
+      router?.push('/exam');
+    } else {
+      setCategories([]);
+      router?.push('/dashboard');
+    }
+  };
   return (
     <div>
       <div className="container mx-auto">
@@ -134,7 +154,7 @@ export default function Page() {
         </button>
 
         <button
-          onClick={() => setJoinConfirmModal(true)}
+          onClick={() => onContinue()}
           className={`mb-8 h-12  min-w-48 rounded-lg border border-meta-light-blue-2 bg-meta-blue-1 py-3 text-meta-light-blue-3 transition delay-150 duration-300 ease-in-out will-change-auto hover:bg-hiring-btn-gradient`}
         >
           <span
@@ -172,7 +192,7 @@ export default function Page() {
                         <input
                           type="checkbox"
                           id={'JoinNow'}
-                          checked={joinNow ? true : false}
+                          // checked={joinNow ? true : false}
                           onChange={() => setJoinNow(true)}
                         />
                       </label>
@@ -186,7 +206,7 @@ export default function Page() {
                         <input
                           type="checkbox"
                           id={'joinLater'}
-                          checked={joinNow ? false : true}
+                          // checked={joinNow ? false : true}
                           onChange={() => setJoinNow(false)}
                         />
                       </label>
@@ -195,7 +215,7 @@ export default function Page() {
                       <Button
                         title={TEXT?.DONE}
                         btnClass="h-[37px] mb-0"
-                        handleClick={() => router?.push(ROUTE?.EXAM)}
+                        handleClick={() => confirmMeeting()}
                       />
                     </div>
                   </div>
