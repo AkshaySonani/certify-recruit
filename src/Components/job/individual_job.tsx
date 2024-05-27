@@ -106,22 +106,29 @@ const IndividualJob = () => {
                   </Popover.Button>
                   <input
                     type="text"
-                    placeholder="Search..."
-                    onChange={(e) => setJobSearch(e?.target?.value)}
                     value={jobSearch}
-                    className="h-12 w-full rounded-lg border border-meta-light-blue-1  bg-transparent px-12 text-black outline-none transition"
+                    placeholder="Search..."
+                    onChange={(e) => {
+                      if (e?.target?.value === "") {
+                        getJobApi();
+                        setJobSearch(e?.target?.value);
+                      } else {
+                        setJobSearch(e?.target?.value);
+                      }
+                    }}
+                    className="h-12 w-full rounded-lg border border-meta-light-blue-1 bg-transparent px-12 text-black outline-none transition"
                   />
                 </Popover>
               </div>
               <div className="flex w-[150px] items-center sm:w-[260px]">
                 <div className="relative w-full">
                   <AutoComplete
+                    name={'city'}
+                    query={cityQuery}
                     value={cityFilter}
                     filterArr={cities}
                     className="py-[1px]"
-                    query={cityQuery}
                     setQuery={setCityQuery}
-                    name={'city'}
                     placeholder="Search city"
                     handleChange={(e: any) => setCityFilter(e)}
                   />
@@ -130,7 +137,8 @@ const IndividualJob = () => {
               <div>
                 <button
                   onClick={() => _applyFilter()}
-                  className="rounded-xl border border-meta-light-blue-2 bg-meta-light-blue-2 p-3 "
+                  disabled={ jobSearch || cityFilter ? false :true }
+                  className={`${jobSearch || cityFilter ? "bg-meta-light-blue-2" : "bg-gray-300"} rounded-xl border border-meta-light-blue-2 p-3`}
                 >
                   <Image
                     alt="date"

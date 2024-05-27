@@ -3,6 +3,7 @@ import { Job } from '@/models';
 import mongoose from 'mongoose';
 import { connect } from '@/db/mongodb';
 import { getServerSession } from 'next-auth';
+import { USER_ROLE } from '@/service/Helper';
 import { authOptions } from '@/service/AuthOptions';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -20,6 +21,9 @@ export const POST = async (req: NextRequest) => {
     await connect();
 
     let obj = {};
+    if (session?.user?.role === USER_ROLE?.EMPLOYEE) {
+      obj = { ...obj, company_id: new mongoose.Types.ObjectId(session?.user?._id) };
+    }
     if (city !== null) {
       obj = { ...obj, city: new mongoose.Types.ObjectId(city) };
     }
@@ -33,11 +37,22 @@ export const POST = async (req: NextRequest) => {
       };
     }
 
-    const results = await Job.find(obj)
+    let results
+    if(session?.user?.role === USER_ROLE?.EMPLOYEE){
+       results = await Job.find(obj)
       .populate({ path: 'city' })
       .populate({ path: 'state' })
       .populate({ path: 'skills' })
       .populate({ path: 'country' });
+    } else {
+      results = await Job.find(obj)
+      .populate({ path: 'city' })
+      .populate({ path: 'state' })
+      .populate({ path: 'skills' })
+      .populate({ path: 'country' });
+    }
+
+    
 
     return NextResponse.json({
       status: 200,

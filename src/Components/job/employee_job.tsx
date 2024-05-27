@@ -13,6 +13,7 @@ import DatePicker from 'react-multi-date-picker';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Menu, Popover, Transition } from '@headlessui/react';
+import moment from 'moment';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -156,8 +157,15 @@ const EmployeeJob = () => {
               <input
                 type="text"
                 value={jobSearch}
-                onChange={(e) => setJobSearch(e?.target?.value)}
                 placeholder="Job title search here..."
+                onChange={(e) => {
+                  if (e?.target?.value === "") {
+                    getJobApi();
+                    setJobSearch(e?.target?.value);
+                  } else {
+                    setJobSearch(e?.target?.value);
+                  }
+                }}
                 className="focus:border-primary active:border-primary h-12 w-full rounded-lg border border-meta-light-blue-1  bg-transparent px-12 text-black outline-none transition"
               />
               <div className="absolute right-3 top-[15px]">
@@ -176,8 +184,8 @@ const EmployeeJob = () => {
                   <input
                     type="text"
                     value={jobSearch}
-                    onChange={(e) => setJobSearch(e?.target?.value)}
                     placeholder="Job title search here..."
+                    onChange={(e) => setJobSearch(e?.target?.value)}
                     className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
                   />
                 </div>
@@ -187,12 +195,12 @@ const EmployeeJob = () => {
                   </label>
                   <div className="relative w-full">
                     <AutoComplete
+                      name={'city'}
+                      query={cityQuery}
                       value={cityFilter}
                       filterArr={cities}
                       className="py-[1px]"
-                      query={cityQuery}
                       setQuery={setCityQuery}
-                      name={'city'}
                       placeholder="Search city"
                       handleChange={(e: any) => setCityFilter(e)}
                     />
@@ -205,16 +213,16 @@ const EmployeeJob = () => {
                   <div className="flex  items-center">
                     <DatePicker
                       format="YYYY-MM-DD"
-                      containerStyle={{ width: '100%' }}
-                      onOpenPickNewDate={false}
                       value={date?.startDate}
+                      placeholder="Start date"
+                      onOpenPickNewDate={false}
+                      containerStyle={{ width: '100%' }}
                       onChange={(dt: any) => {
                         setDate({
                           ...date,
                           startDate: dt?.format('YYYY-MM-DD'),
                         });
                       }}
-                      placeholder="Start date"
                       style={{
                         height: 48,
                         width: '100%',
@@ -227,16 +235,16 @@ const EmployeeJob = () => {
                     <label className="mx-2">To</label>
                     <DatePicker
                       format="YYYY-MM-DD"
-                      containerStyle={{ width: '100%' }}
-                      onOpenPickNewDate={false}
                       value={date?.endDate}
+                      placeholder="Start date"
+                      onOpenPickNewDate={false}
+                      containerStyle={{ width: '100%' }}
                       onChange={(dt: any) => {
                         setDate({
                           ...date,
                           endDate: dt?.format('YYYY-MM-DD'),
                         });
                       }}
-                      placeholder="Start date"
                       style={{
                         height: 48,
                         width: '100%',
@@ -256,10 +264,10 @@ const EmployeeJob = () => {
                     >
                       <input
                         id={'default'}
-                        value={String(isDefault)}
-                        class="!h-4 !w-4"
                         type="checkbox"
                         name={'job_types'}
+                        className="!h-4 !w-4"
+                        value={String(isDefault)}
                         checked={isDefault ? true : false}
                         onChange={(e) => setIsDefault(e?.target?.checked)}
                       />
@@ -350,21 +358,22 @@ const EmployeeJob = () => {
                 placeholder="End date"
                 style={{
                   height: 48,
+                  marginTop: 0,
                   width: '100%',
-                  borderColor: '#DCE7FF',
                   borderRadius: 8,
                   paddingLeft: 10,
-                  marginTop: 0,
+                  borderColor: '#DCE7FF',
                 }}
               />
             </div>
           </div>
-          <div className="flex  w-1/3 max-w-[130px] items-center ">
+          <div className="flex  w-1/3 max-w-[130px] items-center">
             <Button
               title={'Job Search'}
-              btnClass="h-12 w-full !mb-0"
               handleClick={() => _applyFilter()}
               titleClass="flex justify-center text-sm font-medium text-white"
+              disabled={jobSearch || date?.startDate || date?.endDate ? false : true}
+              btnClass={`${jobSearch || date?.startDate || date?.endDate ? "" : "bg-gray-400 hover:bg-none"} h-12 w-full !mb-0 cursor-pointer`}
             />
           </div>
         </div>
@@ -392,12 +401,12 @@ const EmployeeJob = () => {
                           {list?.title}
                         </div>
                         <p className="ml-2 mt-1 text-base font-medium text-meta-light-blue-3">
-                          {TEXT?.TWO_WEEKS_AGO}
+                          {moment(list?.createdAt).fromNow()}
                         </p>
                       </div>
                       <div className="text-base font-medium text-meta-light-blue-3">
-                        {list?.city?.[0]?.name},
-                        {list?.state?.[0]?.name ?? 'Gujarat'},
+                        {list?.city?.[0]?.name},{" "}
+                        {list?.state?.[0]?.name ?? 'Gujarat'},{" "}
                         {list?.country?.[0]?.name ?? ''}
                       </div>
                     </div>

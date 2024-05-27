@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 import JobPostingFormMain from '@/Components/Job_posting/jobPostingFormMain';
 
 const Page = () => {

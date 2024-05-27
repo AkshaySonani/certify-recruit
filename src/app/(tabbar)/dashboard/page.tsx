@@ -178,7 +178,7 @@ const Page = (data: any) => {
             </div>
           )}
 
-          {percentage > 100 && !isSpinner && <CompleteProfile />}
+          {percentage < 100 && !isSpinner && <CompleteProfile />}
 
           {percentage >= 100 &&
             Array.from({ length: 3 }).map((_, index) => {

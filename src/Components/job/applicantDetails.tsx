@@ -1,21 +1,23 @@
 'use client';
-import Image from 'next/image';
-import React, { Fragment, useEffect, useState } from 'react';
-import Checkbox from '@/Components/Checkbox';
-import DatePicker from 'react-multi-date-picker';
-import { TEXT } from '@/service/Helper';
-import { Menu, Popover, Transition } from '@headlessui/react';
-import API from '@/service/ApiService';
-import { API_CONSTANT } from '@/constant/ApiConstant';
-import { APPLICANT_STATUS } from '@/constant/Enum';
-import { toast } from 'react-toastify';
 import moment from 'moment';
+import Image from 'next/image';
+import API from '@/service/ApiService';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
+import Checkbox from '@/Components/Checkbox';
+import { ROUTE, TEXT } from '@/service/Helper';
+import DatePicker from 'react-multi-date-picker';
+import { APPLICANT_STATUS } from '@/constant/Enum';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Menu, Popover, Transition } from '@headlessui/react';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
 
 function ApplicantDetails({ id, status }: any) {
+  const router = useRouter();
   const [data, setData] = useState<any>([]);
 
   const getJobApi = () => {
@@ -70,8 +72,11 @@ function ApplicantDetails({ id, status }: any) {
   return (
     <div>
       <div>
-        <div className="text-2xl font-semibold text-meta-purple-1">
-          {TEXT?.APPLICANT}
+        <div className="text-2xl flex items-center font-semibold text-meta-purple-1">
+          <div className='cursor-pointer' onClick={() => router?.push(ROUTE?.JOB)}>
+            <Image src={'/BackArrow.svg'} alt="date" width={20} height={20} />
+          </div>
+          <p className='ml-2'>{status}</p>
         </div>
         <div className="mb-10 mt-5 flex items-center justify-start gap-6">
           <div className="w-2/5 max-w-[400px]">
