@@ -39,6 +39,7 @@ export default function Page() {
   };
 
   useEffect(() => {
+    setCategories([]);
     if (examStatus === EXAM_STATUS?.STARTED) {
       router?.replace(ROUTE?.EXAM);
     }

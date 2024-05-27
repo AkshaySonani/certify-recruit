@@ -5,8 +5,7 @@ import { useReducer } from 'react';
 import { useRouter } from 'next/navigation';
 import { ROUTE } from '@/service/Helper';
 
-const ResultComp = ({ results }: any) => {
-  console.log('results', results);
+const ResultComp = ({ results, setResults }: any) => {
   const router = useRouter();
   return (
     <div>
@@ -48,7 +47,10 @@ const ResultComp = ({ results }: any) => {
           <Button
             title={'Back to dashboard'}
             btnClass="!h-[37px] !mb-0 !w-auto !px-6"
-            handleClick={() => router?.push(ROUTE?.DASHBOARD)}
+            handleClick={() => {
+              setResults(undefined);
+              router?.replace(ROUTE?.DASHBOARD);
+            }}
           />
         </div>
       </div>

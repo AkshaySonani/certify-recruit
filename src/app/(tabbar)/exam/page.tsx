@@ -10,37 +10,15 @@ import FinishExamDialog from '@/Components/exam/FinishExamDialog';
 import ResultComp from '@/Components/exam/ResultComp';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import API from '@/service/ApiService';
-
-const EXAM_DURATION = 1800;
-
-const useInterval = (callback: any, delay: any) => {
-  const savedCallback = useRef() as any;
-
-  // Remember the latest callback.
-  useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
-
-  // Set up the interval.
-  useEffect(() => {
-    function tick() {
-      savedCallback.current();
-    }
-    if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
-  }, [delay]);
-};
-
+import moment from 'moment';
 const Page = () => {
   const router = useRouter();
-  const [secondsRemaining, setSecondsRemaining] = usePersistState(
-    EXAM_DURATION,
-    'RemainingTime',
-  );
+  const intervalRef = useRef<any>(null);
+  const [secondsRemaining, setSecondsRemaining] = useState(30 * 60);
+  const [startTime, setStartTime] = usePersistState(Date.now(), 'startTime');
+  const [endTime, setEndTime] = usePersistState(30 * 60, 'endTime');
   const [examStatus, setExamStatus] = usePersistState(
-    EXAM_STATUS?.STOPPED,
+    EXAM_STATUS?.STARTED,
     'Status',
   );
   const [CurrentQuestion, setCurrentQuestion] = usePersistState(
@@ -56,33 +34,39 @@ const Page = () => {
     [],
     'questionSheet',
   );
-  const secondsToDisplay = secondsRemaining % 60;
+  const secondsToDisplay = Math.floor(secondsRemaining % 60);
   const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60;
-  const minutesToDisplay = minutesRemaining % 60;
+  const minutesToDisplay = Math.floor(secondsRemaining / 60);
   const hoursToDisplay = (minutesRemaining - minutesToDisplay) / 60;
   const twoDigits = (num: any) => String(num).padStart(2, '0');
-  useInterval(
-    () => {
-      if (questionSheet?.length !== 0) {
-        if (secondsRemaining > 0) {
-          setSecondsRemaining(secondsRemaining - 1);
-          setExamStatus(EXAM_STATUS?.STARTED);
-          setCurrentQuestion(CurrentQuestion);
-          setAnswerSheet(answerSheet);
-          setCurrentQuestion(CurrentQuestion);
+  useEffect(() => {
+    if (startTime) {
+      setExamStatus(EXAM_STATUS?.STARTED);
+      const elapsedTime = Math.floor((Date.now() - parseInt(startTime)) / 1000);
+      const newTime = endTime
+        ? parseInt(endTime) - elapsedTime
+        : 30 * 60 - elapsedTime;
+      setSecondsRemaining(newTime > 0 ? newTime : 0);
+    }
+    if (questionSheet?.length === 0) {
+      clearStorage();
+    }
+
+    // Start interval to update timer
+    intervalRef.current = setInterval(() => {
+      setSecondsRemaining((prevTime: any) => {
+        if (prevTime > 0) {
+          return prevTime - 1;
         } else {
           toast.error('Time is over');
-          setExamStatus(EXAM_STATUS.STOPPED);
-          setSecondsRemaining(EXAM_DURATION);
           handleFinishExam();
+          clearInterval(intervalRef.current);
+          return 0;
         }
-      }
-    },
-    1000,
-
-    // examStatus === EXAM_STATUS.STARTED ? 1000 : null,
-    // passing null stops the interval
-  );
+      });
+    }, 1000);
+    return () => clearInterval(intervalRef.current);
+  }, []);
 
   useEffect(() => {
     if (questionSheet?.length === 0) {
@@ -124,6 +108,10 @@ const Page = () => {
             };
           });
           setQuestionSheet(questionArr);
+          setExamStatus(EXAM_STATUS?.STARTED);
+          const newStartTime = Date.now();
+          setStartTime(newStartTime);
+          setEndTime(30 * 60);
         }
       })
       .catch((error) => {
@@ -132,11 +120,12 @@ const Page = () => {
   };
 
   const clearStorage = () => {
+    localStorage.removeItem('Exam:startTime');
+    localStorage.removeItem('Exam:endTime');
     setSelectedAnswer('');
     setExamStatus(EXAM_STATUS.STOPPED);
     setQuestionSheet([]);
     setCategories([]);
-    setSecondsRemaining(EXAM_DURATION);
     setCurrentQuestion(0);
     setAnswerSheet([]);
   };
@@ -379,7 +368,7 @@ const Page = () => {
                       {TEXT?.START_DATE_TIME}
                     </p>
                     <p className="text-sm font-medium text-meta-purple-1">
-                      2024-03-05 08:00:00
+                      {moment().toString()}
                     </p>
                   </div>
                 </div>
@@ -550,7 +539,7 @@ const Page = () => {
           </div>
         )
       ) : (
-        <ResultComp results={results} />
+        <ResultComp results={results} setResults={setResults} />
       )}
     </>
   );
