@@ -2,6 +2,7 @@
 import Button from '@/Components/Button';
 import MultipleSelectBox from '@/Components/MultipleSelectBox';
 import { API_CONSTANT } from '@/constant/ApiConstant';
+import { EXAM_STATUS } from '@/constant/Enum';
 import useDebounce from '@/hooks/useDebounce';
 import usePersistState from '@/hooks/usePersistState';
 import API from '@/service/ApiService';
@@ -16,19 +17,18 @@ import { toast } from 'react-toastify';
 export default function Page() {
   const router = useRouter();
   const [categories, setCategories] = usePersistState([], 'category');
+  const [examStatus] = usePersistState(EXAM_STATUS?.STOPPED, 'Status');
   const [skillData, setSkillData] = useState([]);
   const [skillQuery, setSkillQuery] = useState('');
   const [JoinConfirmModal, setJoinConfirmModal] = useState(false);
-  const [selectSkill, setSelectSkill] = useState<any>([]);
-  const [joinNow, setJoinNow] = useState(false);
+  const [allCategory, setAllCategory] = useState<any>([]);
+  const [joinNow, setJoinNow] = useState(true);
   const debouncedSearchSkill = useDebounce(skillQuery);
   const MultiboxStyle = {
     control: (base: any, state: any) => ({
       ...base,
       border: state.isFocused ? 1 : 1,
-      // This line disable the blue border
       boxShadow: state.isFocused ? 0 : 0,
-      // paddingLeft: '20px',
       paddingRight: '2px',
       paddingTop: '0px',
       paddingBottom: '0px',
@@ -39,8 +39,11 @@ export default function Page() {
   };
 
   useEffect(() => {
-    setCategories([]);
+    if (examStatus === EXAM_STATUS?.STARTED) {
+      router?.replace(ROUTE?.EXAM);
+    }
   }, []);
+
   const searchSkillApi = (search: any) => {
     let obj = {
       searchText: search,
@@ -60,6 +63,7 @@ export default function Page() {
         console.log('error', error);
       });
   };
+
   const onSearchSkill = (search: any) => {
     setSkillQuery(search);
   };
@@ -116,20 +120,20 @@ export default function Page() {
                 options={skillData}
                 style={MultiboxStyle}
                 placeholder="Search Categories"
-                value={categories}
+                value={allCategory}
                 onKeyDown={(e: any) => onSearchSkill(e)}
                 className="w-full !border-meta-light-blue-1"
-                handleChange={(option: any) => setCategories(option)}
+                handleChange={(option: any) => setAllCategory(option)}
                 components={{ Placeholder, DropdownIndicator }}
               />
             </div>
           </div>
           <div className="mt-5 flex w-full flex-wrap items-start justify-center gap-4 text-start sm:flex-nowrap">
-            {categories?.map((ele: any, i: any) => {
+            {allCategory?.map((ele: any, i: any) => {
               return (
                 <div
-                  onClick={() => setSelectSkill([...selectSkill, ele])}
-                  className={`${selectSkill?.includes(ele) ? 'border border-meta-blue-1' : ''} flex w-1/4 items-center gap-2 rounded-xl  bg-meta-light-blue-1 px-3 py-5`}
+                  onClick={() => setCategories([...categories, ele])}
+                  className={`${categories?.includes(ele) ? 'border border-meta-blue-1' : ''} flex w-1/4 items-center gap-2 rounded-xl  bg-meta-light-blue-1 px-3 py-5`}
                 >
                   <Image
                     alt="icon"
@@ -137,7 +141,7 @@ export default function Page() {
                     height={20}
                     src={'/Individual.svg'}
                   />
-                  <div className="   text-meta-blue-1">{ele?.label}</div>
+                  <div className="text-meta-blue-1">{ele?.label}</div>
                 </div>
               );
             })}
@@ -147,7 +151,7 @@ export default function Page() {
       <div className={`"w-full mt-20  flex  items-end justify-between`}>
         <button
           type="button"
-          // onClick={handlePrevious}
+          onClick={() => router?.back()}
           className="mb-8 h-12 min-w-full rounded-lg border-2 border-meta-light-blue-1 text-base font-medium text-meta-light-blue-3 sm:mb-8 sm:min-w-48"
         >
           {TEXT?.BACK}
@@ -192,7 +196,8 @@ export default function Page() {
                         <input
                           type="checkbox"
                           id={'JoinNow'}
-                          // checked={joinNow ? true : false}
+                          value={String(joinNow)}
+                          checked={joinNow ? true : false}
                           onChange={() => setJoinNow(true)}
                         />
                       </label>
@@ -206,7 +211,8 @@ export default function Page() {
                         <input
                           type="checkbox"
                           id={'joinLater'}
-                          // checked={joinNow ? false : true}
+                          value={String(joinNow)}
+                          checked={joinNow ? false : true}
                           onChange={() => setJoinNow(false)}
                         />
                       </label>

@@ -2,20 +2,16 @@
 import Image from 'next/image';
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { TEXT } from '@/service/Helper';
+import { ROUTE, TEXT } from '@/service/Helper';
 import { toast } from 'react-toastify';
 import usePersistState from '@/hooks/usePersistState';
-import { QUESTION_STATUS } from '@/constant/Enum';
+import { EXAM_STATUS, QUESTION_STATUS } from '@/constant/Enum';
 import FinishExamDialog from '@/Components/exam/FinishExamDialog';
 import ResultComp from '@/Components/exam/ResultComp';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import API from '@/service/ApiService';
 
 const EXAM_DURATION = 1800;
-const EXAM_STATUS = {
-  STARTED: 'Started',
-  STOPPED: 'Stopped',
-};
 
 const useInterval = (callback: any, delay: any) => {
   const savedCallback = useRef() as any;
@@ -44,7 +40,7 @@ const Page = () => {
     'RemainingTime',
   );
   const [examStatus, setExamStatus] = usePersistState(
-    EXAM_STATUS?.STARTED,
+    EXAM_STATUS?.STOPPED,
     'Status',
   );
   const [CurrentQuestion, setCurrentQuestion] = usePersistState(
@@ -64,99 +60,39 @@ const Page = () => {
   const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60;
   const minutesToDisplay = minutesRemaining % 60;
   const hoursToDisplay = (minutesRemaining - minutesToDisplay) / 60;
-
   const twoDigits = (num: any) => String(num).padStart(2, '0');
   useInterval(
     () => {
-      if (secondsRemaining > 0) {
-        setSecondsRemaining(secondsRemaining - 1);
-        setCurrentQuestion(CurrentQuestion);
-        setAnswerSheet(answerSheet);
-        setCurrentQuestion(CurrentQuestion);
-      } else {
-        toast.error('Time is over');
-        setExamStatus(EXAM_STATUS.STOPPED);
-        setSelectedAnswer('');
-        setQuestionSheet([]);
-        setCategories([]);
-        setCurrentQuestion(0);
-        setAnswerSheet([]);
+      if (questionSheet?.length !== 0) {
+        if (secondsRemaining > 0) {
+          setSecondsRemaining(secondsRemaining - 1);
+          setExamStatus(EXAM_STATUS?.STARTED);
+          setCurrentQuestion(CurrentQuestion);
+          setAnswerSheet(answerSheet);
+          setCurrentQuestion(CurrentQuestion);
+        } else {
+          toast.error('Time is over');
+          setExamStatus(EXAM_STATUS.STOPPED);
+          setSecondsRemaining(EXAM_DURATION);
+          handleFinishExam();
+        }
       }
     },
-    examStatus === EXAM_STATUS.STARTED ? 1000 : null,
+    1000,
+
+    // examStatus === EXAM_STATUS.STARTED ? 1000 : null,
     // passing null stops the interval
   );
-
-  const handleNext = () => {
-    if (CurrentQuestion + 1 !== questionSheet?.length) {
-      setCurrentQuestion(CurrentQuestion + 1);
-      if (
-        answerSheet.some(
-          (element: any) =>
-            element._id === updatedQuestions[CurrentQuestion]?._id,
-        )
-      ) {
-        const updatedElements = answerSheet.map((element: any) => {
-          if (element._id === updatedQuestions[CurrentQuestion]?._id) {
-            return {
-              ...element,
-              status: selectedAnswer
-                ? selectedAnswer?.status
-                : QUESTION_STATUS[1],
-              ans: selectedAnswer?.ans ? selectedAnswer?.ans : '',
-            };
-          }
-          return element;
-        });
-        questionSheet[CurrentQuestion].status = selectedAnswer?.ans;
-        setAnswerSheet(updatedElements);
-      } else {
-        if (selectedAnswer == '') {
-          questionSheet[CurrentQuestion].status = QUESTION_STATUS[1];
-          setAnswerSheet([
-            ...answerSheet,
-            {
-              _id: questionSheet[CurrentQuestion]?._id,
-              ans: '',
-              status: QUESTION_STATUS[1],
-            },
-          ]);
-        } else {
-          questionSheet[CurrentQuestion].status = selectedAnswer?.status;
-          setAnswerSheet([...answerSheet, selectedAnswer]);
-        }
-      }
-
-      setSelectedAnswer('');
-    } else {
-      setFinishExamModal(true);
-    }
-  };
-
-  const getQuestionSheet = () => {
-    const obj = {
-      categoryIds: categories?.map((el: any) => el?._id),
-    };
-    API.post(API_CONSTANT?.QUESTION, obj)
-      .then((res) => {
-        if (res?.data?.status === 200) {
-          let questionArr = res?.data?.data?.map((list: any) => {
-            return {
-              ...list,
-              status: QUESTION_STATUS[0],
-            };
-          });
-          setQuestionSheet(questionArr);
-        }
-      })
-      .catch((error) => {
-        toast.error(error || 'Something want wrong');
-      });
-  };
 
   useEffect(() => {
     if (questionSheet?.length === 0) {
       getQuestionSheet();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (categories?.length === 0 && results === undefined) {
+      router.replace(ROUTE?.CERTIFICATION);
     }
   }, []);
 
@@ -174,16 +110,58 @@ const Page = () => {
       ? compareArrays(questionSheet, answerSheet)
       : questionSheet;
 
+  const getQuestionSheet = () => {
+    const obj = {
+      categoryIds: categories?.map((el: any) => el?._id),
+    };
+    API.post(API_CONSTANT?.QUESTION, obj)
+      .then((res: any) => {
+        if (res?.data?.status === 200) {
+          let questionArr = res?.data?.data?.map((list: any) => {
+            return {
+              ...list,
+              status: QUESTION_STATUS[0],
+            };
+          });
+          setQuestionSheet(questionArr);
+        }
+      })
+      .catch((error) => {
+        toast.error(error || 'Something want wrong');
+      });
+  };
+
+  const clearStorage = () => {
+    setSelectedAnswer('');
+    setExamStatus(EXAM_STATUS.STOPPED);
+    setQuestionSheet([]);
+    setCategories([]);
+    setSecondsRemaining(EXAM_DURATION);
+    setCurrentQuestion(0);
+    setAnswerSheet([]);
+  };
+
   const handleAnswer = (e: any, key: any) => {
-    if (answerSheet[CurrentQuestion]) {
-      answerSheet[CurrentQuestion].ans =
-        updatedQuestions[CurrentQuestion]?.option?.[key];
+    if (e?.target?.checked === true) {
+      if (answerSheet[CurrentQuestion]) {
+        answerSheet[CurrentQuestion].ans =
+          updatedQuestions[CurrentQuestion]?.option?.[key];
+      }
+      setSelectedAnswer({
+        _id: updatedQuestions[CurrentQuestion]?._id,
+        ans: updatedQuestions[CurrentQuestion]?.option?.[key],
+        status: QUESTION_STATUS[2],
+      });
+    } else {
+      if (answerSheet[CurrentQuestion]) {
+        answerSheet[CurrentQuestion].ans = '';
+      }
+      setSelectedAnswer({
+        _id: updatedQuestions[CurrentQuestion]?._id,
+        ans: '',
+        status: QUESTION_STATUS[1],
+      });
     }
-    setSelectedAnswer({
-      _id: updatedQuestions[CurrentQuestion]?._id,
-      ans: updatedQuestions[CurrentQuestion]?.option?.[key],
-      status: QUESTION_STATUS[2],
-    });
   };
 
   const handleFinishExam = () => {
@@ -191,26 +169,137 @@ const Page = () => {
       answers: answerSheet.map(({ _id, ans }: any) => ({ _id, ans })),
     };
     API.post(API_CONSTANT?.CHECK_ANSWER, obj)
-      .then((res) => {
+      .then((res: any) => {
         if (res?.data?.status === 200) {
           setResults(res?.data?.data);
+          clearStorage();
         }
       })
-      .catch((error) => {
+      .catch((error: any) => {
         toast.error(error || 'Something want wrong');
       });
   };
+
   const handleBackToExam = () => {
     setFinishExamModal(false);
     setCurrentQuestion(CurrentQuestion);
   };
+
+  const handleNext = () => {
+    if (
+      answerSheet.some(
+        (element: any) =>
+          element._id === updatedQuestions[CurrentQuestion]?._id,
+      )
+    ) {
+      const updatedElements = answerSheet.map((element: any) => {
+        if (element._id === updatedQuestions[CurrentQuestion]?._id) {
+          return {
+            ...element,
+            status: selectedAnswer
+              ? selectedAnswer?.status
+              : answerSheet[CurrentQuestion]?.status,
+            ans: selectedAnswer?.ans
+              ? selectedAnswer?.ans
+              : answerSheet[CurrentQuestion]?.ans,
+          };
+        }
+        return element;
+      });
+      questionSheet[CurrentQuestion].status = selectedAnswer
+        ? selectedAnswer?.status
+        : answerSheet[CurrentQuestion]?.status;
+      setAnswerSheet(updatedElements);
+    } else {
+      if (selectedAnswer == '') {
+        questionSheet[CurrentQuestion].status = QUESTION_STATUS[1];
+        setAnswerSheet([
+          ...answerSheet,
+          {
+            _id: questionSheet[CurrentQuestion]?._id,
+            ans: answerSheet[CurrentQuestion]?.ans || '',
+            status: QUESTION_STATUS[1],
+          },
+        ]);
+      } else {
+        questionSheet[CurrentQuestion].status = selectedAnswer?.status;
+        setAnswerSheet([...answerSheet, selectedAnswer]);
+      }
+    }
+    setSelectedAnswer('');
+    if (CurrentQuestion + 1 !== questionSheet?.length) {
+      setCurrentQuestion(CurrentQuestion + 1);
+    } else {
+      setFinishExamModal(true);
+    }
+  };
+
+  const handleMarkedForReview = () => {
+    if (
+      answerSheet.some(
+        (element: any) =>
+          element._id === updatedQuestions[CurrentQuestion]?._id,
+      )
+    ) {
+      const updatedElements = answerSheet.map((element: any) => {
+        if (element._id === updatedQuestions[CurrentQuestion]?._id) {
+          return {
+            ...element,
+            status:
+              selectedAnswer?.status?.status == 'Answered'
+                ? QUESTION_STATUS[4]
+                : QUESTION_STATUS[3],
+            ans: selectedAnswer?.ans
+              ? selectedAnswer?.ans
+              : answerSheet[CurrentQuestion]?.ans,
+          };
+        }
+        return element;
+      });
+      questionSheet[CurrentQuestion].status =
+        selectedAnswer?.status?.status == 'Answered';
+      setAnswerSheet(updatedElements);
+    } else {
+      if (selectedAnswer === '') {
+        questionSheet[CurrentQuestion].status = QUESTION_STATUS[3];
+        setAnswerSheet([
+          ...answerSheet,
+          {
+            _id: questionSheet[CurrentQuestion]?._id,
+            ans: answerSheet[CurrentQuestion]?.ans || '',
+            status: QUESTION_STATUS[3],
+          },
+        ]);
+      } else {
+        questionSheet[CurrentQuestion].status = QUESTION_STATUS[4];
+        setAnswerSheet([
+          ...answerSheet,
+          {
+            _id: updatedQuestions[CurrentQuestion]?._id,
+            ans: updatedQuestions[CurrentQuestion]?.ans,
+            status: QUESTION_STATUS[4],
+          },
+        ]);
+      }
+    }
+    setSelectedAnswer('');
+    if (CurrentQuestion + 1 !== questionSheet?.length) {
+      setCurrentQuestion(CurrentQuestion + 1);
+    }
+  };
+
   return (
     <>
       {results === undefined ? (
         questionSheet?.length !== 0 && (
           <div className="m-auto w-10/12 max-w-7xl">
             <div className="flex justify-between ">
-              {/* <Image src={'/MainLogo.svg'} alt="MainLogo" width={199} height={33} /> */}
+              <Image
+                src={'/MainLogo.svg'}
+                alt="MainLogo"
+                width={199}
+                height={33}
+              />
               <div>
                 <p className="text-sm font-medium text-meta-purple-1">
                   {TEXT?.TIME_REMAINING}
@@ -349,7 +438,8 @@ const Page = () => {
                   {updatedQuestions.map((list: any, i: any) => {
                     return (
                       <div
-                        className={`flex h-8 w-8 items-center justify-center rounded-[4px]  text-center  ${list?.status?.color} text-white `}
+                        className={`flex h-8 w-8 items-center justify-center rounded-[4px]  text-center  ${list?.status?.color} 
+                        ${list?.status?.status == 'Default' ? 'text-meta-purple-1' : 'text-white'}  `}
                       >
                         <p>{`${i > 10 ? '0' : ''} ${i + 1} `}</p>
                       </div>
@@ -371,8 +461,16 @@ const Page = () => {
                     Object?.keys(
                       updatedQuestions[CurrentQuestion]?.option as any,
                     )?.map((key: any) => {
+                      const check =
+                        updatedQuestions[CurrentQuestion]?.option?.[key] ===
+                          selectedAnswer?.ans ||
+                        updatedQuestions[CurrentQuestion]?.option?.[key] ===
+                          answerSheet?.[CurrentQuestion]?.ans;
+
                       return (
-                        <div className="my-2 w-full rounded-lg border border-meta-light-blue-1 p-3">
+                        <div
+                          className={`my-2 w-full rounded-lg border  p-3 ${check === true ? 'border-meta-blue-2' : 'border-meta-light-blue-1'} `}
+                        >
                           <label
                             htmlFor={key}
                             className={`flex cursor-pointer select-none items-center justify-between `}
@@ -390,12 +488,10 @@ const Page = () => {
                             <input
                               type="checkbox"
                               id={key}
-                              value={answerSheet[CurrentQuestion]?.ans ?? ''}
-                              checked={
-                                updatedQuestions[CurrentQuestion]?.option?.[
-                                  key
-                                ] === answerSheet[CurrentQuestion]?.ans
+                              value={
+                                updatedQuestions[CurrentQuestion]?.option?.[key]
                               }
+                              checked={check}
                               onChange={(e) => handleAnswer(e, key)}
                             />
                           </label>
@@ -421,10 +517,12 @@ const Page = () => {
                 )}
                 <button
                   type="button"
-                  // onClick={handlePrevious}
+                  onClick={handleMarkedForReview}
                   className="mb-8 h-12 min-w-full rounded-lg  bg-meta-light-blue-1 px-3 text-base font-medium text-meta-light-blue-3 sm:mb-8 sm:min-w-48"
                 >
-                  Answered & Marked for Review
+                  {selectedAnswer?.ans || answerSheet?.[CurrentQuestion]?.ans
+                    ? 'Answered & Marked for Review'
+                    : 'Marked for Review'}
                 </button>
               </div>
               <button
@@ -454,7 +552,6 @@ const Page = () => {
       ) : (
         <ResultComp results={results} />
       )}
-      //
     </>
   );
 };

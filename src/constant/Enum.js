@@ -64,18 +64,21 @@ const COMPLETION_DATE = {
 const JOB_STATUS = ['PENDING', 'ACTIVE', 'CLOSED'];
 
 const APPLICANT_STATUS = ['Applicants', 'Awaiting', 'Contacting', 'Hired'];
+const EXAM_STATUS = {
+  STARTED: 'Started',
+  STOPPED: 'Stopped',
+};
 
 const QUESTION_STATUS = [
-  { id: 1, status: 'Default', color: 'bg-meta-gray-2' },
-  { id: 2, status: 'Not Answered', color: 'bg-meta-brown-1' },
-  { id: 3, status: 'Answered', color: 'bg-meta-green-1' },
-  { id: 4, status: 'Marked for Review', color: 'bg-meta-red-1' },
-
+  { id: 1, status: 'Default', color: 'bg-meta-gray-2' }, //0
+  { id: 2, status: 'Not Answered', color: 'bg-meta-brown-1' }, //1
+  { id: 3, status: 'Answered', color: 'bg-meta-green-1' }, //2
+  { id: 4, status: 'Marked for Review', color: 'bg-meta-red-1' }, //3
   {
     id: 5,
     status: 'Answered & Marked for Review ',
     color: 'bg-meta-purple-2',
-  },
+  }, //4
 ];
 export {
   PROFICIENCY,
@@ -88,4 +91,5 @@ export {
   JOB_STATUS,
   APPLICANT_STATUS,
   QUESTION_STATUS,
+  EXAM_STATUS,
 };

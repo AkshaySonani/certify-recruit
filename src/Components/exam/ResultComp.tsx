@@ -15,16 +15,27 @@ const ResultComp = ({ results }: any) => {
           <Image src={'/MainLogo.svg'} alt="MainLogo" width={334} height={56} />
         </div>
         <div className="flex justify-center ">
-          <Image
-            src={'/exam/examPassLogo.svg'}
-            alt="MainLogo"
-            width={200}
-            height={221}
-          />
+          {results?.pass === true ? (
+            <Image
+              src={'/exam/examPassLogo.svg'}
+              alt="MainLogo"
+              width={200}
+              height={221}
+            />
+          ) : (
+            <Image
+              src={'/exam/examFail.svg'}
+              alt="MainLogo"
+              width={200}
+              height={221}
+            />
+          )}
         </div>
         <div className="mt-10 w-full">
           <p className="text-center text-5xl text-meta-light-blue-3">
-            Congratulations
+            {results?.pass === true
+              ? 'Congratulations'
+              : 'Batter luck next time'}
           </p>
           <p className="m-auto mt-5 w-[70%] text-center text-lg text-meta-light-blue-3">
             Lorem Ipsum is simply dummy text of the printing and typesetting

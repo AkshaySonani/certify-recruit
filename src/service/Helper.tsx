@@ -30,6 +30,7 @@ const ROUTE = {
   JOB_HIRED: '/job/hired',
   CHOOSE_CATEGORY: '/certification/chooseCategories',
   EXAM: '/exam',
+  CERTIFICATION: '/certification',
 };
 
 const TEXT = {
