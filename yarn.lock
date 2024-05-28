@@ -5264,6 +5264,11 @@ react-onclickoutside@^6.13.0:
   resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.13.0.tgz#e165ea4e5157f3da94f4376a3ab3e22a565f4ffc"
   integrity sha512-ty8So6tcUpIb+ZE+1HAhbLROvAIJYyJe/1vRrrcmW+jLsaM+/powDRqxzo6hSh9CuRZGSL1Q8mvcF5WRD93a0A==
 
+react-orgchart@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-orgchart/-/react-orgchart-1.0.5.tgz#49da6714ed12926315c79744cd7f8bed18f1e915"
+  integrity sha512-9BseBKJSy028iyDdCb298YBGNp5VzOUWtYzmvBjE1rPWCGTpdYBZWjm9je+7ikR4HZraamdY9ZdUWlq6fKx/Zg==
+
 react-quill@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-quill/-/react-quill-2.0.0.tgz#67a0100f58f96a246af240c9fa6841b363b3e017"

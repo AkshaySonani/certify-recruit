@@ -1,70 +1,91 @@
 'use client';
 import Image from 'next/image';
+import { TEXT } from '@/service/Helper';
 import Select from '@/Components/Select';
+import Button from '@/Components/Button';
 import Checkbox from '@/Components/Checkbox';
 import React, { useState, Fragment } from 'react';
 import { Dialog, Menu, Popover, Switch, Transition } from '@headlessui/react';
-import { TEXT } from '@/service/Helper';
 
 const Page = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
   const SelectOption = [
     { label: 'Admin', value: 'admin' },
-    { label: 'Employee', value: 'employee' },
     { label: 'Role1', value: 'Role1' },
+    { label: 'Employee', value: 'employee' },
   ];
+
   const tableData = [
     {
+      id: 1,
       name: 'Kate Tanner',
       Email: 'UI/UX Designer',
       Role: '6+ years',
       Status: 'Available',
     },
     {
+      id: 2,
       name: 'April Curtis',
       Email: 'UI/UX Designer',
       Role: '5.5+ years',
       Status: 'Hired',
     },
     {
+      id: 3,
       name: 'Sledge Hammer',
       Email: 'UI/UX Designer',
       Role: '5.5+ years',
       Status: 'Available',
     },
     {
+      id: 4,
       name: 'B.A. Baracus',
       Email: 'UI/UX Designer',
       Role: '5+ years',
       Status: 'Available',
     },
     {
+      id: 5,
       name: 'Mike Torello',
       Email: 'UI/UX Designer',
       Role: '4+ years',
       Status: 'Available',
     },
     {
+      id: 6,
       name: 'Dori Doreau',
       Email: 'UI/UX Designer',
       Role: '4+ years',
       Status: 'Hired',
     },
     {
+      id: 7,
       name: 'Murdock',
       Email: 'UI/UX Designer',
       Role: '6+ years',
       Status: 'Available',
     },
     {
+      id: 8,
       name: 'Lynn Tanner',
       Email: 'UI/UX Designer',
       Role: '5+ years',
       Status: 'Hired',
     },
   ];
-  const [enabled, setEnabled] = useState(false);
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [rowStates, setRowStates] = useState({});
+  const [searchText, setSearchText] = useState('');
+  const [selectedRole, setSelectedRole] = useState('');
+
+  const toggleRow = (id) => {
+    setRowStates((prevRowStates) => ({
+      ...prevRowStates,
+      [id]: !prevRowStates[id],
+    }));
+  };
 
   return (
     <div>
@@ -82,8 +103,10 @@ const Page = () => {
             </Popover.Button>
             <input
               type="text"
+              value={searchText}
               placeholder="Job title"
-              className="border-stroke focus:border-primary active:border-primary h-12 w-full rounded-lg border-2 bg-transparent px-12 py-3 text-black outline-none transition"
+              onChange={(event) => setSearchText(event?.target?.value)}
+              className="border-stroke active:border-primary h-12 w-full rounded-lg border-2 bg-transparent px-12 py-3 text-black outline-none transition focus:border-meta-light-blue-1"
             />
 
             <Popover.Panel className="absolute z-10 mt-2 w-full rounded-xl border border-meta-light-blue-1 bg-white p-4 shadow-xl">
@@ -94,7 +117,7 @@ const Page = () => {
                 <input
                   type="text"
                   placeholder="Job title search here..."
-                  className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+                  className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:outline-meta-light-blue-1"
                 />
               </div>
               <div className="mt-4 w-full">
@@ -104,7 +127,7 @@ const Page = () => {
                 <input
                   type="text"
                   placeholder="Type location here..."
-                  className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+                  className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:outline-meta-light-blue-1"
                 />
               </div>
 
@@ -126,24 +149,22 @@ const Page = () => {
             </Popover.Panel>
           </Popover>
         </div>
-        <div className="flex w-1/3 items-center lg:w-2/4">
-          <div className="rounded-lg bg-meta-light-blue-2 p-2">
+        <div className="flex w-1/3 cursor-pointer items-center lg:w-2/4">
+          <div className="rounded-lg bg-meta-light-blue-2 p-3">
             <Image
               alt="date"
-              width={19}
-              height={19}
+              width={20}
+              height={20}
               src={'/dashboard/search.svg'}
             />
           </div>
         </div>
-        <button
-          onClick={() => setIsOpen(true)}
-          className="min-w-50 ml-5 h-12 w-full  max-w-64 rounded-xl border border-meta-light-blue-2 bg-meta-blue-1"
-        >
-          <span className="flex justify-center text-sm font-medium text-white">
-            {TEXT?.ADD_USER}
-          </span>
-        </button>
+        <Button
+          title={TEXT?.ADD_USER}
+          handleClick={() => setIsOpen(true)}
+          titleClass="flex justify-center text-sm font-medium text-white"
+          btnClass="!mb-0 min-w-52 max-w-40 mt-4 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-meta-blue-1"
+        />
       </div>
 
       <div>
@@ -176,6 +197,7 @@ const Page = () => {
           </thead>
           <tbody>
             {tableData.map((item) => {
+              const isEnabled = rowStates[item?.id] || false;
               return (
                 <tr>
                   <td className="px-6 py-4 text-gray-500">
@@ -213,7 +235,7 @@ const Page = () => {
                           item.Status === 'Hired'
                             ? 'text-meta-red-1'
                             : 'text-meta-green-1'
-                        }  `}
+                        }`}
                       >
                         {item.Status}
                       </div>
@@ -222,16 +244,16 @@ const Page = () => {
                   <td className="px-6 py-4 text-gray-500">
                     <div className="flex justify-end">
                       <Switch
-                        checked={enabled}
-                        onChange={setEnabled}
+                        checked={isEnabled}
+                        onChange={() => toggleRow(item.id)}
                         className={`${
-                          enabled ? 'bg-gray-100' : 'bg-green-100'
-                        } relative inline-flex h-6 w-12 items-center rounded-full`}
+                          isEnabled ? 'bg-gray-100' : 'bg-green-100'
+                        } relative inline-flex h-6 w-[60px] items-center rounded-full`}
                       >
                         <span className="sr-only">Enable notifications</span>
                         <span
                           className={`${
-                            enabled ? 'translate-x-6' : 'translate-x-1'
+                            isEnabled ? 'translate-x-6' : 'translate-x-1'
                           } inline-block h-4 w-4 transform rounded-full bg-blue-600 transition`}
                         />
                       </Switch>
@@ -239,7 +261,7 @@ const Page = () => {
                         alt="Icon"
                         width={21}
                         height={21}
-                        className="mx-4"
+                        className="mx-4 cursor-pointer"
                         src={'/dashboard/EditIcon.svg'}
                       />
                     </div>
@@ -279,13 +301,13 @@ const Page = () => {
                   <Dialog.Panel className="w-full max-w-md transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
                     <Dialog.Title
                       as="h3"
-                      className=" border-b-default-1 relative flex items-center justify-center border-meta-light-blue-1 p-6 text-xl font-semibold leading-6 text-meta-purple-1"
+                      className="border-b-default-1 relative flex items-center justify-center border-meta-light-blue-1 p-6 pb-0 text-xl font-semibold leading-6 text-meta-purple-1"
                     >
                       {TEXT?.ADD_USER}
                     </Dialog.Title>
                     <div
                       onClick={() => setIsOpen(false)}
-                      className="absolute right-1 top-2 cursor-pointer p-2"
+                      className="absolute right-1 top-2 cursor-pointer p-2 pr-3"
                     >
                       <Image
                         alt="date"
@@ -298,15 +320,23 @@ const Page = () => {
                       <div>
                         <input
                           type="text"
+                          value={name}
                           placeholder="Name"
-                          className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+                          onChange={(event: any) =>
+                            setName(event?.target?.value)
+                          }
+                          className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:outline-meta-light-blue-1"
                         />
                       </div>
                       <div className="mt-3">
                         <input
                           type="text"
+                          value={email}
                           placeholder="Email"
-                          className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3"
+                          onChange={(event: any) =>
+                            setEmail(event?.target?.value)
+                          }
+                          className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:outline-meta-light-blue-1"
                         />
                       </div>
                       <div className="mt-3 w-full">
@@ -314,13 +344,15 @@ const Page = () => {
                           as="div"
                           className="relative z-[1] inline-block w-full text-left"
                         >
-                          <Menu.Button className="mt-1 inline-flex w-full items-center justify-between rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3">
-                            {TEXT?.ROLE}
-                            <div>
+                          <Menu.Button className="mt-1 inline-flex w-full items-center justify-between rounded-lg border border-meta-light-blue-1 p-3 focus:outline-meta-light-blue-1">
+                            {selectedRole?.label
+                              ? selectedRole?.label
+                              : 'Select role'}
+                            <div className="flex w-max items-center justify-end">
                               <Image
                                 alt="Icon"
-                                width={14}
-                                height={14}
+                                width={18}
+                                height={18}
                                 src={'/dashboard/SelectDown.svg'}
                               />
                             </div>
@@ -337,11 +369,14 @@ const Page = () => {
                           >
                             <Menu.Items className="absolute right-0 mt-2 w-full divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                               <div className="px-1 py-1">
-                                {SelectOption?.map((list) => {
+                                {SelectOption?.map((list: any) => {
                                   return (
                                     <Menu.Item>
                                       {({ active }) => (
-                                        <div className="flex w-full items-center justify-between">
+                                        <div
+                                          onClick={() => setSelectedRole(list)}
+                                          className="flex w-full items-center justify-between"
+                                        >
                                           <button
                                             className={`${
                                               active ? '' : 'text-gray-900'
@@ -351,11 +386,9 @@ const Page = () => {
                                           </button>
                                           <div>
                                             <Checkbox
-                                              checked={active ? true : false}
                                               value={list?.value}
-                                              className={
-                                                'text-base font-medium text-meta-light-blue-3'
-                                              }
+                                              checked={active ? true : false}
+                                              className="text-base font-medium text-meta-light-blue-3"
                                             />
                                           </div>
                                         </div>
@@ -368,14 +401,12 @@ const Page = () => {
                           </Transition>
                         </Menu>
                       </div>
-                      <button
-                        onClick={() => setIsOpen(false)}
-                        className="mt-4 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-meta-blue-1"
-                      >
-                        <span className="flex justify-center text-sm font-medium text-white">
-                          {TEXT?.ADD_USER}
-                        </span>
-                      </button>
+                      <Button
+                        title={TEXT?.ADD_USER}
+                        handleClick={() => setIsOpen(false)}
+                        titleClass="flex justify-center text-sm font-medium text-white"
+                        btnClass="!mb-0 mt-4 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-meta-blue-1"
+                      />
                     </div>
                   </Dialog.Panel>
                 </Transition.Child>

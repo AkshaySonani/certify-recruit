@@ -32,6 +32,7 @@
     "react-dom": "^18",
     "react-dropzone": "^14.2.3",
     "react-multi-date-picker": "^4.4.1",
+    "react-orgchart": "^1.0.5",
     "react-quill": "^2.0.0",
     "react-select": "^5.8.0",
     "react-toastify": "^10.0.5",

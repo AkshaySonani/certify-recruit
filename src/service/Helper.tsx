@@ -278,6 +278,16 @@ const SIDE_BAR_DATA = {
       icon: Icons.Job,
     },
     {
+      path: 'users',
+      title: 'Users',
+      icon: Icons.Job,
+    },
+    {
+      icon: Icons.Job,
+      path: 'earn_badge',
+      title: 'Company info',
+    },
+    {
       path: 'pricing',
       title: 'Pricing',
       icon: Icons.Pricing,
