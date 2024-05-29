@@ -5,7 +5,7 @@ import { TEXT } from '@/service/Helper';
 import { Menu, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import { Fragment } from 'react';
-import ApexCharts from 'apexcharts';
+import ReactApexChart from 'react-apexcharts';
 
 const data = [
   { no: 1, week: 'Monday', score: '08/10', time: '4:30', status: 'Complete' },
@@ -81,14 +81,13 @@ const TopRankData = [
 
 const series = [
   {
-    name: 'Desktops',
-    data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
+    name: 'Rank',
+    data: [10, 5, 0, 1, 7, 4, 6],
   },
 ];
 
 const options = {
   chart: {
-    height: 350,
     type: 'line',
     zoom: {
       enabled: false,
@@ -100,8 +99,11 @@ const options = {
   stroke: {
     curve: 'straight',
   },
+  toolbar: {
+    show: false, // Disable the toolbar
+  },
   title: {
-    text: 'Product Trends by Month',
+    text: 'Weekly Ranking ',
     align: 'left',
   },
   grid: {
@@ -111,7 +113,7 @@ const options = {
     },
   },
   xaxis: {
-    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+    categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
   },
 };
 
@@ -174,14 +176,14 @@ const Page = () => {
           </Transition>
         </Menu>
       </div>
-      <div className="mt-5 flex w-full">
-        <div className="w-1/2">
-          {/* <ApexCharts
+      <div className="mt-5 flex w-full gap-4">
+        <div className="  w-1/2 rounded-2xl border border-meta-light-blue-1">
+          <ReactApexChart
             options={options}
             series={series}
             type="line"
-            height={350}
-          /> */}
+            height={200}
+          />
         </div>
         <div className="w-1/2 ">
           <div className="container mx-auto rounded-2xl border border-meta-light-blue-1 p-4">
