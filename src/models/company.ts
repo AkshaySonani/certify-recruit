@@ -140,6 +140,33 @@ const companySchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  users: [
+    {
+      name: {
+        type: String,
+        required: true,
+      },
+      email: {
+        type: String,
+        required: true,
+        validate: {
+          validator: (v: any) => {
+            return /^\S+@\S+\.\S+$/.test(v);
+          },
+          message: (props: any) => `${props.value} is not a valid email!`,
+        },
+      },
+      role: {
+        default: '',
+        type: String,
+        enum: ['Super Admin', 'Contain Creator', 'User'],
+      },
+      parent: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Company',
+      },
+    },
+  ],
 });
 
 companySchema.set('timestamps', true);

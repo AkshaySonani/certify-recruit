@@ -27,6 +27,7 @@ export const POST = async (req: NextRequest) => {
         role,
         owner,
         state,
+        users,
         country,
         pincode,
         user_name,
@@ -49,6 +50,7 @@ export const POST = async (req: NextRequest) => {
       role && (reqData.role = role);
       owner && (reqData.owner = owner);
       state && (reqData.state = state);
+      // users && (reqData.users = users);
       country && (reqData.country = country);
       pincode && (reqData.pincode = pincode);
       user_name && (reqData.user_name = user_name);
@@ -63,20 +65,52 @@ export const POST = async (req: NextRequest) => {
       contact_number && (reqData.contact_number = contact_number);
       street_address && (reqData.street_address = street_address);
 
-      const updatedCompany = await Company.findOneAndUpdate(
-        { user_ref_id: session?.user?._id },
-        reqData,
+      const companyFilter = { user_ref_id: session?.user?._id };
+
+      let updatedCompany;
+
+      // Update other fields
+      updatedCompany = await Company.findOneAndUpdate(
+        companyFilter,
+        { $set: reqData },
         {
           upsert: true,
           new: true,
         },
       );
 
+      // If users array is provided, push new users
+      if (users && users.length > 0) {
+        updatedCompany = await Company.findOneAndUpdate(
+          companyFilter,
+          { $push: { users: { $each: users } } },
+          {
+            new: true,
+          },
+        );
+      }
+
       return NextResponse.json({
         status: 200,
         data: updatedCompany,
         message: 'Your profile was updated successfully',
       });
+
+      // const updatedCompany = await Company.findOneAndUpdate(
+      //   { user_ref_id: '664cd94a41ff5e2ad284dac8' },
+      //   // { user_ref_id: session?.user?._id },
+      //   reqData,
+      //   {
+      //     upsert: true,
+      //     new: true,
+      //   },
+      // );
+
+      // return NextResponse.json({
+      //   status: 200,
+      //   data: updatedCompany,
+      //   message: 'Your profile was updated successfully',
+      // });
     } catch (error) {
       return NextResponse.json(
         {
