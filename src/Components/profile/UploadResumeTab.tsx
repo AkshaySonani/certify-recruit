@@ -8,6 +8,7 @@ import { useDropzone } from 'react-dropzone';
 import AppContext from '@/context/AppProvider';
 import React, { useContext, useState } from 'react';
 import { API_CONSTANT } from '@/constant/ApiConstant';
+import Link from 'next/link';
 
 const UploadResumeTab = ({
   userDetails,
@@ -176,21 +177,19 @@ const UploadResumeTab = ({
                   key={ele?.file_id}
                   className="mt-5 flex cursor-pointer items-center justify-between rounded-md bg-meta-gray-2 p-4"
                 >
-                  <div
-                    className="flex items-center"
-                    onClick={() => window.open(ele?.file_url, '_blank')}
-                  >
-                    <Image
-                      alt="file"
-                      width={22}
-                      height={22}
-                      src={'/sidebarIcon/jobPosting.svg'}
-                    />
-                    <p className="test-meta-light-blue-3 ml-3 text-sm font-medium">
-                      {ele?.file_name}
-                    </p>
-                  </div>
-
+                  <Link href={ele?.file_url} target="_blank">
+                    <div className="flex items-center">
+                      <Image
+                        alt="file"
+                        width={22}
+                        height={22}
+                        src={'/sidebarIcon/jobPosting.svg'}
+                      />
+                      <p className="test-meta-light-blue-3 ml-3 text-sm font-medium">
+                        {ele?.file_name}
+                      </p>
+                    </div>
+                  </Link>
                   <Image
                     width={22}
                     height={22}

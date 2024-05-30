@@ -4,6 +4,7 @@ import API from '@/service/ApiService';
 import { TEXT } from '@/service/Helper';
 import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Fragment, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'react-toastify';
@@ -189,21 +190,19 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
             key={select?.ele?.file_id}
             className="mt-5 flex cursor-pointer items-center justify-between rounded-md bg-meta-gray-2 p-4"
           >
-            <div
-              className="flex items-center"
-              onClick={() => window.open(select?.ele?.file_url, '_blank')}
-            >
-              <Image
-                alt="file"
-                width={22}
-                height={22}
-                src={'/sidebarIcon/jobPosting.svg'}
-              />
-              <p className="test-meta-light-blue-3 ml-3 text-sm font-medium">
-                {select?.ele?.file_name}
-              </p>
-            </div>
-
+            <Link href={select?.ele?.file_url} target="_blank">
+              <div className="flex items-center">
+                <Image
+                  alt="file"
+                  width={22}
+                  height={22}
+                  src={'/sidebarIcon/jobPosting.svg'}
+                />
+                <p className="test-meta-light-blue-3 ml-3 text-sm font-medium">
+                  {select?.ele?.file_name}
+                </p>
+              </div>
+            </Link>
             <Image
               width={22}
               height={22}

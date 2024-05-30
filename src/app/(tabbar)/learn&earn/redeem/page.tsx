@@ -3,9 +3,14 @@ import Button from '@/Components/Button';
 import { APPLICANT_STATUS } from '@/constant/Enum';
 import { TEXT } from '@/service/Helper';
 import { Menu, Transition } from '@headlessui/react';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { Fragment } from 'react';
-import ReactApexChart from 'react-apexcharts';
+
+// import ReactApexChart from 'react-apexcharts';
+const ReactApexChart = dynamic(() => import('react-apexcharts'), {
+  ssr: false,
+});
 
 const data = [
   { no: 1, week: 'Monday', score: '08/10', time: '4:30', status: 'Complete' },

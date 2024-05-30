@@ -11,6 +11,7 @@ import { APPLICANT_STATUS } from '@/constant/Enum';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Menu, Popover, Transition } from '@headlessui/react';
+import Link from 'next/link';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -72,11 +73,14 @@ function ApplicantDetails({ id, status }: any) {
   return (
     <div>
       <div>
-        <div className="text-2xl flex items-center font-semibold text-meta-purple-1">
-          <div className='cursor-pointer' onClick={() => router?.push(ROUTE?.JOB)}>
+        <div className="flex items-center text-2xl font-semibold text-meta-purple-1">
+          <div
+            className="cursor-pointer"
+            onClick={() => router?.push(ROUTE?.JOB)}
+          >
             <Image src={'/BackArrow.svg'} alt="date" width={20} height={20} />
           </div>
-          <p className='ml-2'>{status}</p>
+          <p className="ml-2">{status}</p>
         </div>
         <div className="mb-10 mt-5 flex items-center justify-start gap-6">
           <div className="w-2/5 max-w-[400px]">
@@ -287,20 +291,17 @@ function ApplicantDetails({ id, status }: any) {
                   </td>
                   <td className="px-6 py-4 text-gray-500">
                     <div className="flex justify-end">
-                      <div
-                        className="cursor-pointer"
-                        onClick={() =>
-                          window.open(item?.user_cv?.[0]?.file_url, '_blank')
-                        }
-                      >
-                        <Image
-                          alt="Icon"
-                          width={21}
-                          height={21}
-                          className="mx-4"
-                          src={'/sidebarIcon/jobPosting.svg'}
-                        />
-                      </div>
+                      <Link href={item?.user_cv?.[0]?.file_url} target="_blank">
+                        <div className="cursor-pointer">
+                          <Image
+                            alt="Icon"
+                            width={21}
+                            height={21}
+                            className="mx-4"
+                            src={'/sidebarIcon/jobPosting.svg'}
+                          />
+                        </div>
+                      </Link>
                       <div
                         className="cursor-pointer"
                         onClick={() =>
