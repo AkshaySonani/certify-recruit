@@ -3,8 +3,10 @@ import Image from 'next/image';
 import Button from '../Button';
 import { TEXT } from '@/service/Helper';
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const Header = () => {
+  const router = useRouter();
   const [navbar, setNavbar] = useState(false);
 
   const NAV_ARR = [
@@ -37,7 +39,7 @@ const Header = () => {
 
   return (
     <header>
-      <nav className="border-gray-200 bg-white px-4 py-6 md:relative lg:px-6">
+      <nav className="border-gray-200 bg-white px-8 py-6 md:relative lg:px-12">
         <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between">
           <div className="flex justify-center">
             <Image
@@ -85,6 +87,7 @@ const Header = () => {
               {NAV_ARR?.map((ele) => {
                 return (
                   <p
+                    onClick={() => router.push(ele?.route)}
                     className="bg-primary-700 lg:text-primary-700 block cursor-pointer rounded py-2 pl-3 pr-4 text-base font-medium text-meta-gray-1 hover:text-meta-blue-1 lg:bg-transparent lg:p-0"
                     aria-current="page"
                   >

@@ -16,8 +16,8 @@ const config: Config = {
         'meta-green': { 1: '#34A853' },
         'meta-brown': { 1: '#A8000C' },
         'meta-red': { 1: '#EA4335', 2: '#FF0C0C' },
-        'meta-gray': { 1: '#B9B9B9', 2: '#F8FAFC' },
         'meta-purple': { 1: '#150936', 2: '#A804D1' },
+        'meta-gray': { 1: '#B9B9B9', 2: '#F8FAFC', 3: '#5F6583' },
         'meta-blue': { 1: '#013BB7', 2: '#3751F2', 3: '#001A51', 4: '#002779' },
         'meta-light-blue': {
           1: '#DCE7FF',

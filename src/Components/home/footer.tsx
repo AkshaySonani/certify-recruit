@@ -32,7 +32,7 @@ const Footer = () => {
   ];
 
   return (
-    <div className="mx-auto px-4 pt-16 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-xl lg:px-8">
+    <div className="mx-auto px-8 pt-16 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-xl lg:px-12">
       <div className="row-gap-6 mb-8 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div className="sm:col-span-2">
           <Image
@@ -173,15 +173,15 @@ const Footer = () => {
         <ul className="mb-3 flex flex-col space-y-2 sm:flex-row sm:space-x-5 sm:space-y-0 lg:mb-0">
           <li>
             <a
-              href="/"
+              href="/refund_policy"
               className="hover:text-deep-purple-accent-400 text-sm text-gray-600 transition-colors duration-300"
             >
-              F.A.Q
+              Refund Policy
             </a>
           </li>
           <li>
             <a
-              href="/"
+              href="/privacy_policy"
               className="hover:text-deep-purple-accent-400 text-sm text-gray-600 transition-colors duration-300"
             >
               Privacy Policy
@@ -189,7 +189,7 @@ const Footer = () => {
           </li>
           <li>
             <a
-              href="/"
+              href="/terms_of_use"
               className="hover:text-deep-purple-accent-400 text-sm text-gray-600 transition-colors duration-300"
             >
               Terms &amp; Conditions
