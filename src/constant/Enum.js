@@ -80,6 +80,7 @@ const QUESTION_STATUS = [
     color: 'bg-meta-purple-2',
   }, //4
 ];
+const WORKPLACE_TYPE = ['ONSITE', 'HYBRID', 'REMOTE'];
 export {
   PROFICIENCY,
   EMP_TYPE_ARR,
@@ -92,4 +93,5 @@ export {
   APPLICANT_STATUS,
   QUESTION_STATUS,
   EXAM_STATUS,
+  WORKPLACE_TYPE
 };

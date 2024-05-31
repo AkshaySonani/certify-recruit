@@ -16,7 +16,6 @@ import AutoComplete from '@/Components/Autocomplete';
 import useDebounce from '@/hooks/useDebounce';
 import Spinner from '@/app/icons/Spinner';
 import PreviewDialog from '@/Components/Job_posting/PreviewDialog';
-import { WORK_SCHEDULE } from '@/constant/Enum';
 import { format } from 'path';
 
 const WORKPLACE_TYPE = ['ONSITE', 'HYBRID', 'REMOTE'];
@@ -272,7 +271,7 @@ function JobPostingFormMain({ id }: any) {
               <div className="mt-3 flex w-full items-center gap-4 lg:mt-0 lg:w-1/2">
                 <label
                   htmlFor="Yes"
-                  className="cursor-pointer flex w-1/2 items-center gap-2 rounded-lg border border-meta-light-blue-1 p-3 hover:bg-meta-light-blue-2"
+                  className="flex w-1/2 cursor-pointer items-center gap-2 rounded-lg border border-meta-light-blue-1 p-3 hover:bg-meta-light-blue-2"
                 >
                   <input
                     id="Yes"
@@ -293,7 +292,7 @@ function JobPostingFormMain({ id }: any) {
                 </label>
                 <label
                   htmlFor="No"
-                  className="cursor-pointer flex w-1/2 items-center gap-2 rounded-lg border border-meta-light-blue-1 p-3 hover:bg-meta-light-blue-2"
+                  className="flex w-1/2 cursor-pointer items-center gap-2 rounded-lg border border-meta-light-blue-1 p-3 hover:bg-meta-light-blue-2"
                 >
                   <input
                     id="No"

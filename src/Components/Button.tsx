@@ -1,7 +1,14 @@
-const Button = ({ title, disabled, btnClass, titleClass, handleClick }: any) => {
+const Button = ({
+  title,
+  disabled,
+  btnClass,
+  titleClass,
+  handleClick,
+  type = 'submit',
+}: any) => {
   return (
     <button
-      type="submit"
+      type={type}
       disabled={disabled}
       onClick={handleClick}
       className={`${btnClass} mb-8 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-meta-blue-2 transition delay-150 duration-300 ease-in-out will-change-auto hover:bg-hiring-btn-gradient`}
