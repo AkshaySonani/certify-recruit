@@ -161,10 +161,6 @@ const companySchema = new mongoose.Schema({
         type: String,
         enum: ['Super Admin', 'Contain Creator', 'User'],
       },
-      parent: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Company',
-      },
     },
   ],
 });
