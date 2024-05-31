@@ -22,7 +22,10 @@ export const POST = async (req: NextRequest) => {
 
     let obj = {};
     if (session?.user?.role === USER_ROLE?.EMPLOYEE) {
-      obj = { ...obj, company_id: new mongoose.Types.ObjectId(session?.user?._id) };
+      obj = {
+        ...obj,
+        company_id: new mongoose.Types.ObjectId(session?.user?._id),
+      };
     }
     if (city !== null) {
       obj = { ...obj, city: new mongoose.Types.ObjectId(city) };
@@ -37,22 +40,20 @@ export const POST = async (req: NextRequest) => {
       };
     }
 
-    let results
-    if(session?.user?.role === USER_ROLE?.EMPLOYEE){
-       results = await Job.find(obj)
-      .populate({ path: 'city' })
-      .populate({ path: 'state' })
-      .populate({ path: 'skills' })
-      .populate({ path: 'country' });
+    let results;
+    if (session?.user?.role === USER_ROLE?.EMPLOYEE) {
+      results = await Job.find(obj)
+        .populate({ path: 'city' })
+        .populate({ path: 'state' })
+        .populate({ path: 'skills' })
+        .populate({ path: 'country' });
     } else {
       results = await Job.find(obj)
-      .populate({ path: 'city' })
-      .populate({ path: 'state' })
-      .populate({ path: 'skills' })
-      .populate({ path: 'country' });
+        .populate({ path: 'city' })
+        .populate({ path: 'state' })
+        .populate({ path: 'skills' })
+        .populate({ path: 'country' });
     }
-
-    
 
     return NextResponse.json({
       status: 200,

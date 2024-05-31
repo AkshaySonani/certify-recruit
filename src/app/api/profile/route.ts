@@ -124,6 +124,7 @@ export const POST = async (req: NextRequest) => {
     // for employee user ( user that find job )
     try {
       const {
+        bgv,
         role,
         skills,
         degree,
@@ -184,6 +185,18 @@ export const POST = async (req: NextRequest) => {
         await Individual.findOneAndUpdate(
           { user_ref_id: session?.user?._id },
           { $push: { resume: resume } },
+          {
+            upsert: true,
+            new: true,
+          },
+        );
+      }
+
+      // If bgv array is provided, push new bgv
+      if (bgv && bgv.length > 0) {
+        await Individual.findOneAndUpdate(
+          { user_ref_id: session?.user?._id },
+          { $push: { bgv: { $each: bgv } } },
           {
             upsert: true,
             new: true,

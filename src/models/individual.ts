@@ -224,6 +224,49 @@ const individualSchema = new mongoose.Schema({
       },
     },
   ],
+  bgv: [
+    {
+      currently_working: {
+        type: 'String',
+      },
+      company_name: {
+        type: 'String',
+        required: true,
+      },
+      start_date: {
+        type: 'Date',
+      },
+      end_date: {
+        type: 'Date',
+      },
+      location_type: {
+        type: 'String',
+        enum: ['On site', 'Hybrid', 'Remote'],
+      },
+      reference: {
+        name: {
+          type: 'String',
+        },
+        designation: {
+          type: 'String',
+        },
+        phone_no: {
+          type: 'Number',
+        },
+        email_id: {
+          type: 'String',
+        },
+      },
+      description: {
+        type: 'String',
+      },
+      status: {
+        type: 'String',
+        default: 'Pending',
+        enum: ['Pending', 'Verified', 'Rejected'],
+      },
+    },
+  ],
   expected_salary_start_at: {
     type: Number,
     required: false,
