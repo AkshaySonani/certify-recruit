@@ -121,23 +121,31 @@ const MyProfile = () => {
 
           <div className="mt-4 w-full rounded-2xl bg-meta-light-blue-2 p-10">
             <div className="flex w-full items-center gap-8">
-              <div className="relative h-24 w-24">
-                <Image
-                  width={73}
-                  height={73}
-                  alt="avatar"
-                  src={'/sidebarIcon/profile.svg'}
-                  className="absolute right-[6px] top-[5px] rounded-full p-0.5"
-                />
-                <CircularProgressbar
-                  value={percentage ? percentage : 0}
-                  styles={buildStyles({
-                    pathColor: '#34A853',
-                    strokeLinecap: 'butt',
-                    trailColor: '#d6d6d6',
-                    pathTransitionDuration: 0.5,
-                  })}
-                />
+              <div className="flex flex-col justify-center">
+                <div className="relative h-24 w-24">
+                  <Image
+                    width={73}
+                    height={73}
+                    alt="avatar"
+                    src={'/sidebarIcon/profile.svg'}
+                    className="absolute right-[6px] top-[6px] h-[84px] w-[84px] rounded-full p-0.5"
+                  />
+                  <CircularProgressbar
+                    className="h-max w-max"
+                    value={percentage ? percentage : 0}
+                    styles={buildStyles({
+                      pathColor: '#34A853',
+                      strokeLinecap: 'butt',
+                      trailColor: '#d6d6d6',
+                      pathTransitionDuration: 0.5,
+                    })}
+                  />
+                </div>
+                <div className="w-full text-center">
+                  <p className="mt-1 text-base font-normal text-meta-green-1">
+                    {percentage}%
+                  </p>
+                </div>
               </div>
               <div className="flex w-full gap-8">
                 <div className="w-11/12">

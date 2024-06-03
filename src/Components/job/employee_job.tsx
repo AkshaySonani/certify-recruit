@@ -159,7 +159,7 @@ const EmployeeJob = () => {
                 value={jobSearch}
                 placeholder="Job title search here..."
                 onChange={(e) => {
-                  if (e?.target?.value === "") {
+                  if (e?.target?.value === '') {
                     getJobApi();
                     setJobSearch(e?.target?.value);
                   } else {
@@ -372,8 +372,10 @@ const EmployeeJob = () => {
               title={'Job Search'}
               handleClick={() => _applyFilter()}
               titleClass="flex justify-center text-sm font-medium text-white"
-              disabled={jobSearch || date?.startDate || date?.endDate ? false : true}
-              btnClass={`${jobSearch || date?.startDate || date?.endDate ? "" : "bg-gray-400 hover:bg-none"} h-12 w-full !mb-0 cursor-pointer`}
+              disabled={
+                jobSearch || date?.startDate || date?.endDate ? false : true
+              }
+              btnClass={`${jobSearch || date?.startDate || date?.endDate ? '' : 'bg-gray-400 hover:bg-none'} h-12 w-full !mb-0 cursor-pointer`}
             />
           </div>
         </div>
@@ -405,8 +407,8 @@ const EmployeeJob = () => {
                         </p>
                       </div>
                       <div className="text-base font-medium text-meta-light-blue-3">
-                        {list?.city?.[0]?.name},{" "}
-                        {list?.state?.[0]?.name ?? 'Gujarat'},{" "}
+                        {list?.city?.[0]?.name},{' '}
+                        {list?.state?.[0]?.name ?? 'Gujarat'},{' '}
                         {list?.country?.[0]?.name ?? ''}
                       </div>
                     </div>

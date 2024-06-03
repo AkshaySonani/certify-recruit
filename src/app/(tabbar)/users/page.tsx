@@ -163,7 +163,7 @@ const Page = () => {
           title={TEXT?.ADD_USER}
           handleClick={() => setIsOpen(true)}
           titleClass="flex justify-center text-sm font-medium text-white"
-          btnClass="!mb-0 min-w-52 max-w-40 mt-4 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-meta-blue-1"
+          btnClass="!mb-0 min-w-52 max-w-40 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-meta-blue-1"
         />
       </div>
 
@@ -247,7 +247,7 @@ const Page = () => {
                         checked={isEnabled}
                         onChange={() => toggleRow(item.id)}
                         className={`${
-                          isEnabled ? 'bg-gray-100' : 'bg-green-100'
+                          isEnabled ? 'bg-meta-light-blue-1' : 'bg-gray-100'
                         } relative inline-flex h-6 w-[60px] items-center rounded-full`}
                       >
                         <span className="sr-only">Enable notifications</span>

@@ -252,7 +252,7 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
       </div>
       <div className="my-6 border border-meta-light-blue-1" />
 
-      <div className="flex w-full flex-wrap items-center justify-between lg:flex-nowrap">
+      <div className="flex w-full flex-wrap items-start justify-between lg:flex-nowrap">
         <div className="w-full text-start lg:mr-5">
           <p className="text-xl font-semibold text-meta-purple-1 sm:text-2xl">
             {TEXT?.INTERVIEW_TIME}
