@@ -80,8 +80,9 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
             })
             .catch((error) => {
               setIsSpinner({ apply: false });
-              console.log('error', error);
-              toast?.error(error);
+              toast.error(
+                error?.response?.data?.message || 'Internal server error',
+              );
             });
         } else {
           setIsSpinner({ apply: false });
@@ -149,7 +150,6 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
         })
         .catch((error) => {
           setIsSpinner({ continue: false });
-          console.log('error', error);
           toast?.error(error?.response?.data?.message);
         });
     }

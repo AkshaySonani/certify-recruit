@@ -7,6 +7,7 @@ import moment from 'moment';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 export default function Page({ params }: { params: { id: string } }) {
   const [jobApplyId, setJobApplyId] = useState('');
@@ -26,7 +27,9 @@ export default function Page({ params }: { params: { id: string } }) {
           setJobDetails(res?.data?.data[0]);
         })
         .catch((error) => {
-          console.log('error', error);
+          toast.error(
+            error?.response?.data?.message || 'Internal server error',
+          );
         });
     }
   };

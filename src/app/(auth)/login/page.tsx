@@ -37,7 +37,6 @@ const Page = () => {
         ...values,
         redirect: false,
       });
-      console.log('signInResponse', signInResponse);
       if (!signInResponse?.ok) {
         setLoading(false);
         toast.error(signInResponse?.error);
@@ -48,8 +47,9 @@ const Page = () => {
       }
     } catch (error) {
       setLoading(false);
-      console.log('🚀 ~ signInWithEmailAndPassword ~ error:', error);
-      toast.error('Error signing in with email and password. Try again later.');
+      toast.error(
+        `Error signing in with email and password. Try again later. ${error}`,
+      );
     }
   };
 
@@ -97,9 +97,9 @@ const Page = () => {
     <div>
       <Loading loading={loading} />
       <div className="container mx-auto max-w-6xl">
-        {/* <div className="flex justify-center py-20">
+        <div className="flex justify-center py-20">
           <Image src={'/MainLogo.svg'} alt="MainLogo" width={334} height={56} />
-        </div> */}
+        </div>
 
         <div className="bg-[url('/_Compound.svg')]">
           <form onSubmit={formik.handleSubmit}>

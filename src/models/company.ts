@@ -33,20 +33,14 @@ const companySchema = new mongoose.Schema({
   },
   profile_count: {
     type: {
-      skill_details: { type: Number, default: 0 },
-      resume_details: { type: Number, default: 0 },
-      career_details: { type: Number, default: 0 },
-      summary_details: { type: Number, default: 0 },
-      personal_details: { type: Number, default: 0 },
-      education_details: { type: Number, default: 0 },
+      kyc_details: { type: Number, default: 0 },
+      basic_details: { type: Number, default: 0 },
+      company_details: { type: Number, default: 0 },
     },
     default: {
-      skill_details: 0,
-      resume_details: 0,
-      career_details: 0,
-      summary_details: 0,
-      personal_details: 0,
-      education_details: 0,
+      kyc_details: 0,
+      basic_details: 0,
+      company_details: 0,
     },
   },
   // company_type: {

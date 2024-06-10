@@ -57,7 +57,7 @@ const AutoComplete = ({
                   key={el._id}
                   className={({ active }) =>
                     `relative cursor-default select-none p-1 py-2 pl-4 pr-4 ${
-                      active ? 'bg-meta-blue-1 text-white' : 'text-gray-900'
+                      active ? 'bg-meta-light-blue-1' : 'text-gray-900'
                     }`
                   }
                   value={el}

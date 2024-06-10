@@ -75,6 +75,8 @@ const Page = (data: any) => {
       context?.userProfileCount?.summary_details;
   }
 
+  // console.log('context?.userProfileCount', context?.userProfileCount);
+
   return (
     <div>
       <div className="mb-4 text-2xl font-semibold text-meta-purple-1">

@@ -210,7 +210,10 @@ const Sidebar = () => {
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      onClick={() => signOut()}
+                      onClick={() => {
+                        localStorage.removeItem('userRole');
+                        signOut();
+                      }}
                       className={`${
                         active ? 'bg-meta-blue-1 text-white' : 'text-gray-900'
                       } group flex w-full items-center justify-center rounded-md px-2 py-2 text-sm font-medium lg:justify-normal`}

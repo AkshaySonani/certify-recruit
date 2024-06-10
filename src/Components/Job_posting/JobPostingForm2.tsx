@@ -72,10 +72,11 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
                       value={list}
                       type="checkbox"
                       name={'job_types'}
+                      className="custom-checkbox"
+                      onChange={formik.handleChange}
                       checked={
                         formik?.values?.job_types?.includes(list) ? true : false
                       }
-                      onChange={formik.handleChange}
                     />
                     <p className="pl-3 capitalize">{list}</p>
                   </label>
@@ -167,20 +168,26 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
         </div>
         <div className="mt-3 flex w-full flex-col items-center lg:mt-0 lg:w-1/2">
           <div className="mb-3 flex w-full items-center justify-between">
-            <div className="min-w-54 mr-3 w-full cursor-pointer rounded-xl border border-meta-light-blue-1">
+            <div className="min-w-54 relative mr-3 w-full cursor-pointer rounded-xl border border-meta-light-blue-1">
               <input
                 id="hour"
                 type="radio"
                 name="salary_pay"
                 value={'MONTHLY'}
                 radioGroup="Salary"
-                className="ml-2 mt-2"
                 onChange={formik.handleChange}
+                className="ml-2 mt-2 h-4 w-4 cursor-pointer appearance-none rounded-full border-2 border-meta-blue-1"
                 checked={
                   formik?.values?.salary_pay === 'MONTHLY' ? true : false
                 }
               />
-              <label className="mb-6 flex flex-col items-center" htmlFor="hour">
+              {formik?.values?.salary_pay === 'MONTHLY' && (
+                <div className="absolute left-3 top-3 h-2 w-2 rounded-full bg-meta-blue-1" />
+              )}
+              <label
+                className="mb-6 flex cursor-pointer flex-col items-center"
+                htmlFor="hour"
+              >
                 <Image
                   width={20}
                   height={20}
@@ -190,20 +197,23 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
                 <p>{TEXT?.MONTHLY}</p>
               </label>
             </div>
-            <div className="min-w-54 w-full cursor-pointer rounded-xl border border-meta-light-blue-1">
+            <div className="min-w-54 relative w-full cursor-pointer rounded-xl border border-meta-light-blue-1">
               <input
                 id="month"
                 type="radio"
                 value={'HOURLY'}
                 name="salary_pay"
                 radioGroup="Salary"
-                className="ml-2 mt-2"
                 onChange={formik.handleChange}
                 checked={formik?.values?.salary_pay === 'HOURLY' ? true : false}
+                className="ml-2 mt-2 h-4 w-4 cursor-pointer appearance-none rounded-full border-2 border-meta-blue-1"
               />
+              {formik?.values?.salary_pay === 'HOURLY' && (
+                <div className="absolute left-3 top-3 h-2 w-2 rounded-full bg-meta-blue-1" />
+              )}
               <label
                 htmlFor="month"
-                className="mb-6 flex flex-col items-center"
+                className="mb-6 flex cursor-pointer flex-col items-center"
               >
                 <Image
                   width={20}

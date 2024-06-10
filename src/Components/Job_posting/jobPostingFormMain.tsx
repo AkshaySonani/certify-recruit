@@ -47,7 +47,9 @@ function JobPostingFormMain({ id }: any) {
           setJobDetails(res?.data?.data[0]);
         })
         .catch((error) => {
-          console.log('error', error);
+          toast.error(
+            error?.response?.data?.message || 'Internal server error',
+          );
         });
     }
   };
@@ -206,7 +208,7 @@ function JobPostingFormMain({ id }: any) {
         setCities(res?.data?.data);
       })
       .catch((error) => {
-        console.log('error', error);
+        toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
   const searchStateApi = (search: any) => {
@@ -218,7 +220,7 @@ function JobPostingFormMain({ id }: any) {
         setStates(res?.data?.data);
       })
       .catch((error) => {
-        console.log('error', error);
+        toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
   const getCountryApi = () => {
@@ -227,7 +229,7 @@ function JobPostingFormMain({ id }: any) {
         setCountries(res?.data?.data);
       })
       .catch((error) => {
-        console.log('error', error);
+        toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
 
@@ -271,6 +273,46 @@ function JobPostingFormMain({ id }: any) {
               <div className="mt-3 flex w-full items-center gap-4 lg:mt-0 lg:w-1/2">
                 <label
                   htmlFor="Yes"
+                  className="flex w-1/2 cursor-pointer items-center gap-2 rounded-lg border border-meta-light-blue-1 p-3"
+                >
+                  <input
+                    id="Yes"
+                    type="radio"
+                    value="true"
+                    name="is_hiring_manager"
+                    className="custom-radio"
+                    checked={formik?.values?.is_hiring_manager ? true : false}
+                    onChange={(e) => {
+                      formik.setFieldValue(
+                        'is_hiring_manager',
+                        e?.target?.checked === true,
+                      );
+                    }}
+                  />
+                  <p>Yes</p>
+                </label>
+                <label
+                  htmlFor="No"
+                  className="flex w-1/2 cursor-pointer items-center gap-2 rounded-lg border border-meta-light-blue-1 p-3"
+                >
+                  <input
+                    id="No"
+                    name="is_hiring_manager"
+                    type="radio"
+                    value="false"
+                    checked={formik?.values?.is_hiring_manager ? false : true}
+                    onChange={(e) => {
+                      formik.setFieldValue(
+                        'is_hiring_manager',
+                        e?.target?.checked === false,
+                      );
+                    }}
+                    className="custom-radio"
+                  />
+                  <p>No</p>
+                </label>
+                {/* <label
+                  htmlFor="Yes"
                   className="flex w-1/2 cursor-pointer items-center gap-2 rounded-lg border border-meta-light-blue-1 p-3 hover:bg-meta-light-blue-2"
                 >
                   <input
@@ -310,7 +352,7 @@ function JobPostingFormMain({ id }: any) {
                     }}
                   />
                   <p>{'No'}</p>
-                </label>
+                </label> */}
               </div>
             </div>
             <div className="my-6 border border-meta-light-blue-1" />
@@ -377,7 +419,29 @@ function JobPostingFormMain({ id }: any) {
               </div>
               <div className="mt-3 flex w-full flex-col flex-wrap items-start gap-2 md:flex-nowrap lg:mt-0 lg:w-1/2">
                 <div className="flex w-full items-center justify-between gap-2">
-                  {WORKPLACE_TYPE?.map((list) => {
+                  {WORKPLACE_TYPE.map((list) => (
+                    <div
+                      key={list}
+                      className="w-1/3 rounded-lg border border-meta-light-blue-1 p-3"
+                    >
+                      <label
+                        htmlFor={list}
+                        className="flex cursor-pointer select-none items-center"
+                      >
+                        <input
+                          id={list}
+                          value={list}
+                          type="checkbox"
+                          name="workplace"
+                          className="custom-checkbox"
+                          onChange={formik.handleChange}
+                          checked={formik?.values?.workplace.includes(list)}
+                        />
+                        <p className="pl-3 capitalize">{list.toLowerCase()}</p>
+                      </label>
+                    </div>
+                  ))}
+                  {/* {WORKPLACE_TYPE?.map((list) => {
                     return (
                       <div className="w-1/3 rounded-lg border border-meta-light-blue-1 p-3">
                         <label
@@ -400,7 +464,7 @@ function JobPostingFormMain({ id }: any) {
                         </label>
                       </div>
                     );
-                  })}
+                  })} */}
                 </div>
 
                 {formik.touched.workplace && formik.errors.workplace && (
@@ -462,9 +526,9 @@ function JobPostingFormMain({ id }: any) {
                                     }}
                                     className={classNames(
                                       active
-                                        ? 'bg-meta-blue-1 text-white'
+                                        ? 'bg-meta-light-blue-1 text-white'
                                         : 'text-gray-900',
-                                      'block px-4 py-2 text-[14px] capitalize hover:text-white',
+                                      'block cursor-pointer px-4 py-2 text-sm capitalize',
                                     )}
                                   >
                                     {list?.name}

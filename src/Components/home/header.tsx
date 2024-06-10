@@ -1,9 +1,9 @@
 'use client';
 import Image from 'next/image';
 import Button from '../Button';
-import { TEXT } from '@/service/Helper';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { ROUTE, TEXT } from '@/service/Helper';
 
 const Header = () => {
   const router = useRouter();
@@ -128,6 +128,7 @@ const Header = () => {
               <Button
                 title={TEXT?.LOG_IN}
                 titleClass="!text-base !text-white"
+                handleClick={() => router.push(ROUTE?.LOGIN)}
                 btnClass="!w-32 !rounded-lg !bg-meta-blue-1 !py-2 !mb-0"
               />
             </div>

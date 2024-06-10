@@ -72,8 +72,9 @@ const UploadResumeTab = ({
               }
             })
             .catch((error) => {
-              console.log('error', error);
-              toast?.error(error);
+              toast.error(
+                error?.response?.data?.message || 'Internal server error',
+              );
             });
         } else {
           toast.error(

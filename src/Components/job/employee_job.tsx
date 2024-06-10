@@ -47,7 +47,7 @@ const EmployeeJob = () => {
       })
       .catch((error) => {
         setIsSpinner(false);
-        console.log('error', error);
+        toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
 
@@ -70,7 +70,7 @@ const EmployeeJob = () => {
       })
       .catch((error: any) => {
         setIsSpinner(false);
-        console.log('error', error);
+        toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
 
@@ -89,7 +89,7 @@ const EmployeeJob = () => {
       })
       .catch((error) => {
         setIsSpinner(false);
-        console.log('error', error);
+        toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
 
@@ -116,7 +116,9 @@ const EmployeeJob = () => {
           toast?.success('Job delete successfully');
         })
         .catch((error) => {
-          console.log('error', error);
+          toast.error(
+            error?.response?.data?.message || 'Internal server error',
+          );
         });
     } else {
       router.push(`${ROUTE?.JOb_DETAILS}/${job._id}`);
@@ -133,7 +135,7 @@ const EmployeeJob = () => {
         toast?.success('Job updated successfully');
       })
       .catch((error) => {
-        console.log('error', error);
+        toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
 

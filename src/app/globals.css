@@ -22,6 +22,69 @@
   }
 }
 
+/* Custom CSS for square checkboxes */
+input[type="checkbox"].custom-checkbox {
+  margin: 0;
+  font: inherit;
+  display: grid;
+  width: 1.25rem;
+  height: 1.25rem;
+  cursor: pointer;
+  appearance: none;
+  border-radius: 2px; /* Make square */
+  color: currentColor;
+  place-content: center;
+  background-color: #fff;
+  -webkit-appearance: none;
+  border: 2px solid #DCE7FF;
+}
+
+input[type="checkbox"].custom-checkbox::before {
+  content: "";
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 2px;
+  transform: scale(0);
+  background-color: #013BB7;
+  transition: 120ms transform ease-in-out;
+}
+
+input[type="checkbox"].custom-checkbox:checked::before {
+  transform: scale(1);
+}
+
+/* Custom CSS for square radio buttons */
+input[type="radio"].custom-radio {
+  margin: 0;
+  font: inherit;
+  display: grid;
+  width: 1.25rem;
+  height: 1.25rem;
+  cursor: pointer;
+  appearance: none;
+  border-radius: 2px; /* Make square */
+  color: currentColor;
+  place-content: center;
+  background-color: #fff;
+  -webkit-appearance: none;
+  border: 2px solid #DCE7FF;
+}
+
+input[type="radio"].custom-radio::before {
+  content: "";
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 2px;
+  transform: scale(0);
+  background-color: #013BB7;
+  box-shadow: inset 1rem 1rem #013BB7;
+  transition: 120ms transform ease-in-out;
+}
+
+input[type="radio"].custom-radio:checked::before {
+  transform: scale(1);
+}
+
 #inTechOrgChart .orgNodeChildGroup .nodeGroupLineVerticalMiddle {
   border-right: solid 1px #DCE7FF
 }

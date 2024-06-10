@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useContext, useEffect } from 'react';
 import AppContext from '@/context/AppProvider';
 import { API_CONSTANT } from '@/constant/ApiConstant';
+import { toast } from 'react-toastify';
 
 export default function RootLayout({
   children,
@@ -19,7 +20,7 @@ export default function RootLayout({
         context?.setUserProfileCount(res?.data?.data?.profile_count);
       })
       .catch((error) => {
-        console.log('error', error);
+        toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
 

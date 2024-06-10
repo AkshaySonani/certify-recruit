@@ -33,7 +33,9 @@ function ApplicantDetails({ id, status }: any) {
           setData(response);
         })
         .catch((error: any) => {
-          console.log('error', error);
+          toast.error(
+            error?.response?.data?.message || 'Internal server error',
+          );
         });
     }
   };
@@ -54,7 +56,7 @@ function ApplicantDetails({ id, status }: any) {
         }
       })
       .catch((error: any) => {
-        console.log('error', error);
+        toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
   const downLoadResume = async (imageSrc: any) => {
@@ -202,8 +204,6 @@ function ApplicantDetails({ id, status }: any) {
           </thead>
           <tbody>
             {data.map((item: any) => {
-              console.log(item);
-
               let totalYears = 0;
               let totalMonths = 0;
               item?.user_info?.total_experiences?.forEach((experience: any) => {

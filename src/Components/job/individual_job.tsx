@@ -33,7 +33,7 @@ const IndividualJob = () => {
         setCities(res?.data?.data);
       })
       .catch((error) => {
-        console.log('error', error);
+        toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
   useEffect(() => {
@@ -51,7 +51,7 @@ const IndividualJob = () => {
       })
       .catch((error) => {
         setIsSpinner(false);
-        console.log('error', error);
+        toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
 
@@ -79,7 +79,7 @@ const IndividualJob = () => {
       })
       .catch((error) => {
         setIsSpinner(false);
-        console.log('error', error);
+        toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
 
@@ -109,7 +109,7 @@ const IndividualJob = () => {
                     value={jobSearch}
                     placeholder="Search..."
                     onChange={(e) => {
-                      if (e?.target?.value === "") {
+                      if (e?.target?.value === '') {
                         getJobApi();
                         setJobSearch(e?.target?.value);
                       } else {
@@ -137,8 +137,8 @@ const IndividualJob = () => {
               <div>
                 <button
                   onClick={() => _applyFilter()}
-                  disabled={ jobSearch || cityFilter ? false :true }
-                  className={`${jobSearch || cityFilter ? "bg-meta-light-blue-2" : "bg-gray-300"} rounded-xl border border-meta-light-blue-2 p-3`}
+                  disabled={jobSearch || cityFilter ? false : true}
+                  className={`${jobSearch || cityFilter ? 'bg-meta-light-blue-2' : 'bg-gray-300'} rounded-xl border border-meta-light-blue-2 p-3`}
                 >
                   <Image
                     alt="date"

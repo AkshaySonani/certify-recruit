@@ -129,7 +129,7 @@ const CompanyDetailsTab = ({
         setCities(res?.data?.data);
       })
       .catch((error) => {
-        console.log('error', error);
+        toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
   const searchStateApi = (search: any) => {
@@ -141,7 +141,7 @@ const CompanyDetailsTab = ({
         setStates(res?.data?.data);
       })
       .catch((error) => {
-        console.log('error', error);
+        toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
   const getCountryApi = () => {
@@ -150,7 +150,7 @@ const CompanyDetailsTab = ({
         setCountries(res?.data?.data);
       })
       .catch((error) => {
-        console.log('error', error);
+        toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
 
@@ -195,7 +195,7 @@ const CompanyDetailsTab = ({
                           }
                           className={classNames(
                             active
-                              ? 'bg-meta-blue-1 text-white'
+                              ? 'bg-meta-light-blue-1 text-white'
                               : 'text-gray-900',
                             'block px-4 py-2 text-[14px] capitalize',
                           )}
@@ -333,9 +333,9 @@ const CompanyDetailsTab = ({
                             }}
                             className={classNames(
                               active
-                                ? 'bg-meta-blue-1 text-white'
+                                ? 'bg-meta-light-blue-1 text-white'
                                 : 'text-gray-900',
-                              'block px-4 py-2 text-[14px] capitalize hover:text-white',
+                              'block px-4 py-2 text-[14px] capitalize',
                             )}
                           >
                             {list?.name}

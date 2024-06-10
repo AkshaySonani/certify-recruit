@@ -41,7 +41,9 @@ const SignupForm = () => {
   const onNextUpdateProfileRole = async () => {
     const currentUserRole = await localStorage.getItem('userRole');
 
-    API.post(API_CONSTANT?.PROFILE, { role: currentUserRole })
+    API.post(API_CONSTANT?.PROFILE, {
+      role: currentUserRole || context.currentRole,
+    })
       .then((res) => {
         if (res?.data?.status === 200) {
           return;
