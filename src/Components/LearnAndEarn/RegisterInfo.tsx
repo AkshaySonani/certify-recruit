@@ -4,7 +4,7 @@ import React, { Fragment } from 'react';
 import { useRouter } from 'next/navigation';
 import { TEXT } from '@/service/Helper';
 
-const Page = () => {
+const RegisterInfo = () => {
   const router = useRouter();
 
   return (
@@ -97,4 +97,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default RegisterInfo;
