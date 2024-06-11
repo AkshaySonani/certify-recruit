@@ -267,6 +267,29 @@ const individualSchema = new mongoose.Schema({
       },
     },
   ],
+  certificates: [
+    {
+      start_time: {
+        type: Date,
+      },
+      end_time: {
+        type: Date,
+      },
+      skill: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Category',
+        },
+      ],
+      result: { type: Number },
+    },
+  ],
+  learn_and_earn: {
+    result: { type: Number, default: 0 },
+    end_time: { type: Date, default: '' },
+    join_time: { type: Date, default: '' },
+    register: { type: Boolean, default: false },
+  },
   expected_salary_start_at: {
     type: Number,
     required: false,

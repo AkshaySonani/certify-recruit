@@ -15,4 +15,5 @@ export * from './savedJob';
 export * from './countries';
 export * from './individual';
 export * from './transaction';
+export * from './learnAndEarn';
 export * from './jobApplication';
