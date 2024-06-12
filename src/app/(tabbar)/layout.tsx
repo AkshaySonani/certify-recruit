@@ -35,6 +35,7 @@ export default function RootLayout({
       ROUTE?.MAIN,
       ROUTE?.CHOOSE_CATEGORY,
       ROUTE?.EXAM,
+      ROUTE?.QUIZ,
     ].some((e) => path.includes(e));
 
   return (

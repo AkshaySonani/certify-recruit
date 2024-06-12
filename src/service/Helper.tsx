@@ -31,6 +31,7 @@ const ROUTE = {
   CHOOSE_CATEGORY: '/certification/chooseCategories',
   EXAM: '/exam',
   CERTIFICATION: '/certification',
+  QUIZ: '/quiz',
 };
 
 const TEXT = {

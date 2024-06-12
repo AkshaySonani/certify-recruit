@@ -19,6 +19,10 @@ const API_CONSTANT = {
   UPDATE_APPLY_JOB: '/update-apply-job',
   QUESTION: '/question',
   CHECK_ANSWER: '/check-answer',
+  UPDATE_LE_DETAILS: '/update-le-details',
+  LEARN_AND_EARN_QUESTION: '/learn-and-earn-question',
+  CHECK_LEARN_ANSWER: '/check-le-answer',
+  QUIZ_RESULTS: '/le-today-results',
 };
 
 export { API_CONSTANT };
