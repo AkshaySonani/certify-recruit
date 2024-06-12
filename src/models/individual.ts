@@ -289,6 +289,7 @@ const individualSchema = new mongoose.Schema({
     end_time: { type: Date, default: '' },
     join_time: { type: Date, default: '' },
     register: { type: Boolean, default: false },
+    registration_time: { type: Date, default: '' },
   },
   expected_salary_start_at: {
     type: Number,

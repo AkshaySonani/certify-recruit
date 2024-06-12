@@ -18,7 +18,10 @@ export const POST = async (req: NextRequest) => {
     await connect();
     const updatedUser = await Individual.findOneAndUpdate(
       { user_ref_id: session?.user?._id },
-      { 'learn_and_earn.register': true },
+      {
+        'learn_and_earn.register': true,
+        'learn_and_earn.registration_time': new Date(Date.now()),
+      },
       {
         upsert: true,
         new: true,

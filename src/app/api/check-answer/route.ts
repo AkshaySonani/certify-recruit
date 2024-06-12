@@ -57,8 +57,8 @@ export const POST = async (req: NextRequest) => {
       { 'certificates._id': exam_id, user_ref_id: session?.user?._id },
       {
         $set: {
-          'certificates.$.end_time': new Date(),
           'certificates.$.result': correctAnswersCount,
+          'certificates.$.end_time': new Date(Date.now()),
         },
       },
       { new: true },
