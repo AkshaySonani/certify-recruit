@@ -269,7 +269,7 @@ const individualSchema = new mongoose.Schema({
   ],
   certificates: [
     {
-      start_time: {
+      join_time: {
         type: Date,
       },
       end_time: {
@@ -281,7 +281,7 @@ const individualSchema = new mongoose.Schema({
           ref: 'Category',
         },
       ],
-      result: { type: Number },
+      result: { type: Number, default: 0 },
     },
   ],
   learn_and_earn: {
@@ -314,5 +314,31 @@ const individualSchema = new mongoose.Schema({
 });
 
 individualSchema.set('timestamps', true);
+
+const setLearnAndEarnDefaults = function (this: any, next: any) {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  if (!this.learn_and_earn.join_time || this.learn_and_earn.join_time < today) {
+    this.learn_and_earn.join_time = today;
+  }
+
+  if (!this.learn_and_earn.end_time || this.learn_and_earn.end_time < today) {
+    this.learn_and_earn.end_time = today;
+  }
+
+  if (this.learn_and_earn.register === undefined) {
+    this.learn_and_earn.register = false;
+  }
+
+  if (this.learn_and_earn.result === undefined) {
+    this.learn_and_earn.result = 0;
+  }
+
+  next();
+};
+
+individualSchema.pre('save', setLearnAndEarnDefaults);
+
 export const Individual = createModal('Individual', individualSchema);
 export default Individual;

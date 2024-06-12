@@ -1,8 +1,8 @@
 'use server';
 import mongoose from 'mongoose';
-import { Question } from '@/models';
 import { connect } from '@/db/mongodb';
 import { getServerSession } from 'next-auth';
+import { Individual, Question } from '@/models';
 import { authOptions } from '@/service/AuthOptions';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -17,7 +17,7 @@ export const POST = async (req: NextRequest) => {
 
   try {
     await connect();
-    const { answers } = await req.json();
+    const { exam_id, answers } = await req.json();
 
     // Validate answers
     if (!Array.isArray(answers) || answers.length === 0) {
@@ -52,6 +52,24 @@ export const POST = async (req: NextRequest) => {
 
     // Determine if the user passes
     const pass = correctPercentage >= 70;
+
+    const updatedUser = await Individual.findOneAndUpdate(
+      { 'certificates._id': exam_id, user_ref_id: session?.user?._id },
+      {
+        $set: {
+          'certificates.$.end_time': new Date(),
+          'certificates.$.result': correctAnswersCount,
+        },
+      },
+      { new: true },
+    );
+
+    if (!updatedUser) {
+      return NextResponse.json({
+        status: 404,
+        message: 'Certificate not found or update failed',
+      });
+    }
 
     return NextResponse.json({
       status: 200,

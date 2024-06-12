@@ -2,10 +2,10 @@
 import mongoose from 'mongoose';
 import { connect } from '@/db/mongodb';
 import { getServerSession } from 'next-auth';
-import { Category, Question } from '@/models';
 import { shuffleData } from '@/service/Helper';
 import { authOptions } from '@/service/AuthOptions';
 import { NextRequest, NextResponse } from 'next/server';
+import { Category, Individual, Question } from '@/models';
 
 // export const POST = async (req: NextRequest) => {
 //   const session = await getServerSession(authOptions);
@@ -108,9 +108,31 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
+    // Add new certificate entry
+    const newCertificate = {
+      join_time: new Date(Date.now()),
+      skill: categoryObjectIds,
+    };
+
+    const updatedUser = await Individual.findOneAndUpdate(
+      { user_ref_id: session?.user?._id },
+      { $push: { certificates: newCertificate } },
+      {
+        upsert: true,
+        new: true,
+      },
+    );
+
+    if (!updatedUser) {
+      throw new Error('Failed to get questions.');
+    }
+
+    // Get the latest certificate entry ID
+    const latestCertificate = updatedUser.certificates.slice(-1)[0];
     return NextResponse.json({
       status: 200,
       data: shuffledData,
+      exam_id: latestCertificate?._id,
       message: 'Questions get successfully',
     });
   } catch (error) {
