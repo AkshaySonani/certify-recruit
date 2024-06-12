@@ -46,14 +46,10 @@ export const POST = async (req: NextRequest) => {
       }
     });
 
-    // // Calculate the percentage of correct answers
-    const totalQuestions = answers.length;
-    const correctPercentage = (correctAnswersCount / totalQuestions) * 100;
-
     const userData = await Individual.findOneAndUpdate(
       { user_ref_id: session?.user?._id },
       {
-        'learn_and_earn.result': correctPercentage,
+        'learn_and_earn.result': correctAnswersCount,
         'learn_and_earn.end_time': new Date(Date.now()),
       },
       {
