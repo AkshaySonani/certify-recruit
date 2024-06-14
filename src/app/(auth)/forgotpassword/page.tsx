@@ -3,9 +3,19 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { TEXT } from '@/service/Helper';
+import { useFormik } from 'formik';
+import Button from '@/Components/Button';
 
 const Page = () => {
   const router = useRouter();
+
+  const [email, setEmail] = useState('');
+  const [sendMail, setSendMail] = useState(false);
+
+  const handleSubmit = () => {
+    console.log('click', email);
+  };
+
   return (
     <div>
       <div className="container mx-auto">
@@ -22,6 +32,17 @@ const Page = () => {
               <p className="mb-10 text-center text-sm font-medium text-meta-light-blue-3">
                 {TEXT?.PLEASE_SELECT_OPTION_TO_RECEIVE_PASSWORD_RESET_LINK}
               </p>
+
+              {sendMail && (
+                <input
+                  type="text"
+                  name="email"
+                  value={email}
+                  placeholder="Enter email..."
+                  onChange={(e) => setEmail(e?.target?.value)}
+                  className="my-3 w-full rounded-lg border border-meta-light-blue-1 p-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
+                />
+              )}
 
               <div className="mb-8 flex h-28 w-full items-center justify-between rounded-xl border border-meta-blue-1 bg-white px-4 sm:h-20">
                 <div className="my-3 flex max-w-80 items-center">
@@ -45,18 +66,35 @@ const Page = () => {
                 </div>
 
                 <div className="m-4">
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    value={sendMail}
+                    className="custom-checkbox"
+                    onChange={(e) => {
+                      if (e.target.checked === false) {
+                        setEmail('');
+                      }
+                      setSendMail(e.target.checked);
+                    }}
+                  />
                 </div>
               </div>
 
-              <button className="mb-8 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-meta-blue-2">
+              <Button
+                title={TEXT?.SEND}
+                handleClick={() => handleSubmit()}
+                disabled={email?.length !== 0 ? false : true}
+                btnClass={`${email?.length === 0 && '!bg-gray-300 hover:!bg-none'}`}
+              />
+
+              {/* <button className="mb-8 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-meta-blue-2">
                 <span
-                  onClick={() => router.push('/resetpassword')}
+                  onClick={() => handleSubmit()}
                   className="flex justify-center text-sm font-medium text-white"
                 >
                   {TEXT?.SEND}
                 </span>
-              </button>
+              </button> */}
             </div>
           </div>
         </div>

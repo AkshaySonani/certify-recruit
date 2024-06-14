@@ -1,5 +1,7 @@
 import { Icons } from '@/svg';
+import bcrypt from 'bcryptjs';
 import mongoose from 'mongoose';
+import CryptoJS from 'crypto-js';
 
 const EMAIlREGEX =
   /^[a-zA-Z0-9]+([._-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-]?[a-zA-Z0-9]+)*\.[a-zA-Z]{2,}$/g;
@@ -294,6 +296,15 @@ const SIDE_BAR_DATA = {
       icon: Icons.Pricing,
     },
   ],
+};
+
+export const generateToken = () => {
+  return CryptoJS.lib.WordArray.random(32).toString();
+};
+
+export const hashToken = async (token: string) => {
+  const salt = await bcrypt.genSalt(10);
+  return bcrypt.hash(token, salt);
 };
 
 const createModal = (name: string, schema: any) =>

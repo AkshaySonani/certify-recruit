@@ -4,8 +4,9 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ROUTE, TEXT } from '@/service/Helper';
 
-const Page = () => {
+const Page = (data: any) => {
   const router = useRouter();
+
   const [eye, setEye] = useState<Record<string, boolean>>({
     pass: false,
     confirmPass: false,

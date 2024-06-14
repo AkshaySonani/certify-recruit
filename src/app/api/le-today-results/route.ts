@@ -44,11 +44,24 @@ export const GET = async (req: NextRequest) => {
       user_ref_id: currentUser?._id,
     }).populate({ path: 'user_ref_id' });
 
+    // Sort the results by 'result' in descending order and limit to top 10
+    const sortedResults = todayResults
+      .sort((a, b) => b.result - a.result)
+      .slice(0, 10);
+
+    // Get full user data for top ten results
+    const topTenData = await Promise.all(
+      sortedResults.map(async (result) => {
+        const user = await Individual.findById(result.user_ref_id._id);
+        return { ...result.toObject(), user };
+      }),
+    );
+
     return NextResponse.json({
       status: 200,
       data: {
         allResults: allResults,
-        topTenData: todayResults,
+        topTenData: topTenData,
       },
       message: "Today's results fetched successfully",
     });

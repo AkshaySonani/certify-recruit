@@ -29,6 +29,14 @@ const userSchema = new mongoose.Schema({
     required: true,
     enum: ['employee', 'individual', 'admin', 'superadmin'],
   },
+  resetPasswordToken: {
+    type: String,
+    default: null,
+  },
+  resetPasswordExpires: {
+    type: Number,
+    default: null,
+  },
   profile_picture: {
     type: String, // Assuming storing image URL
     default: '',
