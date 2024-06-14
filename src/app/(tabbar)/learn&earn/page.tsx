@@ -1,15 +1,33 @@
 'use client';
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { TEXT } from '@/service/Helper';
 import RegisterInfo from '@/Components/LearnAndEarn/RegisterInfo';
+import API from '@/service/ApiService';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import { toast } from 'react-toastify';
 
 const Page = () => {
+  const [userDetails, setUserDetails] = useState<any>({});
   const router = useRouter();
-  const certificate = 1;
+
+  useEffect(() => {
+    getProfileDetails();
+  }, []);
+
+  const getProfileDetails = () => {
+    API.get(API_CONSTANT?.PROFILE)
+      .then((res) => {
+        setUserDetails(res?.data?.data);
+      })
+      .catch((error) => {
+        toast.error(error?.response?.data?.error);
+      });
+  };
+
   return (
     <div>
-      {certificate !== 1 ? (
+      {userDetails?.certificates?.length !== 0 ? (
         <div>
           <div className="mb-4 text-2xl font-semibold text-meta-purple-1">
             {TEXT?.LEARN_AND_EARN}
@@ -31,7 +49,7 @@ const Page = () => {
           </div>
         </div>
       ) : (
-        <RegisterInfo />
+        <RegisterInfo userDetails={userDetails} />
       )}
     </div>
   );

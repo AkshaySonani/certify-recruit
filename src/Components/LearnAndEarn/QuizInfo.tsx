@@ -3,16 +3,39 @@ import Image from 'next/image';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { TEXT } from '@/service/Helper';
+import { log } from 'console';
+import { toast } from 'react-toastify';
 
 const QuizInfo = ({ userDetails }: any) => {
-  const startTime = new Date(userDetails?.learn_and_earn?.registration_time);
-  const targetTime = new Date(startTime) as any;
-  targetTime.setHours(20, 0, 0); // Set to 8:00 PM
+  const checkMeetingTime = () => {
+    const now = new Date();
+    const startTime = new Date();
+    startTime.setHours(20, 0, 0, 0); // 8:00 PM
+    const endTime = new Date();
+    endTime.setHours(20, 45, 0, 0); // 8:45 PM
+    if (now >= startTime && now <= endTime) {
+      toast.info('quiz is started please join');
+      router.replace('/quiz');
+    } else {
+      toast.error('Sorry, you cannot join the meeting now.');
+    }
+  };
+  const getNextTargetTime = () => {
+    const now = new Date();
+    const target = new Date();
 
-  const calculateTimeLeft = () => {
-    const now = new Date() as any;
-    const difference = targetTime - now;
-    let timeLeft = {} as any;
+    // target.setHours(23, 30, 0, 0);  //  For testing Set target time to 11:30 PM today
+
+    //set Target time 8:45
+    target.setHours(20, 45, 0, 0);
+    // If the current time is after 11:30 PM, set target to 11:30 PM the next day
+    return target;
+  };
+  const calculateTimeLeft = (target: any) => {
+    const now = new Date();
+    const difference = +target - +now;
+    let timeLeft = {};
+
     if (difference > 0) {
       timeLeft = {
         hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
@@ -20,27 +43,23 @@ const QuizInfo = ({ userDetails }: any) => {
         seconds: Math.floor((difference / 1000) % 60),
       };
     } else {
-      timeLeft = {
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
-      };
+      timeLeft = { hours: 0, minutes: 0, seconds: 0 };
     }
     return timeLeft;
   };
+  const [targetTime, setTargetTime] = useState(getNextTargetTime());
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(targetTime));
 
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-  const twoDigits = (num: any) => String(num).padStart(2, '0');
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
+      setTimeLeft(calculateTimeLeft(targetTime));
     }, 1000);
 
-    return () => clearInterval(timer); // Clean up the timer on component unmount
-  }, []);
-  const router = useRouter();
-  console.log('userDetails', userDetails);
+    return () => clearInterval(timer);
+  }, [targetTime]);
 
+  const router = useRouter();
+  const twoDigits = (num: any) => String(num).padStart(2, '0');
   return (
     <div>
       <div className="mb-4 text-2xl font-semibold text-meta-purple-1">
@@ -140,7 +159,10 @@ const QuizInfo = ({ userDetails }: any) => {
       </div>
       <div className="mt-8 flex items-center justify-end">
         <button
-          onClick={() => router.push('/quiz')}
+          // disabled={!isMeetingTime}
+          onClick={() => {
+            checkMeetingTime();
+          }}
           className="rounded-xl bg-meta-light-blue-1 px-8 py-2 text-meta-light-blue-3"
         >
           {TEXT?.Join_Now}

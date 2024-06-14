@@ -111,8 +111,8 @@ const MyProfile = () => {
               </p>
             </div>
             <div>
-              {session?.data?.user?.role === USER_ROLE?.EMPLOYEE &&
-              percentage !== 100 ? (
+              {isEdit === true ||
+              session?.data?.user?.role === USER_ROLE.INDIVIDUAL ? (
                 <button
                   className="w-32 rounded-lg bg-hiring-btn-gradient py-3 text-sm font-semibold text-white"
                   onClick={() => router?.push(ROUTE?.SEARCH_CVS)}
@@ -130,119 +130,119 @@ const MyProfile = () => {
             </div>
           </div>
 
-          {session?.data?.user?.role === USER_ROLE?.EMPLOYEE &&
-            percentage !== 100 &&
-            isEdit !== false && (
-              <div className="mt-4 w-full rounded-2xl bg-meta-light-blue-2 p-10">
-                <div className="flex w-full items-center gap-8">
-                  <div className="flex flex-col justify-center">
-                    <div className="relative h-24 w-24">
-                      <Image
-                        width={73}
-                        height={73}
-                        alt="avatar"
-                        src={'/sidebarIcon/profile.svg'}
-                        className="absolute right-[6px] top-[6px] h-[84px] w-[84px] rounded-full p-0.5"
-                      />
-                      <CircularProgressbar
-                        className="h-max w-max"
-                        value={percentage ? percentage : 0}
-                        styles={buildStyles({
-                          pathColor: '#34A853',
-                          strokeLinecap: 'butt',
-                          trailColor: '#d6d6d6',
-                          pathTransitionDuration: 0.5,
-                        })}
-                      />
-                    </div>
-                    <div className="w-full text-center">
-                      <p className="mt-1 text-base font-normal text-meta-green-1">
-                        {percentage}%
-                      </p>
-                    </div>
+          {(session?.data?.user?.role === USER_ROLE.INDIVIDUAL ||
+            isEdit ||
+            percentage !== 100) && (
+            <div className="mt-4 w-full rounded-2xl bg-meta-light-blue-2 p-10">
+              <div className="flex w-full items-center gap-8">
+                <div className="flex flex-col justify-center">
+                  <div className="relative h-24 w-24">
+                    <Image
+                      width={73}
+                      height={73}
+                      alt="avatar"
+                      src={'/sidebarIcon/profile.svg'}
+                      className="absolute right-[6px] top-[6px] h-[84px] w-[84px] rounded-full p-0.5"
+                    />
+                    <CircularProgressbar
+                      className="h-max w-max"
+                      value={percentage ? percentage : 0}
+                      styles={buildStyles({
+                        pathColor: '#34A853',
+                        strokeLinecap: 'butt',
+                        trailColor: '#d6d6d6',
+                        pathTransitionDuration: 0.5,
+                      })}
+                    />
                   </div>
-                  <div className="flex w-full gap-8">
-                    <div className="w-11/12">
-                      <p className="text-xl font-semibold capitalize text-meta-purple-1">
-                        {session?.data?.user?.role !== USER_ROLE?.EMPLOYEE
+                  <div className="w-full text-center">
+                    <p className="mt-1 text-base font-normal text-meta-green-1">
+                      {percentage}%
+                    </p>
+                  </div>
+                </div>
+                <div className="flex w-full gap-8">
+                  <div className="w-11/12">
+                    <p className="text-xl font-semibold capitalize text-meta-purple-1">
+                      {session?.data?.user?.role !== USER_ROLE?.EMPLOYEE
+                        ? userDetails?.user_name
                           ? userDetails?.user_name
-                            ? userDetails?.user_name
-                            : '-'
-                          : userDetails?.company_name
-                            ? userDetails?.company_name
-                            : '-'}
-                      </p>
-                      <p className="text-sm font-medium capitalize text-meta-light-blue-3">
-                        {session?.data?.user?.role === USER_ROLE?.EMPLOYEE &&
-                          userDetails?.company_type}
-                      </p>
+                          : '-'
+                        : userDetails?.company_name
+                          ? userDetails?.company_name
+                          : '-'}
+                    </p>
+                    <p className="text-sm font-medium capitalize text-meta-light-blue-3">
+                      {session?.data?.user?.role === USER_ROLE?.EMPLOYEE &&
+                        userDetails?.company_type}
+                    </p>
 
-                      <div className="border-b-default-1 my-3 w-full border-meta-light-blue-1" />
-                      <div className="flex w-1/2 justify-between">
-                        <div className="flex flex-wrap items-center gap-2">
-                          <Image
-                            width={16}
-                            height={16}
-                            alt="MainLogo"
-                            src={'/location.svg'}
-                          />
-                          <p className="text-xs text-meta-light-blue-3">
-                            {userDetails?.current_location
-                              ? userDetails?.current_location === 'OUT_OF_USA'
-                                ? TEXT?.OUT_SIDE_USA
-                                : TEXT?.USA
-                              : '-'}
-                          </p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Image
-                            width={16}
-                            height={16}
-                            alt="MainLogo"
-                            src={'/call.svg'}
-                          />
-                          <p className="text-xs text-meta-light-blue-3">
-                            {userDetails?.contact_number
-                              ? userDetails?.contact_number
-                              : '-'}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="mt-3 flex items-center gap-2">
+                    <div className="border-b-default-1 my-3 w-full border-meta-light-blue-1" />
+                    <div className="flex w-1/2 justify-between">
+                      <div className="flex flex-wrap items-center gap-2">
                         <Image
                           width={16}
                           height={16}
                           alt="MainLogo"
-                          src={'/mail.svg'}
+                          src={'/location.svg'}
                         />
                         <p className="text-xs text-meta-light-blue-3">
-                          {session?.data?.user?.email}
+                          {userDetails?.current_location
+                            ? userDetails?.current_location === 'OUT_OF_USA'
+                              ? TEXT?.OUT_SIDE_USA
+                              : TEXT?.USA
+                            : '-'}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Image
+                          width={16}
+                          height={16}
+                          alt="MainLogo"
+                          src={'/call.svg'}
+                        />
+                        <p className="text-xs text-meta-light-blue-3">
+                          {userDetails?.contact_number
+                            ? userDetails?.contact_number
+                            : '-'}
                         </p>
                       </div>
                     </div>
-                    {session?.data?.user?.role !== USER_ROLE?.EMPLOYEE && (
-                      <div
-                        onClick={() => setIsOpen(true)}
-                        className="cursor-pointer text-base font-medium text-meta-blue-1"
-                      >
-                        {TEXT?.EDIT}
-                      </div>
-                    )}
-                    <div>
-                      {isOpen && (
-                        <EditDetailsDialog
-                          isOpen={isOpen}
-                          setIsOpen={setIsOpen}
-                          session={session?.data}
-                          userDetails={userDetails}
-                          getUserDataApiCall={() => getProfileDetails()}
-                        />
-                      )}
+                    <div className="mt-3 flex items-center gap-2">
+                      <Image
+                        width={16}
+                        height={16}
+                        alt="MainLogo"
+                        src={'/mail.svg'}
+                      />
+                      <p className="text-xs text-meta-light-blue-3">
+                        {session?.data?.user?.email}
+                      </p>
                     </div>
+                  </div>
+                  {session?.data?.user?.role !== USER_ROLE?.EMPLOYEE && (
+                    <div
+                      onClick={() => setIsOpen(true)}
+                      className="cursor-pointer text-base font-medium text-meta-blue-1"
+                    >
+                      {TEXT?.EDIT}
+                    </div>
+                  )}
+                  <div>
+                    {isOpen && (
+                      <EditDetailsDialog
+                        isOpen={isOpen}
+                        setIsOpen={setIsOpen}
+                        session={session?.data}
+                        userDetails={userDetails}
+                        getUserDataApiCall={() => getProfileDetails()}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
-            )}
+            </div>
+          )}
 
           {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
             <CompanyProfile
@@ -250,6 +250,7 @@ const MyProfile = () => {
               userDetails={userDetails}
               getUserDataApiCall={() => getProfileDetails()}
               percentage={percentage}
+              isEdit={isEdit}
             />
           ) : (
             <IndividualProfile

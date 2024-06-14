@@ -24,11 +24,12 @@ const CompanyProfile = ({
   session,
   getUserDataApiCall,
   percentage,
+  isEdit,
 }: any) => {
   const [activePage, setActivePage] = useState(TAB[0]?.id);
   return (
     <>
-      {percentage !== 100 ? (
+      {percentage !== 100 || isEdit === true ? (
         <div className="mt-5">
           <div className="flex w-3/5 justify-around">
             {TAB?.map((list: any) => {

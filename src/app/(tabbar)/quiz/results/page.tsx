@@ -7,7 +7,7 @@ import { TEXT } from '@/service/Helper';
 import { Menu, Transition } from '@headlessui/react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 // import ReactApexChart from 'react-apexcharts';
@@ -125,11 +125,15 @@ const options = {
   },
 };
 
-const QuizResults = () => {
+const Page = () => {
+  const [results, setResults] = useState({
+    allResults: [],
+    topTenData: [],
+  });
   const getResults = () => {
     API.get(API_CONSTANT?.QUIZ_RESULTS)
       .then((res: any) => {
-        console.log('res----', res);
+        setResults(res?.data?.data);
       })
       .catch((error) => {
         toast.error(error?.response?.data?.message || 'Internal server error');
@@ -144,6 +148,15 @@ const QuizResults = () => {
     return classes.filter(Boolean).join(' ');
   }
 
+  const dayNames = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
@@ -207,8 +220,8 @@ const QuizResults = () => {
             height={200}
           />
         </div>
-        <div className="w-1/2 ">
-          <div className="container mx-auto rounded-2xl border border-meta-light-blue-1 p-4">
+        <div className="w-1/2">
+          <div className="container  mx-auto rounded-2xl border border-meta-light-blue-1 p-4">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-base font-bold text-meta-purple-1 ">
                 Weekly Score Detail
@@ -228,22 +241,27 @@ const QuizResults = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.map((row) => (
-                  <tr
-                    key={row.no}
-                    className="text-base font-medium text-meta-light-blue-3"
-                  >
-                    <td className="px-4 py-2 text-center">{row.no}</td>
-                    <td className="px-4 py-2 text-center">{row.week}</td>
-                    <td className="px-4 py-2 text-center">{row.score}</td>
-                    <td className="px-4 py-2 text-center">{row.time}</td>
-                    <td
-                      className={`px-4 py-2 text-center ${row.status === 'Missed' ? 'text-red-500' : 'text-green-500'}`}
+                {results?.allResults?.map((row: any, i: any) => {
+                  const date = new Date(row?.join_time);
+                  const dayName = dayNames[date.getDay()];
+                  const time = `${date.getHours()}:${date.getMinutes()}`;
+                  return (
+                    <tr
+                      key={row.no}
+                      className="text-base font-medium text-meta-light-blue-3"
                     >
-                      {row.status}
-                    </td>
-                  </tr>
-                ))}
+                      <td className="px-4 py-2 text-center">{i + 1}</td>
+                      <td className="px-4 py-2 text-center">{dayName}</td>
+                      <td className="px-4 py-2 text-center">{`${row.result}/10`}</td>
+                      <td className="px-4 py-2 text-center">{time}</td>
+                      <td
+                        className={`px-4 py-2 text-center ${row.result < 0 ? 'text-red-500' : 'text-green-500'}`}
+                      >
+                        {row.result > 0 ? 'Complete' : 'Missed'}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -270,11 +288,7 @@ const QuizResults = () => {
                     Name
                   </div>
                 </th>
-                <th className="px-6 py-4">
-                  <div className="text-base font-medium text-meta-light-blue-3">
-                    Department
-                  </div>
-                </th>
+
                 <th className="px-6 py-4">
                   <div className="text-base font-medium text-meta-light-blue-3">
                     Experience
@@ -293,13 +307,26 @@ const QuizResults = () => {
               </tr>
             </thead>
             <tbody>
-              {TopRankData.map((row: any) => {
+              {results?.topTenData.map((row: any) => {
+                let totalYears = 0;
+                let totalMonths = 0;
+
+                row?.user?.total_experiences?.forEach((experience: any) => {
+                  totalYears += experience.years;
+                  totalMonths += experience.month;
+                  // Adjust totalMonths to years if it's more than 12
+                  totalYears += Math.floor(totalMonths / 12);
+                  totalMonths %= 12;
+                });
+
+                const date = new Date(row?.join_time);
+                const time = `${date.getHours()}:${date.getMinutes()}`;
                 return (
                   <tr>
                     <td className="px-6 py-4 text-gray-500">
                       <div>
                         <div className="text-base font-medium text-meta-purple-1">
-                          {row.rank}
+                          {row.result}
                         </div>
                       </div>
                     </td>
@@ -312,7 +339,7 @@ const QuizResults = () => {
                           src={'/dashboard/photo.svg'}
                         />
                         <div className="pl-4 text-base font-medium text-meta-purple-1">
-                          {row.name}
+                          {row?.user?.user_name}
                         </div>
                       </div>
                     </td>
@@ -320,29 +347,21 @@ const QuizResults = () => {
                     <td className="px-6 py-4 text-gray-500">
                       <div>
                         <div className="text-base font-medium text-meta-purple-1">
-                          {' '}
-                          {row.department}
+                          {(totalYears, totalMonths)}
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 text-gray-500">
                       <div>
                         <div className="text-base font-medium text-meta-purple-1">
-                          {row.experience}
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-gray-500">
-                      <div>
-                        <div className="text-base font-medium text-meta-purple-1">
-                          {row.time}
+                          {time}
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 text-gray-500">
                       <div>
                         <div className="text-base font-medium text-meta-green-1">
-                          {row.score}
+                          {row.result}
                         </div>
                       </div>
                     </td>
@@ -356,4 +375,4 @@ const QuizResults = () => {
     </div>
   );
 };
-export default QuizResults;
+export default Page;

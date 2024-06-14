@@ -8,10 +8,9 @@ import { API_CONSTANT } from '@/constant/ApiConstant';
 import { toast } from 'react-toastify';
 import QuizInfo from './QuizInfo';
 
-const RegisterInfo = () => {
+const RegisterInfo = ({ userDetails }: any) => {
   const router = useRouter();
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
-  const [userDetails, setUserDetails] = useState<any>({});
   const [showQuizInfo, setShowQuizInfo] = useState(false);
 
   useEffect(() => {
@@ -45,6 +44,9 @@ const RegisterInfo = () => {
   const userRegistarion = () => {
     API.post(API_CONSTANT?.UPDATE_LE_DETAILS, {})
       .then((res: any) => {
+        if (res?.data?.data) {
+          toast.info('Your quiz started at 8:00 PM');
+        }
         setIsRegistrationOpen(false);
         getProfileDetails();
       })
@@ -52,23 +54,13 @@ const RegisterInfo = () => {
         toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
-  useEffect(() => {
-    getProfileDetails();
-  }, []);
-
-  const getProfileDetails = () => {
-    API.get(API_CONSTANT?.PROFILE)
-      .then((res) => {
-        setUserDetails(res?.data?.data);
-      })
-      .catch((error) => {
-        toast.error(error?.response?.data?.error);
-      });
-  };
 
   useEffect(() => {
-    if (userDetails?.learn_and_earn?.results !== 0) {
-      router?.replace('/quiz');
+    if (
+      userDetails?.learn_and_earn &&
+      userDetails?.learn_and_earn?.result !== 0
+    ) {
+      router?.replace('/quiz/results');
     }
   }, [userDetails]);
 
