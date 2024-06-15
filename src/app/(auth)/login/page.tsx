@@ -182,8 +182,8 @@ const Page = () => {
                 </div>
                 <div className="mb-3 flex items-center justify-end">
                   <span
+                    onClick={() => router.push('/forgotpassword')}
                     className="mx-2 cursor-pointer text-xs font-normal text-meta-blue-1"
-                    onClick={() => router.push('/login/forgotPass')}
                   >
                     {TEXT?.FORGOT_PASSWORD}
                   </span>
