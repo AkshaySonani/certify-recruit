@@ -17,6 +17,7 @@ import sha256 from 'crypto-js/sha256';
 import API from '@/service/ApiService';
 import React, { useState } from 'react';
 import Button from '@/Components/Button';
+import Spinner from '@/app/icons/Spinner';
 import { Switch } from '@headlessui/react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -78,7 +79,11 @@ const Page = () => {
       ? EMP_BUSINESS_PLAN
       : INDIVIDUAL_MONTHLY_PLAN;
 
-  return (
+  return session?.data?.user === undefined ? (
+    <div className="flex h-full items-center justify-center">
+      <Spinner width="32px" height="32px" color="#3751F2" className="spinner" />
+    </div>
+  ) : (
     <section>
       <div className="text-center">
         <div className="text-3xl font-semibold text-meta-purple-1">
@@ -176,11 +181,14 @@ const Page = () => {
         </div>
 
         <div className="min-w-64 max-w-96 rounded-3xl">
-          <div className="bg-meta-purple-1 py-2 text-center text-base font-medium text-white">
+          {/* <div className="bg-meta-purple-1 py-2 text-center text-base font-medium text-white">
             {TEXT?.MOST_POPULAR}
-          </div>
-          <div className="flex h-[520px] flex-col justify-between bg-meta-gray-2 px-8 pb-10 pt-10">
-            <div>
+          </div> */}
+          <div className="flex h-[520px] flex-col justify-between bg-meta-gray-2">
+            <div className="rounded-t-lg bg-meta-purple-1 py-2 text-center text-base font-medium text-white">
+              {TEXT?.MOST_POPULAR}
+            </div>
+            <div className="px-8 pb-10 pt-10">
               <div className="text-center text-base font-medium text-meta-purple-1">
                 {session?.data?.user?.role === USER_ROLE?.EMPLOYEE
                   ? TEXT?.STANDARD_PLAN
@@ -228,14 +236,14 @@ const Page = () => {
                   </div>
                 </div>
               ))}
-            </div>
 
-            <Button
-              title={TEXT?.GET_STARTED}
-              btnClass="h-12 w-full !mb-0"
-              handleClick={() => makePayment(70)}
-              titleClass="flex justify-center text-sm font-medium text-white"
-            />
+              <Button
+                title={TEXT?.GET_STARTED}
+                btnClass="h-12 w-full !mt-2 !mb-0"
+                handleClick={() => makePayment(70)}
+                titleClass="flex justify-center text-sm font-medium text-white"
+              />
+            </div>
           </div>
         </div>
 
