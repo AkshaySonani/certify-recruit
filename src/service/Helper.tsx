@@ -37,12 +37,11 @@ const ROUTE = {
 };
 
 const TEXT = {
-  UPLOAD: 'Upload',
   OR: 'or',
   CTC: 'CTC',
-  POST: 'Post',
   USA: 'Usa',
   CSS: 'Css',
+  POST: 'Post',
   SEND: 'Send',
   DONE: 'Done',
   NAME: 'Name',
@@ -60,6 +59,7 @@ const TEXT = {
   CITY: 'City',
   AREA: 'Area',
   YEAR: 'Year',
+  DAILY: 'Daily',
   EMAIL: 'Email',
   SCORE: 'Score',
   MONTH: 'Month',
@@ -68,6 +68,7 @@ const TEXT = {
   HOURS: 'Hours',
   SHARE: 'Share:',
   Month: '/Month',
+  UPLOAD: 'Upload',
   LOG_IN: 'Log In',
   CANCEL: 'Cancel',
   DELETE: 'Delete',
@@ -107,6 +108,7 @@ const TEXT = {
   AVAILABLE: 'Available',
   QUIZ_INFO: 'Quiz info',
   FULL_NAME: 'Full Name',
+  FORT_NIGHT: 'Fortnight',
   DEPARTMENT: 'Department',
   EXPERIENCE: 'Experience',
   ACTIVE_JOB: 'Active Job',
@@ -127,6 +129,7 @@ const TEXT = {
   SERVER_SIDE: 'Server Side',
   ADD_KEYWORD: 'Add keyword',
   QUIZ_DETAIL: 'Quiz Detail',
+  ARTICLE_LINK: 'Article Link',
   Get_Started: 'Get Started!',
   OUT_SIDE_USA: 'Outside USA',
   EDIT_PROFILE: 'Edit profile',
@@ -168,17 +171,18 @@ const TEXT = {
   WEBNOVA_INFOTECH: 'Webnova Infotech',
   NAME_ON_PAN_CARD: 'Name on PAN Card',
   QUESTION_PALETTE: 'Question Palette',
-  CHOOSE_YOUR_PLAN: ' Choose your plan',
   RECENTLY_JOB_POST: 'Recently Job post',
   YOUR_COMPANY_NAME: 'Your Company name',
   REGISTRATION_INFO: 'Registration info',
   MARKS_PER_QUESTION: 'Marks Per Question',
   LOG_IN_WITH_GOOGLE: ' Log in with Google',
   SIGN_UP_WITH_GOOGLE: 'Sign up with Google',
+  PAY_55_AND_PLAY_ONCE: 'Pay 55 and Play once',
   JOB_POSTING_LOCATION: 'Job posting location',
   START_NOW_ITS_FREE: " Start now - it's free",
   REDIRECT_TO_CALENDLY: 'Redirect to Calendly',
   MAX_TAB_SWITCH_ALLOW: 'Max Tab Switch Allow',
+  ENABLE_NOTIFICATIONS: 'Enable notifications',
   COMPLETE_YOUR_PROFILE: 'Complete your profile',
   PICK_WORKING_SCHEDULE: 'Pick working schedule',
   KYC_Compliance_Detail: 'KYC Compliance Detail',
@@ -197,9 +201,12 @@ const TEXT = {
   NEGATIVE_MARKS_PER_QUESTION: 'Negative Marks Per Question',
   REGISTRATION_TIME: 'Registration Time 8:00 AM to 12:00 PM',
   YOUR_NEW_JOURNEY_BEGINS_NOW: 'Your New Journey Begins Now.',
+  CHOOSE_YOUR_PLAN: ' Choose the most suitable plan for you.',
   MUST_BE_AT_LEAST_CHARACTERS: 'Must be at least 8 characters',
   YOUR_PASSWORD_HAS_BEEN_RESET: 'your password has been reset',
+  PAY_1470_AND_PLAY_ONCE: 'Pay 1470 and play for 30 days straight',
   CHOOSE_YOUR_INTERVIEW_TIME_SLOT: 'Choose your interview time slot',
+  PAY_750_AND_PLAY_ONCE: 'Pay 750 and play for 15 days straight (Only 50/Day)',
   YOU_CAN_PICK_MULTIPLE_WORK_SCHEDULES: 'You can pick multiple work schedules.',
   CHOOSE_HOW_YOU_PREFER_TO_PAY_FOR_THIS_JOB:
     'Choose how you prefer to pay for this job.',
@@ -298,6 +305,57 @@ const SIDE_BAR_DATA = {
   ],
 };
 
+const EMP_BASIC_PLAN = [
+  { Title: 'Upto 5 Job Postings' },
+  { Title: 'Upto 10 Applicant search' },
+  { Title: 'Badge of Honour Not included' },
+  { Title: 'Upto 5 BGV' },
+  { Title: 'Upto 5 applicants allowed' },
+];
+
+const EMP_STANDARD_PLAN = [
+  { Title: 'Upto 25 Job Postings' },
+  { Title: 'Upto 25 Applicant Search' },
+  { Title: 'Eligible for Badge of Honour' },
+  { Title: 'Upto 15 BGV' },
+  { Title: 'Eligible for Post Boosting' },
+  { Title: 'Upto 20 applicants allowed' },
+];
+
+const EMP_BUSINESS_PLAN = [
+  { Title: 'Unlimited Job Postings' },
+  { Title: 'Unlimited Applicant Search' },
+  { Title: 'Eligible for badge of Honour' },
+  { Title: 'Upto 50 BGV (outsiders included)' },
+  { Title: 'Eligible for Post Boosting' },
+  { Title: 'Upto 75 applicants allowed' },
+];
+
+const INDIVIDUAL_DAILY_PLAN = [
+  { Title: 'Get daily news, facts and assessment of 10 questions.' },
+  { Title: 'Log in every day to get 100 points. Missed days you get nothing.' },
+  {
+    Title:
+      '1st Rank gets 50 points. 2nd rank gets 25 points. 3rd rank gets 10 Points.',
+  },
+];
+const INDIVIDUAL_FORT_NIGHT_PLAN = [
+  { Title: 'Get daily news, facts and assessment of 10 questions.' },
+  { Title: 'Log in every day to get 100 points. Missed days you get nothing.' },
+  {
+    Title:
+      '1st Rank gets 50 points. 2nd rank gets 25 points. 3rd rank gets 10 Points.',
+  },
+];
+const INDIVIDUAL_MONTHLY_PLAN = [
+  { Title: 'Get daily news, facts and assessment of 10 questions.' },
+  { Title: 'Log in every day to get 100 points. Missed days you get nothing.' },
+  {
+    Title:
+      '1st Rank gets 50 points. 2nd rank gets 25 points. 3rd rank gets 10 Points.',
+  },
+];
+
 export const generateToken = () => {
   return CryptoJS.lib.WordArray.random(32).toString();
 };
@@ -334,5 +392,11 @@ export {
   shuffleData,
   createModal,
   SIDE_BAR_DATA,
+  EMP_BASIC_PLAN,
+  EMP_BUSINESS_PLAN,
+  EMP_STANDARD_PLAN,
   calculatePercentage,
+  INDIVIDUAL_DAILY_PLAN,
+  INDIVIDUAL_MONTHLY_PLAN,
+  INDIVIDUAL_FORT_NIGHT_PLAN,
 };

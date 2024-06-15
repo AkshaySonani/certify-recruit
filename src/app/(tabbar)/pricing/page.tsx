@@ -1,11 +1,21 @@
 'use client';
+import {
+  TEXT,
+  USER_ROLE,
+  EMP_BASIC_PLAN,
+  EMP_STANDARD_PLAN,
+  EMP_BUSINESS_PLAN,
+  INDIVIDUAL_DAILY_PLAN,
+  INDIVIDUAL_MONTHLY_PLAN,
+  INDIVIDUAL_FORT_NIGHT_PLAN,
+} from '@/service/Helper';
 import axios from 'axios';
+import Link from 'next/link';
 import Image from 'next/image';
 import { v4 as uuidv4 } from 'uuid';
 import sha256 from 'crypto-js/sha256';
 import API from '@/service/ApiService';
 import React, { useState } from 'react';
-import { TEXT } from '@/service/Helper';
 import Button from '@/Components/Button';
 import { Switch } from '@headlessui/react';
 import { useRouter } from 'next/navigation';
@@ -13,7 +23,7 @@ import { useSession } from 'next-auth/react';
 
 const Page = () => {
   const router = useRouter();
-  const session = useSession();
+  const session: any = useSession();
 
   const [enabled, setEnabled] = useState(false);
 
@@ -55,58 +65,92 @@ const Page = () => {
     router.replace(redirect);
   };
 
+  const FIRST_PLAN =
+    session?.data?.user?.role === USER_ROLE?.EMPLOYEE
+      ? EMP_BASIC_PLAN
+      : INDIVIDUAL_DAILY_PLAN;
+  const SECOND_PLAN =
+    session?.data?.user?.role === USER_ROLE?.EMPLOYEE
+      ? EMP_STANDARD_PLAN
+      : INDIVIDUAL_FORT_NIGHT_PLAN;
+  const THIRD_PLAN =
+    session?.data?.user?.role === USER_ROLE?.EMPLOYEE
+      ? EMP_BUSINESS_PLAN
+      : INDIVIDUAL_MONTHLY_PLAN;
+
   return (
     <section>
       <div className="text-center">
         <div className="text-3xl font-semibold text-meta-purple-1">
           {TEXT?.CHOOSE_YOUR_PLAN}
         </div>
-        <div className="mt-2 text-base font-medium text-meta-light-blue-3">
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry.
-        </div>
       </div>
-      <div className="my-14 flex items-center justify-center">
-        <div className="mx-3 text-xl font-medium text-meta-purple-1">
-          {TEXT?.MONTHLY}
-        </div>
-        <div className="mx-2">
-          <Switch
-            checked={enabled}
-            onChange={setEnabled}
-            className={`${
-              enabled ? 'bg-gray-100' : 'bg-green-100'
-            } relative inline-flex h-6 w-11 items-center rounded-full`}
-          >
-            <span className="sr-only">Enable notifications</span>
-            <span
+
+      {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
+        <div className="my-14 flex items-center justify-center">
+          <div className="mx-3 text-xl font-medium text-meta-purple-1">
+            {TEXT?.MONTHLY}
+          </div>
+          <div className="mx-2">
+            <Switch
+              checked={enabled}
+              onChange={setEnabled}
               className={`${
-                enabled ? 'translate-x-6' : 'translate-x-1'
-              } inline-block h-4 w-4 transform rounded-full bg-blue-600 transition`}
-            />
-          </Switch>
+                enabled ? 'bg-meta-light-blue-1' : 'bg-gray-100'
+              } relative inline-flex h-6 w-11 items-center rounded-full`}
+            >
+              <span className="sr-only">{TEXT?.ENABLE_NOTIFICATIONS}</span>
+              <span
+                className={`${
+                  enabled ? 'translate-x-6' : 'translate-x-1'
+                } inline-block h-4 w-4 transform rounded-full bg-blue-600 transition`}
+              />
+            </Switch>
+          </div>
+          <div className="mx-2 text-xl font-medium text-meta-light-blue-3">
+            {TEXT?.YEARLY}
+          </div>
+          <div className="text-sm font-medium text-meta-blue-1">20%off</div>
         </div>
-        <div className="mx-2 text-xl font-medium text-meta-light-blue-3">
-          {TEXT?.YEARLY}
+      ) : (
+        <div className="mb-10 mt-3 flex items-center justify-center text-base font-semibold text-meta-blue-2 underline">
+          <Link href="#">{TEXT?.ARTICLE_LINK}</Link>
         </div>
-        <div className="text-sm font-medium text-meta-blue-1">20%off</div>
-      </div>
+      )}
 
       <div className="flex flex-wrap items-end justify-center gap-6">
         <div className="flex h-[520px] min-w-64 max-w-96 flex-col justify-between rounded-3xl bg-meta-gray-2 px-8 py-10">
           <div>
             <div className="text-center text-base font-medium text-meta-purple-1">
-              {TEXT?.BASIC_PLAN}
+              {session?.data?.user?.role === USER_ROLE?.EMPLOYEE
+                ? TEXT?.BASIC_PLAN
+                : TEXT?.DAILY}
             </div>
 
-            <div className="my-6 flex items-end justify-center">
-              <div className="text-4xl font-medium text-meta-purple-1">$20</div>
-              <div className="mb-1 text-xs font-medium text-meta-light-blue-3">
-                {TEXT?.Month}
+            <div className="my-5 flex items-end justify-center">
+              <div className="text-4xl font-medium text-meta-purple-1">
+                {session?.data?.user?.role === USER_ROLE?.EMPLOYEE
+                  ? '$99'
+                  : '₹55'}
               </div>
+              {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
+                <div className="mb-1 text-xs font-medium text-meta-light-blue-3">
+                  {TEXT?.Month}
+                </div>
+              ) : (
+                ''
+              )}
             </div>
 
-            {Array.from({ length: 4 }).map((_, index) => (
+            {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
+              ''
+            ) : (
+              <div className="my-4 text-center text-lg font-normal text-meta-purple-1">
+                {TEXT?.PAY_55_AND_PLAY_ONCE}
+              </div>
+            )}
+
+            {FIRST_PLAN?.map((ele, index) => (
               <div key={index} className="mb-3 flex items-center justify-start">
                 <div className="mr-4">
                   <Image
@@ -117,7 +161,7 @@ const Page = () => {
                   />
                 </div>
                 <div className="text-sm font-normal text-meta-purple-1">
-                  Lorem Ipsum is simply dummy
+                  {ele?.Title}
                 </div>
               </div>
             ))}
@@ -138,19 +182,35 @@ const Page = () => {
           <div className="flex h-[520px] flex-col justify-between bg-meta-gray-2 px-8 pb-10 pt-10">
             <div>
               <div className="text-center text-base font-medium text-meta-purple-1">
-                {TEXT?.STANDARD_PLAN}
+                {session?.data?.user?.role === USER_ROLE?.EMPLOYEE
+                  ? TEXT?.STANDARD_PLAN
+                  : TEXT?.FORT_NIGHT}
               </div>
 
               <div className="my-6 flex items-end justify-center">
                 <div className="text-4xl font-medium text-meta-purple-1">
-                  $70
+                  {session?.data?.user?.role === USER_ROLE?.EMPLOYEE
+                    ? '$249'
+                    : '₹750'}
                 </div>
-                <div className="mb-1 text-xs font-medium text-meta-light-blue-3">
-                  {TEXT?.Month}
-                </div>
+                {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
+                  <div className="mb-1 text-xs font-medium text-meta-light-blue-3">
+                    {TEXT?.Month}
+                  </div>
+                ) : (
+                  ''
+                )}
               </div>
 
-              {Array.from({ length: 7 }).map((_, index) => (
+              {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
+                ''
+              ) : (
+                <div className="my-4 max-w-64 text-center text-lg font-normal text-meta-purple-1">
+                  {TEXT?.PAY_750_AND_PLAY_ONCE}
+                </div>
+              )}
+
+              {SECOND_PLAN?.map((ele, index) => (
                 <div
                   key={index}
                   className="mb-3 flex items-center justify-start"
@@ -164,7 +224,7 @@ const Page = () => {
                     />
                   </div>
                   <div className="text-sm font-normal text-meta-purple-1">
-                    Lorem Ipsum is simply dummy
+                    {ele?.Title}
                   </div>
                 </div>
               ))}
@@ -182,17 +242,35 @@ const Page = () => {
         <div className="flex h-[520px] min-w-64 max-w-96 flex-col justify-between rounded-3xl bg-meta-gray-2 px-8 py-10">
           <div>
             <div className="text-center text-base font-medium text-meta-purple-1">
-              {TEXT?.BUSINESS_PLAN}
+              {session?.data?.user?.role === USER_ROLE?.EMPLOYEE
+                ? TEXT?.BUSINESS_PLAN
+                : TEXT?.MONTHLY}
             </div>
 
             <div className="my-6 flex items-end justify-center">
-              <div className="text-4xl font-medium text-meta-purple-1">$99</div>
-              <div className="mb-1 text-xs font-medium text-meta-light-blue-3">
-                {TEXT?.Month}
+              <div className="text-4xl font-medium text-meta-purple-1">
+                {session?.data?.user?.role === USER_ROLE?.EMPLOYEE
+                  ? '$499'
+                  : '₹1470'}
               </div>
+              {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
+                <div className="mb-1 text-xs font-medium text-meta-light-blue-3">
+                  {TEXT?.Month}
+                </div>
+              ) : (
+                ''
+              )}
             </div>
 
-            {Array.from({ length: 5 }).map((_, index) => (
+            {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
+              ''
+            ) : (
+              <div className="my-4 text-center text-lg font-normal text-meta-purple-1">
+                {TEXT?.PAY_1470_AND_PLAY_ONCE}
+              </div>
+            )}
+
+            {THIRD_PLAN?.map((ele, index) => (
               <div key={index} className="mb-3 flex items-center justify-start">
                 <div className="mr-4">
                   <Image
@@ -203,7 +281,7 @@ const Page = () => {
                   />
                 </div>
                 <div className="text-sm font-normal text-meta-purple-1">
-                  Lorem Ipsum is simply dummy
+                  {ele?.Title}
                 </div>
               </div>
             ))}
