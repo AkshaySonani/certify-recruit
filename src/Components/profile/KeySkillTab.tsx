@@ -76,19 +76,15 @@ const KeySkillTab = ({
     formik?.setFieldValue('skills', arr);
   };
 
-  const searchSkillApi = (search: any) => {
-    let obj = {
-      searchText: search,
-    };
-    API.post(API_CONSTANT?.CATEGORY, obj)
+  const searchSkillApi = (searchText: any) => {
+    API.post(API_CONSTANT?.CATEGORY, { searchText })
       .then((res) => {
-        let skiilArr = res?.data?.data?.map((list: any) => {
-          return {
-            _id: list?._id,
-            label: list?.subcategory,
-            value: list?.subcategory,
-          };
-        });
+        let skiilArr = res?.data?.data?.map((list: any) => ({
+          _id: list?._id,
+          label: list?.subcategory,
+          value: list?.subcategory,
+        }));
+        console.log('🚀 ~ .then ~ skiilArr:', skiilArr);
         setSkillData(skiilArr);
       })
       .catch((error) => {
@@ -97,14 +93,10 @@ const KeySkillTab = ({
   };
 
   useEffect(() => {
-    if (debouncedSearchSkill !== '') {
+    if (debouncedSearchSkill) {
       searchSkillApi(debouncedSearchSkill);
     }
   }, [debouncedSearchSkill]);
-
-  const onSearchSkill = (search: any) => {
-    setSkillQuery(search);
-  };
 
   const Placeholder = (props: any) => {
     return <components.Placeholder {...props} />;
@@ -156,7 +148,7 @@ const KeySkillTab = ({
                 style={MultiboxStyle}
                 placeholder="Add your Skill"
                 value={formik?.values?.skills}
-                onKeyDown={(e: any) => onSearchSkill(e)}
+                onKeyDown={(e: any) => setSkillQuery(e)}
                 className="w-full !border-meta-light-blue-1"
                 components={{ Placeholder, DropdownIndicator }}
               />

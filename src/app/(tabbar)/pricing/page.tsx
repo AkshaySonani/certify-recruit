@@ -27,8 +27,8 @@ const Page = () => {
       merchantTransactionId: transactionid,
       paymentInstrument: { type: 'PAY_PAGE' },
       merchantId: process.env.NEXT_PUBLIC_MERCHANT_ID,
-      redirectUrl: `${process.env.NEXT_PUBLIC_DOMAIN}/api/transaction/${transactionid}`,
-      callbackUrl: `${process.env.NEXT_PUBLIC_DOMAIN}/api/transaction/${transactionid}`,
+      redirectUrl: `${process.env.NEXT_PUBLIC_BASE_URL}api/transaction/${transactionid}`,
+      callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}api/transaction/${transactionid}`,
     };
 
     const dataBase64 = Buffer.from(JSON.stringify(payload)).toString('base64');
