@@ -111,8 +111,11 @@ const MyProfile = () => {
               </p>
             </div>
             <div>
-              {isEdit === true ||
-              session?.data?.user?.role === USER_ROLE.INDIVIDUAL ? (
+              {session?.data?.user?.role === USER_ROLE.INDIVIDUAL ? (
+                <button className="w-32 rounded-lg bg-hiring-btn-gradient py-3 text-sm font-semibold text-white">
+                  Open to
+                </button>
+              ) : isEdit === true ? (
                 <button
                   className="w-32 rounded-lg bg-hiring-btn-gradient py-3 text-sm font-semibold text-white"
                   onClick={() => router?.push(ROUTE?.SEARCH_CVS)}

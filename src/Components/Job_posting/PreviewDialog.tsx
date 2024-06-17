@@ -4,6 +4,8 @@ import React, { Fragment, useState } from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 
 const PreviewDialog = ({ isOpen, setIsOpen, formik }: any) => {
+  console.log('formik', formik);
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -143,7 +145,7 @@ const PreviewDialog = ({ isOpen, setIsOpen, formik }: any) => {
                       formik?.values?.working_schedule?.map((list: any) => {
                         return (
                           <div className="text-sm font-medium text-black">
-                            {list}
+                            {list?.label}
                           </div>
                         );
                       })}

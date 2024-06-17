@@ -16,11 +16,12 @@ import AutoComplete from '@/Components/Autocomplete';
 import useDebounce from '@/hooks/useDebounce';
 import Spinner from '@/app/icons/Spinner';
 import PreviewDialog from '@/Components/Job_posting/PreviewDialog';
-import { format } from 'path';
+import { useRouter } from 'next/navigation';
 
 const WORKPLACE_TYPE = ['ONSITE', 'HYBRID', 'REMOTE'];
 
 function JobPostingFormMain({ id }: any) {
+  const router = useRouter();
   let [isOpen, setIsOpen] = useState(false);
   const [nextPage, setNextPage] = useState(1);
   const [stateQuery, setStateQuery] = useState('');
@@ -79,6 +80,7 @@ function JobPostingFormMain({ id }: any) {
               res?.data?.message || 'Successfully your job is posting',
             );
           }
+          router.push(ROUTE?.DASHBOARD);
           actions.setSubmitting(false);
         })
         .catch((error) => {

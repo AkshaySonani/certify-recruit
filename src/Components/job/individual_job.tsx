@@ -13,6 +13,7 @@ import useDebounce from '@/hooks/useDebounce';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Menu, Popover, Transition } from '@headlessui/react';
+import { toast } from 'react-toastify';
 
 const IndividualJob = () => {
   const [cities, setCities] = useState([]);
@@ -83,6 +84,12 @@ const IndividualJob = () => {
       });
   };
 
+  const ClearFilter = () => {
+    setCityFilter('');
+    setJobSearch('');
+    getJobApi();
+  };
+
   return (
     <div>
       <div>
@@ -134,7 +141,7 @@ const IndividualJob = () => {
                   />
                 </div>
               </div>
-              <div>
+              <div className="flex items-center gap-2">
                 <button
                   onClick={() => _applyFilter()}
                   disabled={jobSearch || cityFilter ? false : true}
@@ -147,6 +154,22 @@ const IndividualJob = () => {
                     src={'/dashboard/search.svg'}
                   />
                 </button>
+
+                {jobSearch !== '' || cityFilter ? (
+                  <button
+                    onClick={() => ClearFilter()}
+                    className={`${jobSearch || cityFilter ? 'bg-meta-light-blue-2' : 'bg-gray-300'} rounded-xl border border-meta-light-blue-2 p-3`}
+                  >
+                    <Image
+                      alt="date"
+                      width={19}
+                      height={19}
+                      src={'/Closeicon.svg'}
+                    />
+                  </button>
+                ) : (
+                  ''
+                )}
               </div>
             </div>
 

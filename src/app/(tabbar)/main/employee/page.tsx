@@ -3,6 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { TEXT } from '@/service/Helper';
+import Link from 'next/link';
 
 const Page = () => {
   const router = useRouter();
@@ -32,12 +33,12 @@ const Page = () => {
                   >
                     {TEXT?.START_NOW_ITS_FREE}
                   </button>
-                  <button
-                    onClick={() => router.push('/main/employee/demo')}
+                  <Link
+                    href={process.env.NEXT_PUBLIC_CALENDLY}
                     className="h-16 w-64 rounded-2xl border border-meta-light-blue-2 bg-white text-xl font-semibold text-meta-light-blue-3"
                   >
                     {TEXT?.SCHEDULE_A_DEMO}
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

@@ -27,7 +27,7 @@ const Page = () => {
 
   return (
     <div>
-      {userDetails?.certificates?.length !== 0 ? (
+      {userDetails?.certificates?.length === 0 ? (
         <div>
           <div className="mb-4 text-2xl font-semibold text-meta-purple-1">
             {TEXT?.LEARN_AND_EARN}

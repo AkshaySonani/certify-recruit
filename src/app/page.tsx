@@ -1,3 +1,4 @@
+import Certificate from '@/Components/Certificate/certificate';
 import Footer from '@/Components/home/footer';
 import Header from '@/Components/home/header';
 import PageTitle from '@/Components/home/pageTitle';

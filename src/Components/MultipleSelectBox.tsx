@@ -29,7 +29,12 @@ export const MultipleSelectBox = ({
       components={components}
       placeholder={placeholder}
       controlShouldRenderValue={false}
-      onKeyDown={(e) => onKeyDown(e?.target?.value)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+        }
+        onKeyDown(e?.target?.value);
+      }}
     />
   );
 };

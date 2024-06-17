@@ -56,7 +56,7 @@ const Certificate = () => {
                   className="mx-auto mb-4 w-60"
                 />
               </div>
-              <h1 className="text-meta-blue-3 text-2xl font-bold">
+              <h1 className="text-2xl font-bold text-meta-blue-3">
                 CERTIFICATE
               </h1>
               <p className="text-base font-bold text-black">
@@ -76,13 +76,13 @@ const Certificate = () => {
               </div> */}
             </div>
             <div className="mb-6 text-center">
-              <p className="text-meta-blue-4 text-xl font-bold">
+              <p className="text-xl font-bold text-meta-blue-4">
                 PROUDLY PRESENTED TO
               </p>
               <h2 className="text-2xl font-bold text-meta-blue-1">
                 Lynn Tanner
               </h2>
-              <div className="border-meta-blue-4 mx-auto mt-2 max-w-96 border-[1px]" />
+              <div className="mx-auto mt-2 max-w-96 border-[1px] border-meta-blue-4" />
             </div>
             <div className="mb-6 text-center">
               <p className="text-xl leading-6 tracking-tight text-meta-purple-1">
@@ -125,7 +125,7 @@ const Certificate = () => {
                     className="mx-auto mb-4 w-28"
                     src={'/certificate/signature.png'}
                   />
-                  <div className="border-meta-blue-4 mx-auto my-1 max-w-52 border-[1px]" />
+                  <div className="mx-auto my-1 max-w-52 border-[1px] border-meta-blue-4" />
                   <p>Founder & CEO</p>
                   <p>CLUSTER CERTIFY RECRUIT PRIVATE LIMITED</p>
                 </div>

@@ -22,7 +22,7 @@ const actionMenuItems = ['Edit', 'Delete', 'View JobDetails'];
 const EmployeeJob = () => {
   const router = useRouter();
   const [cities, setCities] = useState([]);
-  const [jobList, setJobList] = useState([]);
+  const [jobList, setJobList] = useState<any>([]);
   const [jobSearch, setJobSearch] = useState('');
   const [cityQuery, setCityQuery] = useState('');
   const [jobStatus, setJobStatus] = useState('');
@@ -126,6 +126,10 @@ const EmployeeJob = () => {
   };
 
   const updateStatusApi = (val: any, id: any) => {
+    const updatedItems = jobList.map((item: any) =>
+      item?._id === id ? { ...item, status: val } : item,
+    );
+    setJobList(updatedItems);
     const data = {
       status: val,
       job_id: id,
@@ -369,7 +373,7 @@ const EmployeeJob = () => {
               />
             </div>
           </div>
-          <div className="flex  w-1/3 max-w-[130px] items-center">
+          <div className="flex  w-1/3 max-w-[130px] items-center gap-2">
             <Button
               title={'Job Search'}
               handleClick={() => _applyFilter()}
@@ -379,6 +383,23 @@ const EmployeeJob = () => {
               }
               btnClass={`${jobSearch || date?.startDate || date?.endDate ? '' : 'bg-gray-400 hover:bg-none'} h-12 w-full !mb-0 cursor-pointer`}
             />
+            {jobSearch !== '' ||
+            date?.endDate !== null ||
+            date?.startDate !== null ? (
+              <button
+                onClick={() => clearFilter()}
+                className={`${jobSearch || cityFilter ? 'bg-meta-light-blue-2' : 'bg-gray-300'} rounded-xl border border-meta-light-blue-2 p-3`}
+              >
+                <Image
+                  alt="date"
+                  width={19}
+                  height={19}
+                  src={'/Closeicon.svg'}
+                />
+              </button>
+            ) : (
+              ''
+            )}
           </div>
         </div>
 
@@ -419,7 +440,7 @@ const EmployeeJob = () => {
                       <Menu as="div" className="relative w-44">
                         <Menu.Button className="relative  flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-2 pl-5 pr-[11px] outline-none transition">
                           <p className="font-me capitalize text-meta-purple-1">
-                            {jobStatus ? jobStatus : list?.status}
+                            {list?.status}
                           </p>
                           <Image
                             alt="Icon"
@@ -446,7 +467,6 @@ const EmployeeJob = () => {
                                       <div
                                         onClick={() => {
                                           updateStatusApi(el, list?._id);
-                                          setJobStatus(el);
                                         }}
                                         className={classNames(
                                           active

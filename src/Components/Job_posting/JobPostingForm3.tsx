@@ -60,6 +60,7 @@ const JobPostingForm3 = ({ formik }: { formik: any }) => {
         toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
+
   useEffect(() => {
     if (debouncedSearchSkill !== '') {
       searchSkillApi(debouncedSearchSkill);
@@ -172,7 +173,11 @@ const JobPostingForm3 = ({ formik }: { formik: any }) => {
               placeholder="Add"
               options={skillData}
               value={formik?.values?.skills}
-              onKeyDown={(e: any) => onSearchSkill(e)}
+              onKeyDown={(e: any) => {
+                console.log('e', e);
+
+                onSearchSkill(e);
+              }}
               components={{ Placeholder, DropdownIndicator }}
             />
           </div>
@@ -227,7 +232,12 @@ const JobPostingForm3 = ({ formik }: { formik: any }) => {
               id="hire-multiple"
               className=""
               value={hireMultiple as any}
-              onChange={() => setHireMultiple(!hireMultiple)}
+              onChange={(e) => {
+                if (e?.target?.checked === false) {
+                  formik.values.vacancy = 1;
+                }
+                setHireMultiple(!hireMultiple);
+              }}
             />
             <label
               htmlFor="hire-multiple"
