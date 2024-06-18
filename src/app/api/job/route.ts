@@ -115,7 +115,6 @@ export const GET = async (req: NextResponse) => {
         {
           $match: {
             company_id: new mongoose.Types.ObjectId(session?.user?._id),
-            // company_id: new mongoose.Types.ObjectId("667191868e7ccc44d587b1b1"),
           },
         },
        {
@@ -193,16 +192,20 @@ export const GET = async (req: NextResponse) => {
         {
           $lookup: {
             from: 'jobapplications',
-            localField: '_id',
-            foreignField: 'job_id',
-            as: 'applicants',
+            let: { jobId: '$_id' },
             pipeline: [
               {
                 $match: {
-                  user_id: new mongoose.Types.ObjectId(session?.user?._id),
-                },
-              },
+                  $expr: {
+                    $and: [
+                      { $eq: ['$$jobId', '$job_id'] },
+                      { $eq: ['$user_id', new mongoose.Types.ObjectId(session?.user?._id)] }
+                    ]
+                  }
+                }
+              }
             ],
+            as: 'applicants'
           },
         },
         {
@@ -243,6 +246,7 @@ export const GET = async (req: NextResponse) => {
               _id: { $arrayElemAt: ['$country_info._id', 0] },
               name: { $arrayElemAt: ['$country_info.name', 0] },
             },
+            applied: { $cond: { if: { $gt: [{ $size: "$applicants" }, 0] }, then: true, else: false } },
           },
         },
         {
@@ -250,9 +254,79 @@ export const GET = async (req: NextResponse) => {
             city_info: 0,
             state_info: 0,
             country_info: 0,
+            applicants: 0,
           },
         },
       ]);
+      // results = await Job.aggregate([
+      //   {
+      //     $match: {
+      //      status: 'ACTIVE',
+      //    }
+      //  },
+      //   {
+      //     $lookup: {
+      //       from: 'jobapplications',
+      //       localField: '_id',
+      //       foreignField: 'job_id',
+      //       as: 'applicants',
+      //       pipeline: [
+      //         {
+      //           $match: {
+      //             user_id: new mongoose.Types.ObjectId(session?.user?._id),
+      //           },
+      //         },
+      //       ],
+      //     },
+      //   },
+      //   {
+      //     $lookup: {
+      //       from: 'states',
+      //       localField: 'state',
+      //       foreignField: '_id',
+      //       as: 'state_info',
+      //     },
+      //   },
+      //   {
+      //     $lookup: {
+      //       from: 'countries',
+      //       localField: 'country',
+      //       foreignField: '_id',
+      //       as: 'country_info',
+      //     },
+      //   },
+      //   {
+      //     $lookup: {
+      //       from: 'cities',
+      //       localField: 'city',
+      //       foreignField: '_id',
+      //       as: 'city_info',
+      //     },
+      //   },
+      //   {
+      //     $addFields: {
+      //       city: {
+      //         _id: { $arrayElemAt: ['$city_info._id', 0] },
+      //         name: { $arrayElemAt: ['$city_info.name', 0] },
+      //       },
+      //       state: {
+      //         _id: { $arrayElemAt: ['$state_info._id', 0] },
+      //         name: { $arrayElemAt: ['$state_info.name', 0] },
+      //       },
+      //       country: {
+      //         _id: { $arrayElemAt: ['$country_info._id', 0] },
+      //         name: { $arrayElemAt: ['$country_info.name', 0] },
+      //       },
+      //     },
+      //   },
+      //   {
+      //     $project: {
+      //       city_info: 0,
+      //       state_info: 0,
+      //       country_info: 0,
+      //     },
+      //   },
+      // ]);
       return NextResponse.json({
         status: 200,
         data: results,
