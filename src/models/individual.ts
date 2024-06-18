@@ -214,7 +214,7 @@ const individualSchema = new mongoose.Schema({
         type: Number,
         validate: {
           validator: (v: any) => {
-            return v >= 1 && v <= 12;
+            return v >= 0 && v <= 12;
           },
           message: (props: any) => `${props.value} is not a valid month!`,
         },

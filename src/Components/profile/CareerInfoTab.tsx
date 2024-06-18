@@ -41,7 +41,7 @@ const CareerInfoTab = ({
         ...context?.userProfileCount,
         career_details: 20,
       },
-    };
+    }; 
 
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
