@@ -85,7 +85,7 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json({
       status: 201,
       data: job,
-      message: 'Job crate successfully',
+      message: 'Job created successfully',
     });
   } catch (error) {
     return NextResponse.json(
