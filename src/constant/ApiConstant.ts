@@ -1,3 +1,5 @@
+import { JOB_STATUS } from './Enum';
+
 const API_CONSTANT = {
   LOGIN: '/signin',
   SIGN_UP: '/signup',
@@ -23,6 +25,7 @@ const API_CONSTANT = {
   LEARN_AND_EARN_QUESTION: '/learn-and-earn-question',
   CHECK_LEARN_ANSWER: '/check-le-answer',
   QUIZ_RESULTS: '/le-today-results',
+  DASHBOARD_JOB: '/dashboard-job',
 };
 
 export { API_CONSTANT };

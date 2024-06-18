@@ -91,7 +91,7 @@ const MyProfile = () => {
 
   return (
     <Suspense fallback={<Loader />}>
-      {Object.keys(userDetails)?.length === 0 ? (
+      {userDetails && Object.keys(userDetails)?.length === 0 ? (
         <Spinner
           width="32px"
           height="32px"

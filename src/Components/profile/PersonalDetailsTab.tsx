@@ -302,19 +302,11 @@ const PersonalDetailsTab = ({
       </div>
       <div className="mt-8 flex w-full justify-end">
         <Button
-          title={TEXT?.SAVE}
+          title={TEXT?.NEXT}
           titleClass="!text-base !text-white"
           btnClass="!w-36 !rounded-lg !bg-meta-blue-1 !py-2"
         />
       </div>
-      {/* <div className="mt-8 flex w-full justify-end">
-        <button
-          type="submit"
-          className="w-36 rounded-lg bg-meta-blue-1 py-2 text-base text-white"
-        >
-          {TEXT?.SAVE}
-        </button>
-      </div> */}
     </form>
   );
 };

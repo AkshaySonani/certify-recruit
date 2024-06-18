@@ -75,7 +75,7 @@ const CareerInfoTab = ({
               employmentType: Yup.string().required('Emp type is required'),
               years: Yup.number()
                 .required('Years is required')
-                .min(1, 'Years cannot be less than 0')
+                .min(0, 'Years cannot be negative')
                 .max(50, 'Years cannot be greater than 50'),
               month: Yup.number()
                 .required('Month is required')

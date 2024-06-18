@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { TEXT } from '@/service/Helper';
 import { useDropzone } from 'react-dropzone';
 import AppContext from '@/context/AppProvider';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import Link from 'next/link';
 
@@ -19,23 +19,27 @@ const UploadResumeTab = ({
   const context = useContext(AppContext);
   const [files, setFiles] = useState([]);
   const [fileName, setFileName] = useState('');
-
+  const [loading, setLoading] = useState(false);
   const { getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
     accept: {
       'application/pdf': [],
     },
-
     onDrop: (acceptedFiles: any) => {
       setFiles(acceptedFiles);
+      setFileName(acceptedFiles[0]?.name?.split('.')[0]);
       // UploadFileOnBucket(acceptedFiles[0]);
     },
   });
 
+  useEffect(() => {
+    getUserDataApiCall();
+  }, []);
+
   const UploadFileOnBucket = async (file: any) => {
+    setLoading(true);
     const NewFormData = new FormData();
     NewFormData.append('file', file[0]);
-
     API.post(API_CONSTANT?.UPLOAD_FILE, NewFormData)
       .then((res) => {
         if (res?.data?.success) {
@@ -65,18 +69,21 @@ const UploadResumeTab = ({
             .then((res) => {
               if (res?.data?.status === 200) {
                 context?.setUserProfileCount(res?.data?.data?.profile_count);
+                setLoading(false);
                 setFileName('');
                 // actions.setSubmitting(false);
-                // setActivePage(activePage + 1);
+                setActivePage(activePage + 1);
                 toast?.success(res?.data?.message);
               }
             })
             .catch((error) => {
+              setLoading(false);
               toast.error(
                 error?.response?.data?.message || 'Internal server error',
               );
             });
         } else {
+          setLoading(false);
           toast.error(
             res?.data?.error || 'Your resume are not upload please try again',
           );
@@ -92,7 +99,24 @@ const UploadResumeTab = ({
     if (fileName && files?.length !== 0) {
       UploadFileOnBucket(files);
     } else {
-      toast.error('File name and file is required');
+      API.post(API_CONSTANT?.PROFILE, {
+        resume: userDetails?.resume,
+        profile_count: userDetails?.profile_count,
+      })
+        .then((res) => {
+          if (res?.data?.status === 200) {
+            context?.setUserProfileCount(res?.data?.data?.profile_count);
+            setFileName('');
+            // actions.setSubmitting(false);
+            setActivePage(activePage + 1);
+            toast?.success(res?.data?.message);
+          }
+        })
+        .catch((error) => {
+          toast.error(
+            error?.response?.data?.message || 'Internal server error',
+          );
+        });
     }
   };
 
@@ -210,7 +234,9 @@ const UploadResumeTab = ({
 
       <div className="mt-8 flex w-full justify-end">
         <Button
-          title={TEXT?.SAVE}
+          isLoading={loading}
+          disabled={loading}
+          title={TEXT?.NEXT}
           titleClass="!text-base !text-white"
           btnClass="!w-36 !rounded-lg !bg-meta-blue-1 !py-2"
         />

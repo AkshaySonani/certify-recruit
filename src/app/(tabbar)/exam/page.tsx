@@ -29,6 +29,7 @@ const Page = () => {
   const [answerSheet, setAnswerSheet] = usePersistState([], 'answerSheet');
   const [finishExamModal, setFinishExamModal] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<any>('');
+  const [examId, setExamId] = useState('');
   const [results, setResults] = useState(undefined);
   const [questionSheet, setQuestionSheet] = usePersistState(
     [],
@@ -75,8 +76,8 @@ const Page = () => {
   }, []);
 
   useEffect(() => {
-    if (categories?.length === 0 && results === undefined) {
-      router.replace(ROUTE?.CERTIFICATION);
+    if (examStatus === EXAM_STATUS?.STOPPED && results === undefined) {
+      // router.replace(ROUTE?.CERTIFICATION);
     }
   }, []);
 
@@ -101,6 +102,8 @@ const Page = () => {
     API.post(API_CONSTANT?.QUESTION, obj)
       .then((res: any) => {
         if (res?.data?.status === 200) {
+          console.log('question', res?.data);
+          setExamId(res?.data?.exam_id);
           let questionArr = res?.data?.data?.map((list: any) => {
             return {
               ...list,
@@ -155,6 +158,7 @@ const Page = () => {
 
   const handleFinishExam = () => {
     const obj = {
+      exam_id: examId,
       answers: answerSheet.map(({ _id, ans }: any) => ({ _id, ans })),
     };
     API.post(API_CONSTANT?.CHECK_ANSWER, obj)

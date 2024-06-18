@@ -213,6 +213,7 @@ const Sidebar = () => {
                       onClick={() => {
                         localStorage.removeItem('userRole');
                         signOut();
+                        router.replace(ROUTE?.LOGIN);
                       }}
                       className={`${
                         active ? 'bg-meta-blue-1 text-white' : 'text-gray-900'

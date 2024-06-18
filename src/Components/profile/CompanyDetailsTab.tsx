@@ -395,7 +395,7 @@ const CompanyDetailsTab = ({
           type="submit"
           className="w-36 rounded-lg bg-meta-blue-1 py-2 text-base text-white"
         >
-          {TEXT?.SAVE}
+          {TEXT?.NEXT}
         </button>
       </div>
     </form>

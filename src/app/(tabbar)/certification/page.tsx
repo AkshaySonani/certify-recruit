@@ -1,5 +1,5 @@
 'use client';
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ROUTE, TEXT } from '@/service/Helper';
 import { Icons } from '@/svg';
@@ -96,7 +96,7 @@ const Page = () => {
       </div>
       <div className="mt-5">
         <p className="text-xl font-bold text-meta-purple-1">Fees</p>
-        <div className="bg-meta-light-blue-4 mt-3 flex w-full items-center rounded-lg border border-meta-green-1 p-4">
+        <div className="mt-3 flex w-full items-center rounded-lg border border-meta-green-1 bg-meta-light-blue-4 p-4">
           <div className="relative h-12 w-12  rounded-full bg-white">
             <Image
               alt="Icon"

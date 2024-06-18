@@ -16,7 +16,6 @@ const BasicDetails = ({
   getUserDataApiCall,
 }: any) => {
   const context = useContext(AppContext);
-
   const handleSubmit = async (values: any, actions: any) => {
     let obj = {
       ...values,
@@ -140,7 +139,7 @@ const BasicDetails = ({
           type="submit"
           className="w-36 rounded-lg bg-meta-blue-1 py-2 text-base text-white"
         >
-          {TEXT?.SAVE}
+          {TEXT?.NEXT}
         </button>
       </div>
     </form>

@@ -1,3 +1,5 @@
+import Spinner from '@/app/icons/Spinner';
+
 const Button = ({
   title,
   disabled,
@@ -5,6 +7,7 @@ const Button = ({
   titleClass,
   handleClick,
   type = 'submit',
+  isLoading = false,
 }: any) => {
   return (
     <button
@@ -16,7 +19,11 @@ const Button = ({
       <span
         className={`${titleClass} flex justify-center text-sm font-medium text-white`}
       >
-        {title}
+        {isLoading ? (
+          <Spinner width="25px" height="25px" className="spinner" />
+        ) : (
+          title
+        )}
       </span>
     </button>
   );
