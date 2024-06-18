@@ -201,20 +201,15 @@ const individualSchema = new mongoose.Schema({
         required: true,
       },
       years: {
+        default: 0,
         type: Number,
         required: true,
-        validate: {
-          validator: (v: any) => {
-            return v >= 1 && v <= 12;
-          },
-          message: (props: any) => `${props.value} is not a valid year!`,
-        },
       },
       month: {
         type: Number,
         validate: {
           validator: (v: any) => {
-            return v >= 0 && v <= 12;
+            return v >= 1 && v <= 12;
           },
           message: (props: any) => `${props.value} is not a valid month!`,
         },
