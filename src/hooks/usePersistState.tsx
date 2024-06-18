@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useMemo, useState } from 'react';
 
 export default function usePersistState<T>(initial_value: T, id: string): any {
