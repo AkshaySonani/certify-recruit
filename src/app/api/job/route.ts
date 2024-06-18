@@ -105,7 +105,7 @@ export const GET = async (req: NextResponse) => {
       message: 'Unauthorized',
       status: 401,
     });
-  }
+  }  
 
   try {
     await connect();
@@ -115,8 +115,14 @@ export const GET = async (req: NextResponse) => {
         {
           $match: {
             company_id: new mongoose.Types.ObjectId(session?.user?._id),
+            // company_id: new mongoose.Types.ObjectId("667191868e7ccc44d587b1b1"),
           },
         },
+       {
+         $match: {
+          status: 'ACTIVE',
+        }
+      },
         {
           $lookup: {
             from: 'jobapplications',
@@ -179,6 +185,11 @@ export const GET = async (req: NextResponse) => {
       });
     } else {
       results = await Job.aggregate([
+        {
+          $match: {
+           status: 'ACTIVE',
+         }
+       },
         {
           $lookup: {
             from: 'jobapplications',
