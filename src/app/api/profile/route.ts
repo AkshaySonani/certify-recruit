@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { User, Company, Individual } from '@/models/index';
 
 export const POST = async (req: NextRequest) => {
-  const session = await getServerSession(authOptions);
+  const session: any = await getServerSession(authOptions);
   if (!session?.user?._id) {
     return NextResponse.json({
       message: 'Unauthorized',
@@ -133,15 +133,22 @@ export const POST = async (req: NextRequest) => {
         user_name,
         languages,
         is_fresher,
+        bank_name,
+        IFSC_code,
+        account_type,
         company_name,
         profile_count,
         date_of_birth,
+        account_number,
         contact_number,
+        account_in_name,
         completion_date,
+        pan_card_number,
         profile_summary,
         current_location,
         highest_education,
         total_experiences,
+        aadhar_card_number,
         college_school_name,
         expected_salary_upto,
         expected_salary_start_at,
@@ -153,18 +160,25 @@ export const POST = async (req: NextRequest) => {
       skills && (reqData.skills = skills);
       degree && (reqData.degree = degree);
       gender && (reqData.gender = gender);
+      bank_name && (reqData.bank_name = bank_name);
+      IFSC_code && (reqData.IFSC_code = IFSC_code);
       user_name && (reqData.user_name = user_name);
       languages && (reqData.languages = languages);
       is_fresher && (reqData.is_fresher = is_fresher);
+      account_type && (reqData.account_type = account_type);
       company_name && (reqData.company_name = company_name);
       profile_count && (reqData.profile_count = profile_count);
       date_of_birth && (reqData.date_of_birth = date_of_birth);
       contact_number && (reqData.contact_number = contact_number);
+      account_number && (reqData.account_number = account_number);
+      account_in_name && (reqData.account_in_name = account_in_name);
+      pan_card_number && (reqData.pan_card_number = pan_card_number);
       completion_date && (reqData.completion_date = completion_date);
       profile_summary && (reqData.profile_summary = profile_summary);
       current_location && (reqData.current_location = current_location);
       highest_education && (reqData.highest_education = highest_education);
       total_experiences && (reqData.total_experiences = total_experiences);
+      aadhar_card_number && (reqData.aadhar_card_number = aadhar_card_number);
       college_school_name &&
         (reqData.college_school_name = college_school_name);
       expected_salary_upto &&

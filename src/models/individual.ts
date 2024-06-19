@@ -22,6 +22,7 @@ const individualSchema = new mongoose.Schema({
   },
   profile_count: {
     type: {
+      bank_details: { type: Number, default: 0 },
       skill_details: { type: Number, default: 0 },
       resume_details: { type: Number, default: 0 },
       career_details: { type: Number, default: 0 },
@@ -30,6 +31,7 @@ const individualSchema = new mongoose.Schema({
       education_details: { type: Number, default: 0 },
     },
     default: {
+      bank_details: 0,
       skill_details: 0,
       resume_details: 0,
       career_details: 0,
@@ -306,6 +308,48 @@ const individualSchema = new mongoose.Schema({
   contact_number: {
     type: Number,
     required: false,
+  },
+  bank_name: {
+    type: String,
+    required: false,
+  },
+  IFSC_code: {
+    type: String,
+    required: false,
+  },
+  account_number: {
+    type: String,
+    required: false,
+  },
+  account_type: {
+    type: String,
+    enum: ['SAVINGS', 'CURRENT'],
+    required: false,
+  },
+  account_in_name: {
+    type: String,
+    required: false,
+  },
+  aadhar_card_number: {
+    type: String,
+    required: false,
+    validate: {
+      validator: (v: any) => {
+        return /^[2-9]{1}[0-9]{11}$/.test(v);
+      },
+      message: (props: any) =>
+        `${props.value} is not a valid Aadhar card number!`,
+    },
+  },
+  pan_card_number: {
+    type: String,
+    required: false,
+    validate: {
+      validator: (v: any) => {
+        return /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(v);
+      },
+      message: (props: any) => `${props.value} is not a valid PAN card number!`,
+    },
   },
 });
 
