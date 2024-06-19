@@ -6,6 +6,7 @@ import CareerInfoTab from './CareerInfoTab';
 import UploadResumeTab from './UploadResumeTab';
 import 'react-datepicker/dist/react-datepicker.css';
 import PersonalDetailsTab from './PersonalDetailsTab';
+import BankDetailsTab from './BankDetailsTab';
 
 const page = [
   { id: 1, page: 'Profile Summary' },
@@ -14,6 +15,7 @@ const page = [
   { id: 4, page: 'Education' },
   { id: 5, page: 'Personal Detail' },
   { id: 6, page: 'Career info' },
+  { id: 7, page: 'Bank Details' },
 ];
 
 const IndividualProfile = ({
@@ -94,6 +96,14 @@ const IndividualProfile = ({
         )}
         {activePage === page[5]?.id && (
           <CareerInfoTab
+            setActivePage={setActivePage}
+            userDetails={userDetails}
+            activePage={activePage}
+            getUserDataApiCall={getUserDataApiCall}
+          />
+        )}
+        {activePage === page[6]?.id && (
+          <BankDetailsTab
             setActivePage={setActivePage}
             userDetails={userDetails}
             activePage={activePage}

@@ -4,8 +4,6 @@ import React, { Fragment, useState } from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 
 const PreviewDialog = ({ isOpen, setIsOpen, formik }: any) => {
-  console.log('formik', formik);
-
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog

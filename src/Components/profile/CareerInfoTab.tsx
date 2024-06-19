@@ -41,13 +41,13 @@ const CareerInfoTab = ({
         ...context?.userProfileCount,
         career_details: 20,
       },
-    }; 
+    };
 
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
           setIsSpinner(false);
-          setActivePage(1);
+          setActivePage(activePage + 1);
           getUserDataApiCall();
           context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);
@@ -511,7 +511,7 @@ const CareerInfoTab = ({
           </div>
         ) : (
           <Button
-            title={TEXT?.SAVE}
+            title={TEXT?.NEXT}
             titleClass="!text-base !text-white"
             btnClass="!w-36 !rounded-lg !bg-meta-blue-1 !py-2"
           />
