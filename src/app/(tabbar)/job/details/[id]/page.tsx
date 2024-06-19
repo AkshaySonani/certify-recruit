@@ -24,7 +24,7 @@ export default function Page({ params }: { params: { id: string } }) {
         job_id: params?.id,
       })
         .then((res: any) => {
-          setJobDetails(res?.data?.data[0]);
+          setJobDetails(res?.data?.data);
         })
         .catch((error) => {
           toast.error(
@@ -87,18 +87,26 @@ export default function Page({ params }: { params: { id: string } }) {
                 </button>
                 {session?.data?.user?.role === USER_ROLE?.INDIVIDUAL && (
                   <button
-                    onClick={() => _onJobApply(jobDetails?._id)}
-                    className="flex w-[140px] items-center justify-between rounded-lg border border-meta-light-blue-1 bg-white p-3"
+                    disabled={jobDetails?.applied}
+                    onClick={(e) => {
+                      e?.stopPropagation();
+                      _onJobApply(jobDetails?._id);
+                    }}
+                    className="flex items-center justify-center rounded-lg border border-meta-light-blue-1 bg-white p-3 px-[10px]"
                   >
                     <p className="text-sm font-bold text-meta-purple-1">
-                      Apply Now
+                      {jobDetails?.applied ? 'Applied' : 'Apply Now'}
                     </p>
-                    <Image
-                      alt="date"
-                      width={14}
-                      height={14}
-                      src={'/job/share.svg'}
-                    />
+                    {!jobDetails?.applied && (
+                      <div className="pl-[10px]">
+                        <Image
+                          alt="date"
+                          width={14}
+                          height={14}
+                          src={'/job/share.svg'}
+                        />
+                      </div>
+                    )}
                   </button>
                 )}
               </div>

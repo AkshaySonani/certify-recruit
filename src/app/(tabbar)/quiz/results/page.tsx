@@ -130,6 +130,7 @@ const Page = () => {
     allResults: [],
     topTenData: [],
   });
+
   const getResults = () => {
     API.get(API_CONSTANT?.QUIZ_RESULTS)
       .then((res: any) => {
@@ -158,7 +159,7 @@ const Page = () => {
     'Saturday',
   ];
   return (
-    <div className="w-full">
+    <div className="max-w-8xl m-auto  w-10/12">
       <div className="flex w-full items-center justify-between">
         <div className="mb-4 text-2xl font-semibold text-meta-purple-1">
           {TEXT?.LEARN_AND_EARN}

@@ -34,7 +34,7 @@ const ResultComp = ({ results, setResults }: any) => {
           <p className="text-center text-5xl text-meta-light-blue-3">
             {results?.pass === true
               ? 'Congratulations'
-              : 'Batter luck next time'}
+              : 'Better luck next time'}
           </p>
           <p className="m-auto mt-5 w-[70%] text-center text-lg text-meta-light-blue-3">
             Lorem Ipsum is simply dummy text of the printing and typesetting

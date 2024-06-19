@@ -1,16 +1,17 @@
 'use client';
+import moment from 'moment';
 import Image from 'next/image';
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import { toast } from 'react-toastify';
+import API from '@/service/ApiService';
 import { useRouter } from 'next/navigation';
 import { ROUTE, TEXT } from '@/service/Helper';
-import { toast } from 'react-toastify';
 import usePersistState from '@/hooks/usePersistState';
-import { EXAM_STATUS, QUESTION_STATUS } from '@/constant/Enum';
-import FinishExamDialog from '@/Components/exam/FinishExamDialog';
 import ResultComp from '@/Components/exam/ResultComp';
 import { API_CONSTANT } from '@/constant/ApiConstant';
-import API from '@/service/ApiService';
-import moment from 'moment';
+import React, { useEffect, useRef, useState } from 'react';
+import FinishExamDialog from '@/Components/exam/FinishExamDialog';
+import { EXAM_STATUS, QUESTION_STATUS, RENDER_OPTION } from '@/constant/Enum';
+
 const Page = () => {
   const router = useRouter();
   const intervalRef = useRef<any>(null);
@@ -29,7 +30,7 @@ const Page = () => {
   const [answerSheet, setAnswerSheet] = usePersistState([], 'answerSheet');
   const [finishExamModal, setFinishExamModal] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<any>('');
-  const [examId, setExamId] = useState('');
+  const [examId, setExamId] = usePersistState('', 'examId');
   const [results, setResults] = useState(undefined);
   const [questionSheet, setQuestionSheet] = usePersistState(
     [],
@@ -40,6 +41,7 @@ const Page = () => {
   const minutesToDisplay = Math.floor(secondsRemaining / 60);
   const hoursToDisplay = (minutesRemaining - minutesToDisplay) / 60;
   const twoDigits = (num: any) => String(num).padStart(2, '0');
+
   useEffect(() => {
     if (startTime) {
       setExamStatus(EXAM_STATUS?.STARTED);
@@ -76,8 +78,8 @@ const Page = () => {
   }, []);
 
   useEffect(() => {
-    if (examStatus === EXAM_STATUS?.STOPPED && results === undefined) {
-      // router.replace(ROUTE?.CERTIFICATION);
+    if (categories?.length === 0 && results === undefined) {
+      router.replace(ROUTE?.CERTIFICATION);
     }
   }, []);
 
@@ -102,7 +104,6 @@ const Page = () => {
     API.post(API_CONSTANT?.QUESTION, obj)
       .then((res: any) => {
         if (res?.data?.status === 200) {
-          console.log('question', res?.data);
           setExamId(res?.data?.exam_id);
           let questionArr = res?.data?.data?.map((list: any) => {
             return {
@@ -128,9 +129,10 @@ const Page = () => {
     setSelectedAnswer('');
     setExamStatus(EXAM_STATUS.STOPPED);
     setQuestionSheet([]);
-    setCategories([]);
+    // setCategories([]);
     setCurrentQuestion(0);
     setAnswerSheet([]);
+    setExamId('');
   };
 
   const handleAnswer = (e: any, key: any) => {
@@ -159,12 +161,13 @@ const Page = () => {
   const handleFinishExam = () => {
     const obj = {
       exam_id: examId,
-      answers: answerSheet.map(({ _id, ans }: any) => ({ _id, ans })),
+      answers: answerSheet.map(({ _id, ans }: any) => ({ que_id: _id, ans })),
     };
     API.post(API_CONSTANT?.CHECK_ANSWER, obj)
       .then((res: any) => {
         if (res?.data?.status === 200) {
           setResults(res?.data?.data);
+          setCategories([]);
           clearStorage();
         }
       })
@@ -469,7 +472,9 @@ const Page = () => {
                             className={`flex cursor-pointer select-none items-center justify-between `}
                           >
                             <div className="flex gap-2 pl-3">
-                              <p className="capitalize">{key}.</p>
+                              <p className="capitalize">
+                                {RENDER_OPTION[key]?.[key]}
+                              </p>
                               <p>
                                 {
                                   updatedQuestions[CurrentQuestion]?.option?.[

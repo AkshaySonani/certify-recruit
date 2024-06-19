@@ -7,7 +7,7 @@ import { authOptions } from '@/service/AuthOptions';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const POST = async (req: NextRequest) => {
-  const session = await getServerSession(authOptions);
+  const session: any = await getServerSession(authOptions);
   if (!session?.user?._id) {
     return NextResponse.json({
       message: 'Unauthorized',
@@ -53,22 +53,24 @@ export const POST = async (req: NextRequest) => {
     // Determine if the user passes
     const pass = correctPercentage >= 70;
 
-    const updatedUser = await Individual.findOneAndUpdate(
-      { 'certificates._id': exam_id, user_ref_id: session?.user?._id },
-      {
-        $set: {
-          'certificates.$.result': correctAnswersCount,
-          'certificates.$.end_time': new Date(Date.now()),
+    if (pass) {
+      const updatedUser = await Individual.findOneAndUpdate(
+        { 'certificates._id': exam_id, user_ref_id: session?.user?._id },
+        {
+          $set: {
+            'certificates.$.result': correctAnswersCount,
+            'certificates.$.end_time': new Date(Date.now()),
+          },
         },
-      },
-      { new: true },
-    );
+        { new: true },
+      );
 
-    if (!updatedUser) {
-      return NextResponse.json({
-        status: 404,
-        message: 'Certificate not found or update failed',
-      });
+      if (!updatedUser) {
+        return NextResponse.json({
+          status: 404,
+          message: 'Certificate not found or update failed',
+        });
+      }
     }
 
     return NextResponse.json({

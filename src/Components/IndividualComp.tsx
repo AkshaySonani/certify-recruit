@@ -10,7 +10,9 @@ import { API_CONSTANT } from '@/constant/ApiConstant';
 
 const IndividualComp = () => {
   const router = useRouter();
+
   const [showForms, setShowForms] = useState(false);
+  const [currentRole, setCurrentRole] = useState('');
 
   const individualArr = [
     'US Recruitment',
@@ -20,6 +22,14 @@ const IndividualComp = () => {
     'UK Recruitment',
     'Canada Recruitment',
   ];
+
+  const handleNextPageNavigation = () => {
+    if (currentRole) {
+      setShowForms(true);
+    } else {
+      toast.error('Please select role.');
+    }
+  };
 
   return (
     <div>
@@ -81,7 +91,10 @@ const IndividualComp = () => {
                         type="radio"
                         value={list}
                         name="inline-radio-group"
-                        onChange={() => localStorage.setItem('userRole', list)}
+                        onChange={() => {
+                          setCurrentRole(list);
+                          localStorage.setItem('userRole', list);
+                        }}
                         className="h-5 w-5 border-meta-light-blue-1 bg-meta-blue-1 text-meta-blue-1"
                       />
                     </div>
@@ -91,7 +104,7 @@ const IndividualComp = () => {
             </div>
           </div>
           <div
-            onClick={() => setShowForms(true)}
+            onClick={() => handleNextPageNavigation()}
             className="m-auto mt-5 flex w-[80%] cursor-pointer items-center justify-end gap-4"
           >
             <p className="text-lg font-medium text-meta-blue-1">{TEXT?.NEXT}</p>

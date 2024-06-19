@@ -7,7 +7,7 @@ import { authOptions } from '@/service/AuthOptions';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const POST = async (req: NextRequest) => {
-  const session = await getServerSession(authOptions);
+  const session: any = await getServerSession(authOptions);
   if (!session?.user?._id) {
     return NextResponse.json({
       message: 'Unauthorized',
@@ -99,13 +99,13 @@ export const POST = async (req: NextRequest) => {
 };
 
 export const GET = async (req: NextResponse) => {
-  const session = await getServerSession(authOptions);
+  const session: any = await getServerSession(authOptions);
   if (!session?.user?._id) {
     return NextResponse.json({
       message: 'Unauthorized',
       status: 401,
     });
-  }  
+  }
 
   try {
     await connect();
@@ -117,11 +117,11 @@ export const GET = async (req: NextResponse) => {
             company_id: new mongoose.Types.ObjectId(session?.user?._id),
           },
         },
-       {
-         $match: {
-          status: 'ACTIVE',
-        }
-      },
+        {
+          $match: {
+            status: 'ACTIVE',
+          },
+        },
         {
           $lookup: {
             from: 'jobapplications',
@@ -178,6 +178,7 @@ export const GET = async (req: NextResponse) => {
           },
         },
       ]);
+
       return NextResponse.json({
         status: 200,
         data: results,
@@ -186,9 +187,9 @@ export const GET = async (req: NextResponse) => {
       results = await Job.aggregate([
         {
           $match: {
-           status: 'ACTIVE',
-         }
-       },
+            status: 'ACTIVE',
+          },
+        },
         {
           $lookup: {
             from: 'jobapplications',
@@ -199,13 +200,18 @@ export const GET = async (req: NextResponse) => {
                   $expr: {
                     $and: [
                       { $eq: ['$$jobId', '$job_id'] },
-                      { $eq: ['$user_id', new mongoose.Types.ObjectId(session?.user?._id)] }
-                    ]
-                  }
-                }
-              }
+                      {
+                        $eq: [
+                          '$user_id',
+                          new mongoose.Types.ObjectId(session?.user?._id),
+                        ],
+                      },
+                    ],
+                  },
+                },
+              },
             ],
-            as: 'applicants'
+            as: 'applicants',
           },
         },
         {
@@ -246,7 +252,13 @@ export const GET = async (req: NextResponse) => {
               _id: { $arrayElemAt: ['$country_info._id', 0] },
               name: { $arrayElemAt: ['$country_info.name', 0] },
             },
-            applied: { $cond: { if: { $gt: [{ $size: "$applicants" }, 0] }, then: true, else: false } },
+            applied: {
+              $cond: {
+                if: { $gt: [{ $size: '$applicants' }, 0] },
+                then: true,
+                else: false,
+              },
+            },
           },
         },
         {

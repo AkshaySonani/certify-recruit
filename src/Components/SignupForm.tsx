@@ -42,7 +42,7 @@ const SignupForm = () => {
     const currentUserRole = await localStorage.getItem('userRole');
 
     API.post(API_CONSTANT?.PROFILE, {
-      role: currentUserRole || context.currentRole,
+      role: currentUserRole,
     })
       .then((res) => {
         if (res?.data?.status === 200) {
@@ -71,10 +71,10 @@ const SignupForm = () => {
         if (context?.currentRole === 'individual') {
           router.push(ROUTE?.DASHBOARD);
           setSuccessMsg(false);
+          onNextUpdateProfileRole();
         }
         setLoading(false);
         setSuccessMsg(true);
-        onNextUpdateProfileRole();
         toast.success('User successfully register');
       }
     } catch (error) {

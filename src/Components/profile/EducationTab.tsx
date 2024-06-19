@@ -6,13 +6,12 @@ import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
 import { TEXT } from '@/service/Helper';
 import { useFormik, Field } from 'formik';
-import DatePicker from 'react-datepicker';
 import AppContext from '@/context/AppProvider';
-import { HIGH_EDUCATION } from '@/constant/Enum';
-import 'react-datepicker/dist/react-datepicker.css';
+import { COMPLETION_DATE, HIGH_EDUCATION } from '@/constant/Enum';
 import { Menu, Transition } from '@headlessui/react';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { Fragment, useContext, useState } from 'react';
+import DatePicker from 'react-multi-date-picker';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -30,11 +29,21 @@ const EducationTab = ({
   const handleSubmit = async (values: any, actions: any) => {
     const obj = {
       ...values,
+      completion_date: {
+        year: values?.completion_date?.year
+          ? Number(moment(values?.completion_date?.year).format('YYYY'))
+          : '',
+        month: values?.completion_date?.month
+          ? moment(values?.completion_date?.month).format('MMMM')
+          : '',
+      },
       profile_count: {
         ...context?.userProfileCount,
         education_details: 16,
       },
     };
+    console.log('obj', obj);
+
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
@@ -72,10 +81,18 @@ const EducationTab = ({
       degree: userDetails?.degree ?? null,
       highest_education: userDetails?.highest_education ?? '',
       college_school_name: userDetails?.college_school_name ?? null,
-      completion_date: userDetails?.completion_date ?? {
-        year: '',
-        month: '',
-      },
+      completion_date: userDetails?.completion_date
+        ? {
+            year: new Date(userDetails?.completion_date?.year, 0),
+            month: new Date(
+              2024,
+              COMPLETION_DATE[userDetails?.completion_date?.month],
+            ),
+          }
+        : {
+            year: '',
+            month: '',
+          },
     },
     enableReinitialize: true,
     validationSchema: validationSchema,
@@ -237,19 +254,27 @@ const EducationTab = ({
           <div className="mt-3 flex w-full gap-3">
             <div className="w-1/2">
               <DatePicker
-                value={String(formik?.values?.completion_date?.month as any)}
-                wrapperClassName="w-full"
-                showMonthYearPicker
-                className="w-full rounded-xl border border-meta-light-blue-1 p-3 focus:outline-meta-light-blue-1"
-                dateFormat="MMMM"
-                placeholderText="Select Month"
+                format="MMMM"
+                containerStyle={{ width: '100%' }}
+                onlyMonthPicker
+                onOpenPickNewDate={false}
+                value={formik?.values?.completion_date?.month}
                 onChange={(date: any) => {
                   {
                     formik?.setFieldValue('completion_date', {
                       ...formik?.values?.completion_date,
-                      month: String(moment(date).format('MMMM')),
+                      month: new Date(2024, date?.month?.index),
                     });
                   }
+                }}
+                placeholder="Select month"
+                style={{
+                  height: 48,
+                  width: '100%',
+                  borderColor: '#DCE7FF',
+                  borderRadius: 8,
+                  paddingLeft: 10,
+                  marginTop: 4,
                 }}
               />
               {formik?.touched?.completion_date?.month &&
@@ -262,23 +287,27 @@ const EducationTab = ({
 
             <div className="w-1/2">
               <DatePicker
-                value={String(formik?.values?.completion_date?.year)}
-                // value={formik?.values?.completion_date?.year as any}
-                showYearPicker={true}
-                wrapperClassName="w-full"
-                // renderYearContent={renderYearContent}
-                // selected={formik?.values?.completion_date?.year as any}
-                shouldCloseOnSelect={true}
-                dateFormat="YYYY"
-                placeholderText="Select Year"
-                className="w-full rounded-xl border border-meta-light-blue-1 p-3 focus:outline-meta-light-blue-1"
+                format="YYYY"
+                containerStyle={{ width: '100%' }}
+                onlyYearPicker
+                onOpenPickNewDate={false}
+                value={formik?.values?.completion_date?.year}
                 onChange={(date: any) => {
                   {
                     formik?.setFieldValue('completion_date', {
                       ...formik?.values?.completion_date,
-                      year: Number(moment(date).format('YYYY')),
+                      year: new Date(date?.year, 0),
                     });
                   }
+                }}
+                placeholder="Select month"
+                style={{
+                  height: 48,
+                  width: '100%',
+                  borderColor: '#DCE7FF',
+                  borderRadius: 8,
+                  paddingLeft: 10,
+                  marginTop: 4,
                 }}
               />
 

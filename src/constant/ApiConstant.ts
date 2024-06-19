@@ -1,5 +1,3 @@
-import { JOB_STATUS } from './Enum';
-
 const API_CONSTANT = {
   LOGIN: '/signin',
   SIGN_UP: '/signup',

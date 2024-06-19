@@ -203,7 +203,7 @@ function ApplicantDetails({ id, status }: any) {
             </tr>
           </thead>
           <tbody>
-            {data.map((item: any) => {
+            {data?.map((item: any) => {
               let totalYears = 0;
               let totalMonths = 0;
               item?.user_info?.total_experiences?.forEach((experience: any) => {

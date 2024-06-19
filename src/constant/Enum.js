@@ -11,6 +11,13 @@ const EMP_TYPE_ARR = [
 
 const GENDER = ['MALE', 'FEMALE', 'OTHER'];
 
+const RENDER_OPTION = [
+  { 0: 'A). ' },
+  { 1: 'B). ' },
+  { 2: 'C). ' },
+  { 3: 'D). ' },
+];
+
 const HIGH_EDUCATION = [
   { label: '10th or Below 10th', value: 'TEN_OR_BELOW' },
   { label: '12th Pass', value: 'TWELVE_PASS' },
@@ -46,19 +53,20 @@ const COMPANY_TYPE = [
   'Banking company',
   'Nidhi Companies',
 ];
+
 const COMPLETION_DATE = {
-  1: 'January',
-  2: 'February',
-  3: 'March',
-  4: 'April',
-  5: 'May',
-  6: 'June',
-  7: 'July',
-  8: 'August',
-  9: 'September',
-  10: 'October',
-  11: 'November',
-  12: 'December',
+  January: 0,
+  February: 1,
+  March: 2,
+  April: 3,
+  May: 4,
+  June: 5,
+  July: 6,
+  August: 7,
+  September: 8,
+  October: 9,
+  November: 10,
+  December: 11,
 };
 
 const JOB_STATUS = ['PENDING', 'ACTIVE', 'CLOSED'];
@@ -82,6 +90,7 @@ const QUESTION_STATUS = [
 ];
 const WORKPLACE_TYPE = ['ONSITE', 'HYBRID', 'REMOTE'];
 export {
+  RENDER_OPTION,
   PROFICIENCY,
   EMP_TYPE_ARR,
   GENDER,
@@ -93,5 +102,5 @@ export {
   APPLICANT_STATUS,
   QUESTION_STATUS,
   EXAM_STATUS,
-  WORKPLACE_TYPE
+  WORKPLACE_TYPE,
 };

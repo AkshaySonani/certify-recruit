@@ -41,7 +41,7 @@ const EditDetailsDialog = ({
     user_name: Yup.string().required('Username is required'),
   });
 
-  const formik = useFormik({
+  const formik: any = useFormik({
     initialValues: {
       current_location: userDetails?.current_location ?? 'USA',
       contact_number: userDetails?.contact_number ?? '',
@@ -156,6 +156,7 @@ const EditDetailsDialog = ({
                         <label>{TEXT?.ROLE}</label>
                         <input
                           type="text"
+                          readOnly
                           name="role"
                           value={formik?.values?.role}
                           onChange={formik?.handleChange}

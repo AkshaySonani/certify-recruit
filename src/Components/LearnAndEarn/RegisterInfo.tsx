@@ -34,7 +34,6 @@ const RegisterInfo = ({ userDetails }: any) => {
         setIsRegistrationOpen(false);
       }
     };
-
     checkRegistrationTime();
     // Optional: Check every minute to update the button state
     const interval = setInterval(checkRegistrationTime, 60000); // 60000ms = 1 minute
@@ -48,7 +47,6 @@ const RegisterInfo = ({ userDetails }: any) => {
           toast.info('Your quiz started at 8:00 PM');
         }
         setIsRegistrationOpen(false);
-        getProfileDetails();
       })
       .catch((error) => {
         toast.error(error?.response?.data?.message || 'Internal server error');
@@ -63,6 +61,7 @@ const RegisterInfo = ({ userDetails }: any) => {
       router?.replace('/quiz/results');
     }
   }, [userDetails]);
+  console.log('userDetails', userDetails);
 
   return (
     <div>

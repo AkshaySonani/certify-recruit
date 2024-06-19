@@ -5,6 +5,7 @@ import { connect } from '@/db/mongodb';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/service/AuthOptions';
 import { NextRequest, NextResponse } from 'next/server';
+import { Individual } from '@/models';
 
 export const POST = async (req: NextRequest) => {
   const session = await getServerSession(authOptions);
@@ -18,6 +19,10 @@ export const POST = async (req: NextRequest) => {
   try {
     await connect();
     const { job_id } = await req.json();
+
+    const userId = await Individual.findOne({
+      user_ref_id: session?.user?._id,
+    });
 
     const jobDetails = await Job.aggregate([
       {
@@ -145,9 +150,16 @@ export const POST = async (req: NextRequest) => {
       },
     ]);
 
+    // Check if the user has applied
+    const applied =
+      jobDetails.length > 0 &&
+      new mongoose.Types.ObjectId(
+        jobDetails[0]?.applicants[0]?.user_id,
+      ).toString() === new mongoose.Types.ObjectId(userId?._id).toString();
+
     return NextResponse.json({
       status: 200,
-      data: jobDetails,
+      data: { ...jobDetails[0], applied },
       message: 'Job get successfully',
     });
   } catch (error) {

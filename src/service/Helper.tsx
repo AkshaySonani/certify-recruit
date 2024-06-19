@@ -21,8 +21,6 @@ const ROUTE = {
   JOb_POST: '/job_posting',
   JOb_DETAILS: 'job/details',
   APPLICANTS: '/job/applicants',
-  QUIZINFO: '/learn&earn/quizInfo',
-  QUIZMCQS: '/learn&earn/quizMCQs',
   ACTIVE_JOB: '/dashboard/active_job',
   EMPLOYMENT_TYPE: '/job_posting/employment_Type',
   SUCCESSFULL_FORGOT_PASSWORD: '/login/forgotPass/newPass/successful',
@@ -257,7 +255,7 @@ const SIDE_BAR_DATA = {
     },
     {
       icon: Icons.Learn,
-      path: 'learn&earn',
+      path: 'learnAndEarn',
       title: 'Learn & Earn',
     },
     {

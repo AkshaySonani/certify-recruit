@@ -2,12 +2,11 @@
 import Image from 'next/image';
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ROUTE, TEXT } from '@/service/Helper';
+import { TEXT } from '@/service/Helper';
 import { toast } from 'react-toastify';
 import usePersistState from '@/hooks/usePersistState';
-import { EXAM_STATUS, QUESTION_STATUS } from '@/constant/Enum';
+import { EXAM_STATUS, QUESTION_STATUS, RENDER_OPTION } from '@/constant/Enum';
 import FinishExamDialog from '@/Components/exam/FinishExamDialog';
-import ResultComp from '@/Components/exam/ResultComp';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import API from '@/service/ApiService';
 import moment from 'moment';
@@ -36,6 +35,7 @@ const Page = () => {
     [],
     'quiz:questionSheet',
   );
+  const [examId, setExamId] = usePersistState('', 'quiz:examId');
   const secondsToDisplay = Math.floor(secondsRemaining % 60);
   const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60;
   const minutesToDisplay = Math.floor(secondsRemaining / 60);
@@ -113,6 +113,7 @@ const Page = () => {
     API.get(API_CONSTANT?.LEARN_AND_EARN_QUESTION)
       .then((res: any) => {
         if (res?.data?.status === 200) {
+          setExamId(res?.data?.exam_id);
           let questionArr = res?.data?.data?.map((list: any) => {
             return {
               ...list,
@@ -138,6 +139,7 @@ const Page = () => {
     setExamStatus(EXAM_STATUS.STOPPED);
     setQuestionSheet([]);
     setCurrentQuestion(0);
+    setExamId('');
     setAnswerSheet([]);
   };
 
@@ -166,6 +168,7 @@ const Page = () => {
 
   const handleFinishExam = () => {
     const obj = {
+      exam_id: examId,
       answers: answerSheet.map(({ _id, ans }: any) => ({ que_id: _id, ans })),
     };
     API.post(API_CONSTANT?.CHECK_LEARN_ANSWER, obj)
@@ -475,7 +478,10 @@ const Page = () => {
                           className={`flex cursor-pointer select-none items-center justify-between `}
                         >
                           <div className="flex gap-2 pl-3">
-                            <p className="capitalize">{key}.</p>
+                            <p className="capitalize">
+                              {' '}
+                              {RENDER_OPTION[key]?.[key]}
+                            </p>
                             <p>
                               {updatedQuestions[CurrentQuestion]?.option?.[key]}
                             </p>
