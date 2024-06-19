@@ -355,30 +355,38 @@ const individualSchema = new mongoose.Schema({
 
 individualSchema.set('timestamps', true);
 
-const setLearnAndEarnDefaults = function (this: any, next: any) {
-  const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
-  if (!this.learn_and_earn.join_time || this.learn_and_earn.join_time < today) {
-    this.learn_and_earn.join_time = today;
+export async function updateLearnAndEarnDefaults() {
+  try {
+    // Your logic to update learn_and_earn defaults
+    console.log('Defaults updated at 12:11 PM');
+  } catch (error) {
+    console.error('Error updating defaults:', error);
+    throw error; // Rethrow the error to catch it in the scheduler file
   }
+}
 
-  if (!this.learn_and_earn.end_time || this.learn_and_earn.end_time < today) {
-    this.learn_and_earn.end_time = today;
-  }
+// export async function updateLearnAndEarnDefaults() {
+//   console.log('funcation call....');
 
-  if (this.learn_and_earn.register === undefined) {
-    this.learn_and_earn.register = false;
-  }
+//   try {
+//     const result = await Individual.updateMany(
+//       {},
+//       {
+//         $set: {
+//           'learn_and_earn.result': 0,
+//           'learn_and_earn.end_time': '',
+//           'learn_and_earn.join_time': '',
+//           'learn_and_earn.register': false,
+//         },
+//       },
+//     );
 
-  if (this.learn_and_earn.result === undefined) {
-    this.learn_and_earn.result = 0;
-  }
-
-  next();
-};
-
-individualSchema.pre('save', setLearnAndEarnDefaults);
+//     console.log('Defaults updated at midnight', result);
+//   } catch (error) {
+//     console.log('error', error);
+//     throw new Error('Failed to update learn and earn defaults');
+//   }
+// }
 
 export const Individual = createModal('Individual', individualSchema);
 export default Individual;
