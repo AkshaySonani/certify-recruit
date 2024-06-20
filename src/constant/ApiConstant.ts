@@ -26,6 +26,7 @@ const API_CONSTANT = {
   UPDATE_APPLY_JOB: '/update-apply-job',
   CHECK_LEARN_ANSWER: '/check-le-answer',
   UPDATE_LE_DETAILS: '/update-le-details',
+  UPDATE_COM_USER_STATUS: '/update-com-user-details',
   LEARN_AND_EARN_QUESTION: '/learn-and-earn-question',
 };
 

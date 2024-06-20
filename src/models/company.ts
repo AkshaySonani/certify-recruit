@@ -140,6 +140,11 @@ const companySchema = new mongoose.Schema({
         type: String,
         required: true,
       },
+      stauts: {
+        type: String,
+        default: 'Active',
+        enum: ['Active', 'Inactive'],
+      },
       email: {
         type: String,
         required: true,
