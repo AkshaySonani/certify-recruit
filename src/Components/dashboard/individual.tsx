@@ -107,14 +107,14 @@ const IndividualDashboard = ({
             >
               <div className="flex justify-between">
                 <div>
-                  <div className="flex items-center">
-                    <p className="text-lg font-semibold text-meta-purple-1">
+                  <div className="flex items-start">
+                    <p className="whitespace-pre-wrap break-all text-lg font-semibold text-meta-purple-1">
                       {list?.title}
                     </p>
-                    <p className="ml-1 text-lg font-semibold text-meta-purple-1">
+                    <p className="ml-1 whitespace-nowrap text-lg font-semibold text-meta-purple-1">
                       - Fresher
                     </p>
-                    <p className="ml-2 mt-1 text-sm font-bold text-meta-light-blue-3">
+                    <p className="mx-2 mt-1 whitespace-nowrap text-sm font-bold text-meta-light-blue-3">
                       {moment(list?.createdAt).fromNow()}
                     </p>
                   </div>
@@ -129,7 +129,7 @@ const IndividualDashboard = ({
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <button className="rounded-lg border border-meta-light-blue-1 bg-white p-3 ">
+                  <button className="h-max w-max min-w-11 rounded-lg border border-meta-light-blue-1 bg-white p-3">
                     <Image
                       alt="date"
                       width={18}
@@ -143,7 +143,7 @@ const IndividualDashboard = ({
                       e?.stopPropagation();
                       _onJobApply(list?._id);
                     }}
-                    className="flex items-center justify-center rounded-lg border border-meta-light-blue-1 bg-white p-3 px-[10px]"
+                    className="flex h-max w-max items-center justify-center rounded-lg border border-meta-light-blue-1 bg-white p-3 px-[10px]"
                   >
                     <p className="text-sm font-bold text-meta-purple-1">
                       {list?.applied ? 'Applied' : 'Apply Now'}

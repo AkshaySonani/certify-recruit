@@ -73,11 +73,11 @@ const EmployeeDashboard = ({
               <div className="rounded-2xl bg-meta-gray-2 p-5">
                 <div className="flex justify-between">
                   <div>
-                    <div className="flex">
-                      <div className="text-xl font-semibold text-meta-purple-1">
+                    <div className="flex items-center">
+                      <div className="whitespace-pre-wrap break-all text-xl font-semibold text-meta-purple-1">
                         {list?.title}
                       </div>
-                      <p className="ml-2 mt-1 text-base font-medium text-meta-light-blue-3">
+                      <p className="mx-2 mt-1 whitespace-nowrap text-base font-medium text-meta-light-blue-3">
                         {moment(list?.createdAt).fromNow()}
                       </p>
                     </div>
