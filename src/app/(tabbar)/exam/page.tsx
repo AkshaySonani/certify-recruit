@@ -100,9 +100,7 @@ const Page = () => {
   const getQuestionSheet = () => {
     const obj = {
       categoryIds: categories?.map((el: any) => el?._id),
-      // token: data?.searchParams?.token ? data?.searchParams?.token : null,
     };
-
     API.post(API_CONSTANT?.QUESTION, obj)
       .then((res: any) => {
         if (res?.data?.status === 200) {
@@ -121,11 +119,7 @@ const Page = () => {
         }
       })
       .catch((error) => {
-        toast.error(
-          error?.response?.data?.message ||
-            error?.message ||
-            'Something want wrong',
-        );
+        toast.error(error || 'Something want wrong');
       });
   };
 
