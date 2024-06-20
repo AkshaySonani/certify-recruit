@@ -12,7 +12,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import FinishExamDialog from '@/Components/exam/FinishExamDialog';
 import { EXAM_STATUS, QUESTION_STATUS, RENDER_OPTION } from '@/constant/Enum';
 
-const Page = (data: any) => {
+const Page = () => {
   const router = useRouter();
   const intervalRef = useRef<any>(null);
   const [secondsRemaining, setSecondsRemaining] = useState(30 * 60);
@@ -77,15 +77,11 @@ const Page = (data: any) => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (
-  //     categories?.length === 0 &&
-  //     results === undefined &&
-  //     !data?.searchParams?.token
-  //   ) {
-  //     router.replace(ROUTE?.CERTIFICATION);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (categories?.length === 0 && results === undefined) {
+      router.replace(ROUTE?.CERTIFICATION);
+    }
+  }, []);
 
   const compareArrays = (a: any, b: any) => {
     a.forEach((element: any) => {
@@ -104,8 +100,9 @@ const Page = (data: any) => {
   const getQuestionSheet = () => {
     const obj = {
       categoryIds: categories?.map((el: any) => el?._id),
-      token: data?.searchParams?.token ? data?.searchParams?.token : null,
+      // token: data?.searchParams?.token ? data?.searchParams?.token : null,
     };
+
     API.post(API_CONSTANT?.QUESTION, obj)
       .then((res: any) => {
         if (res?.data?.status === 200) {
@@ -124,7 +121,11 @@ const Page = (data: any) => {
         }
       })
       .catch((error) => {
-        toast.error(error || 'Something want wrong');
+        toast.error(
+          error?.response?.data?.message ||
+            error?.message ||
+            'Something want wrong',
+        );
       });
   };
 
