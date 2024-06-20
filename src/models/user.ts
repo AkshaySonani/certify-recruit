@@ -37,6 +37,14 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: null,
   },
+  examToken: {
+    type: String,
+    default: null,
+  },
+  examExpires: {
+    type: Number,
+    default: null,
+  },
   profile_picture: {
     type: String, // Assuming storing image URL
     default: '',

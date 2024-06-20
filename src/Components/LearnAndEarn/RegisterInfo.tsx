@@ -61,7 +61,6 @@ const RegisterInfo = ({ userDetails }: any) => {
       router?.replace('/quiz/results');
     }
   }, [userDetails]);
-  console.log('userDetails', userDetails);
 
   return (
     <div>

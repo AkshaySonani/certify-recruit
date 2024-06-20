@@ -1,67 +1,61 @@
 'use server';
+import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import { connect } from '@/db/mongodb';
 import { getServerSession } from 'next-auth';
 import { shuffleData } from '@/service/Helper';
 import { authOptions } from '@/service/AuthOptions';
 import { NextRequest, NextResponse } from 'next/server';
-import { Category, Individual, Question } from '@/models';
-
-// export const POST = async (req: NextRequest) => {
-//   const session = await getServerSession(authOptions);
-//   //   if (!session?.user?._id) {
-//   //     return NextResponse.json({
-//   //       message: 'Unauthorized',
-//   //       status: 401,
-//   //     });
-//   //   }
-
-//   try {
-//     await connect();
-//     const { question, ans, category_id, option } = await req.json();
-
-//     let reqData: any = {};
-
-//     question && (reqData.question = question);
-//     ans && (reqData.ans = ans);
-//     category_id && (reqData.category_id = category_id);
-//     option && (reqData.option = option);
-
-//     const questions = await Question.create(reqData);
-
-//     return NextResponse.json({
-//       status: 201,
-//       data: questions,
-//       message: 'Questions get successfully',
-//     });
-//   } catch (error) {
-//     return NextResponse.json(
-//       {
-//         message: 'An error occurred while getting questions.',
-//         error: error,
-//       },
-//       { status: 500 },
-//     );
-//   }
-// };
+import { Category, Individual, Question, User } from '@/models';
 
 export const POST = async (req: NextRequest) => {
-  const session: any = await getServerSession(authOptions);
-  if (!session?.user?._id) {
-    return NextResponse.json({
-      message: 'Unauthorized',
-      status: 401,
-    });
+  await connect();
+  const { token } = await req.json();
+
+  let userId;
+  let categoryIds;
+
+  if (token) {
+    try {
+      // Verify the token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+      const { email, categoryIds: tokenCategoryIds } = decoded as any;
+
+      // Find the user by email
+      const user = await User.findOne({ email });
+      if (!user || user.examToken !== token || user.examExpires < Date.now()) {
+        return NextResponse.json({
+          message: 'Invalid or expired token',
+          status: 401,
+        });
+      }
+
+      userId = user._id;
+      categoryIds = tokenCategoryIds;
+    } catch (error) {
+      return NextResponse.json({
+        message: 'Invalid or expired token',
+        status: 401,
+      });
+    }
+  } else {
+    const session: any = await getServerSession(authOptions);
+    if (!session?.user?._id) {
+      return NextResponse.json({
+        message: 'Unauthorized',
+        status: 401,
+      });
+    }
+    userId = session.user._id;
+    const { categoryIds: requestCategoryIds } = await req.json();
+    categoryIds = requestCategoryIds;
   }
 
   try {
-    await connect();
-    const { categoryIds } = await req.json();
-
     if (!Array.isArray(categoryIds) || categoryIds.length === 0) {
       return NextResponse.json({
         status: 400,
-        message: 'category must be a non-empty array',
+        message: 'Category must be a non-empty array',
       });
     }
 
@@ -92,7 +86,7 @@ export const POST = async (req: NextRequest) => {
 
     // Check if there's already an active certificate for this user and skill
     const existingCertificate = await Individual.findOne({
-      user_ref_id: session.user._id,
+      user_ref_id: userId,
       'certificates.skill': { $in: categoryObjectIds },
       'certificates.end_time': { $exists: false },
     });
@@ -105,7 +99,7 @@ export const POST = async (req: NextRequest) => {
       };
 
       const updatedUser = await Individual.findOneAndUpdate(
-        { user_ref_id: session.user._id },
+        { user_ref_id: userId },
         { $push: { certificates: newCertificate } },
         { upsert: true, new: true },
       );
@@ -146,7 +140,135 @@ export const POST = async (req: NextRequest) => {
 };
 
 // export const POST = async (req: NextRequest) => {
-//   const session = await getServerSession(authOptions);
+//   await connect();
+//   const { categoryIds, token } = await req.json();
+
+//   let userId;
+
+//   if (token) {
+//     try {
+//       // Verify the token
+//       const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+//       const email = (decoded as any).email;
+//       console.log('🚀 ~ POST ~ email:', email);
+
+//       // Find the user by email
+//       const user = await User.findOne({ email });
+//       if (!user || user.examToken !== token || user.examExpires < Date.now()) {
+//         return NextResponse.json({
+//           message: 'Invalid or expired token',
+//           status: 401,
+//         });
+//       }
+
+//       userId = user._id;
+//     } catch (error) {
+//       return NextResponse.json({
+//         message: 'Invalid or expired token',
+//         status: 401,
+//       });
+//     }
+//   } else {
+//     const session: any = await getServerSession(authOptions);
+//     if (!session?.user?._id) {
+//       return NextResponse.json({
+//         message: 'Unauthorized',
+//         status: 401,
+//       });
+//     }
+//     userId = session.user._id;
+//   }
+
+//   try {
+//     if (!Array.isArray(categoryIds) || categoryIds.length === 0) {
+//       return NextResponse.json({
+//         status: 400,
+//         message: 'Category must be a non-empty array',
+//       });
+//     }
+
+//     const categoryObjectIds = categoryIds.map(
+//       (id) => new mongoose.Types.ObjectId(id),
+//     );
+//     const categories = await Category.find({ _id: { $in: categoryObjectIds } });
+//     if (categories.length !== categoryIds.length) {
+//       return NextResponse.json({
+//         status: 400,
+//         message: 'One or more categories are invalid',
+//       });
+//     }
+
+//     const questions = await Question.find({
+//       category_id: { $in: categoryObjectIds },
+//     });
+
+//     let shuffledData = [];
+//     const questionsPerCategory =
+//       categoryIds.length === 1 ? 12 : categoryIds.length === 2 ? 6 : 4;
+
+//     shuffledData = categoryObjectIds.flatMap((categoryId) =>
+//       shuffleData(
+//         questions.filter((question) => question.category_id.equals(categoryId)),
+//       ).slice(0, questionsPerCategory),
+//     );
+
+//     // Check if there's already an active certificate for this user and skill
+//     const existingCertificate = await Individual.findOne({
+//       user_ref_id: userId,
+//       'certificates.skill': { $in: categoryObjectIds },
+//       'certificates.end_time': { $exists: false },
+//     });
+
+//     if (!existingCertificate) {
+//       // Add new certificate entry
+//       const newCertificate = {
+//         join_time: new Date(Date.now()),
+//         skill: categoryObjectIds,
+//       };
+
+//       const updatedUser = await Individual.findOneAndUpdate(
+//         { user_ref_id: userId },
+//         { $push: { certificates: newCertificate } },
+//         { upsert: true, new: true },
+//       );
+
+//       if (!updatedUser) {
+//         throw new Error('Failed to get questions.');
+//       }
+
+//       // Get the latest certificate entry ID
+//       const latestCertificate = updatedUser.certificates.slice(-1)[0];
+//       return NextResponse.json({
+//         status: 200,
+//         data: shuffledData,
+//         exam_id: latestCertificate._id,
+//         message: 'Questions fetched successfully',
+//       });
+//     } else {
+//       // Return the existing certificate ID
+//       const latestCertificate = existingCertificate.certificates.find(
+//         (cert: any) => !cert.end_time,
+//       );
+//       return NextResponse.json({
+//         status: 200,
+//         data: shuffledData,
+//         exam_id: latestCertificate._id,
+//         message: 'Questions fetched successfully',
+//       });
+//     }
+//   } catch (error: any) {
+//     return NextResponse.json(
+//       {
+//         message: 'An error occurred while getting questions.',
+//         error: error.message,
+//       },
+//       { status: 500 },
+//     );
+//   }
+// };
+
+// export const POST = async (req: NextRequest) => {
+//   const session: any = await getServerSession(authOptions);
 //   if (!session?.user?._id) {
 //     return NextResponse.json({
 //       message: 'Unauthorized',
@@ -158,7 +280,6 @@ export const POST = async (req: NextRequest) => {
 //     await connect();
 //     const { categoryIds } = await req.json();
 
-//     // Validate categoryIds
 //     if (!Array.isArray(categoryIds) || categoryIds.length === 0) {
 //       return NextResponse.json({
 //         status: 400,
@@ -166,17 +287,14 @@ export const POST = async (req: NextRequest) => {
 //       });
 //     }
 
-//     // Convert categoryIds to ObjectIds
 //     const categoryObjectIds = categoryIds.map(
 //       (id) => new mongoose.Types.ObjectId(id),
 //     );
-
-//     // Check if all categoryIds are valid
 //     const categories = await Category.find({ _id: { $in: categoryObjectIds } });
 //     if (categories.length !== categoryIds.length) {
 //       return NextResponse.json({
 //         status: 400,
-//         message: 'One or more category are invalid',
+//         message: 'One or more categories are invalid',
 //       });
 //     }
 
@@ -185,61 +303,64 @@ export const POST = async (req: NextRequest) => {
 //     });
 
 //     let shuffledData = [];
+//     const questionsPerCategory =
+//       categoryIds.length === 1 ? 12 : categoryIds.length === 2 ? 6 : 4;
 
-//     if (categoryIds?.length === 1) {
-//       shuffledData = shuffleData(questions)?.slice(0, 12);
-//     } else if (categoryIds?.length === 2) {
-//       const questionsPerCategory = 6;
-//       shuffledData = categoryObjectIds?.flatMap((categoryId) =>
-//         shuffleData(
-//           questions?.filter((question) =>
-//             question?.category_id?.equals(categoryId),
-//           ),
-//         )?.slice(0, questionsPerCategory),
-//       );
-//     } else if (categoryIds?.length === 3) {
-//       const questionsPerCategory = 4;
-//       shuffledData = categoryObjectIds?.flatMap((categoryId) =>
-//         shuffleData(
-//           questions?.filter((question) =>
-//             question?.category_id?.equals(categoryId),
-//           ),
-//         )?.slice(0, questionsPerCategory),
-//       );
-//     }
-
-//     // Add new certificate entry
-//     const newCertificate = {
-//       join_time: new Date(Date.now()),
-//       skill: categoryObjectIds,
-//     };
-
-//     const updatedUser = await Individual.findOneAndUpdate(
-//       { user_ref_id: session?.user?._id },
-//       { $push: { certificates: newCertificate } },
-//       {
-//         upsert: true,
-//         new: true,
-//       },
+//     shuffledData = categoryObjectIds.flatMap((categoryId) =>
+//       shuffleData(
+//         questions.filter((question) => question.category_id.equals(categoryId)),
+//       ).slice(0, questionsPerCategory),
 //     );
 
-//     if (!updatedUser) {
-//       throw new Error('Failed to get questions.');
-//     }
-
-//     // Get the latest certificate entry ID
-//     const latestCertificate = updatedUser.certificates.slice(-1)[0];
-//     return NextResponse.json({
-//       status: 200,
-//       data: shuffledData,
-//       exam_id: latestCertificate?._id,
-//       message: 'Questions get successfully',
+//     // Check if there's already an active certificate for this user and skill
+//     const existingCertificate = await Individual.findOne({
+//       user_ref_id: session.user._id,
+//       'certificates.skill': { $in: categoryObjectIds },
+//       'certificates.end_time': { $exists: false },
 //     });
-//   } catch (error) {
+
+//     if (!existingCertificate) {
+//       // Add new certificate entry
+//       const newCertificate = {
+//         join_time: new Date(Date.now()),
+//         skill: categoryObjectIds,
+//       };
+
+//       const updatedUser = await Individual.findOneAndUpdate(
+//         { user_ref_id: session.user._id },
+//         { $push: { certificates: newCertificate } },
+//         { upsert: true, new: true },
+//       );
+
+//       if (!updatedUser) {
+//         throw new Error('Failed to get questions.');
+//       }
+
+//       // Get the latest certificate entry ID
+//       const latestCertificate = updatedUser.certificates.slice(-1)[0];
+//       return NextResponse.json({
+//         status: 200,
+//         data: shuffledData,
+//         exam_id: latestCertificate._id,
+//         message: 'Questions fetched successfully',
+//       });
+//     } else {
+//       // Return the existing certificate ID
+//       const latestCertificate = existingCertificate.certificates.find(
+//         (cert: any) => !cert.end_time,
+//       );
+//       return NextResponse.json({
+//         status: 200,
+//         data: shuffledData,
+//         exam_id: latestCertificate._id,
+//         message: 'Questions fetched successfully',
+//       });
+//     }
+//   } catch (error: any) {
 //     return NextResponse.json(
 //       {
 //         message: 'An error occurred while getting questions.',
-//         error: error,
+//         error: error.message,
 //       },
 //       { status: 500 },
 //     );

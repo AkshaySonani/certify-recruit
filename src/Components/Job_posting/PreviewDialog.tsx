@@ -39,178 +39,212 @@ const PreviewDialog = ({ isOpen, setIsOpen, formik }: any) => {
                     />
                   </div>
                 </Dialog.Title>
-
-                <div className="flex w-full items-center justify-between">
-                  <p className="text-base font-medium text-gray-500">
-                    {TEXT?.ARE_YOU_HIRING_MANAGER}
-                  </p>
-                  <div className="text-sm font-medium text-black">
-                    {formik?.values?.is_hiring_manager ? 'Yes' : 'No'}
-                  </div>
-                </div>
-                <div className="mt-2 flex w-full items-center justify-between">
-                  <p className="text-base font-medium text-gray-500">
-                    {TEXT?.YOUR_COMPANY_NAME}
-                  </p>
-                  <div className="text-sm font-medium text-black">
-                    {formik?.values?.company_name}
-                  </div>
-                </div>
-                <div className="mt-2 flex w-full items-center justify-between">
-                  <p className="text-base font-medium text-gray-500">
-                    {TEXT?.JOB_TITLE}
-                  </p>
-                  <div className="rounded-md py-1 pl-4 text-sm font-medium text-black">
-                    {formik?.values?.title}
-                  </div>
-                </div>
-                <div className="mtgi-2 flex w-full items-start justify-between ">
-                  <p className="w-1/2 text-base font-medium text-gray-500">
-                    {TEXT?.WORKPLACE_TYPE}
-                  </p>
-                  <div className="flex flex-wrap gap-3 rounded-md py-1 pl-4 text-sm text-meta-light-blue-3">
-                    {formik?.values?.workplace?.length > 0 &&
-                      formik?.values?.workplace?.map((list: any) => {
-                        return (
-                          <div className="text-sm font-medium text-black">
-                            {list}
-                          </div>
-                        );
-                      })}
-                  </div>
-                </div>
-
-                <p className="text-md my-4 text-center font-bold text-black">
-                  {TEXT?.JOB_POSTING_LOCATION}
-                </p>
-
-                <div className="mt-2 flex w-full items-center justify-between">
-                  <p className="text-base font-medium text-gray-500">
-                    {TEXT?.CITY}
-                  </p>
-                  <div className="rounded-md py-1 pl-4 text-sm font-medium text-black">
-                    {formik?.values?.city?.name}
-                  </div>
-                </div>
-
-                <div className="mt-2 flex w-full items-center justify-between">
-                  <p className="text-base font-medium text-gray-500">
-                    {TEXT?.AREA}
-                  </p>
-                  <div className="rounded-md py-1 pl-4 text-sm font-medium text-black">
-                    {formik?.values?.area}
-                  </div>
-                </div>
-
-                <div className="mt-2 flex w-full items-center justify-between">
-                  <p className="text-base font-medium text-gray-500">
-                    {TEXT?.PINCODE}
-                  </p>
-                  <div className="rounded-md py-1 pl-4 text-sm font-medium text-black">
-                    {formik?.values?.pincode}
-                  </div>
-                </div>
-                <div className="mt-2 flex w-full items-center justify-between ">
-                  <p className="w-1/2 text-base font-medium text-gray-500">
-                    {TEXT?.STREET_ADDRESS}
-                  </p>
-                  <div className="rounded-md py-1 text-sm font-medium text-black">
-                    {formik?.values?.street_address}
-                  </div>
-                </div>
-
-                <div className="mt-2 flex w-full items-start justify-between ">
-                  <p className="w-1/2 text-base font-medium text-gray-500">
-                    {TEXT?.EMPLOYMENT_TYPE}
-                  </p>
-                  <div className="flex flex-wrap gap-3 rounded-md py-1 pl-4 text-sm text-meta-light-blue-3">
-                    {formik?.values?.job_types?.length > 0 &&
-                      formik?.values?.job_types?.map((list: any) => {
-                        return (
-                          <div className="text-sm font-medium text-black">
-                            {list}
-                          </div>
-                        );
-                      })}
-                  </div>
-                </div>
-                <div className="mt-2 flex w-full items-start justify-between ">
-                  <p className="w-1/2 text-base font-medium text-gray-500">
-                    {TEXT?.WORKING_SCHEDULE}
-                  </p>
-                  <div className="flex flex-wrap gap-3 rounded-md py-1 pl-4 text-sm text-meta-light-blue-3">
-                    {formik?.values?.working_schedule.length > 0 &&
-                      formik?.values?.working_schedule?.map((list: any) => {
-                        return (
-                          <div className="text-sm font-medium text-black">
-                            {list?.label}
-                          </div>
-                        );
-                      })}
-                  </div>
-                </div>
-
-                <p className="text-md my-4 text-center font-bold text-black">
-                  {TEXT?.SALARY}
-                </p>
-                <div className="mt-2 flex w-full items-center justify-between ">
-                  <p className="w-1/2 text-base font-medium text-gray-500">
-                    {TEXT?.HOURLY_RATE}
-                  </p>
-                  <div className="rounded-md py-1 pl-4 text-sm font-medium text-black">
-                    {formik?.values?.hourly_rate}
-                  </div>
-                </div>
-                <div className="mt-2 flex w-full items-start justify-between ">
-                  <p className="w-1/2 text-base font-medium text-gray-500">
-                    {TEXT?.CHOOSE_HOW_YOU_PREFER_TO_PAY_FOR_THIS_JOB}
-                  </p>
-                  <div className="text-sm font-medium text-black">
-                    {formik?.values?.salary_pay}
-                  </div>
-                </div>
-
-                <div className="mt-2 flex w-full items-center justify-between ">
-                  <p className="w-1/2 text-base font-medium text-gray-500">
-                    Salary is negotiable
-                  </p>
-                  <div className="rounded-md py-1 pl-4 text-sm font-medium text-black">
-                    {formik?.values?.salary_negotiable ? 'Yes' : 'No'}
-                  </div>
-                </div>
-                <div className="mt-2 flex w-full items-start justify-between ">
-                  <p className="w-1/2 text-base font-medium text-gray-500">
+                <div className="rounded-lg border border-meta-light-blue-1 ">
+                  <div className="bg-meta-gray-6 rounded-t-lg border-b border-meta-light-blue-1  py-2 pl-4 text-lg font-semibold text-meta-purple-1">
                     {TEXT?.JOB_DETAILS}
-                  </p>
-                  <div
-                    id="section-to-print"
-                    className="text-font-dark-gray whitespace-pre-wrap text-left font-normal"
-                    dangerouslySetInnerHTML={{
-                      __html: `<div className="">${formik?.values?.description}</div>`,
-                    }}
-                  />
-                </div>
-                <div className="mt-2 flex w-full items-start justify-between ">
-                  <p className="w-1/2 text-base font-medium text-gray-500">
-                    {TEXT?.SKILLS}
-                  </p>
-                  <div className="flex flex-wrap gap-3 rounded-md py-1 pl-4 text-sm text-meta-light-blue-3">
-                    {formik?.values?.skills?.length > 0 &&
-                      formik?.values?.skills?.map((list: any) => {
-                        return (
-                          <div className="text-sm font-medium text-black">
-                            {list}
-                          </div>
-                        );
-                      })}
+                  </div>
+
+                  <div className="flex ">
+                    <div className="w-1/2 pb-[14px] pl-4 pt-[18px]">
+                      <div>
+                        <div className="text-sm font-medium text-meta-purple-1">
+                          {formik?.values?.is_hiring_manager ? 'Yes' : 'No'}
+                        </div>
+                        <p className="text-meta-gray-7 text-base font-normal">
+                          {TEXT?.ARE_YOU_HIRING_MANAGER}
+                        </p>
+                      </div>
+                      <div className="pt-5">
+                        <div className="text-sm font-medium text-meta-purple-1">
+                          {formik?.values?.title !== ''
+                            ? formik?.values?.title
+                            : '-'}
+                        </div>
+                        <p className="text-meta-gray-7 text-base font-normal">
+                          {TEXT?.JOB_TITLE}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="pb-[14px] pl-4 pt-[18px]">
+                      <div className="">
+                        <div className="text-sm font-medium text-meta-purple-1">
+                          {formik?.values?.company_name !== ''
+                            ? formik?.values?.company_name
+                            : '-'}
+                        </div>
+                        <p className="text-meta-gray-7 text-base font-normal">
+                          {TEXT?.YOUR_COMPANY_NAME}
+                        </p>
+                      </div>
+                      <div className="pt-5">
+                        <div className="flex flex-wrap gap-1 text-sm font-medium text-meta-purple-1">
+                          {formik?.values?.workplace?.length > 0
+                            ? formik?.values?.workplace?.map(
+                                (list: any, index: any) => {
+                                  return (
+                                    <div className="text-sm font-medium text-meta-purple-1">
+                                      {`${list} ${formik?.values?.workplace?.length - 1 !== index ? ' /' : ''}`}
+                                    </div>
+                                  );
+                                },
+                              )
+                            : '-'}
+                        </div>
+
+                        <p className="text-meta-gray-7 text-base font-normal">
+                          {TEXT?.WORKPLACE_TYPE}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="mt-2 flex w-full items-center justify-between ">
-                  <p className="w-1/2 text-base font-medium text-gray-500">
-                    Hiring Candidate
-                  </p>
-                  <div className="rounded-md py-1 pl-4 text-sm font-medium text-black">
-                    {formik?.values?.vacancy}
+                <div className="mt-5 rounded-lg border  border-meta-light-blue-1">
+                  <div className="bg-meta-gray-6 rounded-t-lg border-b border-meta-light-blue-1  py-2 pl-4 text-lg font-semibold text-meta-purple-1">
+                    {TEXT?.JOB_POSTING_LOCATION}
+                  </div>
+                  <div className="flex ">
+                    <div className="w-1/2 pb-[14px] pl-4 pt-[18px]">
+                      <div>
+                        <div className="text-sm font-medium text-meta-purple-1">
+                          {formik?.values?.is_hiring_manager ? 'Yes' : 'No'}
+                        </div>
+                        <p className="text-meta-gray-7 text-base font-normal">
+                          {TEXT?.ARE_YOU_HIRING_MANAGER}
+                        </p>
+                      </div>
+                      <div className="pt-5">
+                        <div className="text-sm font-medium text-meta-purple-1">
+                          {formik?.values?.pincode !== ''
+                            ? formik?.values?.pincode
+                            : '-'}
+                        </div>
+                        <p className="text-meta-gray-7 text-base font-normal">
+                          {TEXT?.PINCODE}
+                        </p>
+                      </div>
+                      <div className="pt-5">
+                        <div className="flex flex-wrap gap-1 text-sm font-medium text-meta-purple-1">
+                          {formik?.values?.job_types?.length > 0
+                            ? formik?.values?.job_types?.map(
+                                (list: any, index: any) => {
+                                  return (
+                                    <div className="text-sm font-medium ">
+                                      {`${list} ${formik?.values?.job_types?.length - 1 !== index ? ' /' : ''}`}
+                                    </div>
+                                  );
+                                },
+                              )
+                            : '-'}
+                        </div>
+                        <p className="text-meta-gray-7 text-base font-normal">
+                          {TEXT?.EMPLOYMENT_TYPE}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="pb-[14px] pl-4 pt-[18px]">
+                      <div className="">
+                        <div className="text-sm font-medium text-meta-purple-1">
+                          {formik?.values?.area !== ''
+                            ? formik?.values?.area
+                            : '-'}
+                        </div>
+                        <p className="text-meta-gray-7 text-base font-normal">
+                          {TEXT?.AREA}
+                        </p>
+                      </div>
+                      <div className="pt-5">
+                        <div className="text-sm font-medium text-meta-purple-1">
+                          {formik?.values?.street_address !== ''
+                            ? formik?.values?.street_address
+                            : '-'}
+                        </div>
+                        <p className="text-meta-gray-7 text-base font-normal">
+                          {TEXT?.STREET_ADDRESS}
+                        </p>
+                      </div>
+                      <div className="pt-5">
+                        <div className=" flex flex-wrap gap-1 ">
+                          {formik?.values?.working_schedule.length > 0
+                            ? formik?.values?.working_schedule?.map(
+                                (list: any, index: any) => {
+                                  return (
+                                    <div className="text-sm font-medium text-meta-purple-1">
+                                      {`${list?.label} ${formik?.values?.working_schedule?.length - 1 !== index ? ' /' : ''}`}
+                                    </div>
+                                  );
+                                },
+                              )
+                            : '-'}
+                        </div>
+                        <p className="text-meta-gray-7 text-base font-normal">
+                          {TEXT?.WORKING_SCHEDULE}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-5 rounded-lg border border-meta-light-blue-1">
+                  <div className="bg-meta-gray-6 rounded-t-lg border-b border-meta-light-blue-1  py-2 pl-4 text-lg font-semibold text-meta-purple-1">
+                    Salary Details
+                  </div>
+
+                  <div className="flex ">
+                    <div className="w-1/2 pb-[14px] pl-4 pt-[18px]">
+                      <div>
+                        <div className="text-sm font-medium text-meta-purple-1">
+                          {formik?.values?.hourly_rate !== null
+                            ? formik?.values?.hourly_rate
+                            : '-'}
+                        </div>
+                        <p className="text-meta-gray-7 text-base font-normal">
+                          {TEXT?.HOURLY_RATE}
+                        </p>
+                      </div>
+                      <div className="pt-5">
+                        <div className="text-sm font-medium text-meta-purple-1">
+                          {formik?.values?.salary_negotiable ? 'Yes' : 'No'}
+                        </div>
+                        <p className="text-meta-gray-7 text-base font-normal">
+                          Salary is negotiable
+                        </p>
+                      </div>
+                      <div className="pt-5">
+                        <div className="flex gap-1 text-sm font-medium text-meta-purple-1">
+                          {formik?.values?.skills?.length > 0
+                            ? formik?.values?.skills?.map(
+                                (list: any, index: any) => {
+                                  return (
+                                    <div className="text-sm font-medium text-black">
+                                      {`${list?.label} ${formik?.values?.skills?.length - 1 !== index ? ' /' : ''}`}
+                                    </div>
+                                  );
+                                },
+                              )
+                            : '-'}
+                        </div>
+                        <p className="text-meta-gray-7 text-base font-normal">
+                          {TEXT?.SKILLS}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="w-1/2 pb-[14px] pl-4 pt-[18px]">
+                      <div>
+                        <div className="text-sm font-medium text-meta-purple-1">
+                          {formik?.values?.salary_pay}
+                        </div>
+                        <p className="text-meta-gray-7 text-base font-normal">
+                          Prefer to Pay
+                        </p>
+                      </div>
+                      <div className="pt-5">
+                        <div className="text-sm font-medium text-meta-purple-1">
+                          {formik?.values?.vacancy}
+                        </div>
+                        <p className="text-meta-gray-7 text-base font-normal">
+                          Hiring Candidate
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </Dialog.Panel>

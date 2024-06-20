@@ -12,7 +12,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import FinishExamDialog from '@/Components/exam/FinishExamDialog';
 import { EXAM_STATUS, QUESTION_STATUS, RENDER_OPTION } from '@/constant/Enum';
 
-const Page = () => {
+const Page = (data: any) => {
   const router = useRouter();
   const intervalRef = useRef<any>(null);
   const [secondsRemaining, setSecondsRemaining] = useState(30 * 60);
@@ -77,11 +77,15 @@ const Page = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (categories?.length === 0 && results === undefined) {
-      router.replace(ROUTE?.CERTIFICATION);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (
+  //     categories?.length === 0 &&
+  //     results === undefined &&
+  //     !data?.searchParams?.token
+  //   ) {
+  //     router.replace(ROUTE?.CERTIFICATION);
+  //   }
+  // }, []);
 
   const compareArrays = (a: any, b: any) => {
     a.forEach((element: any) => {
@@ -100,6 +104,7 @@ const Page = () => {
   const getQuestionSheet = () => {
     const obj = {
       categoryIds: categories?.map((el: any) => el?._id),
+      token: data?.searchParams?.token ? data?.searchParams?.token : null,
     };
     API.post(API_CONSTANT?.QUESTION, obj)
       .then((res: any) => {

@@ -90,7 +90,6 @@ const BankDetailsTab = ({
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
   });
-  console.log('userdetails', userDetails);
 
   return (
     <form onSubmit={formik.handleSubmit}>

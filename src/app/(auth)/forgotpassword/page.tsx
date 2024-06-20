@@ -1,10 +1,13 @@
 'use client';
 import Image from 'next/image';
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { TEXT } from '@/service/Helper';
 import { useFormik } from 'formik';
+import API from '@/service/ApiService';
+import { toast } from 'react-toastify';
+import React, { useState } from 'react';
+import { TEXT } from '@/service/Helper';
 import Button from '@/Components/Button';
+import { useRouter } from 'next/navigation';
+import { API_CONSTANT } from '@/constant/ApiConstant';
 
 const Page = () => {
   const router = useRouter();
@@ -12,8 +15,23 @@ const Page = () => {
   const [email, setEmail] = useState('');
   const [sendMail, setSendMail] = useState(false);
 
-  const handleSubmit = () => {
-    console.log('click', email);
+  const handleForgotPassword = () => {
+    const obj = {
+      email: email,
+    };
+
+    API.post(API_CONSTANT.FORGOT_PASSWORD, obj)
+      .then((res) => {
+        if (res?.data?.status === 200) {
+          toast.success(res?.data?.message);
+        }
+      })
+      .catch((err) => {
+        toast.error(
+          err?.response?.data?.message ||
+            'Something went wrong, please try again',
+        );
+      });
   };
 
   return (
@@ -82,7 +100,7 @@ const Page = () => {
 
               <Button
                 title={TEXT?.SEND}
-                handleClick={() => handleSubmit()}
+                handleClick={() => handleForgotPassword()}
                 disabled={email?.length !== 0 ? false : true}
                 btnClass={`${email?.length === 0 && '!bg-gray-300 hover:!bg-none'}`}
               />

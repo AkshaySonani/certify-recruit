@@ -1,16 +1,45 @@
 'use client';
 import Image from 'next/image';
+import API from '@/service/ApiService';
+import { toast } from 'react-toastify';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ROUTE, TEXT } from '@/service/Helper';
+import { API_CONSTANT } from '@/constant/ApiConstant';
 
 const Page = (data: any) => {
   const router = useRouter();
+  const [newPass, setNewPass] = useState('');
+  const [configPass, setConfigPass] = useState('');
 
   const [eye, setEye] = useState<Record<string, boolean>>({
     pass: false,
     confirmPass: false,
   });
+
+  const handleResetPassword = () => {
+    const obj = {
+      token: data?.searchParams?.token,
+      newPassword: newPass,
+    };
+
+    API.post(API_CONSTANT.RESET_PASSWORD, obj)
+      .then((res) => {
+        if (res?.data?.status === 200) {
+          toast.success(res?.data?.message);
+          setTimeout(() => {
+            router.push(ROUTE?.SUCCESSFUL_FORGOT_PASSWORD);
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        toast.error(
+          err?.response?.data?.message ||
+            'Something want wrong please try again',
+        );
+      });
+  };
+
   return (
     <div>
       <div className="container mx-auto">
@@ -30,8 +59,10 @@ const Page = (data: any) => {
 
               <div className="relative mb-6">
                 <input
+                  value={newPass}
                   placeholder={TEXT?.PASSWORD}
                   type={eye.pass ? 'text' : 'password'}
+                  onChange={(event) => setNewPass(event?.target?.value)}
                   className="h-12 w-full rounded-xl border border-meta-light-blue-2 pl-4"
                 />
                 {!eye.pass && (
@@ -61,8 +92,10 @@ const Page = (data: any) => {
               </div>
               <div className="relative mb-8">
                 <input
+                  value={configPass}
                   placeholder={TEXT?.CONFIRM_PASSWORD}
                   type={eye.confirmPass ? 'text' : 'password'}
+                  onChange={(event) => setConfigPass(event?.target?.value)}
                   className="h-12 w-full rounded-xl border border-meta-light-blue-2 pl-4"
                 />
                 {!eye.confirmPass && (
@@ -100,6 +133,7 @@ const Page = (data: any) => {
               <button
                 className="mb-8 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-meta-light-blue-1 text-meta-purple-1 hover:bg-meta-blue-2 hover:text-white"
                 // onClick={() => router.push(ROUTE?.SUCCESSFULL_FORGOT_PASSWORD)}
+                onClick={() => handleResetPassword()}
               >
                 <span className="flex justify-center text-sm font-medium">
                   {TEXT?.RESET_PASSWORD}

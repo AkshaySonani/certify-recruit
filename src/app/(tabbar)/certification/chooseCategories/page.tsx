@@ -67,6 +67,7 @@ export default function Page() {
   const onSearchSkill = (search: any) => {
     setSkillQuery(search);
   };
+
   useEffect(() => {
     if (debouncedSearchSkill !== '') {
       searchSkillApi(debouncedSearchSkill);
@@ -84,6 +85,7 @@ export default function Page() {
       </components.DropdownIndicator>
     );
   };
+
   const onContinue = () => {
     if (categories?.length === 0) {
       toast.error('Select at least one category');
@@ -100,6 +102,7 @@ export default function Page() {
       router?.push('/dashboard');
     }
   };
+
   return (
     <div>
       <div className="container mx-auto">
