@@ -73,7 +73,7 @@ const EmployeeDashboard = ({
               <div className="rounded-2xl bg-meta-gray-2 p-5">
                 <div className="flex justify-between">
                   <div>
-                    <div className="flex items-center">
+                    <div className="flex items-start">
                       <div className="whitespace-pre-wrap break-all text-xl font-semibold text-meta-purple-1">
                         {list?.title}
                       </div>
@@ -88,7 +88,7 @@ const EmployeeDashboard = ({
                     </div>
                   </div>
 
-                  <div className="flex items-center">
+                  <div className="flex items-start">
                     <Menu as="div" className="relative w-44">
                       <Menu.Button className="relative  flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-2 pl-5 pr-[11px] outline-none transition">
                         <p className="font-me capitalize text-meta-purple-1">
