@@ -19,6 +19,14 @@ export const POST = async (req: NextRequest) => {
     const { email } = await req.json();
 
     let user = await User.findOne({ email });
+
+    if (!user) {
+      return NextResponse.json({
+        status: 404,
+        message: 'User does not exist',
+      });
+    }
+
     let results = await Individual.findOne({ user_ref_id: user?._id });
 
     return NextResponse.json({
