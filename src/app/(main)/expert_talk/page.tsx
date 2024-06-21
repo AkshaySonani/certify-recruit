@@ -64,7 +64,6 @@ const Page = () => {
 
   return (
     <div className="container mx-auto">
-      <Header />
       <div className="h-full w-full">
         <div className="flex h-full min-h-96 items-center justify-center bg-meta-gray-2">
           <PageTitle
@@ -123,7 +122,6 @@ const Page = () => {
           })}
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
