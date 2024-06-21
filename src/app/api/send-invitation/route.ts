@@ -1,22 +1,24 @@
 'use server';
-import jwt from 'jsonwebtoken';
 import { connect } from '@/db/mongodb';
+import { getServerSession } from 'next-auth';
 import { transporter } from '@/config/nodemailer';
+import { authOptions } from '@/service/AuthOptions';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
+  const session: any = await getServerSession(authOptions);
+  if (!session?.user?._id) {
+    return NextResponse.json({
+      message: 'Unauthorized',
+      status: 401,
+    });
+  }
+
   try {
     await connect();
     const { email } = await req.json();
 
-    // Create JWT
-    const inviteToken = jwt.sign(
-      { email },
-      process.env.JWT_SECRET!,
-      { expiresIn: '2d' }, // Token valid for 2 days
-    );
-
-    const inviteUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/invite?token=${inviteToken}`;
+    const inviteUrl = `${process.env.NEXT_PUBLIC_BASE_URL}signup`;
 
     const mailOptions = {
       from: process.env.NEXT_PUBLIC_EMAIL,

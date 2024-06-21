@@ -1,63 +1,70 @@
-"use client";
-import * as Yup from "yup";
-import Image from "next/image";
-import { useFormik } from "formik";
-import API from "@/service/ApiService";
-import { toast } from "react-toastify";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { ROUTE, TEXT } from "@/service/Helper";
-import { API_CONSTANT } from "@/constant/ApiConstant";
-import Button from "@/Components/Button";
+'use client';
+import * as Yup from 'yup';
+import Image from 'next/image';
+import { useFormik } from 'formik';
+import API from '@/service/ApiService';
+import { toast } from 'react-toastify';
+import React, { useState } from 'react';
+import Button from '@/Components/Button';
+import Loading from '@/Components/Loading';
+import { useRouter } from 'next/navigation';
+import { ROUTE, TEXT } from '@/service/Helper';
+import { API_CONSTANT } from '@/constant/ApiConstant';
 
 const Page = (data: any) => {
   const router = useRouter();
 
+  const [loading, setLoading] = useState(false);
   const [eye, setEye] = useState<Record<string, boolean>>({
     pass: false,
     confirmPass: false,
   });
 
   const handleResetPassword = (values: any) => {
+    setLoading(true);
     const obj = {
       newPassword: values?.newPass,
       token: data?.searchParams?.token,
     };
 
+    console.log(obj);
+
     API.post(API_CONSTANT.RESET_PASSWORD, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
+          setLoading(false);
           toast.success(res?.data?.message);
-          setTimeout(() => {
-            router.push(ROUTE?.SUCCESSFUL_FORGOT_PASSWORD);
-          }, 1000);
+          router.push(ROUTE?.SUCCESSFUL_RESET_PASSWORD);
         }
       })
-      .catch((err) => {
+      .catch((err: any) => {
+        console.log('err', err);
+
+        setLoading(false);
         toast.error(
           err?.response?.data?.message ||
-            "Something want wrong please try again"
+            'Something want wrong please try again',
         );
       });
   };
 
   const validationSchema = Yup.object().shape({
     newPass: Yup.string()
-      .required("Password is required")
+      .required('Password is required')
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/,
         // /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+        'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character',
       ),
     CNewPass: Yup.string()
-      .required("Confirm Password is required")
-      .oneOf([Yup.ref("newPass")], "Passwords must match"),
+      .required('Confirm Password is required')
+      .oneOf([Yup.ref('newPass')], 'Passwords must match'),
   });
 
   const formik = useFormik({
     initialValues: {
-      newPass: "",
-      CNewPass: "",
+      newPass: '',
+      CNewPass: '',
     },
     validationSchema,
     enableReinitialize: true,
@@ -67,9 +74,9 @@ const Page = (data: any) => {
   return (
     <div>
       <div className="container mx-auto">
-        {/* <div className="flex justify-center py-20">
-          <Image src={"/MainLogo.svg"} alt="MainLogo" width={334} height={56} />
-        </div> */}
+        <div className="flex justify-center py-20">
+          <Image src={'/MainLogo.svg'} alt="MainLogo" width={334} height={56} />
+        </div>
 
         <div className="bg-[url('/_Compound.svg')]">
           <div className="flex justify-center">
@@ -91,7 +98,7 @@ const Page = (data: any) => {
                     placeholder={TEXT?.PASSWORD}
                     onChange={formik.handleChange}
                     value={formik?.values.newPass}
-                    type={eye.pass ? "text" : "password"}
+                    type={eye.pass ? 'text' : 'password'}
                     className="h-12 w-full rounded-xl border border-meta-light-blue-2 pl-4"
                   />
                   {formik.touched.newPass && formik.errors.newPass && (
@@ -103,7 +110,7 @@ const Page = (data: any) => {
                       alt="eye"
                       width={18}
                       height={18}
-                      src={"/login/Eye-close.svg"}
+                      src={'/login/Eye-close.svg'}
                       className="absolute right-4 top-4"
                       onClick={() =>
                         setEye((prev) => ({ ...prev, pass: !prev.pass }))
@@ -115,7 +122,7 @@ const Page = (data: any) => {
                       alt="eye"
                       width={18}
                       height={18}
-                      src={"/login/Eye-open.svg"}
+                      src={'/login/Eye-open.svg'}
                       className="absolute right-4 top-4"
                       onClick={() =>
                         setEye((prev) => ({ ...prev, pass: !prev.pass }))
@@ -129,7 +136,7 @@ const Page = (data: any) => {
                     onChange={formik.handleChange}
                     value={formik?.values.CNewPass}
                     placeholder={TEXT?.CONFIRM_PASSWORD}
-                    type={eye.confirmPass ? "text" : "password"}
+                    type={eye.confirmPass ? 'text' : 'password'}
                     className="h-12 w-full rounded-xl border border-meta-light-blue-2 pl-4"
                   />
                   {formik.touched.CNewPass && formik.errors.CNewPass && (
@@ -140,7 +147,7 @@ const Page = (data: any) => {
                       alt="eye"
                       width={18}
                       height={18}
-                      src={"/login/Eye-close.svg"}
+                      src={'/login/Eye-close.svg'}
                       className="absolute right-4 top-4"
                       onClick={() =>
                         setEye((prev) => ({
@@ -155,7 +162,7 @@ const Page = (data: any) => {
                       alt="eye"
                       width={18}
                       height={18}
-                      src={"/login/Eye-open.svg"}
+                      src={'/login/Eye-open.svg'}
                       className="absolute right-4 top-4"
                       onClick={() =>
                         setEye((prev) => ({
@@ -167,7 +174,11 @@ const Page = (data: any) => {
                   )}
                 </div>
 
-                <Button title={TEXT?.RESET_PASSWORD} />
+                <Button
+                  disabled={loading}
+                  isLoading={loading}
+                  title={TEXT?.RESET_PASSWORD}
+                />
 
                 {/* <button
                   className="mb-8 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-meta-light-blue-1 text-meta-purple-1 hover:bg-meta-blue-2 hover:text-white"

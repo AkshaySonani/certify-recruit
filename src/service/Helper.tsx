@@ -24,6 +24,7 @@ const ROUTE = {
   ACTIVE_JOB: '/dashboard/active_job',
   EMPLOYMENT_TYPE: '/job_posting/employment_Type',
   SUCCESSFUL_FORGOT_PASSWORD: '/login/forgotPass/newPass/successful',
+  SUCCESSFUL_RESET_PASSWORD: '/resetpassword/success',
   JOB_AWAITING: '/job/awaiting',
   JOB_APPLICANTS: '/job/applicants',
   JOB_CONTACTING: '/job/contacting',

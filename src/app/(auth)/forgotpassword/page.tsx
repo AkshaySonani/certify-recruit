@@ -13,20 +13,24 @@ const Page = () => {
   const router = useRouter();
 
   const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
   const [sendMail, setSendMail] = useState(false);
 
   const handleForgotPassword = () => {
+    setLoading(true);
     const obj = {
       email: email,
     };
 
     API.post(API_CONSTANT.FORGOT_PASSWORD, obj)
       .then((res) => {
+        setLoading(false);
         if (res?.data?.status === 200) {
           toast.success(res?.data?.message);
         }
       })
       .catch((err) => {
+        setLoading(false);
         toast.error(
           err?.response?.data?.message ||
             'Something went wrong, please try again',
@@ -100,8 +104,9 @@ const Page = () => {
 
               <Button
                 title={TEXT?.SEND}
+                isLoading={loading}
                 handleClick={() => handleForgotPassword()}
-                disabled={email?.length !== 0 ? false : true}
+                disabled={email?.length !== 0 || loading ? false : true}
                 btnClass={`${email?.length === 0 && '!bg-gray-300 hover:!bg-none'}`}
               />
 
