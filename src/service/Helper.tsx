@@ -297,6 +297,11 @@ const SIDE_BAR_DATA = {
       title: 'Company info',
     },
     {
+      icon: Icons.Job,
+      path: 'search_CVs',
+      title: 'Search CVs',
+    },
+    {
       path: 'pricing',
       title: 'Pricing',
       icon: Icons.Pricing,
