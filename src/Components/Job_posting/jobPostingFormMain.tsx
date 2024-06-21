@@ -45,7 +45,7 @@ function JobPostingFormMain({ id }: any) {
         job_id: id,
       })
         .then((res: any) => {
-          setJobDetails(res?.data?.data[0]);
+          setJobDetails(res?.data?.data);
         })
         .catch((error) => {
           toast.error(

@@ -4,11 +4,12 @@ import Button from '../Button';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ROUTE, TEXT } from '@/service/Helper';
+import { usePathname } from 'next/navigation';
 
 const Header = () => {
   const router = useRouter();
   const [navbar, setNavbar] = useState(false);
-
+  const pathname = usePathname();
   const NAV_ARR = [
     {
       id: 1,
@@ -18,7 +19,7 @@ const Header = () => {
     {
       id: 2,
       title: 'About Us',
-      route: '/about_us',
+      route: '/aboutUs',
     },
     {
       id: 3,
@@ -33,14 +34,14 @@ const Header = () => {
     {
       id: 4,
       title: 'Contact Us',
-      route: '/contact_us',
+      route: '/contactUs',
     },
   ];
 
   return (
-    <header>
-      <nav className="border-gray-200 bg-white px-8 py-6 md:relative lg:px-12">
-        <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between">
+    <header className="bg-white py-[25px]">
+      <nav className="mx-auto h-full  px-4 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
+        <div className="mx-auto flex max-w-screen-2xl flex-wrap items-center justify-between">
           <div className="flex justify-center">
             <Image
               width={200}
@@ -55,6 +56,9 @@ const Header = () => {
             <div className="hidden md:block">
               <Button
                 title={TEXT?.LOG_IN}
+                handleClick={() => {
+                  router.push(ROUTE?.LOGIN);
+                }}
                 titleClass="!text-base !text-white"
                 btnClass="!w-32 !rounded-lg !bg-meta-blue-1 !py-2 !mb-0"
               />
@@ -88,7 +92,7 @@ const Header = () => {
                 return (
                   <p
                     onClick={() => router.push(ele?.route)}
-                    className="bg-primary-700 lg:text-primary-700 block cursor-pointer rounded py-2 pl-3 pr-4 text-base font-medium text-meta-gray-1 hover:text-meta-blue-1 lg:bg-transparent lg:p-0"
+                    className={`bg-primary-700 lg:text-primary-700 block cursor-pointer rounded py-2 pl-3 pr-4 text-base font-medium  hover:text-meta-blue-1 lg:bg-transparent lg:p-0 ${pathname === ele?.route ? 'text-meta-blue-1' : 'text-meta-gray-1'}`}
                     aria-current="page"
                   >
                     {ele?.title}
@@ -116,7 +120,7 @@ const Header = () => {
                   className="text-body-sm text-meta-grey-2 group relative z-[1] m-2 inline-flex cursor-pointer hover:text-white"
                 >
                   <p
-                    className="bg-primary-700 lg:text-primary-700 block cursor-pointer rounded py-1 pl-3 pr-4 text-base font-medium text-meta-gray-1 hover:text-meta-blue-1 lg:bg-transparent lg:p-0"
+                    className={`bg-primary-700 lg:text-primary-700 block cursor-pointer rounded py-1 pl-3 pr-4 text-base font-medium  hover:text-meta-blue-1 lg:bg-transparent lg:p-0 ${pathname === list?.route ? 'text-meta-blue-1' : 'text-meta-gray-1'}`}
                     aria-current="page"
                   >
                     {list?.title}

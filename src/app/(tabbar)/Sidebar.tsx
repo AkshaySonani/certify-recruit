@@ -212,7 +212,10 @@ const Sidebar = () => {
                     <button
                       onClick={() => {
                         localStorage.removeItem('userRole');
-                        signOut();
+                        signOut({
+                          callbackUrl: process.env.NEXT_PUBLIC_BASE_URL,
+                        });
+
                         router.replace(ROUTE?.LOGIN);
                       }}
                       className={`${

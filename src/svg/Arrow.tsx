@@ -1,0 +1,21 @@
+const Arrow = ({ color }: any) => {
+  return (
+    <div>
+      <svg
+        width="18"
+        height="9"
+        viewBox="0 0 18 9"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M3.82353 1L1.26648 3.67504C0.911173 4.13065 0.911173 4.86935 1.26648 5.32496L3.82353 8M1.53296 4.5H17"
+          stroke={color}
+          stroke-width="1.5"
+          stroke-linecap="round"
+        />
+      </svg>
+    </div>
+  );
+};
+export default Arrow;

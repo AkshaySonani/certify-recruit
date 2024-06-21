@@ -52,12 +52,12 @@ export default withAuth(
 );
 export const config = {
   matcher: [
-    '/',
     '/login',
     '/signup',
     '/dashboard',
     '/myProfile',
     '/job_posting',
     '/job',
+    '/exam',
   ],
 };

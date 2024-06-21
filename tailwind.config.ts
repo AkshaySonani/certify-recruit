@@ -30,6 +30,8 @@ const config: Config = {
           2: '#EFF4FF',
           3: '#49556F',
           4: '#F1FAF4',
+          5: '#FAFAFA',
+          6: '#CEDEFF',
         },
       },
       backgroundColor: {

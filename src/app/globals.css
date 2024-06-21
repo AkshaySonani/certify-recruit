@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -21,9 +22,13 @@
     text-wrap: balance;
   }
 }
-
+.dm-sans {
+  font-family: 'DM Sans', sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
 /* Custom CSS for square checkboxes */
-input[type="checkbox"].custom-checkbox {
+input[type='checkbox'].custom-checkbox {
   margin: 0;
   font: inherit;
   display: grid;
@@ -36,25 +41,25 @@ input[type="checkbox"].custom-checkbox {
   place-content: center;
   background-color: #fff;
   -webkit-appearance: none;
-  border: 2px solid #DCE7FF;
+  border: 2px solid #dce7ff;
 }
 
-input[type="checkbox"].custom-checkbox::before {
-  content: "";
+input[type='checkbox'].custom-checkbox::before {
+  content: '';
   width: 0.75rem;
   height: 0.75rem;
   border-radius: 2px;
   transform: scale(0);
-  background-color: #013BB7;
+  background-color: #013bb7;
   transition: 120ms transform ease-in-out;
 }
 
-input[type="checkbox"].custom-checkbox:checked::before {
+input[type='checkbox'].custom-checkbox:checked::before {
   transform: scale(1);
 }
 
 /* Custom CSS for square radio buttons */
-input[type="radio"].custom-radio {
+input[type='radio'].custom-radio {
   margin: 0;
   font: inherit;
   display: grid;
@@ -67,30 +72,30 @@ input[type="radio"].custom-radio {
   place-content: center;
   background-color: #fff;
   -webkit-appearance: none;
-  border: 2px solid #DCE7FF;
+  border: 2px solid #dce7ff;
 }
 
-input[type="radio"].custom-radio::before {
-  content: "";
+input[type='radio'].custom-radio::before {
+  content: '';
   width: 0.75rem;
   height: 0.75rem;
   border-radius: 2px;
   transform: scale(0);
-  background-color: #013BB7;
-  box-shadow: inset 1rem 1rem #013BB7;
+  background-color: #013bb7;
+  box-shadow: inset 1rem 1rem #013bb7;
   transition: 120ms transform ease-in-out;
 }
 
-input[type="radio"].custom-radio:checked::before {
+input[type='radio'].custom-radio:checked::before {
   transform: scale(1);
 }
 
 #inTechOrgChart .orgNodeChildGroup .nodeGroupLineVerticalMiddle {
-  border-right: solid 1px #DCE7FF
+  border-right: solid 1px #dce7ff;
 }
 
 #inTechOrgChart .nodeLineBorderTop {
-  border-top: solid 1px #DCE7FF;
+  border-top: solid 1px #dce7ff;
 }
 
 .job_html_editor .quill .ql-container {

@@ -10,6 +10,7 @@ import Sense from './Sense';
 import Public from './public';
 import IQ from './IQ';
 import knowledge from './knowledge';
+import Arrow from './Arrow';
 
 export const Icons = {
   Job,
@@ -24,4 +25,5 @@ export const Icons = {
   Public,
   IQ,
   knowledge,
+  Arrow,
 };

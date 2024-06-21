@@ -31,7 +31,6 @@ export default function RootLayout({
   const isFullScreenRoute = (path: any) =>
     [
       ROUTE?.MYPROFILE,
-      ROUTE?.QUIZMCQS,
       ROUTE?.MAIN,
       ROUTE?.CHOOSE_CATEGORY,
       ROUTE?.EXAM,

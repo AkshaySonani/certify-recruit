@@ -5,15 +5,14 @@ import PageTitle from '@/Components/home/pageTitle';
 
 const Page = () => {
   return (
-    <div className="container mx-auto">
-      <Header />
+    <div className="dm-sans ">
       <div className="h-full w-full">
         <div className="flex h-full min-h-96 items-center justify-center bg-meta-gray-2">
           <PageTitle content="Terms of Use" />
         </div>
       </div>
 
-      <div className="px-8 py-8 lg:px-12">
+      <div className="mx-auto h-full px-4 pb-[50px] pt-4 sm:max-w-xl sm:pt-36 md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
         <p className="mb-10 text-lg font-normal text-meta-light-blue-3">
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
@@ -95,7 +94,7 @@ const Page = () => {
         <h2 className="mb-3 text-2xl font-bold text-meta-purple-1">
           Subscriptions
         </h2>
-        <h3 className="text-meta-gray-3 mb-1 text-lg font-bold">
+        <h3 className="mb-1 text-lg font-bold text-meta-gray-3">
           Subscription period
         </h3>
 
@@ -105,7 +104,7 @@ const Page = () => {
           since the 1500s.
         </p>
 
-        <p className="text-meta-gray-3 mb-1 text-lg font-bold">
+        <p className="mb-1 text-lg font-bold text-meta-gray-3">
           Subscription cancellations
         </p>
 
@@ -114,21 +113,21 @@ const Page = () => {
           industry. Lorem Ipsum has been the industry's standard dummy text ever
           since the 1500s.
         </p>
-        <p className="text-meta-gray-3 mb-1 text-lg font-bold">Billing</p>
+        <p className="mb-1 text-lg font-bold text-meta-gray-3">Billing</p>
 
         <p className="mb-4 text-lg font-normal text-meta-light-blue-3">
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
           since the 1500s.
         </p>
-        <p className="text-meta-gray-3 mb-1 text-lg font-bold">Fee Changes</p>
+        <p className="mb-1 text-lg font-bold text-meta-gray-3">Fee Changes</p>
 
         <p className="mb-4 text-lg font-normal text-meta-light-blue-3">
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
           since the 1500s.
         </p>
-        <p className="text-meta-gray-3 mb-1 text-lg font-bold">Refunds</p>
+        <p className="mb-1 text-lg font-bold text-meta-gray-3">Refunds</p>
 
         <p className="mb-10 text-lg font-normal text-meta-light-blue-3">
           Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -184,7 +183,6 @@ const Page = () => {
           including versions of Lorem Ipsum.
         </p>
       </div>
-      <Footer />
     </div>
   );
 };
