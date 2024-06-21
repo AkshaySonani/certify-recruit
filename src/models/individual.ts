@@ -224,7 +224,7 @@ const individualSchema = new mongoose.Schema({
   bgv: [
     {
       currently_working: {
-        type: 'String',
+        type: Boolean,
       },
       company_name: {
         type: 'String',
