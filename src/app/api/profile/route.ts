@@ -236,7 +236,7 @@ export const POST = async (req: NextRequest) => {
 };
 
 export const GET = async (req: NextRequest) => {
-  const session = await getServerSession(authOptions);
+  const session: any = await getServerSession(authOptions);
   if (!session?.user?._id) {
     return NextResponse.json({
       message: 'Unauthorized',
