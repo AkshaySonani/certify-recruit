@@ -1,7 +1,7 @@
 'use server';
 import mongoose from 'mongoose';
-import { connect } from '@/db/mongodb';
 import { Individual } from '@/models';
+import { connect } from '@/db/mongodb';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/service/AuthOptions';
 import { NextRequest, NextResponse } from 'next/server';
@@ -15,83 +15,129 @@ export const POST = async (req: NextRequest) => {
     });
   }
 
+  const { role, skills, data_uploaded, Experience } = await req.json();
+
   try {
     await connect();
-    const { role, skills, data_uploaded, Experience } = await req.json();
 
-    const matchStage = {
-      $match: {
-        role: role ? new RegExp(`^${role}$`, 'i') : { $exists: true },
-        skills: {
-          $elemMatch: {
-            $in: skills.map((skill: any) => new mongoose.Types.ObjectId(skill)),
-          },
-        },
-      },
-    };
+    let query: any = {};
+    if (role) {
+      query.role = role;
+    }
+    if (skills && skills.length > 0) {
+      query.skills = {
+        $in: skills.map((id: any) => new mongoose.Types.ObjectId(id)),
+      };
+    }
+    if (data_uploaded) {
+      const [day, month, year] = data_uploaded.split('-');
+      const date = new Date(`${year}-${month}-${day}`);
+      console.log('Parsed data_uploaded date:', date);
+      query.createdAt = {
+        $gte: new Date(date.setHours(0, 0, 0, 0)),
+        $lt: new Date(date.setHours(24, 0, 0, 0)),
+      };
+    }
 
-    const addFieldsStage = {
-      $addFields: {
-        totalExperience: {
-          $reduce: {
-            input: '$total_experiences',
-            initialValue: { years: 0, months: 0 },
-            in: {
-              years: { $add: ['$$value.years', '$$this.years'] },
-              months: { $add: ['$$value.months', '$$this.month'] },
+    let experienceFilter: any = {};
+    if (Experience) {
+      const match = Experience.match(/(\d+)\s*(year|month)/i);
+      if (match) {
+        const value = parseInt(match[1], 10);
+        const unit = match[2].toLowerCase();
+        if (unit === 'year') {
+          experienceFilter['totalExperience.years'] = { $gte: value };
+        } else if (unit === 'month') {
+          experienceFilter['totalExperience.months'] = { $gte: value };
+        }
+      }
+    }
+
+    const results = await Individual.aggregate([
+      { $match: query },
+      {
+        $addFields: {
+          totalExperience: {
+            $reduce: {
+              input: '$total_experiences',
+              initialValue: { years: 0, months: 0 },
+              in: {
+                years: { $add: ['$$value.years', '$$this.years'] },
+                months: { $add: ['$$value.months', '$$this.month'] },
+              },
             },
           },
         },
       },
-    };
-
-    const lookupStage = {
-      $lookup: {
-        from: 'users', // Replace 'users' with your actual collection name for full document details
-        localField: 'user_ref_id',
-        foreignField: '_id',
-        as: 'userDetails',
-      },
-    };
-
-    const projectStage = {
-      $project: {
-        _id: 1,
-        __v: 1,
-        role: 1,
-        skills: 1,
-        resume: 1,
-        createdAt: 1,
-        updatedAt: 1,
-        user_ref_id: 1,
-        company_name: 1,
-        total_experiences: 1,
-        totalExperience: {
-          years: {
+      {
+        $addFields: {
+          'totalExperience.years': {
             $add: [
               '$totalExperience.years',
               { $floor: { $divide: ['$totalExperience.months', 12] } },
             ],
           },
-          months: { $mod: ['$totalExperience.months', 12] },
+          'totalExperience.months': { $mod: ['$totalExperience.months', 12] },
         },
-        userDetails: { $arrayElemAt: ['$userDetails', 0] },
       },
-    };
-
-    const pipeline = [matchStage, addFieldsStage, lookupStage, projectStage];
-
-    const results = await Individual.aggregate(pipeline);
+      { $match: experienceFilter },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user_ref_id',
+          foreignField: '_id',
+          as: 'userDetails',
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          user_ref_id: 1,
+          profile_count: 1,
+          skills: 1,
+          learn_and_earn: 1,
+          company_name: 1,
+          resume: 1,
+          languages: 1,
+          total_experiences: 1,
+          bgv: 1,
+          certificates: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          __v: 1,
+          role: 1,
+          profile_summary: 1,
+          college_school_name: 1,
+          completion_date: 1,
+          degree: 1,
+          highest_education: 1,
+          date_of_birth: 1,
+          gender: 1,
+          expected_salary_start_at: 1,
+          IFSC_code: 1,
+          aadhar_card_number: 1,
+          account_in_name: 1,
+          account_number: 1,
+          account_type: 1,
+          bank_name: 1,
+          pan_card_number: 1,
+          is_fresher: 1,
+          totalExperience: 1,
+          userDetails: { $arrayElemAt: ['$userDetails', 0] },
+        },
+      },
+    ]);
 
     return NextResponse.json({
       status: 200,
       data: results,
     });
-  } catch (error) {
+  } catch (error: any) {
+    console.error('Error searching CVs:', error);
     return NextResponse.json(
       {
-        message: 'An error occurred while searching cvs.',
-        error: error || 'Internal server error',
+        message: 'An error occurred while searching CVs.',
+        error: error.message || 'Internal server error',
       },
       { status: 500 },
     );
