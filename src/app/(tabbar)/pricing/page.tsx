@@ -101,7 +101,7 @@ const Page = () => {
               checked={enabled}
               onChange={setEnabled}
               className={`${
-                enabled ? 'bg-meta-light-blue-1' : 'bg-gray-100'
+                enabled ? 'bg-meta-light-blue-1' : 'bg-meta-gray-5'
               } relative inline-flex h-6 w-11 items-center rounded-full`}
             >
               <span className="sr-only">{TEXT?.ENABLE_NOTIFICATIONS}</span>
@@ -184,11 +184,11 @@ const Page = () => {
           {/* <div className="bg-meta-purple-1 py-2 text-center text-base font-medium text-white">
             {TEXT?.MOST_POPULAR}
           </div> */}
-          <div className="flex h-[520px] flex-col justify-between bg-meta-gray-2">
-            <div className="rounded-t-lg bg-meta-purple-1 py-2 text-center text-base font-medium text-white">
+          <div className="flex h-[520px] flex-col justify-between bg-meta-gray-2 px-8 pb-10 pt-10">
+            <div className="mb-4 rounded-t-lg bg-meta-purple-1 py-2 text-center text-base font-medium text-white">
               {TEXT?.MOST_POPULAR}
             </div>
-            <div className="px-8 pb-10 pt-10">
+            <div>
               <div className="text-center text-base font-medium text-meta-purple-1">
                 {session?.data?.user?.role === USER_ROLE?.EMPLOYEE
                   ? TEXT?.STANDARD_PLAN

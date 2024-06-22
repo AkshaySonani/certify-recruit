@@ -47,7 +47,10 @@ export const POST = async (req: NextRequest) => {
 
     if (pass) {
       const updatedUser = await Individual.findOneAndUpdate(
-        { 'certificates._id': exam_id, user_ref_id: session.user._id },
+        {
+          'certificates._id': exam_id,
+          user_ref_id: session.user._id,
+        },
         {
           $set: {
             'certificates.$.result': correctAnswersCount,
@@ -65,7 +68,10 @@ export const POST = async (req: NextRequest) => {
       }
     } else {
       await Individual.findOneAndUpdate(
-        { 'certificates._id': exam_id, user_ref_id: session.user._id },
+        {
+          'certificates._id': exam_id,
+          user_ref_id: session.user._id,
+        },
         { $pull: { certificates: { _id: exam_id } } },
         { new: true },
       );
@@ -91,6 +97,100 @@ export const POST = async (req: NextRequest) => {
     );
   }
 };
+
+// export const POST = async (req: NextRequest) => {
+//   const session: any = await getServerSession(authOptions);
+//   // if (!session?.user?._id) {
+//   //   return NextResponse.json({
+//   //     message: 'Unauthorized',
+//   //     status: 401,
+//   //   });
+//   // }
+
+//   try {
+//     await connect();
+//     const { exam_id, answers } = await req.json();
+
+//     if (!Array.isArray(answers) || answers.length === 0) {
+//       return NextResponse.json({
+//         status: 400,
+//         message: 'Answers must be a non-empty array',
+//       });
+//     }
+
+//     const questionIds = answers.map(
+//       (answer) => new mongoose.Types.ObjectId(answer.que_id),
+//     );
+//     const questions = await Question.find({ _id: { $in: questionIds } }).select(
+//       '+ans',
+//     );
+
+//     let correctAnswersCount = 0;
+//     answers.forEach((userAnswer) => {
+//       const question = questions.find((q) => q._id.equals(userAnswer.que_id));
+//       if (question && question.ans === userAnswer.ans) {
+//         correctAnswersCount++;
+//       }
+//     });
+
+//     const totalQuestions = answers.length;
+//     const correctPercentage = (correctAnswersCount / totalQuestions) * 100;
+//     const pass = correctPercentage >= 70;
+
+//     if (pass) {
+//       const updatedUser = await Individual.findOneAndUpdate(
+//         {
+//           'certificates._id': exam_id,
+//           user_ref_id: '666c6927c3c9d4399627aa31',
+//         },
+//         // { 'certificates._id': exam_id, user_ref_id: session.user._id },
+//         {
+//           $set: {
+//             'certificates.$.result': correctAnswersCount,
+//             'certificates.$.end_time': new Date(Date.now()),
+//           },
+//         },
+//         { new: true },
+//       );
+
+//       if (!updatedUser) {
+//         return NextResponse.json({
+//           status: 404,
+//           message: 'Certificate not found or update failed',
+//         });
+//       }
+//     } else {
+//       await Individual.findOneAndUpdate(
+//         {
+//           'certificates._id': exam_id,
+//           user_ref_id: '666c6927c3c9d4399627aa31',
+//         },
+//         // { 'certificates._id': exam_id, user_ref_id: session.user._id },
+//         { $pull: { certificates: { _id: exam_id } } },
+//         { new: true },
+//       );
+//     }
+
+//     return NextResponse.json({
+//       status: 200,
+//       data: {
+//         correctAnswersCount,
+//         totalQuestions,
+//         correctPercentage,
+//         pass,
+//       },
+//       message: pass ? 'Congratulations' : 'Better luck next time',
+//     });
+//   } catch (error: any) {
+//     return NextResponse.json(
+//       {
+//         message: 'An error occurred while checking answers.',
+//         error: error.message,
+//       },
+//       { status: 500 },
+//     );
+//   }
+// };
 
 // export const POST = async (req: NextRequest) => {
 //   const session: any = await getServerSession(authOptions);

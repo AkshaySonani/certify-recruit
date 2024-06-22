@@ -155,6 +155,8 @@ const TEXT = {
   Company_Detail: 'Company Detail',
   STREET_ADDRESS: 'Street address',
   TIME_REMAINING: 'Time remaining',
+  BADGE_OF_HONOUR: 'Badge of Honour',
+  ADD_AN_EMPLOYEE: 'Add an Employee',
   RESET_VIA_EMAIL: 'Reset via Email',
   EMPLOYMENT_TYPE: 'Employment Type',
   SCHEDULE_A_DEMO: 'Schedule a demo',
@@ -300,6 +302,11 @@ const SIDE_BAR_DATA = {
       icon: Icons.Job,
       path: 'search_CVs',
       title: 'Search CVs',
+    },
+    {
+      icon: Icons.Job,
+      path: 'badgeOfHonour',
+      title: 'Badge of Honour',
     },
     {
       path: 'pricing',

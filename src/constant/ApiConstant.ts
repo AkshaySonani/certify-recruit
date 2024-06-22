@@ -23,6 +23,7 @@ const API_CONSTANT = {
   QUIZ_RESULTS: '/le-today-results',
   RESET_PASSWORD: '/reset-password',
   FORGOT_PASSWORD: '/forgot-password',
+  SEND_BADGE_LINK: '/send-badge-link',
   UPDATE_APPLY_JOB: '/update-apply-job',
   CHECK_LEARN_ANSWER: '/check-le-answer',
   UPDATE_LE_DETAILS: '/update-le-details',

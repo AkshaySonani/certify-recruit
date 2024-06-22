@@ -6,7 +6,6 @@ import { TEXT } from '@/service/Helper';
 import Button from '@/Components/Button';
 import Spinner from '@/app/icons/Spinner';
 import { useSession } from 'next-auth/react';
-import Checkbox from '@/Components/Checkbox';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import React, { useState, Fragment, useEffect } from 'react';
 import { Dialog, Menu, Popover, Switch, Transition } from '@headlessui/react';
@@ -23,11 +22,10 @@ const Page = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState('');
-  const [isSpinner, setIsSpinner] = useState(false);
   const [userList, setUserLists] = useState<any>({});
   const [rowStates, setRowStates] = useState<any>({});
-  const [currentUser, setCurretnUser] = useState<any>('');
   const [userDetails, setUserDetails] = useState<any>({});
   const [selectedRole, setSelectedRole] = useState<any>('');
 
@@ -48,15 +46,12 @@ const Page = () => {
   }, []);
 
   const getProfileDetails = () => {
-    setIsSpinner(true);
     API.get(API_CONSTANT?.PROFILE)
       .then((res: any) => {
-        setIsSpinner(false);
         setUserLists(res?.data?.data?.users);
         setUserDetails(res?.data?.data);
       })
       .catch((error: any) => {
-        setIsSpinner(false);
         toast.error(
           error?.response?.data?.message ||
             error?.message ||
@@ -66,6 +61,7 @@ const Page = () => {
   };
 
   const addNewUser = () => {
+    setLoading(true);
     const obj = {
       name: name,
       email: email,
@@ -75,10 +71,11 @@ const Page = () => {
 
     API.post(API_CONSTANT.PROFILE, { users: [obj] })
       .then((res) => {
+        setLoading(false);
         toast?.success(res?.data?.message);
         getProfileDetails();
         setIsOpen(false);
-        setCurretnUser('');
+
         setTimeout(() => {
           setEmail('');
           setName('');
@@ -86,6 +83,7 @@ const Page = () => {
         }, 100);
       })
       .catch((err: any) => {
+        setLoading(false);
         toast.error(
           err?.response?.data?.message ||
             err?.message ||
@@ -94,31 +92,15 @@ const Page = () => {
       });
   };
 
-  const updateUser = () => {
-    const obj = {
-      name: name,
-      email: email,
-      userId: currentUser?._id,
-      role: selectedRole?.value,
-      newStatus: currentUser?.stauts,
-    };
-
-    API.post(API_CONSTANT.UPDATE_COM_USER_STATUS, obj)
+  const sendBadgeLink = (item: any) => {
+    API.post(API_CONSTANT?.SEND_BADGE_LINK, { email: item?.email })
       .then((res) => {
-        if (res?.data?.status === 200) {
-          setCurretnUser('');
-          getProfileDetails();
-          setIsOpen(false);
-          toast?.success(res?.data?.message);
-        } else {
-          toast.error(res?.data?.message);
-        }
+        toast.success(res?.data?.message);
       })
-      .catch((err: any) => {
+      .catch((err) => {
         toast.error(
           err?.response?.data?.message ||
-            err?.message ||
-            'Internal server error',
+            'Something went wrong, please try again',
         );
       });
   };
@@ -168,14 +150,6 @@ const Page = () => {
     }
   };
 
-  const handleEditUser = (item: any) => {
-    setCurretnUser(item);
-    setEmail(item?.email);
-    setName(item?.name);
-    setSelectedRole({ label: item?.role, value: item?.role });
-    setIsOpen(true);
-  };
-
   return (
     <div>
       {!session?.data || !userDetails ? (
@@ -189,7 +163,9 @@ const Page = () => {
         </div>
       ) : (
         <div>
-          <div className="text-2xl font-semibold text-meta-purple-1">Users</div>
+          <div className="text-2xl font-semibold text-meta-purple-1">
+            {TEXT?.BADGE_OF_HONOUR}
+          </div>
           <div className="mb-10 mt-5 flex items-center justify-between gap-6">
             <div className="w-2/4">
               <input
@@ -267,7 +243,7 @@ const Page = () => {
               </div>
             </div> */}
             <Button
-              title={TEXT?.ADD_USER}
+              title={TEXT?.ADD_AN_EMPLOYEE}
               handleClick={() => setIsOpen(true)}
               titleClass="flex justify-center text-sm font-medium text-white"
               btnClass="!mb-0 min-w-52 max-w-40 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-meta-blue-1"
@@ -314,6 +290,7 @@ const Page = () => {
                     <th className="w-1/12 px-6" />
                   </tr>
                 </thead>
+
                 <tbody>
                   {userList?.map((item: any) => {
                     const isEnabled = item.stauts === 'Active';
@@ -369,7 +346,7 @@ const Page = () => {
                                 isEnabled
                                   ? 'bg-meta-light-blue-1'
                                   : 'bg-meta-gray-5'
-                              } relative inline-flex h-6 w-[60px] items-center rounded-full`}
+                              } relative inline-flex h-6 w-[45px] items-center rounded-full`}
                             >
                               <span className="sr-only">
                                 Enable notifications
@@ -380,15 +357,13 @@ const Page = () => {
                                 } inline-block h-4 w-4 transform rounded-full bg-blue-600 transition`}
                               />
                             </Switch>
-                            <div onClick={() => handleEditUser(item)}>
-                              <Image
-                                alt="Icon"
-                                width={21}
-                                height={21}
-                                className="mx-4 cursor-pointer"
-                                src={'/dashboard/EditIcon.svg'}
-                              />
-                            </div>
+
+                            <p
+                              onClick={() => isEnabled && sendBadgeLink(item)}
+                              className={`${isEnabled ? 'cursor-pointer text-meta-blue-1' : 'cursor-not-allowed'} ml-4 text-base font-normal`}
+                            >
+                              {TEXT?.SEND}
+                            </p>
                           </div>
                         </td>
                       </tr>
@@ -404,7 +379,6 @@ const Page = () => {
               <Dialog
                 as="div"
                 onClose={() => {
-                  setCurretnUser('');
                   setIsOpen(false);
                   setTimeout(() => {
                     setEmail('');
@@ -441,11 +415,10 @@ const Page = () => {
                           as="h3"
                           className="border-b-default-1 relative flex items-center justify-center border-meta-light-blue-1 p-6 pb-0 text-xl font-semibold leading-6 text-meta-purple-1"
                         >
-                          {TEXT?.ADD_USER}
+                          {TEXT?.ADD_AN_EMPLOYEE}
                         </Dialog.Title>
                         <div
                           onClick={() => {
-                            setCurretnUser('');
                             setIsOpen(false);
                             setTimeout(() => {
                               setEmail('');
@@ -556,10 +529,10 @@ const Page = () => {
                             </Menu>
                           </div>
                           <Button
-                            title={TEXT?.ADD_USER}
-                            handleClick={() =>
-                              currentUser ? updateUser() : addNewUser()
-                            }
+                            disabled={loading}
+                            isLoading={loading}
+                            title={TEXT?.ADD_AN_EMPLOYEE}
+                            handleClick={() => addNewUser()}
                             titleClass="flex justify-center text-sm font-medium text-white"
                             btnClass="!mb-0 mt-4 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-meta-blue-1"
                           />
