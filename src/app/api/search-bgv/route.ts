@@ -27,10 +27,7 @@ export const POST = async (req: NextRequest) => {
       });
     }
 
-    let results = await Individual.findOne({ user_ref_id: user?._id })
-      .populate({ path: 'city' })
-      .populate({ path: 'state' })
-      .populate({ path: 'country' });
+    let results = await Individual.findOne({ user_ref_id: user?._id });
 
     return NextResponse.json({
       status: 200,
