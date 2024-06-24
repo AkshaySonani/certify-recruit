@@ -27,8 +27,6 @@ const Page = (data: any) => {
       token: data?.searchParams?.token,
     };
 
-    console.log(obj);
-
     API.post(API_CONSTANT.RESET_PASSWORD, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
@@ -38,8 +36,6 @@ const Page = (data: any) => {
         }
       })
       .catch((err: any) => {
-        console.log('err', err);
-
         setLoading(false);
         toast.error(
           err?.response?.data?.message ||

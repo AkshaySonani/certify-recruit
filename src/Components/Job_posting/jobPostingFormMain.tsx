@@ -191,18 +191,56 @@ function JobPostingFormMain({ id }: any) {
 
   useEffect(() => {
     if (debouncedSearchCity !== '') {
-      searchCityApi(debouncedSearchCity);
+      searchCityApi(
+        formik?.values?.state === null ? '' : formik?.values?.state?.name,
+        debouncedSearchCity,
+      );
+    } else {
+      if (formik?.values?.country !== null) {
+        searchCityApi(
+          formik?.values?.state === null ? '' : formik?.values?.state?.name,
+          '',
+        );
+      }
     }
   }, [debouncedSearchCity]);
 
   useEffect(() => {
     if (debouncedSearchState !== '') {
-      searchStateApi(debouncedSearchState);
+      searchStateApi(
+        formik?.values?.country === null ? '' : formik?.values?.country?.name,
+        debouncedSearchState,
+      );
+    } else {
+      if (formik?.values?.country !== null) {
+        searchStateApi(
+          formik?.values?.country === null ? '' : formik?.values?.country?.name,
+          '',
+        );
+      }
     }
   }, [debouncedSearchState]);
 
-  const searchCityApi = (search: any) => {
+  const searchStateApi = (country: any, search: any) => {
     let obj = {
+      countryName: country,
+      searchText: search,
+    };
+    console.log('obj', obj);
+
+    API.post(API_CONSTANT?.STATES, obj)
+      .then((res) => {
+        console.log('res', res);
+
+        setStates(res?.data?.data);
+      })
+      .catch((error) => {
+        toast.error(error?.response?.data?.message || 'Internal server error');
+      });
+  };
+  const searchCityApi = (state: any, search: any) => {
+    let obj = {
+      stateName: state,
       searchText: search,
     };
     API.post(API_CONSTANT?.CITIES, obj)
@@ -213,18 +251,7 @@ function JobPostingFormMain({ id }: any) {
         toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
-  const searchStateApi = (search: any) => {
-    let obj = {
-      searchText: search,
-    };
-    API.post(API_CONSTANT?.STATES, obj)
-      .then((res) => {
-        setStates(res?.data?.data);
-      })
-      .catch((error) => {
-        toast.error(error?.response?.data?.message || 'Internal server error');
-      });
-  };
+
   const getCountryApi = () => {
     API.get(API_CONSTANT?.COUNTRY)
       .then((res) => {
@@ -238,6 +265,7 @@ function JobPostingFormMain({ id }: any) {
   const handlePrevious = () => {
     setNextPage(nextPage - 1);
   };
+  console.log('hello', formik?.values?.state);
 
   return (
     <div>
@@ -523,6 +551,7 @@ function JobPostingFormMain({ id }: any) {
                                   <div
                                     onClick={() => {
                                       formik.setFieldValue('country', list);
+                                      searchStateApi(list?.name, '');
                                       formik.setFieldValue('city', null);
                                       formik.setFieldValue('state', null);
                                     }}
@@ -563,6 +592,7 @@ function JobPostingFormMain({ id }: any) {
                       filterArr={states}
                       handleChange={(e: any) => {
                         formik.setFieldValue('state', e);
+                        searchCityApi(e?.name, '');
                       }}
                     />
                     {formik.touched.state && formik.errors.state && (

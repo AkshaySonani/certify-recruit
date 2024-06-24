@@ -48,7 +48,6 @@ const Page = () => {
   const getProfileDetails = () => {
     API.get(API_CONSTANT?.PROFILE)
       .then((res) => {
-        console.log('res', res);
         setUserDetails(res?.data?.data);
         if (res?.data?.data.learn_and_earn?.result !== 0) {
           router.replace('/quiz/results');
