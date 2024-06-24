@@ -65,8 +65,6 @@ const EmployeeJob = () => {
     setIsSpinner(true);
     API.get(API_CONSTANT?.JOB)
       .then((res: any) => {
-        console.log('res', res?.data);
-
         setIsSpinner(false);
         setJobList(res?.data?.data);
       })

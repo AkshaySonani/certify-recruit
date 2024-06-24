@@ -1,7 +1,10 @@
 'use client';
 import Button from '@/Components/Button';
+import { ROUTE } from '@/service/Helper';
 import { Icons } from '@/svg';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const ServiceARR = [
   {
@@ -46,6 +49,8 @@ const ServiceARR = [
 ];
 
 export default function Home() {
+  const session = useSession();
+  const router = useRouter();
   return (
     <div>
       <div className="dm-sans ">
@@ -90,7 +95,7 @@ export default function Home() {
                   <Button
                     type={'button'}
                     title={'Apply Now'}
-                    // handleClick={downloadPdf}
+                    handleClick={() => router?.push(ROUTE?.LOGIN)}
                     btnClass="w-max !my-3 py-3 px-10 !h-auto !bg-meta-blue-1"
                     titleClass="flex justify-center  text-base  font-medium text-white"
                   />
@@ -115,7 +120,7 @@ export default function Home() {
                   <Button
                     type={'button'}
                     title={'Get Certification'}
-                    // handleClick={downloadPdf}
+                    handleClick={() => router?.push(ROUTE?.LOGIN)}
                     btnClass="w-max !my-3 !p-3 !h-auto !bg-meta-blue-1"
                     titleClass="flex justify-center  text-base  font-medium text-white"
                   />
@@ -204,7 +209,7 @@ export default function Home() {
                 <Button
                   type={'button'}
                   title={'Apply Now'}
-                  // handleClick={downloadPdf}
+                  handleClick={() => router?.push(ROUTE?.LOGIN)}
                   btnClass="w-max !my-3 !p-3 !h-auto !bg-meta-blue-1"
                   titleClass="flex justify-center w-[110px] text-base  font-medium text-white"
                 />
@@ -420,7 +425,7 @@ export default function Home() {
                   <Button
                     type={'button'}
                     title={'Learn more'}
-                    // handleClick={downloadPdf}
+                    handleClick={() => router?.push(ROUTE?.LOGIN)}
                     btnClass="w-max !my-3 !p-3 !h-auto !bg-meta-blue-1"
                     titleClass="flex justify-center w-[110px] text-base  font-medium text-white"
                   />
