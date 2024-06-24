@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import Image from 'next/image';
 import Button from '../Button';
 import React, { useState } from 'react';
@@ -54,7 +55,18 @@ const Header = () => {
 
           <div className="flex items-center lg:order-2">
             <div className="hidden md:block">
-              <Button
+              <div
+                className={`h-12 min-w-32 cursor-pointer rounded-lg border border-meta-light-blue-2 bg-meta-blue-1 py-3 text-meta-light-blue-3 transition delay-150 duration-300 ease-in-out will-change-auto hover:bg-hiring-btn-gradient`}
+              >
+                <Link
+                  href={ROUTE?.LOGIN}
+                  className={`flex justify-center text-sm font-medium text-white`}
+                >
+                  {TEXT?.LOG_IN}
+                </Link>
+              </div>
+
+              {/* <Button
                 title={TEXT?.LOG_IN}
                 type="button"
                 handleClick={() => {
@@ -63,7 +75,7 @@ const Header = () => {
                 }}
                 titleClass="!text-base !text-white"
                 btnClass="!w-32 !rounded-lg !bg-meta-blue-1 !py-2 !mb-0"
-              />
+              /> */}
             </div>
             <p
               onClick={() => setNavbar(!navbar)}
@@ -92,13 +104,13 @@ const Header = () => {
             <ul className="mt-4 flex flex-col font-medium lg:mt-0 lg:flex-row lg:space-x-8">
               {NAV_ARR?.map((ele) => {
                 return (
-                  <p
-                    onClick={() => router.push(ele?.route)}
+                  <Link
+                    href={ele?.route}
                     className={`bg-primary-700 lg:text-primary-700 block cursor-pointer rounded py-2 pl-3 pr-4 text-base font-medium  hover:text-meta-blue-1 lg:bg-transparent lg:p-0 ${pathname === ele?.route ? 'text-meta-blue-1' : 'text-meta-gray-1'}`}
                     aria-current="page"
                   >
                     {ele?.title}
-                  </p>
+                  </Link>
                 );
               })}
             </ul>
