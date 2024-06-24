@@ -110,18 +110,39 @@ const CompanyDetailsTab = ({
 
   useEffect(() => {
     if (debouncedSearchCity !== '') {
-      searchCityApi(debouncedSearchCity);
+      searchCityApi(
+        formik?.values?.state === null ? '' : formik?.values?.state?.name,
+        debouncedSearchCity,
+      );
+    } else {
+      if (formik?.values?.country !== null) {
+        searchCityApi(
+          formik?.values?.state === null ? '' : formik?.values?.state?.name,
+          '',
+        );
+      }
     }
   }, [debouncedSearchCity]);
 
   useEffect(() => {
     if (debouncedSearchState !== '') {
-      searchStateApi(debouncedSearchState);
+      searchStateApi(
+        formik?.values?.country === null ? '' : formik?.values?.country?.name,
+        debouncedSearchState,
+      );
+    } else {
+      if (formik?.values?.country !== null) {
+        searchStateApi(
+          formik?.values?.country === null ? '' : formik?.values?.country?.name,
+          '',
+        );
+      }
     }
   }, [debouncedSearchState]);
 
-  const searchCityApi = (search: any) => {
+  const searchCityApi = (state: any, search: any) => {
     let obj = {
+      stateName: state,
       searchText: search,
     };
     API.post(API_CONSTANT?.CITIES, obj)
@@ -132,8 +153,9 @@ const CompanyDetailsTab = ({
         toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
-  const searchStateApi = (search: any) => {
+  const searchStateApi = (country: any, search: any) => {
     let obj = {
+      countryName: country,
       searchText: search,
     };
     API.post(API_CONSTANT?.STATES, obj)
@@ -328,6 +350,7 @@ const CompanyDetailsTab = ({
                           <div
                             onClick={() => {
                               formik.setFieldValue('country', list);
+                              searchStateApi(list?.name, '');
                               formik.setFieldValue('city', null);
                               formik.setFieldValue('state', null);
                             }}
@@ -366,6 +389,7 @@ const CompanyDetailsTab = ({
             filterArr={states}
             handleChange={(e: any) => {
               formik.setFieldValue('state', e);
+              searchCityApi(e?.name, '');
             }}
           />
           {formik.touched.state && formik.errors.state && (
