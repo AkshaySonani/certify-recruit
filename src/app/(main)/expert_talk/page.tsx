@@ -1,8 +1,9 @@
 import React from 'react';
-import Footer from '@/Components/home/footer';
-import Header from '@/Components/home/header';
-import PageTitle from '@/Components/home/pageTitle';
 import Image from 'next/image';
+import PageTitle from '@/Components/home/pageTitle';
+import ServicesSection from '@/Components/home/servicesSection';
+import FeedbackSection from '@/Components/home/feedbackSection';
+import ContactSection from '@/Components/home/ContactSection';
 
 const Page = () => {
   const EXPERT_LIST = [
@@ -121,6 +122,16 @@ const Page = () => {
             );
           })}
         </div>
+      </div>
+
+      <div className="container mx-auto my-7 px-7 sm:my-14">
+        <ServicesSection />
+      </div>
+      <div className="container mx-auto my-7 px-7 sm:my-14">
+        <FeedbackSection />
+      </div>
+      <div className="container mx-auto mb-7 px-7 sm:my-14">
+        <ContactSection />
       </div>
     </div>
   );
