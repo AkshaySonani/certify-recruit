@@ -56,7 +56,7 @@ const IndividualBGV = () => {
               </p>
             </div>
           </div>
-          <div className="bg-meta-gray-4 m-auto mt-10 w-[70%] rounded-3xl px-16 py-6">
+          <div className="m-auto mt-10 w-[70%] rounded-3xl bg-meta-gray-4 px-16 py-6">
             <p className="text-center text-lg font-medium text-meta-purple-1">
               Get our premium plan to get access to Background Verified
               companies and appear on top of the candidate searches!

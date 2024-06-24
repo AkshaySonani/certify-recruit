@@ -56,7 +56,9 @@ const Header = () => {
             <div className="hidden md:block">
               <Button
                 title={TEXT?.LOG_IN}
+                type="button"
                 handleClick={() => {
+                  console.log('hello');
                   router.push(ROUTE?.LOGIN);
                 }}
                 titleClass="!text-base !text-white"

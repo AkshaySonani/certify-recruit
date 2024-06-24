@@ -6,6 +6,7 @@ const API_CONSTANT = {
   STATES: '/states',
   SIGN_UP: '/signup',
   PROFILE: '/profile',
+  SEARCH_BGV: '/search-bgv',
   COLLEGE: '/collage',
   COUNTRY: '/country',
   CATEGORY: '/category',
@@ -29,6 +30,7 @@ const API_CONSTANT = {
   UPDATE_LE_DETAILS: '/update-le-details',
   UPDATE_COM_USER_STATUS: '/update-com-user-details',
   LEARN_AND_EARN_QUESTION: '/learn-and-earn-question',
+  SEND_INVITATION: '/send-invitation',
 };
 
 export { API_CONSTANT };

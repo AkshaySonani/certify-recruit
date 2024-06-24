@@ -77,6 +77,11 @@ const EXAM_STATUS = {
   STOPPED: 'Stopped',
 };
 
+const BGV_STATUS={
+  PENDING:'Pending',
+   VERIFIED:'Verified',
+   REJECTED: 'Rejected'
+}
 const QUESTION_STATUS = [
   { id: 1, status: 'Default', color: 'bg-meta-gray-2' }, //0
   { id: 2, status: 'Not Answered', color: 'bg-meta-brown-1' }, //1
@@ -105,5 +110,6 @@ export {
   QUESTION_STATUS,
   EXAM_STATUS,
   WORKPLACE_TYPE,
-  BANK_ACCOUNT_TYPE
+  BANK_ACCOUNT_TYPE,
+  BGV_STATUS
 };

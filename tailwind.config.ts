@@ -23,6 +23,7 @@ const config: Config = {
           3: '#5F6583',
           4: '#F5F5F5',
           5: '#EAEAEA',
+          6: '#EDEDED',
         },
         'meta-blue': { 1: '#013BB7', 2: '#3751F2', 3: '#001A51', 4: '#002779' },
         'meta-light-blue': {

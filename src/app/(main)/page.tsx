@@ -125,7 +125,7 @@ export default function Home() {
 
             <div className="mt-[75px]">
               <div className="grid grid-cols-1 items-center justify-center  gap-2 sm:grid-cols-2 xl:grid-cols-4">
-                <div className="border-meta-light-blue-6  h-[209px] w-[295px]  rounded-[43px] border border-dashed px-[16px] pb-[18px] pt-[28px]">
+                <div className="h-[209px]  w-[295px] rounded-[43px]  border border-dashed border-meta-light-blue-6 px-[16px] pb-[18px] pt-[28px]">
                   <div className=" flex h-full flex-col justify-between">
                     <p className="w-full text-center text-[20px] font-bold">
                       Industry Standard Assessment
@@ -140,7 +140,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className="border-meta-light-blue-6 h-[209px] w-[295px] rounded-[43px] border border-dashed px-[16px] pb-[18px] pt-[28px]">
+                <div className="h-[209px] w-[295px] rounded-[43px] border border-dashed border-meta-light-blue-6 px-[16px] pb-[18px] pt-[28px]">
                   <div className=" flex h-full flex-col justify-between">
                     <p className="w-full text-center text-[20px] font-bold">
                       Authentic Certification
@@ -155,7 +155,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className="border-meta-light-blue-6 h-[209px] w-[295px] rounded-[43px] border border-dashed px-[16px] pb-[18px] pt-[28px]">
+                <div className="h-[209px] w-[295px] rounded-[43px] border border-dashed border-meta-light-blue-6 px-[16px] pb-[18px] pt-[28px]">
                   <div className=" flex h-full flex-col justify-between">
                     <p className="w-full text-center text-[20px] font-bold">
                       Uplifting Individuals & Organizations
@@ -170,7 +170,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className="border-meta-light-blue-6 h-[209px] w-[295px] rounded-[43px] border border-dashed px-[16px] pb-[18px] pt-[28px]">
+                <div className="h-[209px] w-[295px] rounded-[43px] border border-dashed border-meta-light-blue-6 px-[16px] pb-[18px] pt-[28px]">
                   <div className=" flex h-full flex-col justify-between">
                     <p className="w-full text-center text-[20px] font-bold">
                       Simplifying Recruitment
@@ -590,7 +590,7 @@ export default function Home() {
           <div className="mt-[50px] grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 ">
             {[1, 2, 3, 4, 5].map((item) => {
               return (
-                <div className="bg-meta-light-blue-5 flex h-[150px] w-[233px] items-center justify-center rounded-[30px] border border-meta-light-blue-2">
+                <div className="flex h-[150px] w-[233px] items-center justify-center rounded-[30px] border border-meta-light-blue-2 bg-meta-light-blue-5">
                   <Image
                     alt="date"
                     width={118}

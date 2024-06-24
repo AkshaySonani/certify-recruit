@@ -33,6 +33,7 @@ const ROUTE = {
   EXAM: '/exam',
   CERTIFICATION: '/certification',
   QUIZ: '/quiz',
+  BGV_FULL_REPORT: '/BGV/fullReport',
 };
 
 const TEXT = {
@@ -271,6 +272,11 @@ const SIDE_BAR_DATA = {
       title: 'Pricing',
       icon: Icons.Pricing,
     },
+    {
+      path: 'BGV',
+      title: 'BGV',
+      icon: Icons.Pricing,
+    },
   ],
   employee: [
     {
@@ -311,6 +317,11 @@ const SIDE_BAR_DATA = {
     {
       path: 'pricing',
       title: 'Pricing',
+      icon: Icons.Pricing,
+    },
+    {
+      path: 'BGV',
+      title: 'BGV',
       icon: Icons.Pricing,
     },
   ],

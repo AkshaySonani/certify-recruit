@@ -67,7 +67,6 @@ const MyProfile = () => {
     API.get(API_CONSTANT?.PROFILE)
       .then((res) => {
         console.log('res', res);
-
         setUserDetails(res?.data?.data);
       })
       .catch((error) => {
