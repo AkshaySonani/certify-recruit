@@ -7,11 +7,11 @@ import { toast } from 'react-toastify';
 import { TEXT } from '@/service/Helper';
 import { useFormik, Field } from 'formik';
 import AppContext from '@/context/AppProvider';
-import { COMPLETION_DATE, HIGH_EDUCATION } from '@/constant/Enum';
+import DatePicker from 'react-multi-date-picker';
 import { Menu, Transition } from '@headlessui/react';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { Fragment, useContext, useState } from 'react';
-import DatePicker from 'react-multi-date-picker';
+import { COMPLETION_DATE, HIGH_EDUCATION } from '@/constant/Enum';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -39,7 +39,7 @@ const EducationTab = ({
       },
       profile_count: {
         ...context?.userProfileCount,
-        education_details: 16,
+        education_details: 14,
       },
     };
     console.log('obj', obj);
@@ -300,7 +300,7 @@ const EducationTab = ({
                     });
                   }
                 }}
-                placeholder="Select month"
+                placeholder="Select year"
                 style={{
                   height: 48,
                   width: '100%',

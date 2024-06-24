@@ -33,7 +33,7 @@ const BankDetailsTab = ({
       ...values,
       profile_count: {
         ...context?.userProfileCount,
-        bank_details: 14.28,
+        bank_details: 15,
       },
     };
 

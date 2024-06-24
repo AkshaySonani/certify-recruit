@@ -28,7 +28,7 @@ const PersonalDetailsTab = ({
       ...values,
       profile_count: {
         ...context?.userProfileCount,
-        personal_details: 16,
+        personal_details: 14,
       },
     };
     API.post(API_CONSTANT?.PROFILE, obj)

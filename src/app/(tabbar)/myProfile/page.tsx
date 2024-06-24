@@ -86,7 +86,8 @@ const MyProfile = () => {
       context?.userProfileCount?.personal_details +
       context?.userProfileCount?.resume_details +
       context?.userProfileCount?.skill_details +
-      context?.userProfileCount?.summary_details;
+      context?.userProfileCount?.summary_details +
+      context?.userProfileCount?.bank_details;
   }
 
   return (

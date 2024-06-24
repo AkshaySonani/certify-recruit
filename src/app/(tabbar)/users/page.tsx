@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
-import { TEXT } from '@/service/Helper';
+import { EMAIlREGEX, TEXT } from '@/service/Helper';
 import Button from '@/Components/Button';
 import Spinner from '@/app/icons/Spinner';
 import { useSession } from 'next-auth/react';
@@ -23,6 +23,7 @@ const Page = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [isSpinner, setIsSpinner] = useState(false);
   const [userList, setUserLists] = useState<any>({});
@@ -66,6 +67,7 @@ const Page = () => {
   };
 
   const addNewUser = () => {
+    setLoading(true);
     const obj = {
       name: name,
       email: email,
@@ -75,6 +77,7 @@ const Page = () => {
 
     API.post(API_CONSTANT.PROFILE, { users: [obj] })
       .then((res) => {
+        setLoading(false);
         toast?.success(res?.data?.message);
         getProfileDetails();
         setIsOpen(false);
@@ -86,6 +89,7 @@ const Page = () => {
         }, 100);
       })
       .catch((err: any) => {
+        setLoading(false);
         toast.error(
           err?.response?.data?.message ||
             err?.message ||
@@ -95,6 +99,7 @@ const Page = () => {
   };
 
   const updateUser = () => {
+    setLoading(true);
     const obj = {
       name: name,
       email: email,
@@ -106,6 +111,7 @@ const Page = () => {
     API.post(API_CONSTANT.UPDATE_COM_USER_STATUS, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
+          setLoading(false);
           setCurretnUser('');
           getProfileDetails();
           setIsOpen(false);
@@ -115,12 +121,33 @@ const Page = () => {
         }
       })
       .catch((err: any) => {
+        setLoading(false);
         toast.error(
           err?.response?.data?.message ||
             err?.message ||
             'Internal server error',
         );
       });
+  };
+
+  const handleSubmit = () => {
+    if (!name) {
+      toast.error('Name is required.');
+    } else if (!email) {
+      toast.error('Email is required.');
+    } else if (!selectedRole?.value) {
+      toast.error('Role is required.');
+    } else {
+      if (EMAIlREGEX.test(email)) {
+        if (currentUser) {
+          updateUser();
+        } else {
+          addNewUser();
+        }
+      } else {
+        toast.error('Entered email is invalid.');
+      }
+    }
   };
 
   const toggleRow = async (id: any, item: any) => {
@@ -369,7 +396,7 @@ const Page = () => {
                                 isEnabled
                                   ? 'bg-meta-light-blue-1'
                                   : 'bg-meta-gray-5'
-                              } relative inline-flex h-6 w-[60px] items-center rounded-full`}
+                              } relative inline-flex h-6 w-[55px] items-center rounded-full`}
                             >
                               <span className="sr-only">
                                 Enable notifications
@@ -556,9 +583,12 @@ const Page = () => {
                             </Menu>
                           </div>
                           <Button
+                            disabled={loading}
+                            isLoading={loading}
                             title={TEXT?.ADD_USER}
-                            handleClick={() =>
-                              currentUser ? updateUser() : addNewUser()
+                            handleClick={
+                              () => handleSubmit()
+                              // currentUser ? updateUser() : addNewUser()
                             }
                             titleClass="flex justify-center text-sm font-medium text-white"
                             btnClass="!mb-0 mt-4 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-meta-blue-1"

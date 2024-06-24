@@ -2,10 +2,10 @@
 import Image from 'next/image';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
-import { TEXT } from '@/service/Helper';
 import Button from '@/Components/Button';
 import Spinner from '@/app/icons/Spinner';
 import { useSession } from 'next-auth/react';
+import { EMAIlREGEX, TEXT } from '@/service/Helper';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import React, { useState, Fragment, useEffect } from 'react';
 import { Dialog, Menu, Popover, Switch, Transition } from '@headlessui/react';
@@ -92,6 +92,22 @@ const Page = () => {
       });
   };
 
+  const handleSubmit = () => {
+    if (!name) {
+      toast.error('Name is required.');
+    } else if (!email) {
+      toast.error('Email is required.');
+    } else if (!selectedRole?.value) {
+      toast.error('Role is required.');
+    } else {
+      if (EMAIlREGEX.test(email)) {
+        addNewUser();
+      } else {
+        toast.error('Entered email is invalid.');
+      }
+    }
+  };
+
   const sendBadgeLink = (item: any) => {
     API.post(API_CONSTANT?.SEND_BADGE_LINK, { email: item?.email })
       .then((res) => {
@@ -175,73 +191,8 @@ const Page = () => {
                 onChange={(event) => handleSearch(event)}
                 className="border-stroke active:border-primary h-12 w-full rounded-lg border-2 bg-transparent px-4 py-3 text-black outline-none transition focus:border-meta-light-blue-1"
               />
-              {/* <Popover className="relative">
-                <Popover.Button className="absolute left-3 top-4">
-                  <Image
-                    alt="date"
-                    width={19}
-                    height={15}
-                    src={'/dashboard/filter.svg'}
-                  />
-                </Popover.Button>
-                <input
-                  type="text"
-                  value={searchText}
-                  placeholder="Job title"
-                  onChange={(event) => handleSearch(event)}
-                  className="border-stroke active:border-primary h-12 w-full rounded-lg border-2 bg-transparent px-12 py-3 text-black outline-none transition focus:border-meta-light-blue-1"
-                />
-
-                <Popover.Panel className="absolute z-10 mt-2 w-full rounded-xl border border-meta-light-blue-1 bg-white p-4 shadow-xl">
-                  <div className="w-full">
-                    <label className="text-base font-medium text-meta-purple-1">
-                      {TEXT?.JOB_TITLE}
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Job title search here..."
-                      className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:outline-meta-light-blue-1"
-                    />
-                  </div>
-                  <div className="mt-4 w-full">
-                    <label className="text-base font-medium text-meta-purple-1">
-                      {TEXT?.LOCATION}
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Type location here..."
-                      className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:outline-meta-light-blue-1"
-                    />
-                  </div>
-
-                  <div className="mt-4 flex w-full items-center justify-between">
-                    <div>
-                      <Checkbox
-                        label={'Set as default'}
-                        className="text-base font-medium text-meta-light-blue-3"
-                      />
-                    </div>
-                    <div>
-                      <button className="ml-5 h-12 w-28 rounded-xl border border-meta-light-blue-2 bg-meta-light-blue-1">
-                        <span className="flex justify-center text-sm font-medium text-meta-light-blue-3">
-                          {TEXT?.DONE}
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                </Popover.Panel>
-              </Popover> */}
             </div>
-            {/* <div className="flex w-1/3 cursor-pointer items-center lg:w-2/4">
-              <div className="rounded-lg bg-meta-light-blue-2 p-3">
-                <Image
-                  alt="date"
-                  width={20}
-                  height={20}
-                  src={'/dashboard/search.svg'}
-                />
-              </div>
-            </div> */}
+
             <Button
               title={TEXT?.ADD_AN_EMPLOYEE}
               handleClick={() => setIsOpen(true)}
@@ -532,7 +483,7 @@ const Page = () => {
                             disabled={loading}
                             isLoading={loading}
                             title={TEXT?.ADD_AN_EMPLOYEE}
-                            handleClick={() => addNewUser()}
+                            handleClick={() => handleSubmit()}
                             titleClass="flex justify-center text-sm font-medium text-white"
                             btnClass="!mb-0 mt-4 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-meta-blue-1"
                           />

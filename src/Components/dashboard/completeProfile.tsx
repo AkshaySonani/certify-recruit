@@ -10,7 +10,7 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
 const CompleteProfile = () => {
   const router = useRouter();
-  const session = useSession();
+  const session: any = useSession();
   const context = useContext(AppContext);
 
   let percentage = 0;
@@ -26,6 +26,7 @@ const CompleteProfile = () => {
       context?.userProfileCount?.personal_details +
       context?.userProfileCount?.resume_details +
       context?.userProfileCount?.skill_details +
+      context?.userProfileCount?.bank_details +
       context?.userProfileCount?.summary_details;
   }
   return (

@@ -15,7 +15,7 @@ import Image from 'next/image';
 
 const Page = () => {
   const router = useRouter();
-  const session = useSession<any>();
+  const session: any = useSession<any>();
   const context = useContext(AppContext);
   const [isSpinner, setIsSpinner] = useState(false);
   const [dashboardData, setDashBoardData] = useState([]);
@@ -74,8 +74,12 @@ const Page = () => {
       context?.userProfileCount?.personal_details +
       context?.userProfileCount?.resume_details +
       context?.userProfileCount?.skill_details +
+      context?.userProfileCount?.bank_details +
       context?.userProfileCount?.summary_details;
   }
+
+  console.log('percentage', percentage);
+
   const getProfileDetails = () => {
     API.get(API_CONSTANT?.PROFILE)
       .then((res: any) => {

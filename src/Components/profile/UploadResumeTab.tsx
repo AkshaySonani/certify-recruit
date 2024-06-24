@@ -1,14 +1,14 @@
 import Image from 'next/image';
 import Button from '../Button';
+import Link from 'next/link';
 import { useFormik } from 'formik';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
 import { TEXT } from '@/service/Helper';
 import { useDropzone } from 'react-dropzone';
 import AppContext from '@/context/AppProvider';
-import React, { useContext, useEffect, useState } from 'react';
 import { API_CONSTANT } from '@/constant/ApiConstant';
-import Link from 'next/link';
+import React, { useContext, useEffect, useState } from 'react';
 
 const UploadResumeTab = ({
   userDetails,
@@ -62,7 +62,7 @@ const UploadResumeTab = ({
             resume: obj,
             profile_count: {
               ...context?.userProfileCount,
-              resume_details: 16,
+              resume_details: 14,
             },
           })
             .then((res) => {

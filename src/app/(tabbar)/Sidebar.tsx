@@ -11,7 +11,7 @@ import { ROUTE, SIDE_BAR_DATA, TEXT, USER_ROLE } from '@/service/Helper';
 
 const Sidebar = () => {
   const router = useRouter();
-  const session = useSession();
+  const session: any = useSession();
   const pathname = usePathname();
   const context = useContext(AppContext);
 
@@ -50,6 +50,7 @@ const Sidebar = () => {
             context?.userProfileCount?.personal_details +
             context?.userProfileCount?.resume_details +
             context?.userProfileCount?.skill_details +
+            context?.userProfileCount?.bank_details +
             context?.userProfileCount?.summary_details,
         );
       }
@@ -93,7 +94,7 @@ const Sidebar = () => {
         {session?.data?.user?.role !== undefined ? (
           <nav className="no-scrollbar flex flex-col overflow-y-auto px-3 duration-300 ease-linear sm:px-4 lg:px-5">
             <ul className="mb-6 flex flex-col gap-1.5">
-              {SIDE_BAR_DATA[session?.data?.user?.role]?.map((e) => (
+              {SIDE_BAR_DATA[session?.data?.user?.role]?.map((e: any) => (
                 <li key={e.title}>
                   <button
                     type="button"

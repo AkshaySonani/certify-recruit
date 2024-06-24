@@ -28,7 +28,7 @@ const KeySkillTab = ({
       skills: values?.skills.map((el: any) => el?._id),
       profile_count: {
         ...context?.userProfileCount,
-        skill_details: 16,
+        skill_details: 14,
       },
     };
     API.post(API_CONSTANT?.PROFILE, obj)

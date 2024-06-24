@@ -21,7 +21,7 @@ const SummaryTab = ({
       ...values,
       profile_count: {
         ...context?.userProfileCount,
-        summary_details: 16,
+        summary_details: 14,
       },
     };
     API.post(API_CONSTANT?.PROFILE, obj)

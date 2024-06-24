@@ -39,7 +39,7 @@ const CareerInfoTab = ({
       ...values,
       profile_count: {
         ...context?.userProfileCount,
-        career_details: 20,
+        career_details: 15,
       },
     };
 
