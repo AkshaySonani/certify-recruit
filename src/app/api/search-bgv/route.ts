@@ -27,11 +27,14 @@ export const POST = async (req: NextRequest) => {
       });
     }
 
-    let results = await Individual.findOne({ user_ref_id: user?._id });
+    let results = await Individual.findOne({ user_ref_id: user?._id })
+      .populate({ path: 'city' })
+      .populate({ path: 'state' })
+      .populate({ path: 'country' });
 
     return NextResponse.json({
       status: 200,
-      data: results?.bgv,
+      data: results,
     });
   } catch (error) {
     return NextResponse.json(
