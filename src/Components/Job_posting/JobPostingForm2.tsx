@@ -278,6 +278,7 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
             </label>
             <DatePicker
               format="YYYY-MM-DD"
+              minDate={new Date()}
               onOpenPickNewDate={false}
               containerStyle={{ width: '100%' }}
               value={formik?.values?.interviewTime?.date}

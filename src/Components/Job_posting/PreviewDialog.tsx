@@ -4,6 +4,8 @@ import React, { Fragment, useState } from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 
 const PreviewDialog = ({ isOpen, setIsOpen, formik }: any) => {
+  console.log('formik?.values', formik?.values);
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -40,7 +42,7 @@ const PreviewDialog = ({ isOpen, setIsOpen, formik }: any) => {
                   </div>
                 </Dialog.Title>
                 <div className="rounded-lg border border-meta-light-blue-1 ">
-                  <div className="bg-meta-gray-6 rounded-t-lg border-b border-meta-light-blue-1  py-2 pl-4 text-lg font-semibold text-meta-purple-1">
+                  <div className="rounded-t-lg border-b border-meta-light-blue-1 bg-meta-light-blue-1  py-2 pl-4 text-lg font-semibold text-meta-purple-1">
                     {TEXT?.JOB_DETAILS}
                   </div>
 
@@ -99,17 +101,19 @@ const PreviewDialog = ({ isOpen, setIsOpen, formik }: any) => {
                   </div>
                 </div>
                 <div className="mt-5 rounded-lg border  border-meta-light-blue-1">
-                  <div className="bg-meta-gray-6 rounded-t-lg border-b border-meta-light-blue-1  py-2 pl-4 text-lg font-semibold text-meta-purple-1">
+                  <div className="rounded-t-lg border-b border-meta-light-blue-1 bg-meta-light-blue-1  py-2 pl-4 text-lg font-semibold text-meta-purple-1">
                     {TEXT?.JOB_POSTING_LOCATION}
                   </div>
                   <div className="flex ">
                     <div className="w-1/2 pb-[14px] pl-4 pt-[18px]">
                       <div>
                         <div className="text-sm font-medium text-meta-purple-1">
-                          {formik?.values?.is_hiring_manager ? 'Yes' : 'No'}
+                          {formik?.values?.city?.name
+                            ? formik?.values?.city?.name
+                            : '-'}
                         </div>
                         <p className="text-meta-gray-7 text-base font-normal">
-                          {TEXT?.ARE_YOU_HIRING_MANAGER}
+                          {TEXT?.CITY} {TEXT?.NAME}
                         </p>
                       </div>
                       <div className="pt-5">
@@ -184,7 +188,7 @@ const PreviewDialog = ({ isOpen, setIsOpen, formik }: any) => {
                   </div>
                 </div>
                 <div className="mt-5 rounded-lg border border-meta-light-blue-1">
-                  <div className="bg-meta-gray-6 rounded-t-lg border-b border-meta-light-blue-1  py-2 pl-4 text-lg font-semibold text-meta-purple-1">
+                  <div className="rounded-t-lg border-b border-meta-light-blue-1 bg-meta-light-blue-1 py-2 pl-4 text-lg font-semibold text-meta-purple-1">
                     Salary Details
                   </div>
 

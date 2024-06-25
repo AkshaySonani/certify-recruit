@@ -515,7 +515,7 @@ function JobPostingFormMain({ id }: any) {
                 </p>
               </div>
               <div className="w-full lg:w-1/2">
-                <div className="relative mt-2 w-full lg:mt-0">
+                <div className="relative z-0 mt-2 w-full lg:mt-0">
                   <label className="text-base font-medium text-meta-purple-1">
                     Country
                   </label>
