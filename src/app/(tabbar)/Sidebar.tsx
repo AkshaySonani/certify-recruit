@@ -214,7 +214,7 @@ const Sidebar = () => {
                       onClick={() => {
                         localStorage.removeItem('userRole');
                         signOut({
-                          callbackUrl: process.env.NEXT_PUBLIC_BASE_URL,
+                          callbackUrl: process.env.NEXTAUTH_URL,
                         });
 
                         router.replace(ROUTE?.LOGIN);
