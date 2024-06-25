@@ -1,10 +1,6 @@
 'use client';
-import { Icons } from '@/svg';
 import Image from 'next/image';
-import Button from '@/Components/Button';
-import { ROUTE } from '@/service/Helper';
-import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
+import Button from '../Button';
 
 const ServiceARR = [
   {
@@ -48,9 +44,9 @@ const ServiceARR = [
   },
 ];
 
-const ServicesSection = () => {
+const Services = () => {
   return (
-    <div>
+    <div className="mt-36">
       <div>
         <p className="text-lg font-semibold text-meta-light-blue-3">
           Here's What CertifyRecruit can do for you.
@@ -109,5 +105,4 @@ const ServicesSection = () => {
     </div>
   );
 };
-
-export default ServicesSection;
+export default Services;

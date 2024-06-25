@@ -1,9 +1,10 @@
+'use client';
 import React from 'react';
 import Image from 'next/image';
 import PageTitle from '@/Components/home/pageTitle';
-import ServicesSection from '@/Components/home/servicesSection';
 import FeedbackSection from '@/Components/home/feedbackSection';
-import ContactSection from '@/Components/home/ContactSection';
+import ContactUs from '@/Components/home/ContactUs';
+import Services from '@/Components/home/Services';
 
 const Page = () => {
   const EXPERT_LIST = [
@@ -30,36 +31,6 @@ const Page = () => {
     {
       id: 6,
       title: 'Expert Talk Series: The Morphing Paas',
-    },
-  ];
-
-  const services = [
-    {
-      id: 1,
-      title: 'KPI Model for Data- Driven Staffing & Recruitment Company',
-      description:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-      buttonText: 'Contact Us',
-    },
-    {
-      id: 2,
-      title: 'Training Program',
-      description:
-        'Empower Your Recruiting Success with our Comprehensive Training Program',
-      buttonText: 'Contact Us',
-    },
-    {
-      id: 3,
-      title: 'Recruitment Community',
-      description: 'Where Recruitment Proficiency Meets Community Excellence.',
-      buttonText: 'Contact Us',
-    },
-    {
-      id: 4,
-      title: 'Recruiter Assessment',
-      description:
-        'Engage with a range of assessment formats, from multiple-choice tests to scenario-based simulations, mimicking real-world recruitment scenarios.',
-      buttonText: 'Register Now',
     },
   ];
 
@@ -124,15 +95,13 @@ const Page = () => {
         </div>
       </div>
 
-      <div className="container mx-auto my-7 px-7 sm:my-14">
-        <ServicesSection />
-      </div>
+      <Services />
+
       <div className="container mx-auto my-7 px-7 sm:my-14">
         <FeedbackSection />
       </div>
-      <div className="container mx-auto mb-7 px-7 sm:my-14">
-        <ContactSection />
-      </div>
+
+      <ContactUs />
     </div>
   );
 };
