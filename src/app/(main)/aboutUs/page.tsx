@@ -1,5 +1,4 @@
 'use client';
-
 import ContactUs from '@/Components/home/ContactUs';
 import Feedback from '@/Components/home/Feedback';
 import Services from '@/Components/home/Services';
@@ -9,12 +8,14 @@ const Page = () => {
   return (
     <div>
       <div className="h-auto bg-meta-gray-2">
-        <div className="mx-auto h-full px-4 pb-[50px] pt-4 sm:max-w-xl sm:pt-36 md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
+        <div className="mx-auto h-full px-4 pb-[75px] pt-4 sm:max-w-xl sm:pt-36 md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
           <div className=" w-full">
-            <div className="relative flex justify-center">
-              <p className="max-w-[1010px] text-center text-[30px] font-bold leading-[60px] text-meta-purple-1 sm:text-[50px]">
-                Make way for more with our advanced Recruitment Assessment
-                Platform.
+            <div className="relative flex flex-col items-center justify-center">
+              <p className=" text-center text-[30px] font-bold leading-[60px] text-meta-blue-1 ">
+                ABOUT US
+              </p>
+              <p className="w-full max-w-[928px] pt-3 text-center text-[30px] font-bold leading-[60px] text-meta-purple-1 sm:text-[50px]">
+                Simplify Your Recruitment With Our Industry Standard Platform
               </p>
               <div className="absolute left-[66px] top-[-72px] hidden lg:block">
                 <Image

@@ -1,5 +1,4 @@
 'use client';
-
 import Image from 'next/image';
 
 const FEEDBACK_ARR = [
@@ -11,33 +10,37 @@ const FEEDBACK_ARR = [
   },
   {
     id: 2,
-    user: 'Deepak Sharma',
+    user: 'Kavya V',
     profile: '/home/feedBack/deepak.png',
-    review: 'Appreciate the certification feature. Thanks a ton!',
+    review:
+      'CertifyRecruit has simplified my recruiting. I can easily find excellent candidates from the leaderboard.',
   },
   {
     id: 3,
-    user: 'Deepak Sharma',
+    user: 'Bhumi Gupta',
     profile: '/home/feedBack/deepak.png',
-    review: 'Appreciate the certification feature. Thanks a ton!',
+    review:
+      'I am a regular user of Learn & Earn. Staying in the top 50 has helped me negotiate during my increment, and I am the happiest :) ',
   },
   {
     id: 4,
-    user: 'Deepak Sharma',
+    user: 'Emmanuel ',
     profile: '/home/feedBack/deepak.png',
-    review: 'Appreciate the certification feature. Thanks a ton!',
+    review: 'Certification is adding good value to my CV. Thank you. ',
   },
   {
     id: 5,
-    user: 'Deepak Sharma',
+    user: 'Kaveri Mehra',
     profile: '/home/feedBack/deepak.png',
-    review: 'Appreciate the certification feature. Thanks a ton!',
+    review:
+      'Thanks for making us eligible for the Badge of Honour. I can proudly say my organization has the best team!',
   },
   {
     id: 6,
-    user: 'Deepak Sharma',
+    user: 'Dhaval Mehta',
     profile: '/home/feedBack/deepak.png',
-    review: 'Appreciate the certification feature. Thanks a ton!',
+    review:
+      'Felt amazing after getting all right answers and staying on top of leader board for 3 weeks. I enjoy coming here and improving my skills everyday. ',
   },
 ];
 const Feedback = () => {
@@ -46,7 +49,7 @@ const Feedback = () => {
       <div className="grid grid-cols-2 lg:grid-cols-3">
         {FEEDBACK_ARR?.map((list) => {
           return (
-            <div className="w-[360px] border-meta-light-blue-2 px-[26px] py-[26px]">
+            <div className="flex h-[300px] w-[360px] flex-col border-meta-light-blue-2 px-[26px] py-[26px]">
               <div className="flex items-center gap-2">
                 {[1, 2, 3, 4]?.map((item: any) => {
                   return (
@@ -70,20 +73,20 @@ const Feedback = () => {
               </div>
               <div className="mt-8">
                 <p className="text-[16px] font-medium text-meta-blue-3">
-                  Appreciate the certification feature. Thanks a ton!
+                  {list?.review}
                 </p>
               </div>
-              <div className="mt-14 flex items-center gap-3">
+              <div className="mt-14 flex items-center gap-3  justify-self-end">
                 <div className="">
                   <Image
                     alt="date"
                     width={50}
                     height={50}
-                    src={'/home/feedBack/deepak.png'}
+                    src={list?.profile}
                   />
                 </div>
                 <p className="text-[20px] font-medium text-meta-blue-1">
-                  Deepak Sharma
+                  {list?.user}
                 </p>
               </div>
             </div>
