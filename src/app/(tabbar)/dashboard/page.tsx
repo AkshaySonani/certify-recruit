@@ -1,17 +1,17 @@
 'use client';
+import Image from 'next/image';
+import API from '@/service/ApiService';
+import { toast } from 'react-toastify';
+import Spinner from '@/app/icons/Spinner';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import AppContext from '@/context/AppProvider';
-import React, { useContext, useEffect, useState } from 'react';
 import { TEXT, USER_ROLE } from '@/service/Helper';
-import CompleteProfile from '@/Components/dashboard/completeProfile';
-import Spinner from '@/app/icons/Spinner';
 import { API_CONSTANT } from '@/constant/ApiConstant';
-import API from '@/service/ApiService';
-import { toast } from 'react-toastify';
+import React, { useContext, useEffect, useState } from 'react';
 import EmployeeDashboard from '@/Components/dashboard/employee';
 import IndividualDashboard from '@/Components/dashboard/individual';
-import Image from 'next/image';
+import CompleteProfile from '@/Components/dashboard/completeProfile';
 
 const Page = () => {
   const router = useRouter();

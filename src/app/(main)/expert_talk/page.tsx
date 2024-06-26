@@ -1,10 +1,10 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
-import PageTitle from '@/Components/home/pageTitle';
-import FeedbackSection from '@/Components/home/feedbackSection';
-import ContactUs from '@/Components/home/ContactUs';
 import Services from '@/Components/home/Services';
+import PageTitle from '@/Components/home/pageTitle';
+import ContactUs from '@/Components/home/ContactUs';
+import FeedbackSection from '@/Components/home/feedbackSection';
 
 const Page = () => {
   const EXPERT_LIST = [

@@ -107,6 +107,7 @@ const TEXT = {
   ADD_SKILL: 'Add Skill',
   AVAILABLE: 'Available',
   QUIZ_INFO: 'Quiz info',
+  START_NOW: 'Start Now',
   FULL_NAME: 'Full Name',
   FORT_NIGHT: 'Fortnight',
   DEPARTMENT: 'Department',
