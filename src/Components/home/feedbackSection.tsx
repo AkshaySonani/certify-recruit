@@ -38,11 +38,19 @@ const FeedbackSection = () => {
   const renderStars = (rating: any) => {
     return Array.from({ length: 5 }, (_, i) => {
       if (rating >= i + 1) {
-        return <span key={i}>★</span>;
+        return (
+          <span className="text-2xl" key={i}>
+            ★
+          </span>
+        );
       } else if (rating > i && rating < i + 1) {
         return <span key={i}>½</span>;
       } else {
-        return <span key={i}>☆</span>;
+        return (
+          <span className="text-2xl" key={i}>
+            ☆
+          </span>
+        );
       }
     });
   };
