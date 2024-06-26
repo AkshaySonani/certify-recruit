@@ -76,13 +76,13 @@ const Feedback = () => {
                   {list?.review}
                 </p>
               </div>
-              <div className="mt-14 flex items-center gap-3  justify-self-end">
-                <div className="">
+              <div className="mt-14 flex items-center gap-3 justify-self-end">
+                <div>
                   <Image
                     alt="user"
                     width={50}
                     height={50}
-                    src={'/home/feedBack/deepak.png'}
+                    src={'/sidebarIcon/profile.svg'}
                   />
                 </div>
                 <p className="text-[20px] font-medium text-meta-blue-1">
