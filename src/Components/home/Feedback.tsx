@@ -79,10 +79,10 @@ const Feedback = () => {
               <div className="mt-14 flex items-center gap-3  justify-self-end">
                 <div className="">
                   <Image
-                    alt="date"
+                    alt="user"
                     width={50}
                     height={50}
-                    src={list?.profile}
+                    src={'/home/feedBack/deepak.png'}
                   />
                 </div>
                 <p className="text-[20px] font-medium text-meta-blue-1">
