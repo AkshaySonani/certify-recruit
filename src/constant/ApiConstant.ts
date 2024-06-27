@@ -31,6 +31,7 @@ const API_CONSTANT = {
   UPDATE_COM_USER_STATUS: '/update-com-user-details',
   LEARN_AND_EARN_QUESTION: '/learn-and-earn-question',
   SEND_INVITATION: '/send-invitation',
+  SEARCH_CVS: '/search-cvs',
 };
 
 export { API_CONSTANT };
