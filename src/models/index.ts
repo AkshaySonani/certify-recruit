@@ -4,6 +4,7 @@ export * from './exam';
 export * from './bedges';
 export * from './cities';
 export * from './states';
+export * from './pricing';
 export * from './company';
 export * from './degrees';
 export * from './question';
