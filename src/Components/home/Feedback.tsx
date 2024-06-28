@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
-
+import 'aos/dist/aos.css';
+import { useEffect } from 'react';
 const FEEDBACK_ARR = [
   {
     id: 1,
@@ -46,10 +47,10 @@ const FEEDBACK_ARR = [
 const Feedback = () => {
   return (
     <div className="mt-[100px]">
-      <div className="grid grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 lg:grid-cols-3">
         {FEEDBACK_ARR?.map((list) => {
           return (
-            <div className="flex h-[300px] w-[360px] flex-col border-meta-light-blue-2 px-[26px] py-[26px]">
+            <div className="flex  flex-col border-meta-light-blue-2 px-[26px] py-[26px] lg:h-[300px] lg:w-[360px]">
               <div className="flex items-center gap-2">
                 {[1, 2, 3, 4]?.map((item: any) => {
                   return (

@@ -3,13 +3,18 @@ import ContactUs from '@/Components/home/ContactUs';
 import Feedback from '@/Components/home/Feedback';
 import Services from '@/Components/home/Services';
 import Image from 'next/image';
-
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useEffect } from 'react';
 const Page = () => {
+  useEffect(() => {
+    AOS.init({ duration: 500 });
+  }, []);
   return (
     <div>
       <div className="h-auto bg-meta-gray-2">
         <div className="mx-auto h-full px-4 pb-[75px] pt-4 sm:max-w-xl sm:pt-36 md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
-          <div className=" w-full">
+          <div className=" w-full" data-aos="fade-down">
             <div className="relative flex flex-col items-center justify-center">
               <p className=" text-center text-[30px] font-bold leading-[60px] text-meta-blue-1 ">
                 ABOUT US
@@ -31,7 +36,11 @@ const Page = () => {
       </div>
       <div className="mx-auto h-full px-4 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
         <div className="mt-16">
-          <div className="flex  justify-between">
+          <div
+            className="flex  justify-between"
+            data-aos="fade-right"
+            data-aos-easing="ease-in-sine"
+          >
             <div>
               <p className="text-lg font-semibold text-meta-light-blue-3">
                 OUR STORY
@@ -59,7 +68,11 @@ const Page = () => {
           </div>
         </div>
         <div className="mt-24">
-          <div className="flex  justify-between">
+          <div
+            className="flex  justify-between"
+            data-aos="fade-right"
+            data-aos-easing="ease-in-sine"
+          >
             <div>
               <p className="text-lg font-semibold text-meta-light-blue-3">
                 VISION
@@ -75,7 +88,11 @@ const Page = () => {
           </div>
         </div>
         <div className="mt-[46px]">
-          <div className="flex  justify-between">
+          <div
+            className="flex  justify-between"
+            data-aos="fade-right"
+            data-aos-easing="ease-in-sine"
+          >
             <div>
               <p className="text-lg font-semibold text-meta-light-blue-3">
                 Mission
@@ -97,7 +114,11 @@ const Page = () => {
         <Services />
 
         <div className="mt-[46px]">
-          <div className="flex  justify-between">
+          <div
+            className="flex  justify-between"
+            data-aos="fade-right"
+            data-aos-easing="ease-in-sine"
+          >
             <div>
               <p className="text-lg font-semibold text-meta-light-blue-3">
                 FEEDBACK

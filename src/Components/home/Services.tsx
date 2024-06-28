@@ -1,7 +1,9 @@
 'use client';
 import Image from 'next/image';
 import Button from '../Button';
-
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useEffect } from 'react';
 const ServiceARR = [
   {
     id: 1,
@@ -45,9 +47,12 @@ const ServiceARR = [
 ];
 
 const Services = () => {
+  useEffect(() => {
+    AOS.init({ duration: 500 });
+  }, []);
   return (
     <div className="mt-36">
-      <div>
+      <div data-aos="fade-right" data-aos-easing="ease-in-sine">
         <p className="text-lg font-semibold text-meta-light-blue-3">
           Here's What CertifyRecruit can do for you.
         </p>
@@ -59,7 +64,7 @@ const Services = () => {
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {ServiceARR?.map((list) => {
             return (
-              <div className="relative h-[285px] w-[400px] rounded-[12px] bg-meta-gray-2 p-[20px]">
+              <div className="relative h-[285px] rounded-[12px] bg-meta-gray-2 p-[20px] lg:w-[400px]">
                 <div className="flex flex-col ">
                   <div className="h-[186px]">
                     <Image

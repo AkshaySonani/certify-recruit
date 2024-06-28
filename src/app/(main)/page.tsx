@@ -5,6 +5,10 @@ import { Icons } from '@/svg';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useEffect } from 'react';
 
 const ServiceARR = [
   {
@@ -49,14 +53,21 @@ const ServiceARR = [
 ];
 
 export default function Home() {
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
+
   const session = useSession();
   const router = useRouter();
   return (
     <div>
       <div className="dm-sans ">
         <div className="h-auto bg-meta-gray-2">
-          <div className="mx-auto h-full px-4 pb-[50px] pt-4 sm:max-w-xl sm:pt-36 md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
-            <div className=" w-full">
+          <div
+            data-aos="fade-down"
+            className="mx-auto  h-full px-4 pb-[50px] pt-4 sm:max-w-xl sm:pt-36 md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8"
+          >
+            <div className=" w-full ">
               <div className="relative flex justify-center">
                 <p className="max-w-[1010px] text-center text-[30px] font-bold leading-[60px] text-meta-purple-1 sm:text-[50px]">
                   Make way for more with our advanced Recruitment Assessment
@@ -72,14 +83,19 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="mt-[30px] flex items-center justify-between sm:mt-[70px]">
+            <div className="mt-[30px] hidden  items-center justify-between sm:mt-[70px] lg:flex">
               <div className="relative">
-                <Image
-                  alt="date"
-                  width={310}
-                  height={394}
-                  src={'/landing/certificate.png'}
-                />
+                <motion.div
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.8 }}
+                >
+                  <Image
+                    alt="date"
+                    width={310}
+                    height={394}
+                    src={'/landing/certificate.png'}
+                  />
+                </motion.div>
                 <div className="absolute bottom-2 flex w-full justify-center">
                   <Button
                     type={'button'}
@@ -101,21 +117,31 @@ export default function Home() {
                   />
                 </div>
                 <div className="mt-[100px] flex-1">
-                  <Image
-                    alt="date"
-                    width={559}
-                    height={370}
-                    src={'/landing/result.png'}
-                  />
+                  <motion.div
+                    whileHover={{ scale: 0.9 }}
+                    whileTap={{ scale: 0.8 }}
+                  >
+                    <Image
+                      alt="date"
+                      width={559}
+                      height={370}
+                      src={'/landing/result.png'}
+                    />
+                  </motion.div>
                 </div>
               </div>
               <div className="relative">
-                <Image
-                  alt="date"
-                  width={310}
-                  height={394}
-                  src={'/landing/certificate.png'}
-                />
+                <motion.div
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.8 }}
+                >
+                  <Image
+                    alt="date"
+                    width={310}
+                    height={394}
+                    src={'/landing/certificate.png'}
+                  />
+                </motion.div>
                 <div className="absolute bottom-2 flex w-full justify-center">
                   <Button
                     type={'button'}
@@ -130,7 +156,10 @@ export default function Home() {
 
             <div className="mt-[75px]">
               <div className="grid grid-cols-1 items-center justify-center  gap-2 sm:grid-cols-2 xl:grid-cols-4">
-                <div className="h-[209px]  w-[295px] rounded-[43px]  border border-dashed border-meta-light-blue-6 px-[16px] pb-[18px] pt-[28px]">
+                <div
+                  data-aos="fade-up"
+                  className="h-[209px]  w-[295px] rounded-[43px]  border border-dashed border-meta-light-blue-6 px-[16px] pb-[18px] pt-[28px]"
+                >
                   <div className=" flex h-full flex-col justify-between">
                     <p className="w-full text-center text-[20px] font-bold">
                       Industry Standard Assessment
@@ -145,7 +174,10 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className="h-[209px] w-[295px] rounded-[43px] border border-dashed border-meta-light-blue-6 px-[16px] pb-[18px] pt-[28px]">
+                <div
+                  data-aos="fade-up"
+                  className="h-[209px] w-[295px] rounded-[43px] border border-dashed border-meta-light-blue-6 px-[16px] pb-[18px] pt-[28px]"
+                >
                   <div className=" flex h-full flex-col justify-between">
                     <p className="w-full text-center text-[20px] font-bold">
                       Authentic Certification
@@ -160,7 +192,10 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className="h-[209px] w-[295px] rounded-[43px] border border-dashed border-meta-light-blue-6 px-[16px] pb-[18px] pt-[28px]">
+                <div
+                  data-aos="fade-up"
+                  className="h-[209px] w-[295px] rounded-[43px] border border-dashed border-meta-light-blue-6 px-[16px] pb-[18px] pt-[28px]"
+                >
                   <div className=" flex h-full flex-col justify-between">
                     <p className="w-full text-center text-[20px] font-bold">
                       Uplifting Individuals & Organizations
@@ -175,7 +210,10 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className="h-[209px] w-[295px] rounded-[43px] border border-dashed border-meta-light-blue-6 px-[16px] pb-[18px] pt-[28px]">
+                <div
+                  data-aos="fade-up"
+                  className="h-[209px] w-[295px] rounded-[43px] border border-dashed border-meta-light-blue-6 px-[16px] pb-[18px] pt-[28px]"
+                >
                   <div className=" flex h-full flex-col justify-between">
                     <p className="w-full text-center text-[20px] font-bold">
                       Simplifying Recruitment
@@ -197,7 +235,7 @@ export default function Home() {
         <div className="mx-auto h-full px-4 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
           <div className="mt-16">
             <div className="flex  justify-between">
-              <div>
+              <div data-aos="fade-right" data-aos-easing="ease-in-sine">
                 <p className="text-lg font-semibold text-meta-light-blue-3">
                   TOP JOB
                 </p>
@@ -407,7 +445,7 @@ export default function Home() {
           {/* {About Section} */}
           <div className="mt-28">
             <div className="flex flex-col-reverse justify-center md:flex-row md:justify-between">
-              <div>
+              <div data-aos="zoom-out-right" data-aos-easing="ease-in-sine">
                 <p className="text-lg font-semibold text-meta-light-blue-3">
                   ABOUT US
                 </p>
@@ -431,7 +469,7 @@ export default function Home() {
                   />
                 </div>
               </div>
-              <div>
+              <div data-aos="zoom-out-left">
                 <Image
                   alt="date"
                   width={525}
@@ -442,13 +480,16 @@ export default function Home() {
             </div>
           </div>
           {/* {connecting Section} */}
-          <div className="mt-12 rounded-[28px] bg-meta-gray-2 md:mt-36">
-            <div className="flex justify-between  px-[50px] pb-2">
+          <div
+            className="mt-12 rounded-[28px] bg-meta-gray-2 md:mt-36"
+            data-aos="flip-down"
+          >
+            <div className="flex justify-between px-3  pb-2 lg:px-[50px]">
               <div>
-                <p className="max-w-[578px] pt-[50px] text-2xl font-bold text-meta-blue-1 sm:text-4xl">
+                <p className="lg:px:0 w-full pr-6 pt-[50px] text-2xl font-bold text-meta-blue-1 sm:text-4xl lg:max-w-[578px]">
                   Connecting Talents, Simplifying Recruitment
                 </p>
-                <p className="mt-[17px] max-w-[320px] text-3xl font-bold text-meta-light-blue-3">
+                <p className="mt-[17px] max-w-[320px] px-6 pb-[20px] text-xl font-bold text-meta-light-blue-3 lg:px-0 lg:text-3xl">
                   Reach Out To Us Today
                 </p>
               </div>
@@ -466,7 +507,7 @@ export default function Home() {
 
           {/* {services Section} */}
           <div className="mt-36">
-            <div>
+            <div data-aos="fade-right" data-aos-easing="ease-in-sine">
               <p className="text-lg font-semibold text-meta-light-blue-3">
                 Here's What CertifyRecruit can do for you.
               </p>
@@ -478,45 +519,50 @@ export default function Home() {
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                 {ServiceARR?.map((list) => {
                   return (
-                    <div className="relative h-[285px] w-[400px] rounded-[12px] bg-meta-gray-2 p-[20px]">
-                      <div className="flex flex-col ">
-                        <div className="h-[186px]">
+                    <motion.div
+                      whileHover={{ scale: 0.8 }}
+                      whileTap={{ scale: 0.8 }}
+                    >
+                      <div className="relative h-[285px] rounded-[12px] bg-meta-gray-2 p-[20px] lg:w-[400px]">
+                        <div className="flex flex-col ">
+                          <div className="h-[186px]">
+                            <Image
+                              alt="date"
+                              width={40}
+                              height={40}
+                              src={'/landing/serviceicon.png'}
+                            />
+                            <div className="mt-[10px]  text-lg font-bold text-meta-blue-1">
+                              {list?.title}
+                            </div>
+                            <div className="text-lg font-bold text-meta-light-blue-3">
+                              {list?.optionText}
+                            </div>
+                            <div className=" max-w-[299px] pt-[10px] text-sm text-meta-light-blue-3 ">
+                              {list?.content}
+                            </div>
+                          </div>
+                          <div className="">
+                            <Button
+                              type={'button'}
+                              title={'Contact Us'}
+                              // handleClick={downloadPdf}
+                              btnClass="w-max !my-3 !p-3 !h-auto !bg-meta-blue-1 !mb-0"
+                              titleClass="flex justify-center w-[110px] text-base  font-medium text-white"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="absolute bottom-2 right-0 hidden lg:block">
                           <Image
                             alt="date"
-                            width={40}
-                            height={40}
-                            src={'/landing/serviceicon.png'}
-                          />
-                          <div className="mt-[10px]  text-lg font-bold text-meta-blue-1">
-                            {list?.title}
-                          </div>
-                          <div className="text-lg font-bold text-meta-light-blue-3">
-                            {list?.optionText}
-                          </div>
-                          <div className=" max-w-[299px] pt-[10px] text-sm text-meta-light-blue-3 ">
-                            {list?.content}
-                          </div>
-                        </div>
-                        <div className="">
-                          <Button
-                            type={'button'}
-                            title={'Contact Us'}
-                            // handleClick={downloadPdf}
-                            btnClass="w-max !my-3 !p-3 !h-auto !bg-meta-blue-1 !mb-0"
-                            titleClass="flex justify-center w-[110px] text-base  font-medium text-white"
+                            width={125}
+                            height={135}
+                            src={'/landing/servicebanner.png'}
                           />
                         </div>
                       </div>
-
-                      <div className="absolute bottom-2 right-0">
-                        <Image
-                          alt="date"
-                          width={125}
-                          height={135}
-                          src={'/landing/servicebanner.png'}
-                        />
-                      </div>
-                    </div>
+                    </motion.div>
                   );
                 })}
               </div>
@@ -526,9 +572,9 @@ export default function Home() {
           {/* {Feedback} */}
         </div>
         <div className="mt-16 bg-meta-gray-2 px-4  py-[75px] md:px-24 lg:px-8">
-          <div className="mx-auto h-full px-4 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
+          <div className="mx-auto h-full px-4 sm:max-w-full md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
             <div className="">
-              <div>
+              <div data-aos="fade-up">
                 <p className="text-lg font-semibold text-meta-light-blue-3">
                   FEEDBACK
                 </p>
@@ -545,7 +591,7 @@ export default function Home() {
                 />
                 <div className="mt-[10px] flex items-center justify-between">
                   <div>
-                    <p className="max-w-[830px] pl-5 text-2xl font-medium text-meta-light-blue-3">
+                    <p className="max-w-[830px]  pl-5 text-2xl font-medium text-meta-light-blue-3">
                       CertifyRecruit has helped me stand apart through their
                       certification. Several companies have contacted me after I
                       shared my certificate on my resume.
@@ -584,7 +630,7 @@ export default function Home() {
         </div>
 
         <div className="mx-auto mt-16 h-full px-4 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
-          <div>
+          <div data-aos="fade-right" data-aos-easing="ease-in-sine">
             <p className="text-lg font-semibold text-meta-light-blue-3">
               OUR PARTNERS
             </p>
@@ -595,7 +641,10 @@ export default function Home() {
           <div className="mt-[50px] grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 ">
             {[1, 2, 3, 4, 5].map((item) => {
               return (
-                <div className="flex h-[150px] w-[233px] items-center justify-center rounded-[30px] border border-meta-light-blue-2 bg-meta-light-blue-5">
+                <div
+                  data-aos="slide-left"
+                  className=" flex h-[150px] w-[233px] items-center justify-center rounded-[30px] border border-meta-light-blue-2 bg-meta-light-blue-5"
+                >
                   <Image
                     alt="date"
                     width={118}
@@ -608,7 +657,7 @@ export default function Home() {
           </div>
         </div>
         <div className="mx-auto my-[150px] h-full px-4 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8 ">
-          <div>
+          <div data-aos="fade-right" data-aos-easing="ease-in-sine">
             <p className="text-lg font-semibold text-meta-light-blue-3">
               CONTACT US
             </p>
@@ -650,7 +699,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="flex w-1/2 items-end justify-end rounded-[30px] bg-meta-gray-2">
+            <div className=" hidden w-1/2 items-end justify-end rounded-[30px] bg-meta-gray-2 lg:flex">
               <div>
                 <Image
                   alt="date"
