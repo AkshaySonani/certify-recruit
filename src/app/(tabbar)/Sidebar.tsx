@@ -213,11 +213,8 @@ const Sidebar = () => {
                     <button
                       onClick={() => {
                         localStorage.removeItem('userRole');
-                        signOut({
-                          callbackUrl: process.env.NEXTAUTH_URL,
-                        });
-
-                        router.replace(ROUTE?.LOGIN);
+                        signOut();
+                        // router.replace(ROUTE?.LOGIN);
                       }}
                       className={`${
                         active ? 'bg-meta-blue-1 text-white' : 'text-gray-900'
