@@ -46,7 +46,7 @@ const FEEDBACK_ARR = [
 ];
 const Feedback = () => {
   return (
-    <div className="mt-[100px]">
+    <div className="mt-[75px]">
       <div className="grid grid-cols-1 lg:grid-cols-3">
         {FEEDBACK_ARR?.map((list) => {
           return (

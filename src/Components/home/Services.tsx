@@ -4,6 +4,7 @@ import Button from '../Button';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';
+import { motion } from 'framer-motion';
 const ServiceARR = [
   {
     id: 1,
@@ -64,45 +65,47 @@ const Services = () => {
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {ServiceARR?.map((list) => {
             return (
-              <div className="relative h-[285px] rounded-[12px] bg-meta-gray-2 p-[20px] lg:w-[400px]">
-                <div className="flex flex-col ">
-                  <div className="h-[186px]">
+              <motion.div whileHover={{ scale: 0.8 }} whileTap={{ scale: 0.8 }}>
+                <div className="relative h-[285px] rounded-[12px] bg-meta-gray-2 p-[20px] lg:w-[350px] xl:w-[400px]">
+                  <div className="flex flex-col ">
+                    <div className="h-[186px]">
+                      <Image
+                        alt="date"
+                        width={40}
+                        height={40}
+                        src={'/landing/serviceicon.png'}
+                      />
+                      <div className="mt-[10px]  text-lg font-bold text-meta-blue-1">
+                        {list?.title}
+                      </div>
+                      <div className="text-lg font-bold text-meta-light-blue-3">
+                        {list?.optionText}
+                      </div>
+                      <div className=" max-w-[299px] pt-[10px] text-sm text-meta-light-blue-3 ">
+                        {list?.content}
+                      </div>
+                    </div>
+                    <div className="">
+                      <Button
+                        type={'button'}
+                        title={'Contact Us'}
+                        // handleClick={downloadPdf}
+                        btnClass="w-max !my-3 !p-3 !h-auto !bg-meta-blue-1 !mb-0"
+                        titleClass="flex justify-center w-[110px] text-base  font-medium text-white"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="absolute bottom-2 right-0">
                     <Image
                       alt="date"
-                      width={40}
-                      height={40}
-                      src={'/landing/serviceicon.png'}
-                    />
-                    <div className="mt-[10px]  text-lg font-bold text-meta-blue-1">
-                      {list?.title}
-                    </div>
-                    <div className="text-lg font-bold text-meta-light-blue-3">
-                      {list?.optionText}
-                    </div>
-                    <div className=" max-w-[299px] pt-[10px] text-sm text-meta-light-blue-3 ">
-                      {list?.content}
-                    </div>
-                  </div>
-                  <div className="">
-                    <Button
-                      type={'button'}
-                      title={'Contact Us'}
-                      // handleClick={downloadPdf}
-                      btnClass="w-max !my-3 !p-3 !h-auto !bg-meta-blue-1 !mb-0"
-                      titleClass="flex justify-center w-[110px] text-base  font-medium text-white"
+                      width={125}
+                      height={135}
+                      src={'/landing/servicebanner.png'}
                     />
                   </div>
                 </div>
-
-                <div className="absolute bottom-2 right-0">
-                  <Image
-                    alt="date"
-                    width={125}
-                    height={135}
-                    src={'/landing/servicebanner.png'}
-                  />
-                </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>

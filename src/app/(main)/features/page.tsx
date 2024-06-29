@@ -5,12 +5,16 @@ import Button from '@/Components/Button';
 import ContactUs from '@/Components/home/ContactUs';
 import PageTitle from '@/Components/home/pageTitle';
 import FeedbackSection from '@/Components/home/feedbackSection';
+import Feedback from '@/Components/home/Feedback';
 
 const Page = () => {
   return (
     <div>
       <div className="relative h-full w-full">
-        <div className="min-h-auto flex h-full items-center justify-center bg-meta-gray-2 sm:min-h-96">
+        <div
+          data-aos="fade-down"
+          className="min-h-auto flex h-full items-center justify-center bg-meta-gray-2 sm:min-h-96"
+        >
           <PageTitle
             showBtn={true}
             title="FEATURES"
@@ -23,7 +27,7 @@ const Page = () => {
       </div>
 
       <div className="container mx-auto">
-        <div className="my-9 px-8 text-center lg:px-12">
+        <div className="my-9 px-8 text-center lg:px-12" data-aos="flip-right">
           <p className="py-2 text-4xl font-bold text-meta-blue-1">
             Professional Certification
           </p>
@@ -32,7 +36,10 @@ const Page = () => {
             Prominently featured at the top of candidate searches.
           </p>
         </div>
-        <div className="mx-auto flex h-full w-full items-center justify-center">
+        <div
+          className="mx-auto flex h-full w-full items-center justify-center"
+          data-aos="zoom-in-down"
+        >
           <Image
             alt="date"
             width={1300}
@@ -41,7 +48,10 @@ const Page = () => {
           />
         </div>
 
-        <div className="flex min-h-screen w-full flex-col items-center justify-between p-4 lg:flex-row">
+        <div
+          data-aos="zoom-in-right"
+          className="flex min-h-screen w-full flex-col items-center justify-between p-4 lg:flex-row"
+        >
           <div className="h-full w-full md:w-max md:px-6">
             <Image
               alt="date"
@@ -69,7 +79,12 @@ const Page = () => {
           </div>
         </div>
 
-        <div className="flex min-h-screen w-full flex-col-reverse items-center justify-between p-4 lg:flex-row">
+        <div
+          data-aos="fade-right"
+          data-aos-offset="300"
+          data-aos-easing="ease-in-sine"
+          className="flex min-h-screen w-full flex-col-reverse items-center justify-between p-4 lg:flex-row"
+        >
           <div className="w-full flex-col items-start justify-center p-6 text-start md:w-[445px] lg:flex">
             <h1 className="w-full text-4xl font-bold text-meta-blue-1 md:text-6xl">
               Learn & Earn (Improve your Knowledge and skills)
@@ -89,7 +104,12 @@ const Page = () => {
           </div>
         </div>
 
-        <div className="flex min-h-screen w-full flex-col items-center justify-between p-4 lg:flex-row">
+        <div
+          data-aos="fade-left"
+          data-aos-offset="300"
+          data-aos-easing="ease-in-sine"
+          className="flex min-h-screen w-full flex-col items-center justify-between p-4 lg:flex-row"
+        >
           <div className="h-full w-full md:w-max md:px-6">
             <Image
               alt="date"
@@ -116,7 +136,12 @@ const Page = () => {
           </div>
         </div>
 
-        <div className="flex min-h-screen w-full flex-col-reverse items-center justify-between p-4 lg:flex-row">
+        <div
+          data-aos="fade-right"
+          data-aos-offset="300"
+          data-aos-easing="ease-in-sine"
+          className="flex min-h-screen w-full flex-col-reverse items-center justify-between p-4 lg:flex-row"
+        >
           <div className="w-full flex-col items-start justify-center p-6 text-start md:w-[445px] lg:flex">
             <h1 className="w-full text-4xl font-bold text-meta-blue-1 md:text-6xl">
               Badge of Honour (Company Certification)
@@ -136,7 +161,12 @@ const Page = () => {
           </div>
         </div>
 
-        <div className="flex min-h-screen w-full flex-col items-center justify-between p-4 lg:flex-row">
+        <div
+          data-aos="fade-left"
+          data-aos-offset="300"
+          data-aos-easing="ease-in-sine"
+          className="flex min-h-screen w-full flex-col items-center justify-between p-4 lg:flex-row"
+        >
           <div className="h-full w-full md:w-max md:px-6">
             <Image
               alt="date"
@@ -162,10 +192,26 @@ const Page = () => {
             </div>
           </div>
         </div>
-
-        <div className="container mx-auto mb-7 px-7 sm:mb-14">
-          <FeedbackSection />
+        <div className="mt-[46px]">
+          <div
+            className="flex  justify-between"
+            data-aos="fade-right"
+            data-aos-easing="ease-in-sine"
+          >
+            <div>
+              <p className="text-lg font-semibold text-meta-light-blue-3">
+                FEEDBACK
+              </p>
+              <p className="max-w-[642px] pt-1 text-4xl font-semibold text-meta-blue-1">
+                What They Thought About Us
+              </p>
+            </div>
+          </div>
+          <Feedback />
         </div>
+        {/* <div className="container mx-auto mb-7 px-7 sm:mb-14">
+          <FeedbackSection />
+        </div> */}
 
         <ContactUs />
       </div>

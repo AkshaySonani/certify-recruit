@@ -469,7 +469,7 @@ export default function Home() {
                   />
                 </div>
               </div>
-              <div data-aos="zoom-out-left">
+              <div data-aos="fade-down">
                 <Image
                   alt="date"
                   width={525}
@@ -523,7 +523,7 @@ export default function Home() {
                       whileHover={{ scale: 0.8 }}
                       whileTap={{ scale: 0.8 }}
                     >
-                      <div className="relative h-[285px] rounded-[12px] bg-meta-gray-2 p-[20px] lg:w-[400px]">
+                      <div className="relative h-[285px] rounded-[12px] bg-meta-gray-2 p-[20px] lg:w-[350px] xl:w-[400px]">
                         <div className="flex flex-col ">
                           <div className="h-[186px]">
                             <Image
@@ -642,7 +642,7 @@ export default function Home() {
             {[1, 2, 3, 4, 5].map((item) => {
               return (
                 <div
-                  data-aos="slide-left"
+                  data-aos="zoom-out"
                   className=" flex h-[150px] w-[233px] items-center justify-center rounded-[30px] border border-meta-light-blue-2 bg-meta-light-blue-5"
                 >
                   <Image

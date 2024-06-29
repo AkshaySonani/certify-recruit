@@ -1,14 +1,22 @@
 'use client';
 import * as Yup from 'yup';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { useFormik, Field } from 'formik';
 import Button from '@/Components/Button';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 const Page = () => {
+  useEffect(() => {
+    AOS.init({ duration: 500 });
+  }, []);
   return (
     <div className="">
       <div className="relative mb-40 bg-meta-gray-2">
-        <div className="mx-auto h-full px-4 pb-[75px] pt-4 sm:max-w-xl sm:pt-36 md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
+        <div
+          data-aos="fade-down"
+          className="mx-auto h-full px-4 pb-[75px] pt-4 sm:max-w-xl sm:pt-36 md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8"
+        >
           <div className=" w-full">
             <div className="relative flex flex-col items-center justify-center">
               <p className=" text-center text-[30px] font-bold leading-[60px] text-meta-blue-1 ">
@@ -28,9 +36,14 @@ const Page = () => {
             </div>
           </div>
         </div>
-        <div className="absolute bottom-[-360px] mx-auto  h-full px-4 pb-[75px]  sm:max-w-xl  md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
-          <div className="grid grid-cols-3 justify-center gap-4">
-            <div className="h-[200px] w-[380px] rounded-[20px] border border-meta-light-blue-1 bg-meta-light-blue-5 py-[30px]">
+        <div className="container relative mx-auto w-full px-4  lg:bottom-[-104px]">
+          <div className=" grid grid-cols-1 justify-center gap-4 lg:grid-cols-3">
+            <div
+              data-aos="flip-left"
+              data-aos-easing="ease-out-cubic"
+              data-aos-duration="500"
+              className="h-[200px] rounded-[20px] border border-meta-light-blue-1 bg-meta-light-blue-5 py-[30px] lg:w-[300px] xl:w-[380px]"
+            >
               <div className="flex justify-center">
                 <Image
                   alt="date"
@@ -47,7 +60,12 @@ const Page = () => {
                 Varachha), Surat.
               </p>
             </div>
-            <div className="h-[200px] w-[380px] rounded-[20px] border border-meta-light-blue-1 bg-meta-light-blue-5 py-[30px]">
+            <div
+              data-aos="flip-left"
+              data-aos-easing="ease-out-cubic"
+              data-aos-duration="500"
+              className="h-[200px] rounded-[20px] border border-meta-light-blue-1 bg-meta-light-blue-5 py-[30px] lg:w-[300px] xl:w-[380px]"
+            >
               <div className="flex justify-center ">
                 <Image
                   alt="date"
@@ -63,7 +81,12 @@ const Page = () => {
                 +91 9157350298
               </p>
             </div>
-            <div className="h-[200px] w-[380px] rounded-[20px] border border-meta-light-blue-1 bg-meta-light-blue-5 py-[30px]">
+            <div
+              data-aos="flip-left"
+              data-aos-easing="ease-out-cubic"
+              data-aos-duration="500"
+              className="h-[200px] rounded-[20px] border border-meta-light-blue-1 bg-meta-light-blue-5 py-[30px] lg:w-[300px] xl:w-[380px]"
+            >
               <div className="flex justify-center">
                 <Image
                   alt="date"
@@ -94,7 +117,7 @@ const Page = () => {
             />
           </div>
           <div>
-            <div>
+            <div data-aos="fade-left" data-aos-easing="ease-in-sine">
               <p className="text-[40px] font-[700] text-meta-purple-1">
                 Contact our Friendly Team
               </p>
