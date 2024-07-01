@@ -13,6 +13,7 @@ export * from './category';
 export * from './language';
 export * from './location';
 export * from './savedJob';
+export * from './contactUs';
 export * from './countries';
 export * from './individual';
 export * from './transaction';
