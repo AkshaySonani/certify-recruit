@@ -165,12 +165,12 @@ const Page = () => {
               Apply for Job
             </h1>
             <p className="mt-4 w-full text-xl font-medium text-meta-light-blue-3 md:text-2xl">
-              Better Opportunities might be awaiting you! Apply today!
+              Better Opportunities might be awaiting you! Apply today! fg
             </p>
             <div className="flex w-full items-start">
               <Button
                 type="button"
-                onClick={() => router?.push(ROUTE?.LOGIN)}
+                handleClick={() => router?.push(ROUTE?.LOGIN)}
                 title={'Apply Job'}
                 btnClass="sm:w-max w-[290px] !my-3 !py-2 !px-6"
               />
