@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Button from '@/Components/Button';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import API from '@/service/ApiService';
 import { useFormik } from 'formik';
 import { EMAIlREGEX } from '@/service/Helper';
 const Page = () => {
@@ -36,8 +35,8 @@ const Page = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    first_name: Yup.string().required('First name is required'),
-    last_name: Yup.string().required('Last name is required'),
+    firstName: Yup.string().required('First name is required'),
+    lastName: Yup.string().required('Last name is required'),
     email: Yup.string()
       .required('Email is required.')
       .matches(EMAIlREGEX, 'Invalid email'),
@@ -48,8 +47,8 @@ const Page = () => {
 
   const formik: any = useFormik({
     initialValues: {
-      first_name: '',
-      last_name: '',
+      firstName: '',
+      lastName: '',
       email: '',
       message: '',
     },
@@ -183,13 +182,13 @@ const Page = () => {
                   <input
                     type="text"
                     onChange={formik.handleChange}
-                    value={formik?.values?.first_name}
-                    name="first_name"
+                    value={formik?.values?.firstName}
+                    name="firstName"
                     placeholder="First name"
                     className="mt-2 w-full rounded-2xl border border-meta-light-blue-1 bg-meta-light-blue-5 p-3 focus:border-meta-light-blue-3"
                   />
-                  {formik.touched.first_name && formik.errors.first_name && (
-                    <div className="error">{formik.errors.first_name}</div>
+                  {formik.touched.firstName && formik.errors.firstName && (
+                    <div className="error">{formik.errors.firstName}</div>
                   )}
                 </div>
                 <div className="w-1/2">

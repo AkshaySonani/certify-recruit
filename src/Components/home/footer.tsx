@@ -2,8 +2,10 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const Footer = () => {
+  const router = useRouter();
   const NAV_ARR = [
     {
       id: 1,
@@ -35,7 +37,7 @@ const Footer = () => {
   return (
     <div className="mx-auto h-full px-4 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
       <div className="row-gap-6 mb-8 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="sm:col-span-2">
+        <div className="sm:col-span-2" onClick={() => router.push('/')}>
           <Image
             width={200}
             height={56}

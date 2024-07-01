@@ -43,7 +43,7 @@ const Header = () => {
     <header className="bg-white py-[25px]">
       <nav className="mx-auto h-full  px-4 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
         <div className="mx-auto flex max-w-screen-2xl flex-wrap items-center justify-between">
-          <div className="flex justify-center">
+          <div className="flex justify-center" onClick={() => router.push('/')}>
             <Image
               width={200}
               height={56}
@@ -77,10 +77,7 @@ const Header = () => {
                 btnClass="!w-32 !rounded-lg !bg-meta-blue-1 !py-2 !mb-0"
               /> */}
             </div>
-            <p
-              onClick={() => setNavbar(!navbar)}
-              className="block cursor-pointer md:hidden"
-            >
+            <p className="block cursor-pointer md:hidden">
               {navbar ? (
                 <Image
                   width={20}
@@ -88,6 +85,7 @@ const Header = () => {
                   alt="close"
                   className="w-6"
                   src={'/home/close.svg'}
+                  onClick={() => setNavbar(false)}
                 />
               ) : (
                 <Image
@@ -95,6 +93,9 @@ const Header = () => {
                   alt="menu"
                   height={20}
                   className="w-6"
+                  onClick={() => {
+                    setNavbar(true);
+                  }}
                   src={'/home/menu.svg'}
                 />
               )}
@@ -122,6 +123,10 @@ const Header = () => {
               return (
                 <div
                   key={list?.id}
+                  onClick={() => {
+                    router.push(list?.route);
+                    setNavbar(false);
+                  }}
                   //   initial={{ scale: 0, opacity: 0 }}
                   //   animate={{ scale: 1, opacity: 1 }}
                   //   transition={{
