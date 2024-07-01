@@ -19,41 +19,50 @@ const Page = () => {
           using the Site, you agree to the terms of this Privacy Policy. If you
           do not agree to these terms, please do not use the Site.
         </p>
+
         <div className="mt-[80px]">
           <h2 className="mb-5 text-2xl font-bold text-meta-purple-1">
             Information We Collect
           </h2>
 
-          <p className="text-lg font-normal text-meta-light-blue-3">
-            Personal Information: We may collect personal information, such as
-            your name, email address, phone number, and other contact details
-            when you register for an account, make payments, or contact us.
-          </p>
-          <p className="text-lg font-normal text-meta-light-blue-3">
-            b. Usage Information: We may collect personal information, such as
-            your name, email address, phone number, and other contact details
-            when you register for an account, make payments, or contact us.
-          </p>
+          <ul className="mb-4 list-inside list-disc text-lg font-normal text-meta-light-blue-3">
+            <li className="mb-5">
+              <span className="pr-1 font-bold text-meta-purple-1">
+                Personal Information:
+              </span>
+              We may collect personal information, such as your name, email
+              address, phone number, and other contact details when you register
+              for an account, make payments, or contact us.
+            </li>
+            <li className="mb-5">
+              <span className="pr-1 font-bold text-meta-purple-1">
+                Usage Information:
+              </span>
+              We may collect personal information, such as your name, email
+              address, phone number, and other contact details when you register
+              for an account, make payments, or contact us.
+            </li>
+          </ul>
         </div>
         <div className="mt-[50px]">
           <h2 className="mb-5 text-2xl font-bold text-meta-purple-1">
             How We Use Your Information
           </h2>
 
-          <p className=" text-lg font-normal text-meta-light-blue-3">
-            a. We use your personal information to:
-          </p>
-          <p className="text-lg font-normal text-meta-light-blue-3">
-            Improving the Site's performance and functionality. Analyzing user
-            behavior and trends to enhance user experience.
-          </p>
-          <p className=" text-lg font-normal text-meta-light-blue-3">
-            b. We may use usage information for:
-          </p>
-          <p className="text-lg font-normal text-meta-light-blue-3">
-            Improving the Site's performance and functionality. Analyzing user
-            behavior and trends to enhance user experience.
-          </p>
+          <ul className="mb-4 list-inside list-disc text-lg font-normal text-meta-light-blue-3">
+            <span className="pr-1 font-bold text-meta-purple-1">
+              We use your personal information to:
+            </span>
+            <li>Process payments and provide the services you request.</li>
+            <li>Send you important information, updates, and newsletters.</li>
+            <span className="pr-1 font-bold text-meta-purple-1">
+              We may use usage information for:
+            </span>
+            <li>Improving the Site's performance and functionality.</li>
+            <li>
+              Analyzing user behavior and trends to enhance user experience.
+            </li>
+          </ul>
         </div>
         <div className="mt-[50px]">
           <h2 className="mb-2 text-2xl font-bold text-meta-purple-1">
@@ -107,67 +116,60 @@ const Page = () => {
         </div>
         <div className="mt-[50px]">
           <h2 className="mb-2 text-2xl font-bold text-meta-purple-1">
-            Changes in Privacy Policy
+            Changes to the Privacy Policy
           </h2>
-          <ul className=" list-inside list-disc text-lg font-normal text-meta-light-blue-3">
-            <li className="list-item text-lg font-normal text-meta-light-blue-3">
-              The Site may contain links to external websites that are not
-              operated by us. We have no control over the content and practices
-              of these websites and cannot be responsible for their privacy
-              policies.
-            </li>
-          </ul>
+
+          <p className="text-lg font-normal text-meta-light-blue-3">
+            The Company reserves the right to modify this Privacy Policy at any
+            time. We will notify you of any changes by posting the updated
+            Privacy Policy on the Site. It is your responsibility to review this
+            policy regularly.
+          </p>
         </div>
         <div className="mt-[50px]">
           <h2 className="mb-2 text-2xl font-bold text-meta-purple-1">
-            Contact Information
+            ionContact Informat
           </h2>
 
           <p className="text-lg font-normal text-meta-light-blue-3">
             If you have questions or concerns about this Privacy Policy, please
-            contact us at: CLUSTER CERTIFY RECRUIT PRIVATE LIMITED 201, Platinum
-            Hub, above 3rd Floor, Opp. Voltamp, Makarpura, Vadodara - 390013,
-            Gujarat, India Email: info@certifyrecruit.com Phone: +91 9157350298
+            contact us at:
+          </p>
+          <h2 className="mt-[50px] text-2xl font-bold text-meta-purple-1">
+            CLUSTER CERTIFY RECRUIT PRIVATE LIMITED
+          </h2>
+          <p className="mb-4 text-lg font-normal text-meta-light-blue-3">
+            201, Platinum Hub, near Central Bank, Near Tulsidham Char Rasta,
+            Manjit Nagar, GIDC Industrial Area, Manjalpur, Vadodara, Gujarat
+            390011
+          </p>
+          <div>
+            <div className="flex items-center">
+              <p>Email : </p>
+              <a
+                title="Our email"
+                aria-label="Our email"
+                href="mailto:info@certifyrecruit.com"
+                className="ml-1 transition-colors duration-300 hover:text-meta-blue-1"
+              >
+                info@certifyrecruit.com
+              </a>
+            </div>
+            <div className="flex items-center">
+              <p>Phone : </p>
+              <a
+                href="tel:+91 9157350298"
+                aria-label="Our phone"
+                title="Our phone"
+                className="ml-1 transition-colors duration-300 hover:text-meta-blue-1"
+              >
+                +91 9157350298
+              </a>
+            </div>
+          </div>
+          <p className="mb-5">
             By using this Site, you acknowledge that you have read, understood,
-            and agreed to this Privacy Policy.
-          </p>
-        </div>
-        <div className="mt-[50px]">
-          <h2 className="mb-2 text-2xl font-bold text-meta-purple-1">
-            Payments
-          </h2>
-
-          <p className="text-lg font-normal text-meta-light-blue-3">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
-          </p>
-        </div>
-        <div className="mt-[50px]">
-          <h2 className="mb-2 text-2xl font-bold text-meta-purple-1">
-            Personal Information of Minors
-          </h2>
-
-          <p className="text-lg font-normal text-meta-light-blue-3">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s.
-          </p>
-        </div>
-        <div className="my-[50px]">
-          <h2 className="mb-2 text-2xl font-bold text-meta-purple-1">
-            Contact Us
-          </h2>
-
-          <p className="text-lg font-normal text-meta-light-blue-3">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
+            and agreed to these Terms and Conditions.
           </p>
         </div>
       </div>
