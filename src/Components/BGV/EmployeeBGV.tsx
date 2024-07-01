@@ -30,6 +30,8 @@ const EmployeeBGV = () => {
           setLoading(false);
           if (res?.data?.status === 404) {
             setUserNotExist(true);
+          } else if (res?.data?.status === 403) {
+            toast.error(res?.data?.message);
           } else {
             setEmail('');
             setBgvUser(res?.data?.data);

@@ -5,8 +5,8 @@ const API_CONSTANT = {
   DEGREE: '/degree',
   STATES: '/states',
   SIGN_UP: '/signup',
+  PRICING: '/pricing',
   PROFILE: '/profile',
-  SEARCH_BGV: '/search-bgv',
   COLLEGE: '/collage',
   COUNTRY: '/country',
   CATEGORY: '/category',
@@ -16,6 +16,8 @@ const API_CONSTANT = {
   UPLOAD_FILE: '/s3-upload',
   JOB_SEARCH: '/job-search',
   JOB_DELETE: '/delete-job',
+  SEARCH_CVS: '/search-cvs',
+  SEARCH_BGV: '/search-bgv',
   JOB_DETAILS: '/job-details',
   CHECK_ANSWER: '/check-answer',
   DELETE_RESUME: '/delete-resume',
@@ -23,6 +25,7 @@ const API_CONSTANT = {
   SEND_EXAM_LINK: '/send-exam-link',
   QUIZ_RESULTS: '/le-today-results',
   RESET_PASSWORD: '/reset-password',
+  SEND_INVITATION: '/send-invitation',
   FORGOT_PASSWORD: '/forgot-password',
   SEND_BADGE_LINK: '/send-badge-link',
   UPDATE_APPLY_JOB: '/update-apply-job',
@@ -30,8 +33,6 @@ const API_CONSTANT = {
   UPDATE_LE_DETAILS: '/update-le-details',
   UPDATE_COM_USER_STATUS: '/update-com-user-details',
   LEARN_AND_EARN_QUESTION: '/learn-and-earn-question',
-  SEND_INVITATION: '/send-invitation',
-  SEARCH_CVS: '/search-cvs',
 };
 
 export { API_CONSTANT };

@@ -31,6 +31,26 @@ const pricingSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  max_applicant_searches: {
+    type: Number,
+    required: true,
+  },
+  max_BGV_searches: {
+    type: Number,
+    required: true,
+  },
+  max_applicant: {
+    type: Number,
+    required: true,
+  },
+  allow_BOH_screen: {
+    type: Boolean,
+    required: true,
+  },
+  post_boosting: {
+    type: Boolean,
+    required: true,
+  },
   additional_features: {
     type: [String],
   },

@@ -78,8 +78,6 @@ const Page = () => {
       context?.userProfileCount?.summary_details;
   }
 
-  console.log('percentage', percentage);
-
   const getProfileDetails = () => {
     API.get(API_CONSTANT?.PROFILE)
       .then((res: any) => {

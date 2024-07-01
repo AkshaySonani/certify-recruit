@@ -162,6 +162,14 @@ const companySchema = new mongoose.Schema({
       },
     },
   ],
+  bgv_search_count: {
+    type: Number,
+    default: 0,
+  },
+  applicant_search_count: {
+    type: Number,
+    default: 0,
+  },
 });
 
 companySchema.set('timestamps', true);

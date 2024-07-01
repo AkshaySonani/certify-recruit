@@ -72,14 +72,18 @@ function JobPostingFormMain({ id }: any) {
       }
       API.post(API_CONSTANT.JOB, data)
         .then((res) => {
-          setIsSpinner(false);
-          if (id) {
-            toast?.success('Job updated Successfully');
+          if (res?.data?.status === 403) {
+            toast.error(res?.data?.message);
           } else {
-            toast?.success(
-              res?.data?.message || 'Successfully your job is posting',
-            );
+            if (id) {
+              toast?.success('Job updated Successfully');
+            } else {
+              toast?.success(
+                res?.data?.message || 'Successfully your job is posting',
+              );
+            }
           }
+          setIsSpinner(false);
           router.push(ROUTE?.DASHBOARD);
           actions.setSubmitting(false);
         })

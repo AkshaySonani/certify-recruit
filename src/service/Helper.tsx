@@ -388,6 +388,27 @@ export const hashToken = async (token: string) => {
   return bcrypt.hash(token, salt);
 };
 
+export const calculateExpirationDate = (createdAt: any, planType: any) => {
+  const date = new Date(createdAt);
+  switch (planType) {
+    case 'Daily':
+      date.setDate(date.getDate() + 1);
+      break;
+    case 'Fortnight':
+      date.setDate(date.getDate() + 14);
+      break;
+    case 'Monthly':
+      date.setMonth(date.getMonth() + 1);
+      break;
+    case 'Yearly':
+      date.setFullYear(date.getFullYear() + 1);
+      break;
+    default:
+      break;
+  }
+  return date;
+};
+
 const createModal = (name: string, schema: any) =>
   mongoose.models?.[name] || mongoose.model(name, schema);
 

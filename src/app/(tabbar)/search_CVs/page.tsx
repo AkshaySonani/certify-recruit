@@ -114,8 +114,12 @@ const Page = () => {
     };
     API.post(API_CONSTANT?.SEARCH_CVS, obj)
       .then((res: any) => {
-        setTableData(res?.data?.data);
-        console.log('res', res);
+        if (res?.data?.status === 403) {
+          toast.error(res?.data?.message);
+          setTableData([]);
+        } else {
+          setTableData(res?.data?.data);
+        }
       })
       .catch((error: any) => {
         toast.error(error?.response?.data?.message || 'Internal server error');

@@ -53,6 +53,7 @@ export default withAuth(
 export const config = {
   matcher: [
     '/job',
+    '/BGV',
     '/exam',
     '/login',
     '/users',
