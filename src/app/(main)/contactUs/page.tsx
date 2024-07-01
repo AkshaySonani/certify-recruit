@@ -148,7 +148,7 @@ const Page = () => {
                 Email
               </p>
               <p className="px-[40px] text-center text-base font-medium text-meta-light-blue-3">
-                Info@Certifyrecruit.Com
+                info@certifyrecruit.com
               </p>
             </div>
           </div>

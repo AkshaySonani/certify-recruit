@@ -124,12 +124,12 @@ const Footer = () => {
               src={'/home/mail.svg'}
             />
             <a
-              href="mailto:Info@Certifyrecruit.Com"
+              href="mailto:info@certifyrecruit.com"
               aria-label="Our email"
               title="Our email"
               className="text-sm font-medium text-meta-light-blue-3 transition-colors duration-300 hover:text-meta-blue-1"
             >
-              Info@Certifyrecruit.Com
+              info@certifyrecruit.com
             </a>
           </div>
         </div>

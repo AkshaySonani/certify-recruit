@@ -106,10 +106,10 @@ const Page = () => {
             <a
               title="Our email"
               aria-label="Our email"
-              href="mailto:Info@Certifyrecruit.Com"
+              href="mailto:info@certifyrecruit.com"
               className="transition-colors duration-300 hover:text-meta-blue-1"
             >
-              Info@Certifyrecruit.Com
+              info@certifyrecruit.com
             </a>
           </div>
           <div className="flex items-center px-1">

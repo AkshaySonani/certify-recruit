@@ -14,11 +14,15 @@ const Page = () => {
           Introduction
         </h2>
         <p className="mb-10 text-lg font-normal text-meta-light-blue-3">
-          Welcome to www.certifyrecruit.io. These Terms and Conditions (“Terms”)
-          govern your use of the Site and the services provided by CLUSTER
-          CERTIFY RECRUIT PRIVATE LIMITED. By accessing and using the Site, you
-          agree to comply with and be bound by these Terms. If you do not agree
-          to these Terms, please do not use the Site.
+          Welcome to{' '}
+          <a href={process.env.NEXT_PUBLIC_BASE_URL} target="_blank">
+            www.certifyrecruit.io{' '}
+          </a>{' '}
+          . These Terms and Conditions (“Terms”) govern your use of the Site and
+          the services provided by CLUSTER CERTIFY RECRUIT PRIVATE LIMITED. By
+          accessing and using the Site, you agree to comply with and be bound by
+          these Terms. If you do not agree to these Terms, please do not use the
+          Site.
         </p>
 
         <h2 className="mb-2 text-2xl font-bold text-meta-purple-1">
@@ -113,12 +117,19 @@ const Page = () => {
         </ul>
 
         <h2 className="mb-2 text-2xl font-bold text-meta-purple-1">
-          Prohibited Activities
+          User Conduct
         </h2>
+
         <ul className="mb-4 list-inside list-disc text-lg font-normal text-meta-light-blue-3">
-          <li className="mb-5 ml-9">
-            You agree not to:
+          <div className="mb-5 ml-9">
             <ul className="ml-4 list-disc">
+              <li>
+                {' '}
+                <span className="font-bold text-meta-purple-1">
+                  Prohibited Activities
+                </span>{' '}
+                : You agree not to:
+              </li>
               <li>Use the Site for any illegal or unauthorized purpose.</li>
               <li>
                 Interfere with or disrupt the Site or its servers or networks.
@@ -132,7 +143,7 @@ const Page = () => {
                 Site for commercial purposes.
               </li>
             </ul>
-          </li>
+          </div>
         </ul>
 
         <h2 className="mb-2 text-2xl font-bold text-meta-purple-1">
@@ -242,10 +253,10 @@ const Page = () => {
             <a
               title="Our email"
               aria-label="Our email"
-              href="mailto:Info@Certifyrecruit.Com"
+              href="mailto:info@certifyrecruit.com"
               className="ml-1 transition-colors duration-300 hover:text-meta-blue-1"
             >
-              Info@Certifyrecruit.Com
+              info@certifyrecruit.com
             </a>
           </div>
           <div className="flex items-center">
