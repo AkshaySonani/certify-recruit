@@ -15,9 +15,13 @@ const Page = () => {
         <p className="mb-10 text-lg font-normal text-meta-light-blue-3">
           This Privacy Policy describes how CLUSTER CERTIFY RECRUIT PRIVATE
           LIMITED collects, uses, and protects your personal information when
-          you visit and use the website www.certifyrecruit.io.By accessing and
-          using the Site, you agree to the terms of this Privacy Policy. If you
-          do not agree to these terms, please do not use the Site.
+          you visit and use the website{' '}
+          <a href={process.env.NEXT_PUBLIC_BASE_URL} target="_blank">
+            www.certifyrecruit.io
+          </a>
+          . By accessing and using the Site, you agree to the terms of this
+          Privacy Policy. If you do not agree to these terms, please do not use
+          the Site.
         </p>
 
         <div className="mt-[80px]">
