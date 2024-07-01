@@ -7,7 +7,12 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useFormik } from 'formik';
 import { EMAIlREGEX } from '@/service/Helper';
+import API from '@/service/ApiService';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 const Page = () => {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     AOS.init({ duration: 500 });
@@ -19,19 +24,17 @@ const Page = () => {
       ...values,
     };
 
-    // API.post(API_CONSTANT?.PROFILE, obj)
-    //   .then((res) => {
-    //     if (res?.data?.status === 200) {
-    //       context?.setUserProfileCount(res?.data?.data?.profile_count);
-    //       setActivePage(1);
-    //       getUserDataApiCall();
-    //       actions.setSubmitting(false);
-    //       toast?.success(res?.data?.message || 'Successfully Update Profile');
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     toast.error(error || 'Something want wrong');
-    //   });
+    API.post(API_CONSTANT?.CONTACT, obj)
+      .then((res) => {
+        if (res?.data?.status === 200) {
+          setLoading(false);
+          toast?.success(res?.data?.message || 'Successfully Update Profile');
+          router.push('/');
+        }
+      })
+      .catch((error) => {
+        toast.error(error || 'Something want wrong');
+      });
   };
 
   const validationSchema = Yup.object().shape({
@@ -197,14 +200,14 @@ const Page = () => {
                   </label>
                   <input
                     onChange={formik.handleChange}
-                    value={formik?.values?.last_name}
-                    name="last_name"
+                    value={formik?.values?.lastName}
+                    name="lastName"
                     type="text"
                     placeholder="Last name"
                     className="mt-2 w-full rounded-2xl border border-meta-light-blue-1 bg-meta-light-blue-5 p-3 focus:border-meta-light-blue-3"
                   />
-                  {formik.touched.last_name && formik.errors.last_name && (
-                    <div className="error">{formik.errors.last_name}</div>
+                  {formik.touched.lastName && formik.errors.lastName && (
+                    <div className="error">{formik.errors.lastName}</div>
                   )}
                 </div>
               </div>
@@ -233,7 +236,7 @@ const Page = () => {
                   onChange={formik.handleChange}
                   value={formik?.values?.message}
                   rows={5}
-                  placeholder="Email"
+                  placeholder="Message"
                   className="mt-2 w-full rounded-2xl border border-meta-light-blue-1 bg-meta-light-blue-5 p-3 focus:border-meta-light-blue-3"
                 />
                 {formik.touched.message && formik.errors.message && (
