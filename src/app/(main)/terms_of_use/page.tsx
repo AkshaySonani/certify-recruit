@@ -1,16 +1,12 @@
 'use client';
 import React from 'react';
-import Footer from '@/Components/home/footer';
-import Header from '@/Components/home/header';
 import PageTitle from '@/Components/home/pageTitle';
 
 const Page = () => {
   return (
-    <div className="dm-sans ">
+    <div className="dm-sans">
       <div className="h-full w-full">
-        <div className="flex h-full min-h-96 items-center justify-center bg-meta-gray-2">
-          <PageTitle content="Terms of Use" />
-        </div>
+        <PageTitle content="Terms of Use" />
       </div>
 
       <div className="mx-auto h-full px-4 pb-[50px] pt-4 sm:max-w-xl sm:pt-36 md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
@@ -95,7 +91,6 @@ const Page = () => {
         <h2 className="mb-2 text-2xl font-bold text-meta-purple-1">
           Intellectual Property
         </h2>
-
         <ul className="mb-4 list-inside list-disc text-lg font-normal text-meta-light-blue-3">
           <li className="mb-5 ml-9">
             <span className="pr-1 font-bold text-meta-purple-1">
@@ -116,26 +111,27 @@ const Page = () => {
             written consent.
           </li>
         </ul>
+
+        <h2 className="mb-2 text-2xl font-bold text-meta-purple-1">
+          Prohibited Activities
+        </h2>
         <ul className="mb-4 list-inside list-disc text-lg font-normal text-meta-light-blue-3">
-          <li className="mb-5">
-            <span className="pr-1 font-bold text-meta-purple-1">
-              Prohibited Activities:
-            </span>
+          <li className="mb-5 ml-9">
             You agree not to:
-            <li className="ml-9">
-              Use the Site for any illegal or unauthorized purpose.
-            </li>
-            <li className="ml-9">
-              Interfere with or disrupt the Site or its servers or networks.
-            </li>
-            <li className="ml-9">
-              Engage in any activity that could damage, disable, or impair the
-              Site.
-            </li>
-            <li className="ml-9">
-              Use any automated system or software to extract data from the Site
-              for commercial purposes.
-            </li>
+            <ul className="ml-4 list-disc">
+              <li>Use the Site for any illegal or unauthorized purpose.</li>
+              <li>
+                Interfere with or disrupt the Site or its servers or networks.
+              </li>
+              <li>
+                Engage in any activity that could damage, disable, or impair the
+                Site.
+              </li>
+              <li>
+                Use any automated system or software to extract data from the
+                Site for commercial purposes.
+              </li>
+            </ul>
           </li>
         </ul>
 
@@ -148,6 +144,7 @@ const Page = () => {
           reproduce, modify, adapt, publish, and distribute such content for any
           purpose.
         </p>
+
         <h2 className="mb-2 text-2xl font-bold text-meta-purple-1">
           Disclaimer of Warranties
         </h2>
@@ -158,6 +155,7 @@ const Page = () => {
           merchantability, fitness for a particular purpose, or
           non-infringement.
         </p>
+
         <h2 className="mb-2 text-2xl font-bold text-meta-purple-1">
           Limitation of Liability
         </h2>
@@ -168,7 +166,6 @@ const Page = () => {
           directly or indirectly, or any loss of data, use, goodwill, or other
           intangible losses, resulting from:
         </p>
-
         <ul className="mb-4 list-inside list-disc text-lg font-normal text-meta-light-blue-3">
           <li>Your use or inability to use the Site or services.</li>
           <li>
@@ -199,7 +196,6 @@ const Page = () => {
           costs, or debt, and expenses (including but not limited to attorney’s
           fees) arising from:
         </p>
-
         <ul className="mb-4 list-inside list-disc text-lg font-normal text-meta-light-blue-3">
           <li>Your use of and access to the Site.</li>
           <li>Your violation of any term of these Terms.</li>
@@ -221,6 +217,7 @@ const Page = () => {
           Site shall be resolved exclusively in the courts located in Vadodara,
           Gujarat, India.
         </p>
+
         <h2 className="mb-2 text-2xl font-bold text-meta-purple-1">
           Changes to the Terms
         </h2>
@@ -230,6 +227,7 @@ const Page = () => {
           Site. Your continued use of the Site after any such changes
           constitutes your acceptance of the new Terms.
         </p>
+
         <h2 className="mb-2 text-2xl font-bold text-meta-purple-1">
           Contact Information
         </h2>

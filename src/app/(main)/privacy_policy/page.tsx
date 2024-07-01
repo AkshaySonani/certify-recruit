@@ -8,9 +8,7 @@ const Page = () => {
   return (
     <div className="dm-sans ">
       <div className="h-full w-full">
-        <div className="flex h-full min-h-96 items-center justify-center bg-meta-gray-2">
-          <PageTitle content="Privacy Policy" />
-        </div>
+        <PageTitle content="Privacy Policy" />
       </div>
 
       <div className="mx-auto h-full px-4 pb-[50px] pt-4 sm:max-w-xl sm:pt-36 md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">

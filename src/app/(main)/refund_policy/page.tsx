@@ -1,16 +1,13 @@
 'use client';
 import React from 'react';
-import Footer from '@/Components/home/footer';
-import Header from '@/Components/home/header';
+
 import PageTitle from '@/Components/home/pageTitle';
 
 const Page = () => {
   return (
     <div className="dm-sans ">
       <div className="h-full w-full">
-        <div className="flex h-full min-h-96 items-center justify-center bg-meta-gray-2">
-          <PageTitle content="Refund Policy" />
-        </div>
+        <PageTitle content="Refund Policy" />
       </div>
 
       <div className="mx-auto h-full px-4 pb-[50px] pt-4 sm:max-w-xl sm:pt-36 md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">

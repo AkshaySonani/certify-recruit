@@ -1,34 +1,74 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import Button from '@/Components/Button';
 import ContactUs from '@/Components/home/ContactUs';
-import PageTitle from '@/Components/home/pageTitle';
-import FeedbackSection from '@/Components/home/feedbackSection';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import Feedback from '@/Components/home/Feedback';
+import { ROUTE, TEXT } from '@/service/Helper';
+import { useRouter } from 'next/navigation';
 
 const Page = () => {
+  const router = useRouter();
+  useEffect(() => {
+    AOS.init({ duration: 500 });
+  }, []);
   return (
     <div>
-      <div className="relative h-full w-full">
-        <div
-          data-aos="fade-down"
-          className="min-h-auto flex h-full items-center justify-center bg-meta-gray-2 sm:min-h-96"
-        >
-          <PageTitle
-            showBtn={true}
-            title="FEATURES"
-            content="Welcome to the Future of Recruitment!"
-          />
-        </div>
-        <div className="absolute left-20 top-20 hidden md:block">
-          <Image alt="date" width={37} height={37} src={'/landing/ball.png'} />
+      <div className="h-auto bg-meta-gray-2">
+        <div className="mx-auto h-full px-4 pb-[75px] pt-4 sm:max-w-xl sm:pt-36 md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
+          <div
+            className=" w-full"
+            data-aos="fade-down"
+            data-aos-duration="1200"
+            data-aos-easing="ease-in-sine"
+          >
+            <div className="relative flex flex-col items-center justify-center">
+              <p className=" text-center text-[30px] font-bold leading-[60px] text-meta-blue-1 ">
+                FEATURES
+              </p>
+              <p className="w-full max-w-[592px] pt-3 text-center text-[30px] font-bold leading-[60px] text-meta-purple-1 sm:text-[50px]">
+                Welcome to the Future of Recruitment!
+              </p>
+              <div className="absolute left-[66px] top-[-72px] hidden lg:block">
+                <Image
+                  alt="date"
+                  width={37}
+                  height={37}
+                  src={'/landing/ball.png'}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="mt-6 flex w-full flex-wrap items-center justify-center sm:mt-10 sm:flex-nowrap">
+            <Button
+              title={TEXT?.START_NOW}
+              handleClick={() => router?.push(ROUTE?.LOGIN)}
+              titleClass="!text-base !text-white"
+              btnClass="!w-[200px] !px-0 !rounded-lg !bg-meta-blue-1 !py-2 !mb-0"
+            />
+
+            <button
+              onClick={() => router?.push(ROUTE?.LOGIN)}
+              className="mb-6 mt-2 h-12 min-w-[250px] rounded-lg border border-meta-light-blue-2 bg-meta-gray-3 py-3 text-white transition delay-150 duration-300 ease-in-out will-change-auto hover:bg-hiring-btn-gradient sm:mb-0 sm:ml-4 sm:mt-0 sm:min-w-48"
+            >
+              <span className="flex justify-center text-base font-medium text-white">
+                Schedule a demo
+              </span>
+            </button>
+          </div>
         </div>
       </div>
 
       <div className="container mx-auto">
-        <div className="my-9 px-8 text-center lg:px-12" data-aos="flip-right">
-          <p className="py-2 text-4xl font-bold text-meta-blue-1">
+        <div
+          className="my-9 px-8 text-center lg:px-12"
+          data-aos="flip-right"
+          data-aos-duration="1200"
+          data-aos-easing="ease-in-sine"
+        >
+          <p className="bg-website-title bg-clip-text  text-center text-[30px] font-bold leading-[60px] text-transparent ">
             Professional Certification
           </p>
           <p className="text-lg font-medium tracking-wider text-meta-light-blue-3">
@@ -72,6 +112,7 @@ const Page = () => {
             <div className="flex w-full items-start">
               <Button
                 type="button"
+                handleClick={() => router?.push(ROUTE?.LOGIN)}
                 title={'Learn More'}
                 btnClass="sm:w-max w-[290px] !my-3 !py-2 !px-6"
               />
@@ -129,6 +170,7 @@ const Page = () => {
             <div className="flex w-full items-start">
               <Button
                 type="button"
+                onClick={() => router?.push(ROUTE?.LOGIN)}
                 title={'Apply Job'}
                 btnClass="sm:w-max w-[290px] !my-3 !py-2 !px-6"
               />
@@ -186,6 +228,7 @@ const Page = () => {
             <div className="flex w-full items-start">
               <Button
                 type="button"
+                handleClick={() => router?.push(ROUTE?.LOGIN)}
                 title={'Apply Job'}
                 btnClass="sm:w-max w-[290px] !my-3 !py-2 !px-6"
               />

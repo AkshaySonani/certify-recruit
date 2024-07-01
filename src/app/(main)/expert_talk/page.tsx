@@ -1,5 +1,4 @@
 'use client';
-import React, { useEffect } from 'react';
 import Image from 'next/image';
 import Services from '@/Components/home/Services';
 import PageTitle from '@/Components/home/pageTitle';
@@ -7,6 +6,7 @@ import ContactUs from '@/Components/home/ContactUs';
 import Feedback from '../../../Components/home/Feedback';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { useEffect } from 'react';
 const Page = () => {
   useEffect(() => {
     AOS.init({ duration: 500 });
@@ -43,9 +43,14 @@ const Page = () => {
     <div>
       <div className="h-auto bg-meta-gray-2">
         <div className="mx-auto h-full px-4 pt-4 sm:max-w-xl sm:pt-36 md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8 lg:pb-[75px]">
-          <div className=" w-full" data-aos="fade-down">
+          <div
+            className=" w-full"
+            data-aos="fade-down"
+            data-aos-duration="1200"
+            data-aos-easing="ease-in-sine"
+          >
             <div className="relative flex flex-col items-center justify-center">
-              <p className=" text-center text-[30px] font-bold leading-[60px] text-meta-blue-1 ">
+              <p className="bg-website-title bg-clip-text  text-center text-[30px] font-bold leading-[60px] text-transparent ">
                 Industry Expert Talk
               </p>
               <p className="w-full max-w-[637px] pt-3 text-center text-[30px] font-bold leading-[60px] text-meta-purple-1 sm:text-[50px]">
@@ -65,15 +70,19 @@ const Page = () => {
       </div>
 
       <div className="mx-auto h-full px-4 pb-[75px]  sm:max-w-xl sm:pt-36 md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
-        <div
-          className="px-8 lg:px-12"
-          data-aos="fade-right"
-          data-aos-easing="ease-in-sine"
-        >
-          <p className="text-lg font-medium tracking-wider text-meta-light-blue-3">
+        <div className="px-8 lg:px-12">
+          <p
+            className="text-lg font-medium tracking-wider text-meta-light-blue-3"
+            data-aos="fade-right"
+            data-aos-easing="ease-in-sine"
+          >
             Know Our Experts
           </p>
-          <p className="py-2 text-4xl font-bold text-meta-blue-1">
+          <p
+            className="py-2 text-4xl font-bold text-meta-blue-1"
+            data-aos="fade-right"
+            data-aos-easing="ease-in-sine"
+          >
             Industry Expert Talk
           </p>
           <p className="text-lg font-medium tracking-wider text-meta-light-blue-3">
@@ -124,11 +133,7 @@ const Page = () => {
         <Services />
 
         <div className="mt-[46px]">
-          <div
-            className="flex  justify-between"
-            data-aos="fade-right"
-            data-aos-easing="ease-in-sine"
-          >
+          <div className="flex  justify-between" data-aos="fade-right">
             <div>
               <p className="text-lg font-semibold text-meta-light-blue-3">
                 FEEDBACK

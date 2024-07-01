@@ -14,9 +14,14 @@ const Page = () => {
     <div>
       <div className="h-auto bg-meta-gray-2">
         <div className="mx-auto h-full px-4 pb-[75px] pt-4 sm:max-w-xl sm:pt-36 md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
-          <div className=" w-full" data-aos="fade-down">
+          <div
+            className=" w-full"
+            data-aos="fade-down"
+            data-aos-duration="1200"
+            data-aos-easing="ease-in-sine"
+          >
             <div className="relative flex flex-col items-center justify-center">
-              <p className=" text-center text-[30px] font-bold leading-[60px] text-meta-blue-1 ">
+              <p className="bg-website-title bg-clip-text  text-center text-[30px] font-bold leading-[60px] text-transparent ">
                 ABOUT US
               </p>
               <p className="w-full max-w-[928px] pt-3 text-center text-[30px] font-bold leading-[60px] text-meta-purple-1 sm:text-[50px]">

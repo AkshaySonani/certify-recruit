@@ -8,7 +8,7 @@ const ContactUs = () => {
     AOS.init({ duration: 500 });
   }, []);
   return (
-    <div className="mx-auto my-[150px] h-full px-4 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8 ">
+    <div className="mx-auto mb-[150px] mt-[50px] h-full px-4 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8 ">
       <div data-aos="fade-right" data-aos-easing="ease-in-sine">
         <p className="text-lg font-semibold text-meta-light-blue-3">
           CONTACT US

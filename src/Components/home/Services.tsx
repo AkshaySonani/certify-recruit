@@ -5,6 +5,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 const ServiceARR = [
   {
     id: 1,
@@ -48,6 +49,7 @@ const ServiceARR = [
 ];
 
 const Services = () => {
+  const router = useRouter();
   useEffect(() => {
     AOS.init({ duration: 500 });
   }, []);
@@ -65,7 +67,7 @@ const Services = () => {
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {ServiceARR?.map((list) => {
             return (
-              <motion.div whileHover={{ scale: 0.8 }} whileTap={{ scale: 0.8 }}>
+              <motion.div whileHover={{ scale: 0.9 }} whileTap={{ scale: 0.9 }}>
                 <div className="relative h-[285px] rounded-[12px] bg-meta-gray-2 p-[20px] lg:w-[350px] xl:w-[400px]">
                   <div className="flex flex-col ">
                     <div className="h-[186px]">
@@ -89,7 +91,7 @@ const Services = () => {
                       <Button
                         type={'button'}
                         title={'Contact Us'}
-                        // handleClick={downloadPdf}
+                        handleClick={() => router?.push('/contactUs')}
                         btnClass="w-max !my-3 !p-3 !h-auto !bg-meta-blue-1 !mb-0"
                         titleClass="flex justify-center w-[110px] text-base  font-medium text-white"
                       />
