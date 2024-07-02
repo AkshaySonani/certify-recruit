@@ -15,18 +15,50 @@ import Image from 'next/image';
 import { v4 as uuidv4 } from 'uuid';
 import sha256 from 'crypto-js/sha256';
 import API from '@/service/ApiService';
-import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import Button from '@/Components/Button';
 import Spinner from '@/app/icons/Spinner';
 import { Switch } from '@headlessui/react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import React, { useEffect, useState } from 'react';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+
+var FIRST_PLAN: any;
+var SECOND_PLAN: any;
+var THIRD_PLAN: any;
 
 const Page = () => {
   const router = useRouter();
   const session: any = useSession();
 
   const [enabled, setEnabled] = useState(false);
+  const [yearlyList, setYearlyList] = useState<any>([]);
+  const [monthlyList, setMonthlyList] = useState<any>([]);
+  const [subscriptionPlan, setSubscriptionPlan] = useState<any>([]);
+
+  useEffect(() => {
+    getSubscriptionPlans();
+  }, []);
+
+  const getSubscriptionPlans = () => {
+    API.get(API_CONSTANT?.PRICING)
+      .then((res) => {
+        const year = res?.data?.data?.filter(
+          (y: any) => y?.plan_type === 'Yearly',
+        );
+        const month = res?.data?.data?.filter(
+          (m: any) => m?.plan_type === 'Monthly',
+        );
+
+        setYearlyList(year);
+        setMonthlyList(month);
+        setSubscriptionPlan(res?.data?.data);
+      })
+      .catch((error) => {
+        toast.error(error?.response?.data?.error);
+      });
+  };
 
   const makePayment = async (amount: any) => {
     const transactionid =
@@ -66,18 +98,26 @@ const Page = () => {
     router.replace(redirect);
   };
 
-  const FIRST_PLAN =
+  const ARR_LISTS =
     session?.data?.user?.role === USER_ROLE?.EMPLOYEE
-      ? EMP_BASIC_PLAN
-      : INDIVIDUAL_DAILY_PLAN;
-  const SECOND_PLAN =
-    session?.data?.user?.role === USER_ROLE?.EMPLOYEE
-      ? EMP_STANDARD_PLAN
-      : INDIVIDUAL_FORT_NIGHT_PLAN;
-  const THIRD_PLAN =
-    session?.data?.user?.role === USER_ROLE?.EMPLOYEE
-      ? EMP_BUSINESS_PLAN
-      : INDIVIDUAL_MONTHLY_PLAN;
+      ? enabled
+        ? yearlyList
+        : monthlyList
+      : subscriptionPlan;
+
+  FIRST_PLAN = ARR_LISTS?.filter(
+    (x: any) => x?.plan_name === 'Basic Plan' || x.plan_name === 'Daily',
+  );
+  SECOND_PLAN = ARR_LISTS?.filter(
+    (x: any) => x?.plan_name === 'Standard Plan' || x.plan_name === 'Fortnight',
+  );
+  THIRD_PLAN = ARR_LISTS?.filter(
+    (x: any) => x?.plan_name === 'Business Plan' || x.plan_name === 'Monthly',
+  );
+
+  const applyPlan = (plan_id: any) => {
+    console.log('🚀 ~ applyPlan ~ plan_id:', plan_id);
+  };
 
   return session?.data?.user === undefined ? (
     <div className="flex h-full items-center justify-center">
@@ -124,19 +164,20 @@ const Page = () => {
       )}
 
       <div className="flex flex-wrap items-end justify-center gap-6">
-        <div className="flex h-[520px] min-w-64 max-w-96 flex-col justify-between rounded-3xl bg-meta-gray-2 px-8 py-10">
-          <div>
-            <div className="text-center text-base font-medium text-meta-purple-1">
-              {session?.data?.user?.role === USER_ROLE?.EMPLOYEE
-                ? TEXT?.BASIC_PLAN
-                : TEXT?.DAILY}
+        <div className="flex h-auto min-h-[520px] w-[320px] min-w-64 max-w-96 flex-col justify-between rounded-3xl bg-meta-gray-2 pb-10">
+          {FIRST_PLAN?.[0]?.is_popular && (
+            <div className="rounded-t-3xl bg-meta-purple-1 py-2 text-center text-base font-medium text-white">
+              {TEXT?.MOST_POPULAR}
+            </div>
+          )}
+          <div className="px-8">
+            <div className="pt-11 text-center text-base font-medium text-meta-purple-1">
+              {FIRST_PLAN?.[0]?.plan_name}
             </div>
 
             <div className="my-5 flex items-end justify-center">
               <div className="text-4xl font-medium text-meta-purple-1">
-                {session?.data?.user?.role === USER_ROLE?.EMPLOYEE
-                  ? '$99'
-                  : '₹55'}
+                ${FIRST_PLAN?.[0]?.plan_pricing}
               </div>
               {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
                 <div className="mb-1 text-xs font-medium text-meta-light-blue-3">
@@ -155,111 +196,118 @@ const Page = () => {
               </div>
             )}
 
-            {FIRST_PLAN?.map((ele, index) => (
-              <div key={index} className="mb-3 flex items-center justify-start">
-                <div className="mr-4">
-                  <Image
-                    alt="Icon"
-                    width={20}
-                    height={20}
-                    src={'/pricing/rightTick.svg'}
-                  />
-                </div>
-                <div className="text-sm font-normal text-meta-purple-1">
-                  {ele?.Title}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <Button
-            title={TEXT?.GET_STARTED}
-            btnClass="h-12 w-full !mb-0"
-            handleClick={() => makePayment(20)}
-            titleClass="flex justify-center text-sm font-medium text-white"
-          />
-        </div>
-
-        <div className="min-w-64 max-w-96 rounded-3xl">
-          {/* <div className="bg-meta-purple-1 py-2 text-center text-base font-medium text-white">
-            {TEXT?.MOST_POPULAR}
-          </div> */}
-          <div className="flex h-[520px] flex-col justify-between bg-meta-gray-2 px-8 pb-10 pt-10">
-            <div className="mb-4 rounded-t-lg bg-meta-purple-1 py-2 text-center text-base font-medium text-white">
-              {TEXT?.MOST_POPULAR}
-            </div>
-            <div>
-              <div className="text-center text-base font-medium text-meta-purple-1">
-                {session?.data?.user?.role === USER_ROLE?.EMPLOYEE
-                  ? TEXT?.STANDARD_PLAN
-                  : TEXT?.FORT_NIGHT}
-              </div>
-
-              <div className="my-6 flex items-end justify-center">
-                <div className="text-4xl font-medium text-meta-purple-1">
-                  {session?.data?.user?.role === USER_ROLE?.EMPLOYEE
-                    ? '$249'
-                    : '₹750'}
-                </div>
-                {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
-                  <div className="mb-1 text-xs font-medium text-meta-light-blue-3">
-                    {TEXT?.Month}
-                  </div>
-                ) : (
-                  ''
-                )}
-              </div>
-
-              {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
-                ''
-              ) : (
-                <div className="my-4 max-w-64 text-center text-lg font-normal text-meta-purple-1">
-                  {TEXT?.PAY_750_AND_PLAY_ONCE}
-                </div>
-              )}
-
-              {SECOND_PLAN?.map((ele, index) => (
+            {FIRST_PLAN?.[0]?.additional_features?.map(
+              (ele: any, index: any) => (
                 <div
                   key={index}
                   className="mb-3 flex items-center justify-start"
                 >
-                  <div className="mr-4">
+                  <div>
                     <Image
                       alt="Icon"
                       width={20}
                       height={20}
+                      className="min-h-5 min-w-5"
                       src={'/pricing/rightTick.svg'}
                     />
                   </div>
-                  <div className="text-sm font-normal text-meta-purple-1">
-                    {ele?.Title}
+                  <div className="pl-4 text-sm font-normal text-meta-purple-1">
+                    {ele}
                   </div>
                 </div>
-              ))}
+              ),
+            )}
+          </div>
 
-              <Button
-                title={TEXT?.GET_STARTED}
-                btnClass="h-12 w-full !mt-2 !mb-0"
-                handleClick={() => makePayment(70)}
-                titleClass="flex justify-center text-sm font-medium text-white"
-              />
-            </div>
+          <div className="px-8">
+            <Button
+              title={TEXT?.GET_STARTED}
+              btnClass="h-12 w-full !mb-0"
+              handleClick={() => applyPlan(FIRST_PLAN?.[0]?._id)}
+              titleClass="flex justify-center text-sm font-medium text-white"
+            />
           </div>
         </div>
 
-        <div className="flex h-[520px] min-w-64 max-w-96 flex-col justify-between rounded-3xl bg-meta-gray-2 px-8 py-10">
-          <div>
-            <div className="text-center text-base font-medium text-meta-purple-1">
-              {session?.data?.user?.role === USER_ROLE?.EMPLOYEE
-                ? TEXT?.BUSINESS_PLAN
-                : TEXT?.MONTHLY}
+        <div className="flex h-auto min-h-[520px] w-[320px] min-w-64 max-w-96 flex-col justify-between rounded-3xl bg-meta-gray-2 pb-10">
+          {SECOND_PLAN?.[0]?.is_popular && (
+            <div className="rounded-t-3xl bg-meta-purple-1 py-2 text-center text-base font-medium text-white">
+              {TEXT?.MOST_POPULAR}
+            </div>
+          )}
+          <div className="px-8">
+            <div className="pt-11 text-center text-base font-medium text-meta-purple-1">
+              {SECOND_PLAN?.[0]?.plan_name}
             </div>
 
             <div className="my-6 flex items-end justify-center">
               <div className="text-4xl font-medium text-meta-purple-1">
-                {session?.data?.user?.role === USER_ROLE?.EMPLOYEE
-                  ? '$499'
-                  : '₹1470'}
+                ${SECOND_PLAN?.[0]?.plan_pricing}
+              </div>
+              {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
+                <div className="mb-1 text-xs font-medium text-meta-light-blue-3">
+                  {TEXT?.Month}
+                </div>
+              ) : (
+                ''
+              )}
+            </div>
+
+            {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
+              ''
+            ) : (
+              <div className="my-4 max-w-64 text-center text-lg font-normal text-meta-purple-1">
+                {TEXT?.PAY_750_AND_PLAY_ONCE}
+              </div>
+            )}
+
+            {SECOND_PLAN?.[0]?.additional_features?.map(
+              (ele: any, index: any) => (
+                <div
+                  key={index}
+                  className="mb-3 flex items-center justify-start"
+                >
+                  <div>
+                    <Image
+                      alt="Icon"
+                      width={20}
+                      height={20}
+                      className="min-h-5 min-w-5"
+                      src={'/pricing/rightTick.svg'}
+                    />
+                  </div>
+                  <div className="pl-4 text-sm font-normal text-meta-purple-1">
+                    {ele}
+                  </div>
+                </div>
+              ),
+            )}
+          </div>
+
+          <div className="px-8">
+            <Button
+              title={TEXT?.GET_STARTED}
+              btnClass="h-12 w-full !mt-2 !mb-0"
+              handleClick={() => applyPlan(SECOND_PLAN?.[0]?._id)}
+              titleClass="flex justify-center text-sm font-medium text-white"
+            />
+          </div>
+        </div>
+
+        <div className="flex h-auto min-h-[520px] w-[320px] min-w-64 max-w-96 flex-col justify-between rounded-3xl bg-meta-gray-2 pb-10">
+          {THIRD_PLAN?.[0]?.is_popular && (
+            <div className="rounded-t-3xl bg-meta-purple-1 py-2 text-center text-base font-medium text-white">
+              {TEXT?.MOST_POPULAR}
+            </div>
+          )}
+          <div className="px-8">
+            <div className="pt-11 text-center text-base font-medium text-meta-purple-1">
+              {THIRD_PLAN?.[0]?.plan_name}
+            </div>
+
+            <div className="my-6 flex items-end justify-center">
+              <div className="text-4xl font-medium text-meta-purple-1">
+                ${THIRD_PLAN?.[0]?.plan_pricing}
               </div>
               {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
                 <div className="mb-1 text-xs font-medium text-meta-light-blue-3">
@@ -278,29 +326,37 @@ const Page = () => {
               </div>
             )}
 
-            {THIRD_PLAN?.map((ele, index) => (
-              <div key={index} className="mb-3 flex items-center justify-start">
-                <div className="mr-4">
-                  <Image
-                    alt="Icon"
-                    width={20}
-                    height={20}
-                    src={'/pricing/rightTick.svg'}
-                  />
+            {THIRD_PLAN?.[0]?.additional_features?.map(
+              (ele: any, index: any) => (
+                <div
+                  key={index}
+                  className="mb-3 flex items-center justify-start"
+                >
+                  <div>
+                    <Image
+                      alt="Icon"
+                      width={20}
+                      height={20}
+                      className="min-h-5 min-w-5"
+                      src={'/pricing/rightTick.svg'}
+                    />
+                  </div>
+                  <div className="pl-4 text-sm font-normal text-meta-purple-1">
+                    {ele}
+                  </div>
                 </div>
-                <div className="text-sm font-normal text-meta-purple-1">
-                  {ele?.Title}
-                </div>
-              </div>
-            ))}
+              ),
+            )}
           </div>
 
-          <Button
-            title={TEXT?.GET_STARTED}
-            btnClass="h-12 w-full !mb-0"
-            handleClick={() => makePayment(99)}
-            titleClass="flex justify-center text-sm font-medium text-white"
-          />
+          <div className="px-8">
+            <Button
+              title={TEXT?.GET_STARTED}
+              btnClass="h-12 w-full !mb-0"
+              handleClick={() => applyPlan(THIRD_PLAN?.[0]?._id)}
+              titleClass="flex justify-center text-sm font-medium text-white"
+            />
+          </div>
         </div>
       </div>
     </section>
