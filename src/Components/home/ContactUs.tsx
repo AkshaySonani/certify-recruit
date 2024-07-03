@@ -46,7 +46,7 @@ const ContactUs = () => {
                 src={'/landing/email.png'}
               />
               <p className="pl-[16px] text-lg font-medium text-meta-purple-1">
-                info@certifyrecruit.com
+                info@certifyrecruit.io
               </p>
             </div>
           </div>

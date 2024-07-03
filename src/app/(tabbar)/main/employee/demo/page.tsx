@@ -19,9 +19,12 @@ const Page = () => {
               <h3 className="mb-6 text-center text-3xl font-bold text-meta-purple-1">
                 {TEXT?.REDIRECT_TO_CALENDLY}
               </h3>
-              <p className="mb-10 text-center text-xl font-semibold text-meta-light-blue-3 underline underline-offset-2">
+              <a
+                href="https://calendly.com/event_types/user/me"
+                className="mb-10 text-center text-xl font-semibold text-meta-light-blue-3 underline underline-offset-2"
+              >
                 https://calendly.com/event_types/user/me
-              </p>
+              </a>
               <div
                 onClick={() => router.back()}
                 className="flex justify-center"

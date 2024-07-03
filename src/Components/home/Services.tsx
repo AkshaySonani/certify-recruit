@@ -64,7 +64,7 @@ const Services = () => {
         </p>
       </div>
       <div className="mt-12">
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid w-full grid-cols-1 place-items-center gap-5 md:grid-cols-2 lg:grid-cols-3 xl:gap-40">
           {ServiceARR?.map((list) => {
             return (
               <motion.div whileHover={{ scale: 0.9 }} whileTap={{ scale: 0.9 }}>

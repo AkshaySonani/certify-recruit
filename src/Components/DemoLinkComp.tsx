@@ -20,7 +20,9 @@ const DemoLinkComp = ({ setShowDemoLink }: any) => {
                 {TEXT?.REDIRECT_TO_CALENDLY}
               </h3>
               <p className="mb-10 text-center text-xl font-semibold text-meta-light-blue-3 underline underline-offset-2">
-                https://calendly.com/event_types/user/me
+                <a href="https://calendly.com/event_types/user/me">
+                  https://calendly.com/event_types/user/me
+                </a>
               </p>
               <div
                 onClick={() => setShowDemoLink(false)}

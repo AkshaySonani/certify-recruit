@@ -41,6 +41,7 @@
     "react-multi-date-picker": "^4.4.1",
     "react-orgchart": "^1.0.5",
     "react-quill": "^2.0.0",
+    "react-responsive-carousel": "^3.2.23",
     "react-select": "^5.8.0",
     "react-toastify": "^10.0.5",
     "tailwind-merge": "^2.3.0",

@@ -61,7 +61,7 @@ const Page = () => {
   });
   return (
     <div className="">
-      <div className="relative mb-40 bg-meta-gray-2">
+      <div className="relative mb-10 bg-meta-gray-2 lg:mb-40">
         <div className="mx-auto h-full px-4 pb-[75px] pt-4 sm:max-w-xl sm:pt-36 md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
           <div
             className=" w-full"
@@ -150,14 +150,14 @@ const Page = () => {
                 Email
               </p>
               <p className="px-[40px] text-center text-base font-medium text-meta-light-blue-3">
-                info@certifyrecruit.com
+                info@certifyrecruit.io
               </p>
             </div>
           </div>
         </div>
       </div>
       <div className="mx-auto h-full px-4 pb-[75px] pt-4 sm:max-w-xl sm:pt-36 md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
-        <div className="justify flex justify-center gap-10">
+        <div className="justify flex items-start justify-center gap-0 md:gap-10">
           <div className="mt-2">
             <Image
               alt="date"
@@ -169,15 +169,15 @@ const Page = () => {
           </div>
           <div>
             <div data-aos="fade-left" data-aos-easing="ease-in-sine">
-              <p className="text-[40px] font-[700] text-meta-purple-1">
+              <p className="text-2xl font-[700] text-meta-purple-1 md:text-[40px]">
                 Contact our Friendly Team
               </p>
-              <p className="text-lg font-medium text-meta-light-blue-3">
+              <p className="pt-[10px] text-lg font-medium text-meta-light-blue-3">
                 Our team is all ears for you!
               </p>
             </div>
             <form onSubmit={formik.handleSubmit}>
-              <div className="mt-[61px] flex w-full gap-3">
+              <div className="mt-[20px] flex w-full gap-3 lg:mt-[61px]">
                 <div className="w-1/2">
                   <label className="text-base font-medium text-meta-purple-1">
                     First name

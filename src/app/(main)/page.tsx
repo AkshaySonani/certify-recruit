@@ -8,8 +8,10 @@ import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import 'aos/dist/aos.css';
 import AOS from 'aos';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Services from '@/Components/home/Services';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 export default function Home() {
   useEffect(() => {
@@ -17,7 +19,30 @@ export default function Home() {
   }, []);
   const session = useSession();
   const router = useRouter();
-
+  const [selected, setSelected] = useState(0);
+  const feedbackArr = [
+    {
+      profile: '/landing/feedbackProfile.png',
+      name: 'Vidhi Goswami',
+      profession: 'HR Manager',
+      content:
+        'CertifyRecruit has helped me stand apart through their certification.Several companies have contacted me after I shared my certificate on my resume.',
+    },
+    {
+      profile: '/landing/feedbackProfile.png',
+      name: 'Deep Patel',
+      profession: 'HR Manager',
+      content:
+        'CertifyRecruit has helped me stand apart through their certification.Several companies have contacted me after I shared my certificate on my resume.',
+    },
+    {
+      profile: '/landing/feedbackProfile.png',
+      name: 'Aakash Rajput ',
+      profession: 'HR Manager',
+      content:
+        'CertifyRecruit has helped me stand apart through their certification.Several companies have contacted me after I shared my certificate on my resume.',
+    },
+  ];
   return (
     <div>
       <div className="dm-sans ">
@@ -471,61 +496,91 @@ export default function Home() {
           {/* {Feedback} */}
         </div>
         <div className="mt-16 bg-meta-gray-2 px-4  py-[75px] md:px-24 lg:px-8">
-          <div className="mx-auto h-full px-4 sm:max-w-full md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
-            <div className="">
-              <div data-aos="fade-up">
-                <p className="text-lg font-semibold text-meta-light-blue-3">
-                  FEEDBACK
-                </p>
-                <p className="max-w-[642px] pt-2 text-4xl font-semibold text-meta-blue-1">
-                  What our clients think about us!
-                </p>
-              </div>
-              <div className="mt-[50px]">
-                <Image
-                  alt="date"
-                  width={39}
-                  height={29}
-                  src={'/landing/comma.png'}
-                />
-                <div className="mt-[10px] flex items-center justify-between">
-                  <div>
-                    <p className="max-w-[830px]  pl-5 text-2xl font-medium text-meta-light-blue-3">
-                      CertifyRecruit has helped me stand apart through their
-                      certification. Several companies have contacted me after I
-                      shared my certificate on my resume.
-                    </p>
-                    <div className="mt-14 pl-5">
-                      <p className="text-lg font-bold text-meta-blue-1">
-                        Vidhi Goswami
+          <Carousel
+            autoPlay={false}
+            showStatus={false}
+            infiniteLoop={false}
+            swipeable={false}
+            stopOnHover={true}
+            useKeyboardArrows={true}
+            showIndicators={false}
+            showThumbs={false}
+            showArrows={false}
+            selectedItem={selected}
+          >
+            {feedbackArr?.map((list: any, i: any) => {
+              return (
+                <div className="mx-auto h-full px-4 sm:max-w-full md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
+                  <div className="">
+                    <div data-aos="fade-up">
+                      <p className="text-left text-lg font-semibold text-meta-light-blue-3">
+                        FEEDBACK
                       </p>
-                      <p className="text-base font-bold text-meta-light-blue-3 ">
-                        HR Manager
+                      <p className="max-w-[642px] pt-2 text-left text-4xl font-semibold text-meta-blue-1">
+                        What our clients think about us!
                       </p>
-                      <div className="mt-14">
-                        <button className="bg-meta-light-blue-1 px-[30px] py-[18px]">
-                          <Icons.Arrow color={'#150936'} />
-                        </button>
-                        <button className="bg-meta-blue-1 px-[30px] py-[18px]">
-                          <div className="rotate-[179deg]">
-                            <Icons.Arrow color={'#FFFF'} />
+                    </div>
+                    <div className="mt-[50px]">
+                      <div className="h-[29px] w-[39px]">
+                        <Image
+                          alt="date"
+                          width={39}
+                          height={29}
+                          src={'/landing/comma.png'}
+                        />
+                      </div>
+
+                      <div className="mt-[10px] flex items-center justify-between">
+                        <div>
+                          <p className="max-w-[830px] pl-5 text-left text-2xl font-medium text-meta-light-blue-3">
+                            {list?.content}
+                          </p>
+                          <div className="mt-14 pl-5">
+                            <p className="text-left text-lg font-bold text-meta-blue-1">
+                              {list?.name}
+                            </p>
+                            <p className="text-left text-base font-bold text-meta-light-blue-3">
+                              {list?.profession}
+                            </p>
+                            <div className="mt-14 flex justify-start">
+                              <button
+                                disabled={i === 0}
+                                className={`${i === 0 ? 'bg-meta-light-blue-1' : 'bg-meta-blue-1'} px-[30px] py-[18px]`}
+                                onClick={() => setSelected(i - 1)}
+                              >
+                                <Icons.Arrow
+                                  color={i !== 0 ? '#ffff' : '#150936'}
+                                />
+                              </button>
+                              <button
+                                disabled={i === 2}
+                                className={`${i === 2 ? 'bg-meta-light-blue-1' : 'bg-meta-blue-1'} px-[30px] py-[18px]`}
+                                onClick={() => setSelected(i + 1)}
+                              >
+                                <div className="rotate-[179deg]">
+                                  <Icons.Arrow
+                                    color={i !== 2 ? '#ffff' : '#150936'}
+                                  />
+                                </div>
+                              </button>
+                            </div>
                           </div>
-                        </button>
+                        </div>
+                        <div className="hidden  sm:block">
+                          <Image
+                            alt="date"
+                            width={278}
+                            height={278}
+                            src={list?.profile}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div className="hidden sm:block">
-                    <Image
-                      alt="date"
-                      width={278}
-                      height={278}
-                      src={'/landing/feedbackProfile.png'}
-                    />
-                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
+              );
+            })}
+          </Carousel>
         </div>
 
         <div className="mx-auto mt-16 h-full px-4 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
@@ -534,7 +589,7 @@ export default function Home() {
               OUR PARTNERS
             </p>
             <p className="max-w-[642px] pt-2 text-4xl font-semibold text-meta-blue-1">
-              What Our Partners Think About Us
+              Simplifying recruitment with following partners
             </p>
           </div>
           <div className="mt-[50px] grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 ">
@@ -593,7 +648,7 @@ export default function Home() {
                     src={'/landing/email.png'}
                   />
                   <p className="pl-[16px] text-lg font-medium text-meta-purple-1">
-                    info@certifyrecruit.com
+                    info@certifyrecruit.io
                   </p>
                 </div>
               </div>
