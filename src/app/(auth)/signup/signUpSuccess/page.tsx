@@ -1,12 +1,27 @@
 'use client';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { TEXT } from '@/service/Helper';
+import { ROUTE, TEXT } from '@/service/Helper';
+import { useSession } from 'next-auth/react';
 
-const Page = () => {
+const Page = (data: any) => {
+  const { data: session, update } = useSession<any>();
   const router = useRouter();
   const [eye, setEye] = useState(false);
+
+  useEffect(() => {
+    console.log(data?.searchParams);
+
+    if (data?.searchParams?.isVerified === 'true') {
+      console.log('update token here');
+
+      update({ ...session?.user, isVerified: true });
+      // router.push(ROUTE?.DASHBOARD);
+    } else {
+      console.log('testing...');
+    }
+  }, []);
   return (
     <div>
       <div className="container mx-auto">

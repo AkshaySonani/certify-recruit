@@ -6,8 +6,12 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ROUTE, TEXT } from '@/service/Helper';
 import { usePathname } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 const Header = () => {
+  const { data: session } = useSession();
+  console.log('sessio', session);
+
   const router = useRouter();
   const [navbar, setNavbar] = useState(false);
   const pathname = usePathname();
@@ -62,20 +66,9 @@ const Header = () => {
                   href={ROUTE?.LOGIN}
                   className={`flex justify-center text-sm font-medium text-white`}
                 >
-                  {TEXT?.LOG_IN}
+                  {session?.user ? TEXT?.DASHBOARD : TEXT?.LOG_IN}
                 </Link>
               </div>
-
-              {/* <Button
-                title={TEXT?.LOG_IN}
-                type="button"
-                handleClick={() => {
-                  console.log('hello');
-                  router.push(ROUTE?.LOGIN);
-                }}
-                titleClass="!text-base !text-white"
-                btnClass="!w-32 !rounded-lg !bg-meta-blue-1 !py-2 !mb-0"
-              /> */}
             </div>
             <p className="block cursor-pointer md:hidden">
               {navbar ? (
@@ -149,9 +142,15 @@ const Header = () => {
             })}
             <div className="block md:hidden">
               <Button
-                title={TEXT?.LOG_IN}
+                title={session?.user ? TEXT?.DASHBOARD : TEXT?.LOG_IN}
                 titleClass="!text-base !text-white"
-                handleClick={() => router.push(ROUTE?.LOGIN)}
+                handleClick={() => {
+                  if (session?.user) {
+                    router?.push(ROUTE?.COMING_SOON);
+                  } else {
+                    router?.push(ROUTE?.LOGIN);
+                  }
+                }}
                 btnClass="!w-32 !rounded-lg !bg-meta-blue-1 !py-2 !mb-0"
               />
             </div>

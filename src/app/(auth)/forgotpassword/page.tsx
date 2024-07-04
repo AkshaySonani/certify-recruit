@@ -4,38 +4,42 @@ import { useFormik } from 'formik';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
 import React, { useState } from 'react';
-import { TEXT } from '@/service/Helper';
+import { EMAIlREGEX, TEXT } from '@/service/Helper';
 import Button from '@/Components/Button';
 import { useRouter } from 'next/navigation';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 
 const Page = () => {
   const router = useRouter();
-
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
-  const [sendMail, setSendMail] = useState(false);
+  const [sendMail, setSendMail] = useState<any>(false);
+  const [error, setError] = useState('');
 
   const handleForgotPassword = () => {
-    setLoading(true);
-    const obj = {
-      email: email,
-    };
-
-    API.post(API_CONSTANT.FORGOT_PASSWORD, obj)
-      .then((res) => {
-        setLoading(false);
-        if (res?.data?.status === 200) {
-          toast.success(res?.data?.message);
-        }
-      })
-      .catch((err) => {
-        setLoading(false);
-        toast.error(
-          err?.response?.data?.message ||
-            'Something went wrong, please try again',
-        );
-      });
+    const isValidEmail = EMAIlREGEX.test(email);
+    if (!isValidEmail) {
+      setError('Invalid Email');
+    } else {
+      setLoading(true);
+      const obj = {
+        email: email,
+      };
+      API.post(API_CONSTANT.FORGOT_PASSWORD, obj)
+        .then((res) => {
+          setLoading(false);
+          if (res?.data?.status === 200) {
+            toast.success(res?.data?.message);
+          }
+        })
+        .catch((err) => {
+          setLoading(false);
+          toast.error(
+            err?.response?.data?.message ||
+              'Something went wrong, please try again',
+          );
+        });
+    }
   };
 
   return (
@@ -61,11 +65,16 @@ const Page = () => {
                   name="email"
                   value={email}
                   placeholder="Enter email..."
-                  onChange={(e) => setEmail(e?.target?.value)}
+                  onChange={(e) => {
+                    if (e?.target?.value === '') {
+                      setError('');
+                    }
+                    setEmail(e?.target?.value);
+                  }}
                   className="my-3 w-full rounded-lg border border-meta-light-blue-1 p-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
                 />
               )}
-
+              {error !== '' && <p className="error !pb-2 !pt-0">{error}</p>}
               <div className="mb-8 flex h-28 w-full items-center justify-between rounded-xl border border-meta-blue-1 bg-white px-4 sm:h-20">
                 <div className="my-3 flex max-w-80 items-center">
                   <div className="mr-3">
@@ -109,15 +118,6 @@ const Page = () => {
                 disabled={email?.length !== 0 || loading ? false : true}
                 btnClass={`${email?.length === 0 && '!bg-gray-300 hover:!bg-none'}`}
               />
-
-              {/* <button className="mb-8 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-meta-blue-2">
-                <span
-                  onClick={() => handleSubmit()}
-                  className="flex justify-center text-sm font-medium text-white"
-                >
-                  {TEXT?.SEND}
-                </span>
-              </button> */}
             </div>
           </div>
         </div>

@@ -17,30 +17,30 @@ export default function Home() {
   useEffect(() => {
     AOS.init({ duration: 500 });
   }, []);
-  const session = useSession();
+  const { data: session } = useSession<any>();
   const router = useRouter();
   const [selected, setSelected] = useState(0);
   const feedbackArr = [
     {
-      profile: '/landing/feedbackProfile.png',
+      profile: '/landing/indianGirl1.png',
       name: 'Vidhi Goswami',
       profession: 'HR Manager',
       content:
         'CertifyRecruit has helped me stand apart through their certification.Several companies have contacted me after I shared my certificate on my resume.',
     },
     {
-      profile: '/landing/feedbackProfile.png',
-      name: 'Deep Patel',
-      profession: 'HR Manager',
+      profile: '/landing/indianGirl2.png',
+      name: 'Deepali Patel',
+      profession: 'Finance Manager',
       content:
-        'CertifyRecruit has helped me stand apart through their certification.Several companies have contacted me after I shared my certificate on my resume.',
+        "CertifyRecruit has truly elevated my career prospects by helping me obtain valuable certifications. Since adding these certifications to my resume and LinkedIn profile, I've received interest from numerous companies. ",
     },
     {
-      profile: '/landing/feedbackProfile.png',
-      name: 'Aakash Rajput ',
-      profession: 'HR Manager',
+      profile: '/landing/indianGirl3.png',
+      name: 'Aakashi Rajput ',
+      profession: 'Software Engineer',
       content:
-        'CertifyRecruit has helped me stand apart through their certification.Several companies have contacted me after I shared my certificate on my resume.',
+        "Thanks to CertifyRecruit, I've been able to distinguish myself in the job market with their valuable certification programs. Sharing my newly earned certificates on my resume has already attracted attention from several companies.",
     },
   ];
   return (
@@ -86,7 +86,13 @@ export default function Home() {
                   <Button
                     type={'button'}
                     title={'Get Certification'}
-                    // handleClick={downloadPdf}
+                    handleClick={() => {
+                      if (session?.user) {
+                        router?.push(ROUTE?.COMING_SOON);
+                      } else {
+                        router?.push(ROUTE?.LOGIN);
+                      }
+                    }}
                     btnClass="w-max !my-3 !p-3 !h-auto !bg-meta-blue-1"
                     titleClass="flex justify-center  text-base  font-medium text-white"
                   />
@@ -97,7 +103,13 @@ export default function Home() {
                   <Button
                     type={'button'}
                     title={'Apply Now'}
-                    handleClick={() => router?.push(ROUTE?.LOGIN)}
+                    handleClick={() => {
+                      if (session?.user) {
+                        router?.push(ROUTE?.COMING_SOON);
+                      } else {
+                        router?.push(ROUTE?.LOGIN);
+                      }
+                    }}
                     btnClass="w-max !my-3 py-3 px-10 !h-auto !bg-meta-blue-1"
                     titleClass="flex justify-center  text-base  font-medium text-white"
                   />
@@ -132,7 +144,13 @@ export default function Home() {
                   <Button
                     type={'button'}
                     title={'Get Certification'}
-                    handleClick={() => router?.push(ROUTE?.LOGIN)}
+                    handleClick={() => {
+                      if (session?.user) {
+                        router?.push(ROUTE?.COMING_SOON);
+                      } else {
+                        router?.push(ROUTE?.LOGIN);
+                      }
+                    }}
                     btnClass="w-max !my-3 !p-3 !h-auto !bg-meta-blue-1"
                     titleClass="flex justify-center  text-base  font-medium text-white"
                   />
@@ -233,7 +251,13 @@ export default function Home() {
                 <Button
                   type={'button'}
                   title={'Apply Now'}
-                  handleClick={() => router?.push(ROUTE?.LOGIN)}
+                  handleClick={() => {
+                    if (session?.user) {
+                      router?.push(ROUTE?.COMING_SOON);
+                    } else {
+                      router?.push(ROUTE?.LOGIN);
+                    }
+                  }}
                   btnClass="w-max !my-3 !p-3 !h-auto !bg-meta-blue-1"
                   titleClass="flex justify-center w-[110px] text-base  font-medium text-white"
                 />
@@ -482,8 +506,14 @@ export default function Home() {
               <div className="self-end">
                 <Button
                   type={'button'}
-                  title={'Register Now'}
-                  handleClick={() => router?.push(ROUTE?.SIGN_UP)}
+                  title={session?.user ? 'Join' : 'Register Now'}
+                  handleClick={() => {
+                    if (session?.user) {
+                      router?.push(ROUTE?.DASHBOARD);
+                    } else {
+                      router?.push(ROUTE?.SIGN_UP);
+                    }
+                  }}
                   btnClass="w-max !my-3 !p-3 !h-auto !bg-meta-blue-1"
                   titleClass="flex justify-center w-[110px] text-base  font-medium text-white"
                 />

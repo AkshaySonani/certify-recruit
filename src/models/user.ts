@@ -55,6 +55,11 @@ const userSchema = new mongoose.Schema({
     unique: false, // Whenever we change this field to required change unique false to true
     required: false,
   },
+  isVerified: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
   subscription: {
     plan_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Pricing' },
     createdAt: { type: Date, default: null },

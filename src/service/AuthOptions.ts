@@ -1,10 +1,12 @@
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import User from '@/models/user';
 import { USER_ROLE } from './Helper';
 import { connect } from '@/db/mongodb';
 import Company from '@/models/company';
 import { AuthOptions } from 'next-auth';
 import Individual from '@/models/individual';
+import { transporter } from '@/config/nodemailer';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
@@ -22,6 +24,7 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials) {
         const { role, email, password }: any = credentials;
+
         try {
           await connect();
           // check if the user exists
@@ -39,8 +42,26 @@ export const authOptions: AuthOptions = {
               password: hashedPassword,
             });
 
+            // Create JWT
+            const verifyToken = jwt.sign(
+              { userId: newUser._id },
+              process.env.JWT_SECRET!,
+            );
+
+            const verifyUrl = `${process.env.NEXT_PUBLIC_BASE_URL}api/verify-user?token=${verifyToken}`;
+
+            const mailOptions = {
+              from: process.env.NEXT_PUBLIC_EMAIL,
+              to: email,
+              subject: 'Verification mail',
+              text: `Please click the following link to verify your account: ${verifyUrl}`,
+              html: `<p>You requested a password reset. Please click the following link to verify your account:</p><a href="${verifyUrl}">${verifyUrl}</a>`,
+            };
+
+            await transporter.sendMail(mailOptions);
+
             // create
-            if (role === 'employee') {
+            if (role === 'employee' && newUser) {
               await Company.create({
                 user_ref_id: newUser?._id,
               });
@@ -123,6 +144,7 @@ export const authOptions: AuthOptions = {
           const newUser = await User.create({
             email: email,
             password: null,
+            isVerified: true,
             role: USER_ROLE?.INDIVIDUAL,
           });
 
@@ -140,17 +162,25 @@ export const authOptions: AuthOptions = {
         return true;
       }
     },
-    async jwt({ token, user }: any) {
+    // token, trigger, session
+    async jwt({ token, user, trigger, session }: any) {
+      if (trigger === 'update') {
+        token.isVerified = session.isVerified;
+      }
+
       if (user?._id) {
         token._id = user._id;
         token.role = user.role;
         token.email = user.email;
+        token.profile_count = 0;
         token.phone = user.phone;
         token.status = user.status;
+        token.isVerified = user.isVerified;
         token.profile_picture = user.profile_picture;
       } else if (!token.role && !token._id) {
         token._id = currentUser?._id;
         token.role = USER_ROLE?.INDIVIDUAL; // Default role if not set
+        token.isVerified = currentUser.isVerified;
       }
       return token;
     },
@@ -161,10 +191,13 @@ export const authOptions: AuthOptions = {
         session.user.email = token.email;
         session.user.phone = token.phone;
         session.user.status = token.status;
+        session.user.isVerified = token.isVerified;
+        session.user.profile_count = token.profile_count;
         session.user.profile_picture = token.profile_picture;
       } else if (!session.user.role && !session.user._id) {
         session.user._id = currentUser?._id;
         session.user.role = USER_ROLE?.INDIVIDUAL; // Default role if not set
+        session.user.isVerified = currentUser.isVerified;
       }
       return session;
     },

@@ -15,7 +15,7 @@ import CompleteProfile from '@/Components/dashboard/completeProfile';
 
 const Page = () => {
   const router = useRouter();
-  const session: any = useSession<any>();
+  const { data: session, update } = useSession<any>();
   const context = useContext(AppContext);
   const [isSpinner, setIsSpinner] = useState(false);
   const [dashboardData, setDashBoardData] = useState([]);
@@ -27,6 +27,7 @@ const Page = () => {
     allJobs: 0,
   });
   useEffect(() => {
+    update({ ...session?.user, isVerified: true });
     getDashboardJob();
     getProfileDetails();
   }, []);
@@ -54,15 +55,15 @@ const Page = () => {
   ];
 
   useEffect(() => {
-    if (session?.data?.user) {
+    if (session?.user) {
       setIsSpinner(false);
     } else {
       setIsSpinner(true);
     }
-  }, [session?.data?.user]);
+  }, [session?.user]);
 
   let percentage = 0;
-  if (session?.data?.user?.role === USER_ROLE?.EMPLOYEE) {
+  if (session?.user?.role === USER_ROLE?.EMPLOYEE) {
     percentage =
       context?.userProfileCount?.basic_details +
       context?.userProfileCount?.company_details +
@@ -87,6 +88,7 @@ const Page = () => {
         toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
+
   return (
     <div>
       <div className="mb-4 text-2xl font-semibold text-meta-purple-1">
@@ -104,7 +106,7 @@ const Page = () => {
         </div>
       ) : (
         <div>
-          {session?.data?.user?.role === USER_ROLE?.EMPLOYEE && (
+          {session?.user?.role === USER_ROLE?.EMPLOYEE && (
             <div className="mt-4 flex gap-4">
               {menu?.map((item: any) => {
                 return (
@@ -137,7 +139,7 @@ const Page = () => {
           )}
           {percentage < 100 && !isSpinner ? (
             <CompleteProfile />
-          ) : session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
+          ) : session?.user?.role === USER_ROLE?.EMPLOYEE ? (
             <EmployeeDashboard
               dashboardData={dashboardData}
               setDashBoardData={setDashBoardData}

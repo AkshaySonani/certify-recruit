@@ -4,16 +4,16 @@ import Image from 'next/image';
 import { useFormik } from 'formik';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@/Components/Button';
 import Loading from '@/Components/Loading';
 import { useRouter } from 'next/navigation';
 import { ROUTE, TEXT } from '@/service/Helper';
 import { API_CONSTANT } from '@/constant/ApiConstant';
+import { error } from 'console';
 
 const Page = (data: any) => {
   const router = useRouter();
-
   const [loading, setLoading] = useState(false);
   const [eye, setEye] = useState<Record<string, boolean>>({
     pass: false,
@@ -36,6 +36,8 @@ const Page = (data: any) => {
         }
       })
       .catch((err: any) => {
+        console.log('err', err);
+
         setLoading(false);
         toast.error(
           err?.response?.data?.message ||
@@ -43,7 +45,12 @@ const Page = (data: any) => {
         );
       });
   };
-
+  useEffect(() => {
+    if (data && !data?.searchParams?.token) {
+      console.log('');
+      router.push(ROUTE?.FORGOT_PASSWORD);
+    }
+  }, []);
   const validationSchema = Yup.object().shape({
     newPass: Yup.string()
       .required('Password is required')

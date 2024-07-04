@@ -6,7 +6,6 @@ import { TEXT } from '@/service/Helper';
 
 const Page = () => {
   const router = useRouter();
-  const [eye, setEye] = useState(false);
   return (
     <div>
       <div className="container mx-auto">

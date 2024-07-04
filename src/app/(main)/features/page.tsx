@@ -8,8 +8,10 @@ import 'aos/dist/aos.css';
 import Feedback from '@/Components/home/Feedback';
 import { ROUTE, TEXT } from '@/service/Helper';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 const Page = () => {
+  const { data: session } = useSession<any>();
   const router = useRouter();
   useEffect(() => {
     AOS.init({ duration: 500 });
@@ -44,13 +46,25 @@ const Page = () => {
           <div className="mt-6 flex w-full flex-wrap items-center justify-center sm:mt-10 sm:flex-nowrap">
             <Button
               title={TEXT?.START_NOW}
-              handleClick={() => router?.push(ROUTE?.LOGIN)}
+              handleClick={() => {
+                if (session?.user) {
+                  router?.push(ROUTE?.COMING_SOON);
+                } else {
+                  router?.push(ROUTE?.LOGIN);
+                }
+              }}
               titleClass="!text-base !text-white"
               btnClass="!w-[200px] !px-0 !rounded-lg !bg-meta-blue-1 !py-2 !mb-0"
             />
 
             <button
-              onClick={() => router?.push(ROUTE?.LOGIN)}
+              onClick={() => {
+                if (session?.user) {
+                  router?.push(ROUTE?.COMING_SOON);
+                } else {
+                  router?.push(ROUTE?.LOGIN);
+                }
+              }}
               className="mb-6 mt-2 h-12 min-w-[250px] rounded-lg border border-meta-light-blue-2 bg-meta-gray-3 py-3 text-white transition delay-150 duration-300 ease-in-out will-change-auto hover:bg-hiring-btn-gradient sm:mb-0 sm:ml-4 sm:mt-0 sm:min-w-48"
             >
               <span className="flex justify-center text-base font-medium text-white">
@@ -112,7 +126,13 @@ const Page = () => {
             <div className="flex w-full items-start">
               <Button
                 type="button"
-                handleClick={() => router?.push(ROUTE?.LOGIN)}
+                handleClick={() => {
+                  if (session?.user) {
+                    router?.push(ROUTE?.COMING_SOON);
+                  } else {
+                    router?.push(ROUTE?.LOGIN);
+                  }
+                }}
                 title={'Learn More'}
                 btnClass="sm:w-max w-[290px] !my-3 !py-2 !px-6"
               />
@@ -170,7 +190,13 @@ const Page = () => {
             <div className="flex w-full items-start">
               <Button
                 type="button"
-                handleClick={() => router?.push(ROUTE?.LOGIN)}
+                handleClick={() => {
+                  if (session?.user) {
+                    router?.push(ROUTE?.COMING_SOON);
+                  } else {
+                    router?.push(ROUTE?.LOGIN);
+                  }
+                }}
                 title={'Apply Job'}
                 btnClass="sm:w-max w-[290px] !my-3 !py-2 !px-6"
               />
@@ -228,7 +254,13 @@ const Page = () => {
             <div className="flex w-full items-start">
               <Button
                 type="button"
-                handleClick={() => router?.push(ROUTE?.LOGIN)}
+                handleClick={() => {
+                  if (session?.user) {
+                    router?.push(ROUTE?.COMING_SOON);
+                  } else {
+                    router?.push(ROUTE?.LOGIN);
+                  }
+                }}
                 title={'Apply Job'}
                 btnClass="sm:w-max w-[290px] !my-3 !py-2 !px-6"
               />

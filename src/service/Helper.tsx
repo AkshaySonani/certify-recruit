@@ -34,7 +34,10 @@ const ROUTE = {
   EMPLOYMENT_TYPE: '/job_posting/employment_Type',
   CHOOSE_CATEGORY: '/certification/chooseCategories',
   SUCCESSFUL_RESET_PASSWORD: '/resetpassword/success',
-  SUCCESSFUL_FORGOT_PASSWORD: '/login/forgotPass/newPass/successful',
+  SUCCESSFUL_FORGOT_PASSWORD: '/forgotPass/newPass/successful',
+  FORGOT_PASSWORD: '/forgotpassword',
+  COMING_SOON: '/comingSoon',
+  SIGN_UP_SUCCESS: '/signup/signUpSuccess',
 };
 
 const TEXT = {
