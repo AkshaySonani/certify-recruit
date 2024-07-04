@@ -39,9 +39,22 @@ export async function GET(req: NextRequest) {
     user.isVerified = true;
     await user.save();
 
-    return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_BASE_URL}signup/signUpSuccess?isVerified=true`,
+    // Create a new token with the updated isVerified status
+    const newToken = jwt.sign(
+      { userId: user._id, isVerified: true },
+      process.env.JWT_SECRET!,
+      { expiresIn: '30d' }, // Adjust the token expiration as needed
     );
+
+    const params = new URLSearchParams({
+      isVerified: 'true',
+      token: newToken, // Send the new token back to the client
+    }).toString();
+
+    const redirectUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/signup/signUpSuccess?${params}`;
+    console.log('Redirecting to:', redirectUrl);
+
+    return NextResponse.redirect(redirectUrl);
   } catch (error) {
     console.error('Verification error:', error);
     return NextResponse.json({

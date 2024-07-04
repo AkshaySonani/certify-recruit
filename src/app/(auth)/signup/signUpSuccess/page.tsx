@@ -6,22 +6,28 @@ import { ROUTE, TEXT } from '@/service/Helper';
 import { useSession } from 'next-auth/react';
 
 const Page = (data: any) => {
-  const { data: session, update } = useSession<any>();
+  const { data: session, update }: any = useSession();
   const router = useRouter();
   const [eye, setEye] = useState(false);
 
   useEffect(() => {
-    console.log(data?.searchParams);
+    const searchParams = new URLSearchParams(window.location.search);
 
-    if (data?.searchParams?.isVerified === 'true') {
-      console.log('update token here');
+    const isVerified = searchParams.get('isVerified') === 'true';
+    const newToken = searchParams.get('token');
 
-      update({ ...session?.user, isVerified: true });
-      // router.push(ROUTE?.DASHBOARD);
+    if (isVerified && newToken && session) {
+      // Update session with new verification status
+      console.log('Updating token...', session);
+      update({ ...session, isVerified: true });
+
+      // Redirect to dashboard
+      router.push(ROUTE.DASHBOARD);
     } else {
-      console.log('testing...');
+      console.log('Verification not detected or session not available');
     }
-  }, []);
+  }, [session, update, router]);
+
   return (
     <div>
       <div className="container mx-auto">
