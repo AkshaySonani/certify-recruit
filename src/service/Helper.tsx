@@ -449,6 +449,7 @@ const updateProfileCount = (
     profile_summary: 10,
     resume: 10,
     key_skills: 10,
+    education: 10,
     personal_details: 20,
     career_info: 20,
     bank_details: 20,
