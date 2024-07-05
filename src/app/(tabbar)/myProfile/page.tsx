@@ -30,8 +30,13 @@ const MyProfile = () => {
 
   useEffect(() => {
     console.log('profileCompletionCount', profileCompletionCount);
-    if (profileCompletionCount?.employee === 100) {
-      UpdateTokenApi(profileCompletionCount?.employee);
+    if (
+      profileCompletionCount?.employee === 100 ||
+      profileCompletionCount?.individual === 100
+    ) {
+      UpdateTokenApi(
+        profileCompletionCount?.employee || profileCompletionCount?.individual,
+      );
     }
   }, [profileCompletionCount]);
 
@@ -39,6 +44,9 @@ const MyProfile = () => {
     API.post(API_CONSTANT?.UPDATE_TOKEN, { count: count })
       .then((res) => {
         console.log('res----->', res);
+        if (res?.status === 200) {
+          router.push(ROUTE?.DASHBOARD);
+        }
       })
       .catch((error) => {
         console.log('error----->', error);
@@ -110,6 +118,8 @@ const MyProfile = () => {
   //     context?.userProfileCount?.bank_details;
   // }
 
+  console.log('-=-=-=session', session);
+
   return (
     <Suspense fallback={<Loader />}>
       {userDetails && Object.keys(userDetails)?.length === 0 ? (
@@ -170,7 +180,13 @@ const MyProfile = () => {
                     />
                     <CircularProgressbar
                       className="h-max w-max"
-                      value={session?.data?.user?.profile_count}
+                      value={
+                        session?.data?.user?.role === USER_ROLE?.EMPLOYEE
+                          ? profileCompletionCount?.employee ||
+                            session?.data?.user?.profile_count
+                          : profileCompletionCount?.individual ||
+                            session?.data?.user?.profile_count
+                      }
                       styles={buildStyles({
                         pathColor: '#34A853',
                         strokeLinecap: 'butt',
@@ -181,7 +197,12 @@ const MyProfile = () => {
                   </div>
                   <div className="w-full text-center">
                     <p className="mt-1 text-base font-normal text-meta-green-1">
-                      {session?.data?.user?.profile_count}%
+                      {session?.data?.user?.role === USER_ROLE?.EMPLOYEE
+                        ? profileCompletionCount?.employee ||
+                          session?.data?.user?.profile_count
+                        : profileCompletionCount?.individual ||
+                          session?.data?.user?.profile_count}
+                      %
                     </p>
                   </div>
                 </div>
