@@ -249,7 +249,7 @@ const USER_ROLE = {
   INDIVIDUAL: 'individual',
 };
 
-const SIDE_BAR_DATA = {
+const SIDE_BAR_DATA: any = {
   admin: [],
   individual: [
     {

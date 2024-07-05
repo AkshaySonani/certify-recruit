@@ -19,7 +19,6 @@ export const POST = async (req: NextRequest) => {
   const { jobTitle, city, endDate, startDate } = await req.json();
   try {
     await connect();
-
     let obj = {};
     if (session?.user?.role === USER_ROLE?.EMPLOYEE) {
       obj = {

@@ -1,33 +1,19 @@
 'use client';
 import Sidebar from './Sidebar';
 import API from '@/service/ApiService';
-import { toast } from 'react-toastify';
 import { ROUTE } from '@/service/Helper';
-import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { useContext, useEffect } from 'react';
 import AppContext from '@/context/AppProvider';
 import { API_CONSTANT } from '@/constant/ApiConstant';
+import { toast } from 'react-toastify';
+import { useSession } from 'next-auth/react';
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
   const context = useContext(AppContext);
-
-  const getProfileDetails = () => {
-    API.get(API_CONSTANT?.PROFILE)
-      .then((res: any) => {
-        context?.setUserProfileCount(res?.data?.data?.profile_count);
-      })
-      .catch((error) => {
-        toast.error(error?.response?.data?.message || 'Internal server error');
-      });
-  };
-
-  useEffect(() => {
-    getProfileDetails();
-  }, []);
 
   const isFullScreenRoute = (path: any) =>
     [

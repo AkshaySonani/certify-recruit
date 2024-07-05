@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
 import { useFormik, Field } from 'formik';
@@ -15,6 +15,16 @@ const BasicDetails = ({
   setActivePage,
   getUserDataApiCall,
 }: any) => {
+  const UpdateTokenApi = (count: any) => {
+    API.post(API_CONSTANT?.UPDATE_TOKEN, { count: count })
+      .then((res) => {
+        console.log('res');
+      })
+      .catch((error) => {
+        toast.error(error || 'Something want wrong');
+      });
+  };
+
   const context = useContext(AppContext);
   const handleSubmit = async (values: any, actions: any) => {
     let obj = {
@@ -28,9 +38,8 @@ const BasicDetails = ({
       .then((res) => {
         if (res?.data?.status === 200) {
           getUserDataApiCall();
-          // const profileCount = calculatePercentage(values, 33);
-          context?.setUserProfileCount(res?.data?.data?.profile_count);
-
+          UpdateTokenApi(30);
+          // context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);
           setActivePage(activePage + 1);
           toast?.success(res?.data?.message || 'Successfully Update Profile');
@@ -146,3 +155,14 @@ const BasicDetails = ({
   );
 };
 export default BasicDetails;
+
+// const count = 0;
+// if (date.name && date.username && date.email) {
+//   count += 30;
+// }
+// if (date.name && date.username && date.email) {
+//   count += 30;
+// }
+// if (date.pan && date.bank) {
+//   count += 30;
+// }

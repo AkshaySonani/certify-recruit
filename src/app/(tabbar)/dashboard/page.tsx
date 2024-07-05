@@ -15,7 +15,7 @@ import CompleteProfile from '@/Components/dashboard/completeProfile';
 
 const Page = () => {
   const router = useRouter();
-  const { data: session, update } = useSession<any>();
+  const { data: session, update }: any = useSession<any>();
   const context = useContext(AppContext);
   const [isSpinner, setIsSpinner] = useState(false);
   const [dashboardData, setDashBoardData] = useState([]);
@@ -62,22 +62,22 @@ const Page = () => {
     }
   }, [session?.user]);
 
-  let percentage = 0;
-  if (session?.user?.role === USER_ROLE?.EMPLOYEE) {
-    percentage =
-      context?.userProfileCount?.basic_details +
-      context?.userProfileCount?.company_details +
-      context?.userProfileCount?.kyc_details;
-  } else {
-    percentage =
-      context?.userProfileCount?.career_details +
-      context?.userProfileCount?.education_details +
-      context?.userProfileCount?.personal_details +
-      context?.userProfileCount?.resume_details +
-      context?.userProfileCount?.skill_details +
-      context?.userProfileCount?.bank_details +
-      context?.userProfileCount?.summary_details;
-  }
+  // let percentage = 0;
+  // if (session?.user?.role === USER_ROLE?.EMPLOYEE) {
+  //   percentage =
+  //     context?.userProfileCount?.basic_details +
+  //     context?.userProfileCount?.company_details +
+  //     context?.userProfileCount?.kyc_details;
+  // } else {
+  //   percentage =
+  //     context?.userProfileCount?.career_details +
+  //     context?.userProfileCount?.education_details +
+  //     context?.userProfileCount?.personal_details +
+  //     context?.userProfileCount?.resume_details +
+  //     context?.userProfileCount?.skill_details +
+  //     context?.userProfileCount?.bank_details +
+  //     context?.userProfileCount?.summary_details;
+  // }
 
   const getProfileDetails = () => {
     API.get(API_CONSTANT?.PROFILE)
@@ -88,6 +88,8 @@ const Page = () => {
         toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
+
+  console.log('session', session);
 
   return (
     <div>
@@ -137,7 +139,7 @@ const Page = () => {
               })}
             </div>
           )}
-          {percentage < 100 && !isSpinner ? (
+          {session?.user?.profile_count < 100 && !isSpinner ? (
             <CompleteProfile />
           ) : session?.user?.role === USER_ROLE?.EMPLOYEE ? (
             <EmployeeDashboard

@@ -10,25 +10,8 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
 const CompleteProfile = () => {
   const router = useRouter();
-  const session: any = useSession();
-  const context = useContext(AppContext);
+  const { data: session }: any = useSession<any>();
 
-  let percentage = 0;
-  if (session?.data?.user?.role === USER_ROLE?.EMPLOYEE) {
-    percentage =
-      context?.userProfileCount?.basic_details +
-      context?.userProfileCount?.company_details +
-      context?.userProfileCount?.kyc_details;
-  } else {
-    percentage =
-      context?.userProfileCount?.career_details +
-      context?.userProfileCount?.education_details +
-      context?.userProfileCount?.personal_details +
-      context?.userProfileCount?.resume_details +
-      context?.userProfileCount?.skill_details +
-      context?.userProfileCount?.bank_details +
-      context?.userProfileCount?.summary_details;
-  }
   return (
     <div className="md:relative">
       <div className="mt-8 flex max-h-80 flex-col items-center justify-center rounded-xl bg-meta-gray-2 p-3 md:p-8">
@@ -47,7 +30,7 @@ const CompleteProfile = () => {
 
             <div className="absolute">
               <CircularProgressbar
-                value={percentage ? percentage : 0}
+                value={session?.user?.profile_count}
                 styles={buildStyles({
                   pathColor: '#34A853',
                   strokeLinecap: 'butt',
@@ -59,7 +42,7 @@ const CompleteProfile = () => {
           </div>
         </div>
         <p className="mb-1 text-base font-medium lowercase text-meta-light-blue-3 md:mb-5 md:text-lg">
-          {percentage ? percentage : 0}% {TEXT?.COMPLETE}
+          {session?.user?.profile_count}% {TEXT?.COMPLETE}
         </p>
         <div
           onClick={() => router.push(ROUTE?.MYPROFILE)}

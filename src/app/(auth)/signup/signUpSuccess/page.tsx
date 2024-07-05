@@ -6,6 +6,7 @@ import { ROUTE, TEXT } from '@/service/Helper';
 import { useSession } from 'next-auth/react';
 
 const Page = (data: any) => {
+  // const { data: session, update }: any = useSession();
   const router = useRouter();
   const [eye, setEye] = useState(false);
 

@@ -3,9 +3,6 @@ import jwt from 'jsonwebtoken';
 import User from '@/models/user';
 import { connect } from '@/db/mongodb';
 import { NextRequest, NextResponse } from 'next/server';
-import { getSession } from 'next-auth/react';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/service/AuthOptions';
 
 export async function GET(req: NextRequest) {
   try {

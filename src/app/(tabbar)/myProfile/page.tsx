@@ -73,22 +73,22 @@ const MyProfile = () => {
       });
   };
 
-  let percentage = 0;
-  if (session?.data?.user?.role === USER_ROLE?.EMPLOYEE) {
-    percentage =
-      context?.userProfileCount?.basic_details +
-      context?.userProfileCount?.company_details +
-      context?.userProfileCount?.kyc_details;
-  } else {
-    percentage =
-      context?.userProfileCount?.career_details +
-      context?.userProfileCount?.education_details +
-      context?.userProfileCount?.personal_details +
-      context?.userProfileCount?.resume_details +
-      context?.userProfileCount?.skill_details +
-      context?.userProfileCount?.summary_details +
-      context?.userProfileCount?.bank_details;
-  }
+  // let percentage = 0;
+  // if (session?.data?.user?.role === USER_ROLE?.EMPLOYEE) {
+  //   percentage =
+  //     context?.userProfileCount?.basic_details +
+  //     context?.userProfileCount?.company_details +
+  //     context?.userProfileCount?.kyc_details;
+  // } else {
+  //   percentage =
+  //     context?.userProfileCount?.career_details +
+  //     context?.userProfileCount?.education_details +
+  //     context?.userProfileCount?.personal_details +
+  //     context?.userProfileCount?.resume_details +
+  //     context?.userProfileCount?.skill_details +
+  //     context?.userProfileCount?.summary_details +
+  //     context?.userProfileCount?.bank_details;
+  // }
 
   return (
     <Suspense fallback={<Loader />}>
@@ -136,7 +136,7 @@ const MyProfile = () => {
 
           {(session?.data?.user?.role === USER_ROLE.INDIVIDUAL ||
             isEdit ||
-            percentage !== 100) && (
+            session !== 100) && (
             <div className="mt-4 w-full rounded-2xl bg-meta-light-blue-2 p-10">
               <div className="flex w-full items-center gap-8">
                 <div className="flex flex-col justify-center">
@@ -150,7 +150,7 @@ const MyProfile = () => {
                     />
                     <CircularProgressbar
                       className="h-max w-max"
-                      value={percentage ? percentage : 0}
+                      value={session?.data?.user?.profile_count}
                       styles={buildStyles({
                         pathColor: '#34A853',
                         strokeLinecap: 'butt',
@@ -161,7 +161,7 @@ const MyProfile = () => {
                   </div>
                   <div className="w-full text-center">
                     <p className="mt-1 text-base font-normal text-meta-green-1">
-                      {percentage}%
+                      {session?.data?.user?.profile_count}%
                     </p>
                   </div>
                 </div>
@@ -253,7 +253,7 @@ const MyProfile = () => {
               session={session?.data}
               userDetails={userDetails}
               getUserDataApiCall={() => getProfileDetails()}
-              percentage={percentage}
+              percentage={session?.data?.user?.profile_count}
               isEdit={isEdit}
             />
           ) : (

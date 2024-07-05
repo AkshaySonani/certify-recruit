@@ -13,7 +13,6 @@ const Sidebar = () => {
   const router = useRouter();
   const session: any = useSession();
   const pathname = usePathname();
-  const context = useContext(AppContext);
 
   const [open, setOpen] = useState(true);
   const [percentage, setPercentage] = useState(0);
@@ -21,41 +20,36 @@ const Sidebar = () => {
   const activeTabCss = (path: string) =>
     pathname.split('/')[1] === path
       ? 'bg-meta-blue-2 text-white dark:bg-meta-4'
-      : percentage <= 99
+      : session?.data?.user?.profile_count <= 99
         ? 'text-meta-gray-1'
         : '';
 
-  useEffect(() => {
-    // if (
-    //   Object?.keys(context?.userProfileCount)?.length !== 0 &&
-    //   context?.userProfileCount !== undefined
-    // ) {
-    //   handlePercentage();
-    // }
-    handlePercentage();
-  }, [context?.userProfileCount]);
+  // useEffect(() => {
 
-  const handlePercentage = () => {
-    if (context?.userProfileCount && context?.userProfileCount !== undefined) {
-      if (session?.data?.user?.role === USER_ROLE?.EMPLOYEE) {
-        setPercentage(
-          context?.userProfileCount?.basic_details +
-            context?.userProfileCount?.company_details +
-            context?.userProfileCount?.kyc_details,
-        );
-      } else {
-        setPercentage(
-          context?.userProfileCount?.career_details +
-            context?.userProfileCount?.education_details +
-            context?.userProfileCount?.personal_details +
-            context?.userProfileCount?.resume_details +
-            context?.userProfileCount?.skill_details +
-            context?.userProfileCount?.bank_details +
-            context?.userProfileCount?.summary_details,
-        );
-      }
-    }
-  };
+  //   handlePercentage();
+  // }, [context?.userProfileCount]);
+
+  // const handlePercentage = () => {
+  //   if (context?.userProfileCount && context?.userProfileCount !== undefined) {
+  //     if (session?.data?.user?.role === USER_ROLE?.EMPLOYEE) {
+  //       setPercentage(
+  //         context?.userProfileCount?.basic_details +
+  //           context?.userProfileCount?.company_details +
+  //           context?.userProfileCount?.kyc_details,
+  //       );
+  //     } else {
+  //       setPercentage(
+  //         context?.userProfileCount?.career_details +
+  //           context?.userProfileCount?.education_details +
+  //           context?.userProfileCount?.personal_details +
+  //           context?.userProfileCount?.resume_details +
+  //           context?.userProfileCount?.skill_details +
+  //           context?.userProfileCount?.bank_details +
+  //           context?.userProfileCount?.summary_details,
+  //       );
+  //     }
+  //   }
+  // };
 
   return (
     <aside
