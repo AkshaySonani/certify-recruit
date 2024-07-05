@@ -6,6 +6,10 @@ const AppProvider = ({ children }) => {
   const [userData, setUserData] = useState({});
   const [currentRole, setCurrentRole] = useState("");
   const [userProfileCount, setUserProfileCount] = useState({});
+  const [completedSections, setCompletedSections] = useState(new Set());
+  const [profileCompletionCount, setProfileCompletionCount] = useState({});
+
+  
 
   const valueToShare = {
     userData,
@@ -13,7 +17,11 @@ const AppProvider = ({ children }) => {
     currentRole,
     setCurrentRole,
     userProfileCount,
+    completedSections,
     setUserProfileCount,
+    setCompletedSections,
+    profileCompletionCount,
+    setProfileCompletionCount
   };
 
   return (

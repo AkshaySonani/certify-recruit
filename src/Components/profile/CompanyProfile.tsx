@@ -61,6 +61,7 @@ const CompanyProfile = ({
             )}
             {activePage === 2 && (
               <CompanyDetailsTab
+                session={session}
                 activePage={activePage}
                 userDetails={userDetails}
                 setActivePage={setActivePage}
@@ -69,6 +70,7 @@ const CompanyProfile = ({
             )}
             {activePage === 3 && (
               <KYCDetailsTab
+                session={session}
                 activePage={activePage}
                 userDetails={userDetails}
                 setActivePage={setActivePage}

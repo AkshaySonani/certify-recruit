@@ -9,10 +9,15 @@ import { COMPANY_TYPE } from '@/constant/Enum';
 import AppContext from '@/context/AppProvider';
 import { Menu, Transition } from '@headlessui/react';
 import { API_CONSTANT } from '@/constant/ApiConstant';
-import { calculatePercentage, TEXT } from '@/service/Helper';
+import {
+  calculatePercentage,
+  TEXT,
+  updateProfileCount,
+} from '@/service/Helper';
 import { Fragment, useContext, useEffect, useState } from 'react';
 
 const CompanyDetailsTab = ({
+  session,
   activePage,
   userDetails,
   setActivePage,
@@ -26,23 +31,41 @@ const CompanyDetailsTab = ({
   const debouncedSearchCity = useDebounce(cityQuery);
   const debouncedSearchState = useDebounce(stateQuery);
   const context = useContext(AppContext);
+
   function classNames(...classes: any) {
     return classes.filter(Boolean).join('');
   }
 
+  const {
+    profileCompletionCount,
+    setProfileCompletionCount,
+    completedSections,
+    setCompletedSections,
+  } = context;
+
+  const handleNextClick = (section: any) => {
+    updateProfileCount(
+      session?.user?.role,
+      section,
+      setProfileCompletionCount,
+      completedSections,
+      setCompletedSections,
+    );
+  };
+
   const handleSubmit = async (values: any, actions: any) => {
     let obj = {
       ...values,
-      profile_count: {
-        ...context?.userProfileCount,
-        company_details: 34,
-      },
+      // profile_count: {
+      //   ...context?.userProfileCount,
+      //   company_details: 34,
+      // },
     };
-
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
-          context?.setUserProfileCount(res?.data?.data?.profile_count);
+          handleNextClick('company_detail');
+          // context?.setUserProfileCount(res?.data?.data?.profile_count);
           getUserDataApiCall();
           setActivePage(activePage + 1);
           actions.setSubmitting(false);

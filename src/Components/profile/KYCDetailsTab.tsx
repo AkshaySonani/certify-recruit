@@ -6,28 +6,52 @@ import { useFormik, Field } from 'formik';
 import AutoComplete from '../Autocomplete';
 import AppContext from '@/context/AppProvider';
 import { API_CONSTANT } from '@/constant/ApiConstant';
-import { calculatePercentage, TEXT } from '@/service/Helper';
+import {
+  calculatePercentage,
+  TEXT,
+  updateProfileCount,
+} from '@/service/Helper';
 
 const KYCDetailsTab = ({
+  session,
   setActivePage,
   userDetails,
   activePage,
   getUserDataApiCall,
 }: any) => {
   const context = useContext(AppContext);
+
+  const {
+    profileCompletionCount,
+    setProfileCompletionCount,
+    completedSections,
+    setCompletedSections,
+  } = context;
+
+  const handleNextClick = (section: any) => {
+    updateProfileCount(
+      session?.user?.role,
+      section,
+      setProfileCompletionCount,
+      completedSections,
+      setCompletedSections,
+    );
+  };
+
   const handleSubmit = async (values: any, actions: any) => {
     let obj = {
       ...values,
-      profile_count: {
-        ...context?.userProfileCount,
-        kyc_details: 33,
-      },
+      // profile_count: {
+      //   ...context?.userProfileCount,
+      //   kyc_details: 33,
+      // },
     };
 
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
-          context?.setUserProfileCount(res?.data?.data?.profile_count);
+          handleNextClick('KYC_compliance_detail');
+          // context?.setUserProfileCount(res?.data?.data?.profile_count);
           setActivePage(1);
           getUserDataApiCall();
           actions.setSubmitting(false);

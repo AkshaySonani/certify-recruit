@@ -9,6 +9,7 @@ const API_CONSTANT = {
   PROFILE: '/profile',
   COLLEGE: '/collage',
   COUNTRY: '/country',
+  CONTACT: '/contact',
   CATEGORY: '/category',
   LANGUAGE: '/language',
   QUESTION: '/question',
@@ -20,6 +21,7 @@ const API_CONSTANT = {
   SEARCH_BGV: '/search-bgv',
   JOB_DETAILS: '/job-details',
   CHECK_ANSWER: '/check-answer',
+  UPDATE_TOKEN: '/update-token',
   DELETE_RESUME: '/delete-resume',
   DASHBOARD_JOB: '/dashboard-job',
   SEND_EXAM_LINK: '/send-exam-link',
@@ -33,8 +35,6 @@ const API_CONSTANT = {
   UPDATE_LE_DETAILS: '/update-le-details',
   UPDATE_COM_USER_STATUS: '/update-com-user-details',
   LEARN_AND_EARN_QUESTION: '/learn-and-earn-question',
-  CONTACT: '/contact',
-  UPDATE_TOKEN: '/update-token',
 };
 
 export { API_CONSTANT };

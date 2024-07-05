@@ -20,11 +20,31 @@ const MyProfile = () => {
   const session = useSession() as any;
   const context = useContext(AppContext);
   const [isOpen, setIsOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   const [degreeList, setDegreeList] = useState([]);
   const [collegeList, setCollegeList] = useState([]);
   const [languageList, setLanguageList] = useState([]);
   const [userDetails, setUserDetails] = useState<any>({});
-  const [isEdit, setIsEdit] = useState(false);
+
+  const { profileCompletionCount } = context;
+
+  useEffect(() => {
+    console.log('profileCompletionCount', profileCompletionCount);
+    if (profileCompletionCount?.employee === 100) {
+      UpdateTokenApi(profileCompletionCount?.employee);
+    }
+  }, [profileCompletionCount]);
+
+  const UpdateTokenApi = (count: any) => {
+    API.post(API_CONSTANT?.UPDATE_TOKEN, { count: count })
+      .then((res) => {
+        console.log('res----->', res);
+      })
+      .catch((error) => {
+        console.log('error----->', error);
+        toast.error(error || 'Something want wrong');
+      });
+  };
 
   useEffect(() => {
     getDegreeList();

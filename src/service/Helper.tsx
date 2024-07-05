@@ -432,6 +432,46 @@ const calculatePercentage = (values: any, pr: any) => {
   return percentage.toFixed(2);
 };
 
+const updateProfileCount = (
+  role: any,
+  section: any,
+  setProfileCompletionCount: any,
+  completedSections: any,
+  setCompletedSections: any,
+) => {
+  const employeeDetails = {
+    basic_details: 30,
+    company_detail: 50,
+    KYC_compliance_detail: 20,
+  };
+
+  const individualDetails = {
+    profile_summary: 10,
+    resume: 10,
+    key_skills: 10,
+    personal_details: 20,
+    career_info: 20,
+    bank_details: 20,
+  };
+
+  let details: any;
+  if (role === 'employee') {
+    details = employeeDetails;
+  } else if (role === 'individual') {
+    details = individualDetails;
+  }
+
+  const sectionKey = `${role}-${section}`;
+
+  if (details && details[section] && !completedSections.has(sectionKey)) {
+    setProfileCompletionCount((prevCount: any) => ({
+      ...prevCount,
+      [role]: (prevCount[role] || 0) + details[section],
+    }));
+    setCompletedSections((prevSet: any) => new Set(prevSet).add(sectionKey));
+  }
+};
+
 export {
   TEXT,
   ROUTE,
@@ -443,6 +483,7 @@ export {
   EMP_BASIC_PLAN,
   EMP_BUSINESS_PLAN,
   EMP_STANDARD_PLAN,
+  updateProfileCount,
   calculatePercentage,
   INDIVIDUAL_DAILY_PLAN,
   INDIVIDUAL_MONTHLY_PLAN,
