@@ -3,21 +3,22 @@ import Image from 'next/image';
 import Button from '../Button';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
-import { TEXT } from '@/service/Helper';
-import { useFormik, Field, FormikConsumer } from 'formik';
 import Spinner from '@/app/icons/Spinner';
 import useDebounce from '@/hooks/useDebounce';
-import { BANK_ACCOUNT_TYPE, EMP_TYPE_ARR } from '@/constant/Enum';
 import AppContext from '@/context/AppProvider';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Menu, Transition } from '@headlessui/react';
 import { API_CONSTANT } from '@/constant/ApiConstant';
+import { useFormik, Field, FormikConsumer } from 'formik';
+import { TEXT, updateProfileCount } from '@/service/Helper';
+import { BANK_ACCOUNT_TYPE, EMP_TYPE_ARR } from '@/constant/Enum';
 import { Fragment, useContext, useEffect, useState } from 'react';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
 const BankDetailsTab = ({
+  session,
   userDetails,
   setActivePage,
   activePage,
@@ -27,19 +28,37 @@ const BankDetailsTab = ({
   const [cityQuery, setCityQuery] = useState('');
   const [isSpinner, setIsSpinner] = useState(false);
 
+  const {
+    profileCompletionCount,
+    setProfileCompletionCount,
+    completedSections,
+    setCompletedSections,
+  } = context;
+
+  const handleNextClick = (section: any) => {
+    updateProfileCount(
+      session?.user?.role,
+      section,
+      setProfileCompletionCount,
+      completedSections,
+      setCompletedSections,
+    );
+  };
+
   const handleSubmit = async (values: any, actions: any) => {
     setIsSpinner(true);
     const obj = {
       ...values,
-      profile_count: {
-        ...context?.userProfileCount,
-        bank_details: 15,
-      },
+      // profile_count: {
+      //   ...context?.userProfileCount,
+      //   bank_details: 15,
+      // },
     };
 
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
+          handleNextClick('bank_details');
           setIsSpinner(false);
           setActivePage(activePage);
           getUserDataApiCall();

@@ -2,33 +2,53 @@ import * as Yup from 'yup';
 import Button from '../Button';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
-import { TEXT } from '@/service/Helper';
 import { useFormik, Field } from 'formik';
 import AppContext from '@/context/AppProvider';
 import 'react-datepicker/dist/react-datepicker.css';
 import { API_CONSTANT } from '@/constant/ApiConstant';
+import { TEXT, updateProfileCount } from '@/service/Helper';
 import { Fragment, useContext, useEffect, useState } from 'react';
 
 const SummaryTab = ({
+  session,
   userDetails,
   setActivePage,
   activePage,
   getUserDataApiCall,
 }: any) => {
   const context = useContext(AppContext);
+
+  const {
+    profileCompletionCount,
+    setProfileCompletionCount,
+    completedSections,
+    setCompletedSections,
+  } = context;
+
+  const handleNextClick = (section: any) => {
+    updateProfileCount(
+      session?.user?.role,
+      section,
+      setProfileCompletionCount,
+      completedSections,
+      setCompletedSections,
+    );
+  };
+
   const handleSubmit = async (values: any, actions: any) => {
     const obj = {
       ...values,
-      profile_count: {
-        ...context?.userProfileCount,
-        summary_details: 14,
-      },
+      // profile_count: {
+      //   ...context?.userProfileCount,
+      //   summary_details: 14,
+      // },
     };
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
           getUserDataApiCall();
-          context?.setUserProfileCount(res?.data?.data?.profile_count);
+          handleNextClick('profile_summary');
+          // context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);
           setActivePage(activePage + 1);
           toast?.success(res?.data?.message || 'Successfully Update Profile');

@@ -446,13 +446,13 @@ const updateProfileCount = (
   };
 
   const individualDetails = {
-    profile_summary: 10,
     resume: 10,
-    key_skills: 10,
     education: 10,
-    personal_details: 20,
+    key_skills: 10,
     career_info: 20,
     bank_details: 20,
+    profile_summary: 10,
+    personal_details: 20,
   };
 
   let details: any;

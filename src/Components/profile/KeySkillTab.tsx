@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Button from '../Button';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
-import { TEXT } from '@/service/Helper';
 import { useFormik, Field } from 'formik';
 import { components } from 'react-select';
 import useDebounce from '@/hooks/useDebounce';
@@ -12,8 +11,10 @@ import 'react-datepicker/dist/react-datepicker.css';
 import MultipleSelectBox from '../MultipleSelectBox';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { useContext, useEffect, useState } from 'react';
+import { TEXT, updateProfileCount } from '@/service/Helper';
 
 const KeySkillTab = ({
+  session,
   userDetails,
   setActivePage,
   activePage,
@@ -23,21 +24,40 @@ const KeySkillTab = ({
   const [skillQuery, setSkillQuery] = useState('');
   const debouncedSearchSkill = useDebounce(skillQuery);
   const context = useContext(AppContext);
+
+  const {
+    profileCompletionCount,
+    setProfileCompletionCount,
+    completedSections,
+    setCompletedSections,
+  } = context;
+
+  const handleNextClick = (section: any) => {
+    updateProfileCount(
+      session?.user?.role,
+      section,
+      setProfileCompletionCount,
+      completedSections,
+      setCompletedSections,
+    );
+  };
+
   const handleSubmit = async (values: any, actions: any) => {
     const obj = {
       skills: values?.skills.map((el: any) => el?._id),
-      profile_count: {
-        ...context?.userProfileCount,
-        skill_details: 14,
-      },
+      // profile_count: {
+      //   ...context?.userProfileCount,
+      //   skill_details: 14,
+      // },
     };
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
+          handleNextClick('key_skills');
           getUserDataApiCall();
-          context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);
           setActivePage(activePage + 1);
+          // context?.setUserProfileCount(res?.data?.data?.profile_count);
           toast?.success(res?.data?.message || 'Successfully Update Profile');
         }
       })

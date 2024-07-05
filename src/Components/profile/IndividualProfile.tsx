@@ -52,6 +52,7 @@ const IndividualProfile = ({
       <div>
         {activePage === page[0]?.id && (
           <SummaryTab
+            session={session}
             setActivePage={setActivePage}
             userDetails={userDetails}
             activePage={activePage}
@@ -60,6 +61,7 @@ const IndividualProfile = ({
         )}
         {activePage === page[1]?.id && (
           <UploadResumeTab
+            session={session}
             setActivePage={setActivePage}
             userDetails={userDetails}
             activePage={activePage}
@@ -68,6 +70,7 @@ const IndividualProfile = ({
         )}
         {activePage === page[2]?.id && (
           <KeySkillTab
+            session={session}
             setActivePage={setActivePage}
             userDetails={userDetails}
             activePage={activePage}
@@ -77,6 +80,7 @@ const IndividualProfile = ({
 
         {activePage === page[3]?.id && (
           <EducationTab
+            session={session}
             setActivePage={setActivePage}
             userDetails={userDetails}
             activePage={activePage}
@@ -87,6 +91,7 @@ const IndividualProfile = ({
         )}
         {activePage === page[4]?.id && (
           <PersonalDetailsTab
+            session={session}
             languageList={languageList}
             setActivePage={setActivePage}
             userDetails={userDetails}
@@ -96,6 +101,7 @@ const IndividualProfile = ({
         )}
         {activePage === page[5]?.id && (
           <CareerInfoTab
+            session={session}
             setActivePage={setActivePage}
             userDetails={userDetails}
             activePage={activePage}
@@ -104,6 +110,7 @@ const IndividualProfile = ({
         )}
         {activePage === page[6]?.id && (
           <BankDetailsTab
+            session={session}
             setActivePage={setActivePage}
             userDetails={userDetails}
             activePage={activePage}

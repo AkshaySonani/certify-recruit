@@ -4,13 +4,14 @@ import Link from 'next/link';
 import { useFormik } from 'formik';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
-import { TEXT } from '@/service/Helper';
 import { useDropzone } from 'react-dropzone';
 import AppContext from '@/context/AppProvider';
 import { API_CONSTANT } from '@/constant/ApiConstant';
+import { TEXT, updateProfileCount } from '@/service/Helper';
 import React, { useContext, useEffect, useState } from 'react';
 
 const UploadResumeTab = ({
+  session,
   userDetails,
   setActivePage,
   activePage,
@@ -94,18 +95,39 @@ const UploadResumeTab = ({
       });
   };
 
+  const {
+    profileCompletionCount,
+    setProfileCompletionCount,
+    completedSections,
+    setCompletedSections,
+  } = context;
+
+  console.log('profileCompletionCount', profileCompletionCount);
+  console.log('session', session);
+
+  const handleNextClick = (section: any) => {
+    updateProfileCount(
+      session?.user?.role,
+      section,
+      setProfileCompletionCount,
+      completedSections,
+      setCompletedSections,
+    );
+  };
+
   const handleSubmit = async (values: any, actions: any) => {
     if (fileName && files?.length !== 0) {
       UploadFileOnBucket(files);
     } else {
       API.post(API_CONSTANT?.PROFILE, {
         resume: userDetails?.resume,
-        profile_count: userDetails?.profile_count,
+        // profile_count: userDetails?.profile_count,
       })
         .then((res) => {
           if (res?.data?.status === 200) {
-            context?.setUserProfileCount(res?.data?.data?.profile_count);
+            handleNextClick('resume');
             setFileName('');
+            // context?.setUserProfileCount(res?.data?.data?.profile_count);
             // actions.setSubmitting(false);
             setActivePage(activePage + 1);
             toast?.success(res?.data?.message);

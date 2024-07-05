@@ -4,13 +4,13 @@ import Image from 'next/image';
 import Button from '../Button';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
-import { TEXT } from '@/service/Helper';
 import { useFormik, Field } from 'formik';
 import AppContext from '@/context/AppProvider';
 import DatePicker from 'react-multi-date-picker';
 import { Menu, Transition } from '@headlessui/react';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { Fragment, useContext, useState } from 'react';
+import { TEXT, updateProfileCount } from '@/service/Helper';
 import { COMPLETION_DATE, HIGH_EDUCATION } from '@/constant/Enum';
 
 function classNames(...classes: any) {
@@ -18,6 +18,7 @@ function classNames(...classes: any) {
 }
 
 const EducationTab = ({
+  session,
   userDetails,
   setActivePage,
   activePage,
@@ -26,6 +27,24 @@ const EducationTab = ({
   getUserDataApiCall,
 }: any) => {
   const context = useContext(AppContext);
+
+  const {
+    profileCompletionCount,
+    setProfileCompletionCount,
+    completedSections,
+    setCompletedSections,
+  } = context;
+
+  const handleNextClick = (section: any) => {
+    updateProfileCount(
+      session?.user?.role,
+      section,
+      setProfileCompletionCount,
+      completedSections,
+      setCompletedSections,
+    );
+  };
+
   const handleSubmit = async (values: any, actions: any) => {
     const obj = {
       ...values,
@@ -37,16 +56,17 @@ const EducationTab = ({
           ? moment(values?.completion_date?.month).format('MMMM')
           : '',
       },
-      profile_count: {
-        ...context?.userProfileCount,
-        education_details: 14,
-      },
+      // profile_count: {
+      //   ...context?.userProfileCount,
+      //   education_details: 14,
+      // },
     };
     console.log('obj', obj);
 
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
+          handleNextClick('education');
           getUserDataApiCall();
           context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);

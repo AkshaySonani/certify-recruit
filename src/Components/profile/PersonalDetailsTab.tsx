@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Button from '../Button';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
-import { TEXT } from '@/service/Helper';
 import { useFormik, Field } from 'formik';
 import { Fragment, useContext } from 'react';
 import AppContext from '@/context/AppProvider';
@@ -11,11 +10,13 @@ import DatePicker from 'react-multi-date-picker';
 import { Menu, Transition } from '@headlessui/react';
 import { GENDER, PROFICIENCY } from '@/constant/Enum';
 import { API_CONSTANT } from '@/constant/ApiConstant';
+import { TEXT, updateProfileCount } from '@/service/Helper';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
 const PersonalDetailsTab = ({
+  session,
   languageList,
   userDetails,
   setActivePage,
@@ -23,17 +24,36 @@ const PersonalDetailsTab = ({
   getUserDataApiCall,
 }: any) => {
   const context = useContext(AppContext);
+
+  const {
+    profileCompletionCount,
+    setProfileCompletionCount,
+    completedSections,
+    setCompletedSections,
+  } = context;
+
+  const handleNextClick = (section: any) => {
+    updateProfileCount(
+      session?.user?.role,
+      section,
+      setProfileCompletionCount,
+      completedSections,
+      setCompletedSections,
+    );
+  };
+
   const handleSubmit = async (values: any, actions: any) => {
     const obj = {
       ...values,
-      profile_count: {
-        ...context?.userProfileCount,
-        personal_details: 14,
-      },
+      // profile_count: {
+      //   ...context?.userProfileCount,
+      //   personal_details: 14,
+      // },
     };
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
+          handleNextClick('personal_details');
           getUserDataApiCall();
           context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);
