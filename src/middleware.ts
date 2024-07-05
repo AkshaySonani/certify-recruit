@@ -68,10 +68,19 @@ export default withAuth(
         if (pathname === '/login' || pathname === '/signup') {
           // If trying to access login or signup, redirect to dashboard
           return NextResponse.redirect(`${origin}/dashboard`);
-        } else if (emailVerificationRequiredPaths.includes(pathname)) {
+        } else if (
+          emailVerificationRequiredPaths.includes(pathname) &&
+          token.profile_count !== 0
+        ) {
           // If trying to access paths requiring verification, allow access
           const url = new URL('/comingSoon', origin);
           return NextResponse.redirect(url);
+        } else if (
+          profileCompletionRequiredPaths.includes(pathname) &&
+          token.profile_count === 0
+        ) {
+          // If trying to access paths requiring verification, allow access
+          return NextResponse.redirect(`${origin}/dashboard`);
         }
       }
     }
