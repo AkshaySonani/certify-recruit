@@ -51,7 +51,9 @@ export async function GET(req: NextRequest) {
       token: newToken, // Send the new token back to the client
     }).toString();
 
-    const redirectUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/signup/signUpSuccess?${params}`;
+    // const redirectUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/signup/signUpSuccess?${params}`;
+
+    const redirectUrl = `${process.env.NEXT_PUBLIC_BASE_URL}dashboard?${params}`;
     console.log('Redirecting to:', redirectUrl);
 
     return NextResponse.redirect(redirectUrl);

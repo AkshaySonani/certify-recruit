@@ -1,12 +1,24 @@
 import { NextResponse } from 'next/server';
 import { withAuth } from 'next-auth/middleware';
-
+import { encode, decode } from 'next-auth/jwt';
 const emailVerificationRequiredPaths = [
   '/job',
   '/exam',
   '/quiz',
-  // '/dashboard',
-  '/myProfile',
+  '/earn_badge',
+  '/search_CVs',
+  '/job_posting',
+  '/learnAndEarn',
+  '/certification',
+  '/badgeOfHonour',
+];
+const profileCompletionRequiredPaths = [
+  '/job',
+  '/BGV',
+  '/exam',
+  '/quiz',
+  '/users',
+  '/pricing',
   '/earn_badge',
   '/search_CVs',
   '/job_posting',
@@ -16,16 +28,27 @@ const emailVerificationRequiredPaths = [
 ];
 
 export default withAuth(
-  function middleware(req: any) {
-    const token = req.nextauth.token;
-    const { pathname, origin } = req.nextUrl;
+  async function middleware(req: any) {
+    const { pathname, origin, searchParams } = req.nextUrl;
+    const secret = process.env.NEXTAUTH_SECRET;
+    let token = req.nextauth.token;
+    const queryToken = searchParams.get('token');
+    const isVerified = searchParams.get('isVerified') === 'true';
 
-    // Function to check if path is an authentication path
-    const isAuthPath = (path: string) =>
-      ['/login', '/signup', '/signup/signUpSuccess'].includes(path);
-    console.log('token', token);
+    if (queryToken && isVerified) {
+      token = { ...token, isVerified: true };
+      req.nextauth.token = token;
+      const newToken = await encode({ token, secret });
+      const response = NextResponse.redirect(new URL('/dashboard', origin));
+      response.cookies.set('next-auth.session-token', newToken, {
+        httpOnly: true,
+        secure: true,
+        path: '/',
+      });
+      return response;
+    }
 
-    // Check if user is authenticated
+    const isAuthPath = (path: string) => ['/login', '/signup'].includes(path);
     if (!token) {
       // If not authenticated, redirect to login
       if (!isAuthPath(pathname)) {
@@ -34,6 +57,7 @@ export default withAuth(
     } else {
       // User is authenticated
       if (!token.isVerified) {
+        console.log('token not verified', token);
         // If authenticated but not verified, redirect to signUpSuccess
         if (pathname !== '/signup/signUpSuccess') {
           const url = new URL('/signup/signUpSuccess', origin);
@@ -45,7 +69,7 @@ export default withAuth(
           // If trying to access login or signup, redirect to dashboard
           return NextResponse.redirect(`${origin}/dashboard`);
         } else if (emailVerificationRequiredPaths.includes(pathname)) {
-          // If trying to access any other path not in emailVerificationRequiredPaths, redirect to /comingSoon
+          // If trying to access paths requiring verification, allow access
           const url = new URL('/comingSoon', origin);
           return NextResponse.redirect(url);
         }
@@ -62,6 +86,7 @@ export default withAuth(
     },
   },
 );
+
 export const config = {
   matcher: [
     '/job',
@@ -79,5 +104,6 @@ export const config = {
     '/certification',
     '/badgeOfHonour',
     '/quiz',
+    '/signup/signUpSuccess:path',
   ],
 };

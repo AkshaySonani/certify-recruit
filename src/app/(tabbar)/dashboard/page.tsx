@@ -26,8 +26,8 @@ const Page = () => {
     hired: 0,
     allJobs: 0,
   });
+
   useEffect(() => {
-    update({ ...session?.user, isVerified: true });
     getDashboardJob();
     getProfileDetails();
   }, []);

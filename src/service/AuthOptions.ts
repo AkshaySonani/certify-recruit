@@ -167,7 +167,6 @@ export const authOptions: AuthOptions = {
       if (trigger === 'update') {
         token.isVerified = session.isVerified;
       }
-
       if (user?._id) {
         token._id = user._id;
         token.role = user.role;

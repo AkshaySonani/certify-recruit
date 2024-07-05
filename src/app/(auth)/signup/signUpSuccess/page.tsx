@@ -6,27 +6,8 @@ import { ROUTE, TEXT } from '@/service/Helper';
 import { useSession } from 'next-auth/react';
 
 const Page = (data: any) => {
-  const { data: session, update }: any = useSession();
   const router = useRouter();
   const [eye, setEye] = useState(false);
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-
-    const isVerified = searchParams.get('isVerified') === 'true';
-    const newToken = searchParams.get('token');
-
-    if (isVerified && newToken && session) {
-      // Update session with new verification status
-      console.log('Updating token...', session);
-      update({ ...session, isVerified: true });
-
-      // Redirect to dashboard
-      router.push(ROUTE.DASHBOARD);
-    } else {
-      console.log('Verification not detected or session not available');
-    }
-  }, [session, update, router]);
 
   return (
     <div>
