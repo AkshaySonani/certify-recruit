@@ -61,14 +61,10 @@ const UploadResumeTab = ({
 
           API.post(API_CONSTANT?.PROFILE, {
             resume: obj,
-            profile_count: {
-              ...context?.userProfileCount,
-              resume_details: 14,
-            },
           })
             .then((res) => {
               if (res?.data?.status === 200) {
-                context?.setUserProfileCount(res?.data?.data?.profile_count);
+                handleNextClick('resume');
                 setLoading(false);
                 setFileName('');
                 // actions.setSubmitting(false);
