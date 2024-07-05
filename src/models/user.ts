@@ -60,6 +60,11 @@ const userSchema = new mongoose.Schema({
     default: false,
     required: true,
   },
+  profile_count: {
+    default: 0,
+    type: Number,
+    required: true,
+  },
   subscription: {
     plan_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Pricing' },
     createdAt: { type: Date, default: null },
