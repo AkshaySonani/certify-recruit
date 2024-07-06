@@ -10,7 +10,6 @@ import { useSession } from 'next-auth/react';
 
 const Header = () => {
   const { data: session } = useSession();
-  console.log('sessio', session);
 
   const router = useRouter();
   const [navbar, setNavbar] = useState(false);

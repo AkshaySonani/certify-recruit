@@ -33,6 +33,7 @@ const Page = () => {
   const session: any = useSession();
 
   const [enabled, setEnabled] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [yearlyList, setYearlyList] = useState<any>([]);
   const [monthlyList, setMonthlyList] = useState<any>([]);
   const [subscriptionPlan, setSubscriptionPlan] = useState<any>([]);
@@ -42,8 +43,10 @@ const Page = () => {
   }, []);
 
   const getSubscriptionPlans = () => {
+    setLoading(true);
     API.get(API_CONSTANT?.PRICING)
       .then((res) => {
+        setLoading(false);
         const year = res?.data?.data?.filter(
           (y: any) => y?.plan_type === 'Yearly',
         );
@@ -56,6 +59,7 @@ const Page = () => {
         setSubscriptionPlan(res?.data?.data);
       })
       .catch((error) => {
+        setLoading(false);
         toast.error(error?.response?.data?.error);
       });
   };
@@ -119,7 +123,7 @@ const Page = () => {
     console.log('🚀 ~ applyPlan ~ plan_id:', plan_id);
   };
 
-  return session?.data?.user === undefined ? (
+  return session?.data?.user === undefined && loading ? (
     <div className="flex h-full items-center justify-center">
       <Spinner width="32px" height="32px" color="#3751F2" className="spinner" />
     </div>

@@ -11,6 +11,7 @@ import Public from './public';
 import IQ from './IQ';
 import knowledge from './knowledge';
 import Arrow from './Arrow';
+import EditPicture from './editpicture';
 
 export const Icons = {
   Job,
@@ -26,4 +27,5 @@ export const Icons = {
   IQ,
   knowledge,
   Arrow,
+  EditPicture,
 };

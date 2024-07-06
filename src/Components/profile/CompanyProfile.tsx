@@ -27,6 +27,7 @@ const CompanyProfile = ({
   isEdit,
 }: any) => {
   const [activePage, setActivePage] = useState(TAB[0]?.id);
+
   return (
     <>
       {percentage !== 100 || isEdit === true ? (
@@ -86,8 +87,12 @@ const CompanyProfile = ({
               width={73}
               height={73}
               alt="avatar"
-              src={'/sidebarIcon/profile.svg'}
-              className="absolute  top-[-26px] rounded-full "
+              src={
+                userDetails?.logo !== ''
+                  ? userDetails?.logo
+                  : '/profile/placeholder.jpg'
+              }
+              className="absolute top-[-26px] h-[84px] w-[84px] rounded-full object-cover  p-0.5"
             />
           </div>
           <div className="mt-20 flex w-full flex-col items-center justify-center">

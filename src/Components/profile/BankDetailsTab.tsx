@@ -58,7 +58,9 @@ const BankDetailsTab = ({
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
-          handleNextClick('bank_details');
+          session?.user?.profile_count !== 100 &&
+            session?.user?.profile_count < 100 &&
+            handleNextClick('bank_details');
           setIsSpinner(false);
           setActivePage(activePage);
           getUserDataApiCall();

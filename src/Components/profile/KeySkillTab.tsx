@@ -53,7 +53,9 @@ const KeySkillTab = ({
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
-          handleNextClick('key_skills');
+          session?.user?.profile_count !== 100 &&
+            session?.user?.profile_count < 100 &&
+            handleNextClick('key_skills');
           getUserDataApiCall();
           actions.setSubmitting(false);
           setActivePage(activePage + 1);
@@ -104,7 +106,6 @@ const KeySkillTab = ({
           label: list?.subcategory,
           value: list?.subcategory,
         }));
-        console.log('🚀 ~ .then ~ skiilArr:', skiilArr);
         setSkillData(skiilArr);
       })
       .catch((error) => {

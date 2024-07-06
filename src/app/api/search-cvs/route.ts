@@ -32,7 +32,6 @@ export const POST = async (req: NextRequest) => {
     if (data_uploaded) {
       const [day, month, year] = data_uploaded.split('-');
       const date = new Date(`${year}-${month}-${day}`);
-      console.log('Parsed data_uploaded date:', date);
       query.createdAt = {
         $gte: new Date(date.setHours(0, 0, 0, 0)),
         $lt: new Date(date.setHours(24, 0, 0, 0)),

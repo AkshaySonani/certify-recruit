@@ -174,8 +174,6 @@ const JobPostingForm3 = ({ formik }: { formik: any }) => {
               options={skillData}
               value={formik?.values?.skills}
               onKeyDown={(e: any) => {
-                console.log('e', e);
-
                 onSearchSkill(e);
               }}
               components={{ Placeholder, DropdownIndicator }}

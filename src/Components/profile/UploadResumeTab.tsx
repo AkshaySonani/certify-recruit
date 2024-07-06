@@ -81,7 +81,9 @@ const UploadResumeTab = ({
         } else {
           setLoading(false);
           toast.error(
-            res?.data?.error || 'Your resume are not upload please try again',
+            res?.data?.error?.message ||
+              res?.data?.error?.name ||
+              'Your resume are not upload please try again',
           );
           setFileName('');
         }
@@ -97,9 +99,6 @@ const UploadResumeTab = ({
     completedSections,
     setCompletedSections,
   } = context;
-
-  console.log('profileCompletionCount', profileCompletionCount);
-  console.log('session', session);
 
   const handleNextClick = (section: any) => {
     updateProfileCount(
@@ -121,7 +120,10 @@ const UploadResumeTab = ({
       })
         .then((res) => {
           if (res?.data?.status === 200) {
-            handleNextClick('resume');
+            getUserDataApiCall();
+            session?.user?.profile_count !== 100 &&
+              session?.user?.profile_count < 100 &&
+              handleNextClick('resume');
             setFileName('');
             // context?.setUserProfileCount(res?.data?.data?.profile_count);
             // actions.setSubmitting(false);

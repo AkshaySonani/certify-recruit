@@ -46,7 +46,6 @@ const AddBGVExperience = () => {
     })
       .then((res: any) => {
         if (res?.data?.status === 200) {
-          console.log('res', res);
           setSaveExperience(true);
           return;
         } else {
@@ -80,7 +79,6 @@ const AddBGVExperience = () => {
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
   });
-  console.log('formik?.error', formik?.errors);
 
   const handleAddMoreEXP = () => {
     formik?.setFieldValue('bgv', [

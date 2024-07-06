@@ -126,6 +126,7 @@ export const POST = async (req: NextRequest) => {
       const {
         bgv,
         role,
+        logo,
         skills,
         degree,
         gender,
@@ -157,6 +158,7 @@ export const POST = async (req: NextRequest) => {
       let reqData: any = {};
 
       role && (reqData.role = role);
+      logo && (reqData.logo = logo);
       skills && (reqData.skills = skills);
       degree && (reqData.degree = degree);
       gender && (reqData.gender = gender);
@@ -268,6 +270,10 @@ export const GET = async (req: NextRequest) => {
       return NextResponse.json({
         status: 200,
         data: employeeData,
+        extraData: {
+          ...employeeData,
+          profile_count: userDetails?.profile_count,
+        },
       });
     } catch (error) {
       return NextResponse.json(
@@ -300,6 +306,10 @@ export const GET = async (req: NextRequest) => {
       return NextResponse.json({
         status: 200,
         data: companyData,
+        extraData: {
+          ...companyData,
+          profile_count: userDetails?.profile_count,
+        },
       });
     } catch (error) {
       return NextResponse.json(

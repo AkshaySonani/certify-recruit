@@ -230,12 +230,9 @@ function JobPostingFormMain({ id }: any) {
       countryName: country,
       searchText: search,
     };
-    console.log('obj', obj);
 
     API.post(API_CONSTANT?.STATES, obj)
       .then((res) => {
-        console.log('res', res);
-
         setStates(res?.data?.data);
       })
       .catch((error) => {
@@ -269,7 +266,6 @@ function JobPostingFormMain({ id }: any) {
   const handlePrevious = () => {
     setNextPage(nextPage - 1);
   };
-  console.log('hello', formik?.values?.state);
 
   return (
     <div>

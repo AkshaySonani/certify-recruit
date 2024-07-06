@@ -1,10 +1,14 @@
+'use client';
 import Link from 'next/link';
 import Image from 'next/image';
 import Pricing from '@/svg/Pricing';
 import Spinner from '../icons/Spinner';
+import API from '@/service/ApiService';
+import { toast } from 'react-toastify';
 import AppContext from '@/context/AppProvider';
 import { Menu, Transition } from '@headlessui/react';
 import { signOut, useSession } from 'next-auth/react';
+import { API_CONSTANT } from '@/constant/ApiConstant';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { Fragment, useContext, useEffect, useState } from 'react';
 import { ROUTE, SIDE_BAR_DATA, TEXT, USER_ROLE } from '@/service/Helper';
@@ -17,12 +21,42 @@ const Sidebar = () => {
   const [open, setOpen] = useState(true);
   const [percentage, setPercentage] = useState(0);
 
+  useEffect(() => {
+    getProfileDetails();
+  }, []);
+
+  useEffect(() => {
+    if (
+      session?.data?.user?.profile_count !== null &&
+      session?.data?.user?.profile_count !== undefined &&
+      session?.data?.user?.profile_count >= 100
+    ) {
+      setPercentage(session?.data?.user?.profile_count);
+    }
+  }, [session?.data]);
+
   const activeTabCss = (path: string) =>
     pathname.split('/')[1] === path
       ? 'bg-meta-blue-2 text-white dark:bg-meta-4'
-      : session?.data?.user?.profile_count <= 99
+      : percentage <= 99
         ? 'text-meta-gray-1'
         : '';
+
+  const getProfileDetails = () => {
+    API.get(API_CONSTANT?.PROFILE)
+      .then((res: any) => {
+        if (
+          res?.data?.extraData?.profile_count !== null &&
+          res?.data?.extraData?.profile_count !== undefined &&
+          res?.data?.extraData?.profile_count >= 100
+        ) {
+          setPercentage(res?.data?.extraData?.profile_count);
+        }
+      })
+      .catch((error) => {
+        toast.error(error?.response?.data?.message || 'Internal server error');
+      });
+  };
 
   // useEffect(() => {
 

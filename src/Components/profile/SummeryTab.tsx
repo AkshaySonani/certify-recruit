@@ -47,7 +47,9 @@ const SummaryTab = ({
       .then((res) => {
         if (res?.data?.status === 200) {
           getUserDataApiCall();
-          handleNextClick('profile_summary');
+          session?.user?.profile_count !== 100 &&
+            session?.user?.profile_count < 100 &&
+            handleNextClick('profile_summary');
           // context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);
           setActivePage(activePage + 1);

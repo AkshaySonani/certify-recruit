@@ -74,7 +74,6 @@ export const authOptions: AuthOptions = {
             return newUser;
           }
         } catch (error) {
-          console.log('register error', error);
           throw new Error(`${error}`);
         }
       },
@@ -109,7 +108,6 @@ export const authOptions: AuthOptions = {
             }
           }
         } catch (error) {
-          console.log('login error', error);
           throw new Error(`${error}`);
         }
       },
@@ -177,6 +175,7 @@ export const authOptions: AuthOptions = {
         token.isVerified = user.isVerified;
         token.profile_picture = user.profile_picture;
       } else if (!token.role && !token._id) {
+        token.profile_count = 0;
         token._id = currentUser?._id;
         token.role = USER_ROLE?.INDIVIDUAL; // Default role if not set
         token.isVerified = currentUser.isVerified;
@@ -197,6 +196,7 @@ export const authOptions: AuthOptions = {
         session.user._id = currentUser?._id;
         session.user.role = USER_ROLE?.INDIVIDUAL; // Default role if not set
         session.user.isVerified = currentUser.isVerified;
+        session.user.profile_count = token.profile_count;
       }
       return session;
     },

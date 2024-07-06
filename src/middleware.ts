@@ -3,8 +3,10 @@ import { withAuth } from 'next-auth/middleware';
 import { encode, decode } from 'next-auth/jwt';
 const emailVerificationRequiredPaths = [
   '/job',
+  '/BGV',
   '/exam',
   '/quiz',
+  '/users',
   '/earn_badge',
   '/search_CVs',
   '/job_posting',
@@ -30,7 +32,7 @@ const profileCompletionRequiredPaths = [
 export default withAuth(
   async function middleware(req: any) {
     const { pathname, origin, searchParams } = req.nextUrl;
-    const secret = process.env.NEXTAUTH_SECRET;
+    const secret: any = process.env.NEXTAUTH_SECRET;
     let token = req.nextauth.token;
     const queryToken = searchParams.get('token');
     const isVerified = searchParams.get('isVerified') === 'true';
@@ -57,7 +59,6 @@ export default withAuth(
     } else {
       // User is authenticated
       if (!token.isVerified) {
-        console.log('token not verified', token);
         // If authenticated but not verified, redirect to signUpSuccess
         if (pathname !== '/signup/signUpSuccess') {
           const url = new URL('/signup/signUpSuccess', origin);
@@ -99,7 +100,9 @@ export default withAuth(
 export const config = {
   matcher: [
     '/job',
+    '/BGV',
     '/exam',
+    '/quiz',
     '/login',
     '/users',
     '/signup',
@@ -112,7 +115,6 @@ export const config = {
     '/learnAndEarn',
     '/certification',
     '/badgeOfHonour',
-    '/quiz',
     '/signup/signUpSuccess:path',
   ],
 };

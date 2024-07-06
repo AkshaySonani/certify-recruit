@@ -36,8 +36,6 @@ const Page = (data: any) => {
         }
       })
       .catch((err: any) => {
-        console.log('err', err);
-
         setLoading(false);
         toast.error(
           err?.response?.data?.message ||
@@ -45,12 +43,13 @@ const Page = (data: any) => {
         );
       });
   };
+
   useEffect(() => {
     if (data && !data?.searchParams?.token) {
-      console.log('');
       router.push(ROUTE?.FORGOT_PASSWORD);
     }
   }, []);
+
   const validationSchema = Yup.object().shape({
     newPass: Yup.string()
       .required('Password is required')

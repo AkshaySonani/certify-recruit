@@ -64,7 +64,9 @@ const CareerInfoTab = ({
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
-          handleNextClick('career_info');
+          session?.user?.profile_count !== 100 &&
+            session?.user?.profile_count < 100 &&
+            handleNextClick('career_info');
           setIsSpinner(false);
           setActivePage(activePage + 1);
           getUserDataApiCall();

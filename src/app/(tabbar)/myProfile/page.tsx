@@ -14,6 +14,9 @@ import { Suspense, useContext, useEffect, useState } from 'react';
 import EditDetailsDialog from '@/Components/profile/EditDetailsDialog';
 import IndividualProfile from '@/Components/profile/IndividualProfile';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
+import { Icons } from '@/svg';
+import { useDropzone } from 'react-dropzone';
+import Loading from '@/Components/Loading';
 
 const MyProfile = () => {
   const router = useRouter();
@@ -25,11 +28,63 @@ const MyProfile = () => {
   const [collegeList, setCollegeList] = useState([]);
   const [languageList, setLanguageList] = useState([]);
   const [userDetails, setUserDetails] = useState<any>({});
+  const [loading, setLoading] = useState(false);
 
   const { profileCompletionCount } = context;
 
+  const { getRootProps, getInputProps } = useDropzone({
+    maxFiles: 1,
+    accept: {
+      'image/png': ['.png'],
+      'image/jpg': ['.jpg'],
+      'image/jpeg': ['.jpeg'],
+    },
+    onDrop: (acceptedFiles: any) => {
+      UploadFileOnBucket(acceptedFiles);
+      // setFiles(acceptedFiles);
+      // setFileName(acceptedFiles[0]?.name?.split('.')[0]);
+      // UploadFileOnBucket(acceptedFiles[0]);
+    },
+  });
+
+  const UploadFileOnBucket = async (file: any) => {
+    setLoading(true);
+    const NewFormData = new FormData();
+    NewFormData.append('file', file[0]);
+    API.post(API_CONSTANT?.UPLOAD_FILE, NewFormData)
+      .then((res) => {
+        if (res?.data?.success) {
+          API.post(API_CONSTANT?.PROFILE, {
+            logo: res?.data?.fileName,
+          })
+            .then((res) => {
+              setLoading(false);
+              if (res?.data?.status === 200) {
+                setUserDetails({ ...userDetails, logo: res?.data?.data?.logo });
+                toast?.success(res?.data?.message);
+              }
+            })
+            .catch((error) => {
+              setLoading(false);
+              toast.error(
+                error?.response?.data?.message || 'Internal server error',
+              );
+            });
+        } else {
+          setLoading(false);
+          toast.error(
+            res?.data?.error?.message ||
+              res?.data?.error?.name ||
+              'Your Profile photo not upload please try again',
+          );
+        }
+      })
+      .catch((error) => {
+        toast.error(error || 'Something want wrong');
+      });
+  };
+
   useEffect(() => {
-    console.log('profileCompletionCount', profileCompletionCount);
     if (
       profileCompletionCount?.employee === 100 ||
       profileCompletionCount?.individual === 100
@@ -43,13 +98,11 @@ const MyProfile = () => {
   const UpdateTokenApi = (count: any) => {
     API.post(API_CONSTANT?.UPDATE_TOKEN, { count: count })
       .then((res) => {
-        console.log('res----->', res);
         if (res?.status === 200) {
           router.push(ROUTE?.DASHBOARD);
         }
       })
       .catch((error) => {
-        console.log('error----->', error);
         toast.error(error || 'Something want wrong');
       });
   };
@@ -101,27 +154,9 @@ const MyProfile = () => {
       });
   };
 
-  // let percentage = 0;
-  // if (session?.data?.user?.role === USER_ROLE?.EMPLOYEE) {
-  //   percentage =
-  //     context?.userProfileCount?.basic_details +
-  //     context?.userProfileCount?.company_details +
-  //     context?.userProfileCount?.kyc_details;
-  // } else {
-  //   percentage =
-  //     context?.userProfileCount?.career_details +
-  //     context?.userProfileCount?.education_details +
-  //     context?.userProfileCount?.personal_details +
-  //     context?.userProfileCount?.resume_details +
-  //     context?.userProfileCount?.skill_details +
-  //     context?.userProfileCount?.summary_details +
-  //     context?.userProfileCount?.bank_details;
-  // }
-
-  console.log('-=-=-=session', session);
-
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense>
+      <Loading loading={loading} />
       {userDetails && Object.keys(userDetails)?.length === 0 ? (
         <Spinner
           width="32px"
@@ -170,14 +205,19 @@ const MyProfile = () => {
             <div className="mt-4 w-full rounded-2xl bg-meta-light-blue-2 p-10">
               <div className="flex w-full items-center gap-8">
                 <div className="flex flex-col justify-center">
-                  <div className="relative h-24 w-24">
+                  <div className="group relative h-24 w-24">
                     <Image
                       width={73}
                       height={73}
                       alt="avatar"
-                      src={'/sidebarIcon/profile.svg'}
-                      className="absolute right-[6px] top-[6px] h-[84px] w-[84px] rounded-full p-0.5"
+                      src={
+                        userDetails?.logo !== ''
+                          ? userDetails?.logo
+                          : '/profile/placeholder.jpg'
+                      }
+                      className="absolute right-[6px] top-[6px] h-[84px] w-[84px] rounded-full object-cover p-0.5"
                     />
+
                     <CircularProgressbar
                       className="h-max w-max"
                       value={
@@ -194,6 +234,12 @@ const MyProfile = () => {
                         pathTransitionDuration: 0.5,
                       })}
                     />
+                    <div {...getRootProps({ className: 'dropzone' })}>
+                      <input {...getInputProps()} multiple={false} />
+                      <div className="absolute inset-0 flex cursor-pointer items-center justify-center rounded-full bg-black bg-opacity-50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                        <Icons.EditPicture />
+                      </div>
+                    </div>
                   </div>
                   <div className="w-full text-center">
                     <p className="mt-1 text-base font-normal text-meta-green-1">

@@ -8,8 +8,10 @@ import 'react-circular-progressbar/dist/styles.css';
 import { ROUTE, TEXT, USER_ROLE } from '@/service/Helper';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
-const CompleteProfile = () => {
+const CompleteProfile = ({ userDetails, currentProfileCount }: any) => {
   const router = useRouter();
+  const context = useContext(AppContext);
+  const { profileCompletionCount } = context;
   const { data: session }: any = useSession<any>();
 
   return (
@@ -20,17 +22,36 @@ const CompleteProfile = () => {
         </p>
         <div className="mb-1 md:mb-3">
           <div className="relative h-24 w-24">
-            <Image
+            {/* <Image
               width={90}
               height={90}
               alt="profile photo"
-              src={'/sidebarIcon/profile.svg'}
-              className="absolute top-0 rounded-full p-0.5"
+              src={
+                'https://marktoconnect.s3.ap-south-1.amazonaws.com/earth.jpg'
+              }
+              className="absolute top-0 rounded-full p-0.5 "
+            /> */}
+            <Image
+              width={80}
+              height={80}
+              alt="avatar"
+              src={
+                userDetails?.logo !== ''
+                  ? userDetails?.logo
+                  : '/profile/placeholder.jpg'
+              }
+              className="absolute right-[6px] top-[6px] h-[84px] w-[84px] rounded-full object-cover p-0.5"
             />
 
             <div className="absolute">
               <CircularProgressbar
-                value={session?.user?.profile_count}
+                value={
+                  session?.user?.role === USER_ROLE?.EMPLOYEE
+                    ? profileCompletionCount?.employee ||
+                      session?.user?.profile_count
+                    : profileCompletionCount?.individual ||
+                      session?.user?.profile_count
+                }
                 styles={buildStyles({
                   pathColor: '#34A853',
                   strokeLinecap: 'butt',

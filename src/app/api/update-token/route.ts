@@ -65,7 +65,6 @@ export const POST = async (req: NextRequest) => {
 
   try {
     const { count } = await req.json();
-    console.log('count', count);
 
     const token = req.cookies.get('next-auth.session-token')?.value;
 

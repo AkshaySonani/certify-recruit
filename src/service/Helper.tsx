@@ -432,6 +432,47 @@ const calculatePercentage = (values: any, pr: any) => {
   return percentage.toFixed(2);
 };
 
+// const updateProfileCount = (
+//   role: any,
+//   section: any,
+//   setProfileCompletionCount: any,
+//   completedSections: any,
+//   setCompletedSections: any,
+// ) => {
+//   const employeeDetails = {
+//     basic_details: 30,
+//     company_detail: 50,
+//     KYC_compliance_detail: 20,
+//   };
+
+//   const individualDetails = {
+//     resume: 10,
+//     education: 10,
+//     key_skills: 10,
+//     career_info: 20,
+//     bank_details: 20,
+//     profile_summary: 10,
+//     personal_details: 20,
+//   };
+
+//   let details: any;
+//   if (role === 'employee') {
+//     details = employeeDetails;
+//   } else if (role === 'individual') {
+//     details = individualDetails;
+//   }
+
+//   const sectionKey = `${role}-${section}`;
+
+//   if (details && details[section] && !completedSections.has(sectionKey)) {
+//     setProfileCompletionCount((prevCount: any) => ({
+//       ...prevCount,
+//       [role]: (prevCount[role] || 0) + details[section],
+//     }));
+//     setCompletedSections((prevSet: any) => new Set(prevSet).add(sectionKey));
+//   }
+// };
+
 const updateProfileCount = (
   role: any,
   section: any,
@@ -465,10 +506,13 @@ const updateProfileCount = (
   const sectionKey = `${role}-${section}`;
 
   if (details && details[section] && !completedSections.has(sectionKey)) {
-    setProfileCompletionCount((prevCount: any) => ({
-      ...prevCount,
-      [role]: (prevCount[role] || 0) + details[section],
-    }));
+    setProfileCompletionCount((prevCount: any) => {
+      const newCount = (prevCount[role] || 0) + details[section];
+      return {
+        ...prevCount,
+        [role]: Math.min(newCount, 100), // Ensure count does not exceed 100
+      };
+    });
     setCompletedSections((prevSet: any) => new Set(prevSet).add(sectionKey));
   }
 };

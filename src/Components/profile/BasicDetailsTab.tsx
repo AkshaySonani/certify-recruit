@@ -45,7 +45,9 @@ const BasicDetails = ({
       .then((res) => {
         if (res?.data?.status === 200) {
           getUserDataApiCall();
-          handleNextClick('basic_details');
+          session?.user?.profile_count !== 100 &&
+            session?.user?.profile_count < 100 &&
+            handleNextClick('basic_details');
           // const profileCount = calculatePercentage(values, 33);
           // context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);

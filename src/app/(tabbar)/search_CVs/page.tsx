@@ -268,7 +268,6 @@ const Page = () => {
                     value={skills}
                     handleChange={(option: any) => setSkills(option)}
                     onKeyDown={(e: any) => {
-                      console.log('e', e);
                       onSearchSkill(e);
                     }}
                     components={{ Placeholder, DropdownIndicator }}

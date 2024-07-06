@@ -53,7 +53,9 @@ const PersonalDetailsTab = ({
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
-          handleNextClick('personal_details');
+          session?.user?.profile_count !== 100 &&
+            session?.user?.profile_count < 100 &&
+            handleNextClick('personal_details');
           getUserDataApiCall();
           context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);

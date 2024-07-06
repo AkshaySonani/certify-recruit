@@ -50,7 +50,9 @@ const KYCDetailsTab = ({
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
-          handleNextClick('KYC_compliance_detail');
+          session?.user?.profile_count !== 100 &&
+            session?.user?.profile_count < 100 &&
+            handleNextClick('KYC_compliance_detail');
           // context?.setUserProfileCount(res?.data?.data?.profile_count);
           setActivePage(1);
           getUserDataApiCall();

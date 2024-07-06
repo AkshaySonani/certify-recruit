@@ -51,7 +51,6 @@ export async function GET(req: NextRequest) {
     // const redirectUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/signup/signUpSuccess?${params}`;
 
     const redirectUrl = `${process.env.NEXT_PUBLIC_BASE_URL}dashboard?${params}`;
-    console.log('Redirecting to:', redirectUrl);
 
     return NextResponse.redirect(redirectUrl);
   } catch (error) {

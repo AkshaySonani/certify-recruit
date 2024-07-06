@@ -26,8 +26,6 @@ const BGVProfile = () => {
       });
   };
 
-  console.log('bgvData', bgvData);
-
   return (
     <div className="mt-5 ">
       {bgvData?.map((list: any) => {
