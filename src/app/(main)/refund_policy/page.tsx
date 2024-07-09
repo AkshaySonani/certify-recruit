@@ -47,9 +47,10 @@ const Page = () => {
         <ul className="mb-4 list-inside list-disc text-lg font-normal text-meta-light-blue-3">
           <li className="mb-5">
             If you are eligible for a refund as per our policy, please contact
-            our customer support team at [contact information]. Provide relevant
-            details such as your booking reference number and payment
-            information to expedite the refund process.
+            our customer support team at +91 9157350298 or Email:
+            info@certifyrecruit.io. Provide relevant details such as your
+            booking reference number and payment information to expedite the
+            refund process.
           </li>
           <li className="mb-5">
             Refunds will be issued to the original payment method used during
@@ -57,8 +58,8 @@ const Page = () => {
           </li>
           <li className="mb-10">
             Depending on your payment provider and bank processing times, it may
-            take a certain number of days for the refund amount to reflect in
-            your account.
+            take up to 10 working days for the refund amount to reflect in your
+            account.
           </li>
         </ul>
 

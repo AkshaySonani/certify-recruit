@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/service/AuthOptions';
 import { NextRequest, NextResponse } from 'next/server';
 import { User, Company, Individual } from '@/models/index';
+import { calculateExpirationDate } from '@/service/Helper';
 
 export const POST = async (req: NextRequest) => {
   const session: any = await getServerSession(authOptions);
@@ -248,7 +249,18 @@ export const GET = async (req: NextRequest) => {
 
   await connect();
 
-  const userDetails = await User.findById(session?.user?._id);
+  const userDetails = await User.findById(session?.user?._id).populate(
+    'subscription.plan_id',
+  );
+
+  if (userDetails.subscription && userDetails.subscription.plan_id) {
+    const { plan_type, createdAt } = userDetails.subscription.plan_id;
+    const planExpirationDate = calculateExpirationDate(createdAt, plan_type);
+
+    if (new Date() > planExpirationDate) {
+      userDetails.subscription = {};
+    }
+  }
 
   if (userDetails?.role === 'employee') {
     // for company user (that create job)
@@ -274,6 +286,7 @@ export const GET = async (req: NextRequest) => {
           ...employeeData,
           profile_count: userDetails?.profile_count,
         },
+        subscription: userDetails.subscription ? userDetails.subscription : [],
       });
     } catch (error) {
       return NextResponse.json(
@@ -310,6 +323,7 @@ export const GET = async (req: NextRequest) => {
           ...companyData,
           profile_count: userDetails?.profile_count,
         },
+        subscription: userDetails.subscription ? userDetails.subscription : [],
       });
     } catch (error) {
       return NextResponse.json(

@@ -66,7 +66,11 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   subscription: {
-    plan_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Pricing' },
+    plan_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Pricing',
+      default: null,
+    },
     createdAt: { type: Date, default: null },
     updatedAt: { type: Date, default: null },
   },

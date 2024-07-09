@@ -66,7 +66,7 @@ const Page = () => {
         setIsSpinner(true);
       }
     }
-  }, [session?.user]);
+  }, []);
 
   // let percentage = 0;
   // if (session?.user?.role === USER_ROLE?.EMPLOYEE) {

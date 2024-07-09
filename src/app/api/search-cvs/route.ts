@@ -1,10 +1,11 @@
 'use server';
 import mongoose from 'mongoose';
-import { Individual } from '@/models';
 import { connect } from '@/db/mongodb';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/service/AuthOptions';
+import { Company, Individual, User } from '@/models';
 import { NextRequest, NextResponse } from 'next/server';
+import { calculateExpirationDate } from '@/service/Helper';
 
 export const POST = async (req: NextRequest) => {
   const session: any = await getServerSession(authOptions);
@@ -19,6 +20,41 @@ export const POST = async (req: NextRequest) => {
 
   try {
     await connect();
+
+    const user = await User.findOne({ _id: session?.user?._id }).populate(
+      'subscription.plan_id',
+    );
+
+    const subscription = user.subscription;
+    if (!subscription || !subscription.plan_id) {
+      return NextResponse.json({
+        status: 403,
+        message:
+          'No active subscription plan found. Please subscribe to a plan to continue search applicant.',
+      });
+    }
+
+    const { plan_type, createdAt, max_applicant_searches } =
+      subscription.plan_id;
+    const planExpirationDate = calculateExpirationDate(createdAt, plan_type);
+    if (new Date() > planExpirationDate) {
+      return NextResponse.json({
+        status: 403,
+        message:
+          'No active subscription plan found. Please subscribe to a plan to continue search applicant.',
+      });
+    }
+
+    const companyData = await Company.findOne({ user_ref_id: user._id });
+    if (
+      max_applicant_searches !== Infinity &&
+      companyData?.applicant_search_count >= max_applicant_searches
+    ) {
+      return NextResponse.json({
+        status: 403,
+        message: `You have reached your maximum limit of ${max_applicant_searches} applicant searches.`,
+      });
+    }
 
     let query: any = {};
     if (role) {
@@ -126,6 +162,10 @@ export const POST = async (req: NextRequest) => {
         },
       },
     ]);
+
+    // increase search count
+    companyData.applicant_search_count += 1;
+    await companyData.save();
 
     return NextResponse.json({
       status: 200,

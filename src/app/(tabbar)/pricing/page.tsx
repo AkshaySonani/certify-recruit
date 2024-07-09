@@ -1,14 +1,4 @@
 'use client';
-import {
-  TEXT,
-  USER_ROLE,
-  EMP_BASIC_PLAN,
-  EMP_STANDARD_PLAN,
-  EMP_BUSINESS_PLAN,
-  INDIVIDUAL_DAILY_PLAN,
-  INDIVIDUAL_MONTHLY_PLAN,
-  INDIVIDUAL_FORT_NIGHT_PLAN,
-} from '@/service/Helper';
 import axios from 'axios';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -22,6 +12,7 @@ import { Switch } from '@headlessui/react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
+import { TEXT, USER_ROLE } from '@/service/Helper';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 
 var FIRST_PLAN: any;
@@ -46,17 +37,16 @@ const Page = () => {
     setLoading(true);
     API.get(API_CONSTANT?.PRICING)
       .then((res) => {
-        setLoading(false);
         const year = res?.data?.data?.filter(
           (y: any) => y?.plan_type === 'Yearly',
         );
         const month = res?.data?.data?.filter(
           (m: any) => m?.plan_type === 'Monthly',
         );
-
         setYearlyList(year);
         setMonthlyList(month);
         setSubscriptionPlan(res?.data?.data);
+        setLoading(false);
       })
       .catch((error) => {
         setLoading(false);
@@ -64,11 +54,12 @@ const Page = () => {
       });
   };
 
-  const makePayment = async (amount: any) => {
+  const makePayment = async (amount: any, planId: string) => {
     const transactionid =
       session?.data?.user?._id + '-' + uuidv4().toString().slice(-6);
 
     const payload = {
+      planId: planId,
       amount: amount * 100,
       redirectMode: 'POST',
       merchantTransactionId: transactionid,
@@ -119,11 +110,7 @@ const Page = () => {
     (x: any) => x?.plan_name === 'Business Plan' || x.plan_name === 'Monthly',
   );
 
-  const applyPlan = (plan_id: any) => {
-    console.log('🚀 ~ applyPlan ~ plan_id:', plan_id);
-  };
-
-  return session?.data?.user === undefined && loading ? (
+  return loading ? (
     <div className="flex h-full items-center justify-center">
       <Spinner width="32px" height="32px" color="#3751F2" className="spinner" />
     </div>
@@ -181,7 +168,7 @@ const Page = () => {
 
             <div className="my-5 flex items-end justify-center">
               <div className="text-4xl font-medium text-meta-purple-1">
-                ${FIRST_PLAN?.[0]?.plan_pricing}
+                ₹{FIRST_PLAN?.[0]?.plan_pricing}
               </div>
               {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
                 <div className="mb-1 text-xs font-medium text-meta-light-blue-3">
@@ -227,7 +214,9 @@ const Page = () => {
             <Button
               title={TEXT?.GET_STARTED}
               btnClass="h-12 w-full !mb-0"
-              handleClick={() => applyPlan(FIRST_PLAN?.[0]?._id)}
+              handleClick={() =>
+                makePayment(FIRST_PLAN?.[0]?.plan_pricing, FIRST_PLAN?.[0]?._id)
+              }
               titleClass="flex justify-center text-sm font-medium text-white"
             />
           </div>
@@ -246,7 +235,7 @@ const Page = () => {
 
             <div className="my-6 flex items-end justify-center">
               <div className="text-4xl font-medium text-meta-purple-1">
-                ${SECOND_PLAN?.[0]?.plan_pricing}
+                ₹{SECOND_PLAN?.[0]?.plan_pricing}
               </div>
               {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
                 <div className="mb-1 text-xs font-medium text-meta-light-blue-3">
@@ -292,7 +281,12 @@ const Page = () => {
             <Button
               title={TEXT?.GET_STARTED}
               btnClass="h-12 w-full !mt-2 !mb-0"
-              handleClick={() => applyPlan(SECOND_PLAN?.[0]?._id)}
+              handleClick={() =>
+                makePayment(
+                  SECOND_PLAN?.[0]?.plan_pricing,
+                  SECOND_PLAN?.[0]?._id,
+                )
+              }
               titleClass="flex justify-center text-sm font-medium text-white"
             />
           </div>
@@ -311,7 +305,7 @@ const Page = () => {
 
             <div className="my-6 flex items-end justify-center">
               <div className="text-4xl font-medium text-meta-purple-1">
-                ${THIRD_PLAN?.[0]?.plan_pricing}
+                ₹{THIRD_PLAN?.[0]?.plan_pricing}
               </div>
               {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
                 <div className="mb-1 text-xs font-medium text-meta-light-blue-3">
@@ -357,7 +351,9 @@ const Page = () => {
             <Button
               title={TEXT?.GET_STARTED}
               btnClass="h-12 w-full !mb-0"
-              handleClick={() => applyPlan(THIRD_PLAN?.[0]?._id)}
+              handleClick={() =>
+                makePayment(THIRD_PLAN?.[0]?.plan_pricing, THIRD_PLAN?.[0]?._id)
+              }
               titleClass="flex justify-center text-sm font-medium text-white"
             />
           </div>

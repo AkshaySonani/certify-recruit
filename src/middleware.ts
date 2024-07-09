@@ -2,14 +2,14 @@ import { NextResponse } from 'next/server';
 import { withAuth } from 'next-auth/middleware';
 import { encode, decode } from 'next-auth/jwt';
 const emailVerificationRequiredPaths = [
-  '/job',
+  // '/job',
   '/BGV',
   '/exam',
   '/quiz',
   '/users',
   '/earn_badge',
   '/search_CVs',
-  '/job_posting',
+  // '/job_posting',
   '/learnAndEarn',
   '/certification',
   '/badgeOfHonour',

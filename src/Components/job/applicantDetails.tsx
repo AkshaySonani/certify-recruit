@@ -27,10 +27,13 @@ function ApplicantDetails({ id, status }: any) {
         job_id: id,
       })
         .then((res: any) => {
-          const response = res?.data?.data?.[0]?.applicants?.filter((d) => {
-            return d?.status === status;
-          });
-          setData(response);
+          setData(res?.data?.data?.applicants);
+          // const response = res?.data?.data?.[0]?.applicants?.filter(
+          //   (d: any) => {
+          //     return d?.status === status;
+          //   },
+          // );
+          // setData(response);
         })
         .catch((error: any) => {
           toast.error(
@@ -59,6 +62,7 @@ function ApplicantDetails({ id, status }: any) {
         toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
+
   const downLoadResume = async (imageSrc: any) => {
     const image = await fetch(imageSrc);
     const imageBlog = await image.blob();
@@ -66,7 +70,7 @@ function ApplicantDetails({ id, status }: any) {
 
     const link = document.createElement('a');
     link.href = imageURL;
-    link.download = 'image file name here';
+    link.download = imageSrc?.split('/').pop() || 'user-cv';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

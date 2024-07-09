@@ -222,11 +222,11 @@ const Page = () => {
           Governing Law
         </h2>
         <p className="mb-5">
-          These Terms shall be governed by and construed in accordance with the
-          laws of India, without regard to its conflict of law principles. Any
-          dispute arising out of or relating to these Terms or the use of the
-          Site shall be resolved exclusively in the courts located in Vadodara,
-          Gujarat, India.
+          These Terms shall be governed by and construed by the laws of India,
+          without regard to its conflict of law principles. Any dispute arising
+          out of or relating to these Terms or the use of the Site shall be
+          resolved exclusively in the courts located in Vadodara, Gujarat,
+          India.
         </p>
 
         <h2 className="mb-2 text-2xl font-bold text-meta-purple-1">
@@ -246,8 +246,12 @@ const Page = () => {
           If you have any questions or concerns about these Terms, please
           contact us at: CLUSTER CERTIFY RECRUIT PRIVATE LIMITED
         </p>
-
-        <div>
+        <p className="text-base font-medium">
+          201, Platinum Hub, near Central Bank, Near Tulsidham Char Rasta,
+          Manjit Nagar, GIDC Industrial Area, Manjalpur, Vadodara, Gujarat
+          390011
+        </p>
+        <div className="text-base font-medium">
           <div className="flex items-center">
             <p>Email : </p>
             <a

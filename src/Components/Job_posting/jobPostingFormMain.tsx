@@ -73,7 +73,7 @@ function JobPostingFormMain({ id }: any) {
       API.post(API_CONSTANT.JOB, data)
         .then((res) => {
           if (res?.data?.status === 403) {
-            toast.error(res?.data?.message);
+            toast.error(res?.data?.message, { autoClose: false });
           } else {
             if (id) {
               toast?.success('Job updated Successfully');

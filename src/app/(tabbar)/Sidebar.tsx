@@ -127,7 +127,9 @@ const Sidebar = () => {
                   <button
                     type="button"
                     onClick={() => {
-                      percentage >= 100 && router.push('/' + e.path);
+                      if (percentage >= 100) {
+                        router.push('/' + e.path);
+                      }
                     }}
                     className={
                       activeTabCss(e.path) +
