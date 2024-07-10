@@ -27,12 +27,12 @@ const CareerInfoTab = ({
   getUserDataApiCall,
 }: any) => {
   const context = useContext(AppContext);
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(1);
   const [cities, setCities] = useState([]);
   const [cityQuery, setCityQuery] = useState('');
   const [isSpinner, setIsSpinner] = useState(false);
   const debouncedSearchCity = useDebounce(cityQuery);
-  const [isFresher, setIsFresher] = useState(userDetails?.is_fresher);
+  const [isFresher, setIsFresher] = useState(true);
 
   const {
     profileCompletionCount,
@@ -55,10 +55,6 @@ const CareerInfoTab = ({
     setIsSpinner(true);
     const obj = {
       ...values,
-      // profile_count: {
-      //   ...context?.userProfileCount,
-      //   career_details: 15,
-      // },
     };
 
     API.post(API_CONSTANT?.PROFILE, obj)
@@ -130,7 +126,7 @@ const CareerInfoTab = ({
 
   const formik: any = useFormik({
     initialValues: {
-      is_fresher: isFresher ? isFresher : userDetails?.is_fresher,
+      is_fresher: isFresher,
       expected_salary_start_at: userDetails?.expected_salary_start_at ?? '',
       total_experiences:
         userDetails?.total_experiences?.length !== 0
@@ -153,8 +149,8 @@ const CareerInfoTab = ({
   });
 
   useEffect(() => {
-    setActive(formik?.values?.total_experiences?.length > 0 ? 2 : 1);
-    setIsFresher(formik?.values?.total_experiences?.length > 0 ? false : true);
+    setActive(userDetails.total_experiences?.length > 0 ? 2 : 1);
+    setIsFresher(userDetails.total_experiences?.length > 0 ? false : true);
   }, []);
 
   const EXPERIENCE_TYPE = [
@@ -174,8 +170,7 @@ const CareerInfoTab = ({
 
   const handleChangeMenu = (i: any, el: any, name: any) => {
     let arr = [...formik?.values?.total_experiences];
-    arr[i][name] = el;
-    formik?.setFieldValue('total_experiences', arr);
+    formik.setFieldValue(`total_experiences[${i}].${name}`, el);
   };
 
   const handleRemove = (list: any) => {
@@ -197,15 +192,11 @@ const CareerInfoTab = ({
         month: '',
         reason_for_leaving: '',
       },
-      ,
     ]);
   };
-
   const handleFormChange = (index: any, event: any) => {
-    let data = [...formik?.values?.total_experiences];
-    data[index][event.target.name] = event.target.value;
-    formik.handleChange(event);
-    formik?.setFieldValue('total_experiences', data);
+    const { name, value } = event.target;
+    formik.setFieldValue(`total_experiences[${index}].${name}`, value);
   };
 
   return (
@@ -491,7 +482,7 @@ const CareerInfoTab = ({
               )}
               <div
                 className="my-2 w-full cursor-pointer rounded-2xl border-[2px] border-dashed border-x-meta-light-blue-1 p-3"
-                onClick={() => handleAddMoreEXP()}
+                onClick={handleAddMoreEXP}
               >
                 <p className="text-center text-base">Add experience</p>
               </div>

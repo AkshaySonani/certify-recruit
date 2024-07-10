@@ -84,6 +84,8 @@ const EmployeeJob = () => {
     };
     API.post(API_CONSTANT?.JOB_SEARCH, obj)
       .then((res: any) => {
+        console.log(res?.data?.data);
+
         setIsSpinner(false);
         setJobList(res?.data?.data);
       })
@@ -415,7 +417,7 @@ const EmployeeJob = () => {
             </div>
           </div>
         ) : jobList?.length !== 0 ? (
-          jobList?.map((list: any, index) => {
+          jobList?.map((list: any, index: any) => {
             return (
               <div className="mt-5">
                 <div className="rounded-2xl bg-meta-gray-2 p-5">

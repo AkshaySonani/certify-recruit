@@ -8,6 +8,7 @@ import usePersistState from '@/hooks/usePersistState';
 import API from '@/service/ApiService';
 import { ROUTE, TEXT } from '@/service/Helper';
 import { Dialog, Transition } from '@headlessui/react';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Fragment, useEffect, useState } from 'react';
@@ -16,14 +17,16 @@ import { toast } from 'react-toastify';
 
 export default function Page() {
   const router = useRouter();
-  const [categories, setCategories] = usePersistState([], 'category');
-  const [examStatus] = usePersistState(EXAM_STATUS?.STOPPED, 'Status');
+  const session: any = useSession();
+  const [categories, setCategories] = usePersistState([], 'Exam:category');
+  const [examStatus] = usePersistState(EXAM_STATUS?.STOPPED, 'Exam:Status');
   const [skillData, setSkillData] = useState([]);
   const [skillQuery, setSkillQuery] = useState('');
   const [JoinConfirmModal, setJoinConfirmModal] = useState(false);
   const [allCategory, setAllCategory] = useState<any>([]);
   const [joinNow, setJoinNow] = useState(true);
   const debouncedSearchSkill = useDebounce(skillQuery);
+  const [loading, setLoading] = useState(false);
   const MultiboxStyle = {
     control: (base: any, state: any) => ({
       ...base,
@@ -95,11 +98,28 @@ export default function Page() {
   };
 
   const confirmMeeting = () => {
+    setLoading(true);
     if (joinNow === true) {
+      setLoading(false);
       router?.push('/exam');
     } else {
-      setCategories([]);
-      router?.push('/dashboard');
+      let obj = {
+        email: session?.data?.user?.email,
+        categoryIds: categories,
+      };
+      API.post(API_CONSTANT?.SEND_EXAM_LINK, obj)
+        .then((res) => {
+          setJoinConfirmModal(false);
+          toast.success(res?.data?.message);
+          router?.push(ROUTE?.DASHBOARD);
+          setLoading(false);
+          setCategories([]);
+        })
+        .catch((error) => {
+          toast.error(
+            error?.response?.data?.message || 'Internal server error',
+          );
+        });
     }
   };
 
@@ -223,6 +243,7 @@ export default function Page() {
                     <div className="mt-5 flex h-full items-center">
                       <Button
                         title={TEXT?.DONE}
+                        isLoading={loading}
                         btnClass="h-[37px] mb-0"
                         handleClick={() => confirmMeeting()}
                       />

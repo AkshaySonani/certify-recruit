@@ -8,6 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { TEXT, updateProfileCount } from '@/service/Helper';
 import { Fragment, useContext, useEffect, useState } from 'react';
+import { UpdateTokenApi } from '@/service/api-helpers';
 
 const SummaryTab = ({
   session,
@@ -32,6 +33,7 @@ const SummaryTab = ({
       setProfileCompletionCount,
       completedSections,
       setCompletedSections,
+      profileCompletionCount,
     );
   };
 

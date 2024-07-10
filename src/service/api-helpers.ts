@@ -1,4 +1,7 @@
+import { API_CONSTANT } from '@/constant/ApiConstant';
 import jwt from 'jsonwebtoken';
+import API from './ApiService';
+import { toast } from 'react-toastify';
 
 class Helpers {
   getEnvVariable(key: string): string {
@@ -16,3 +19,16 @@ class Helpers {
 }
 
 export default Helpers;
+
+export const UpdateTokenApi = (count: any) => {
+  console.log('🚀 ~ UpdateTokenApi ~ count:', count);
+  API.post(API_CONSTANT?.UPDATE_TOKEN, { count: count })
+    .then((res) => {
+      if (res?.status === 200) {
+        // router.push(ROUTE?.DASHBOARD);
+      }
+    })
+    .catch((error) => {
+      console.log('🚀 ~ UpdateTokenApi ~ error:', error);
+    });
+};

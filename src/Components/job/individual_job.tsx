@@ -61,7 +61,7 @@ const IndividualJob = () => {
   }, []);
 
   const _onJobApply = (id: any) => {
-    const updatedItems = dashboardData.map((item: any) =>
+    const updatedItems: any = jobList?.map((item: any) =>
       item?._id === id ? { ...item, applied: true } : item,
     );
     setJobList(updatedItems);

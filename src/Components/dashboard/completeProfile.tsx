@@ -63,7 +63,11 @@ const CompleteProfile = ({ userDetails, currentProfileCount }: any) => {
           </div>
         </div>
         <p className="mb-1 text-base font-medium lowercase text-meta-light-blue-3 md:mb-5 md:text-lg">
-          {session?.user?.profile_count}% {TEXT?.COMPLETE}
+          {session?.user?.role === USER_ROLE?.EMPLOYEE
+            ? profileCompletionCount?.employee || session?.user?.profile_count
+            : profileCompletionCount?.individual ||
+              session?.user?.profile_count}
+          % {TEXT?.COMPLETE}
         </p>
         <div
           onClick={() => router.push(ROUTE?.MYPROFILE)}

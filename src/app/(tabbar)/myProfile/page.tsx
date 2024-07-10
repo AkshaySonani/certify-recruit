@@ -99,7 +99,7 @@ const MyProfile = () => {
     API.post(API_CONSTANT?.UPDATE_TOKEN, { count: count })
       .then((res) => {
         if (res?.status === 200) {
-          router.push(ROUTE?.DASHBOARD);
+          // router.push(ROUTE?.DASHBOARD);
         }
       })
       .catch((error) => {

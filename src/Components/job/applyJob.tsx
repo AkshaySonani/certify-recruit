@@ -3,12 +3,14 @@ import { API_CONSTANT } from '@/constant/ApiConstant';
 import API from '@/service/ApiService';
 import { TEXT } from '@/service/Helper';
 import { Dialog, Transition } from '@headlessui/react';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'react-toastify';
 const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
+  const session: any = useSession();
   const [OpenUploadModal, setOpenUploadModal] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
   const [isSpinner, setIsSpinner] = useState<any>({
@@ -111,29 +113,31 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
     }
   };
   const removeFile = (fileToRemove: any) => {
-    let obj: any = {
-      resumeId: fileToRemove?._id || String(fileToRemove?.file_id),
-    };
-    API.post(API_CONSTANT?.DELETE_RESUME, obj)
-      .then((res) => {
-        if (res?.data?.status === 200) {
-          //@ts-ignore
-          getUserCVList();
-          toast?.success(res?.data?.message);
-          setSelect('');
-        }
-      })
-      .catch((error) => {
-        toast?.error(error);
-      });
+    setSelect('');
+    // let obj: any = {
+    //   resumeId: fileToRemove?._id || String(fileToRemove?.file_id),
+    // };
+    // API.post(API_CONSTANT?.DELETE_RESUME, obj)
+    //   .then((res) => {
+    //     if (res?.data?.status === 200) {
+    //       //@ts-ignore
+    //       getUserCVList();
+    //       toast?.success(res?.data?.message);
+    //       setSelect('');
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     toast?.error(error);
+    //   });
   };
+
   const _onSubmit = () => {
     if (select === '') {
       toast?.error('Please upload resume');
     } else {
       setIsSpinner({ continue: true });
       const obj = {
-        user_id: userDetails?._id,
+        user_id: session?.data?.user?._id,
         job_id: jobApplyId,
         user_cv: [select?.ele],
       };
@@ -190,7 +194,10 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
             key={select?.ele?.file_id}
             className="mt-5 flex cursor-pointer items-center justify-between rounded-md bg-meta-gray-2 p-4"
           >
-            <Link href={select?.ele?.file_url} target="_blank">
+            <Link
+              href={select?.ele?.file_url ? select?.ele?.file_url : ''}
+              target="_blank"
+            >
               <div className="flex items-center">
                 <Image
                   alt="file"

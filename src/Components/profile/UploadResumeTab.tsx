@@ -114,28 +114,33 @@ const UploadResumeTab = ({
     if (fileName && files?.length !== 0) {
       UploadFileOnBucket(files);
     } else {
-      API.post(API_CONSTANT?.PROFILE, {
-        resume: userDetails?.resume,
-        // profile_count: userDetails?.profile_count,
-      })
-        .then((res) => {
-          if (res?.data?.status === 200) {
-            getUserDataApiCall();
-            session?.user?.profile_count !== 100 &&
-              session?.user?.profile_count < 100 &&
-              handleNextClick('resume');
-            setFileName('');
-            // context?.setUserProfileCount(res?.data?.data?.profile_count);
-            // actions.setSubmitting(false);
-            setActivePage(activePage + 1);
-            toast?.success(res?.data?.message);
-          }
-        })
-        .catch((error) => {
-          toast.error(
-            error?.response?.data?.message || 'Internal server error',
-          );
-        });
+      if (userDetails?.resume?.length === 0) {
+        toast.error('Upload Your Resume');
+      } else {
+        setActivePage(activePage + 1);
+      }
+
+      // API.post(API_CONSTANT?.PROFILE, {
+      //   resume: userDetails?.resume,
+      // })
+      //   .then((res) => {
+      //     if (res?.data?.status === 200) {
+      //       getUserDataApiCall();
+      //       session?.user?.profile_count !== 100 &&
+      //         session?.user?.profile_count < 100 &&
+      //         handleNextClick('resume');
+      //       setFileName('');
+      //       // context?.setUserProfileCount(res?.data?.data?.profile_count);
+      //       // actions.setSubmitting(false);
+      //       setActivePage(activePage + 1);
+      //       toast?.success(res?.data?.message);
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     toast.error(
+      //       error?.response?.data?.message || 'Internal server error',
+      //     );
+      //   });
     }
   };
 

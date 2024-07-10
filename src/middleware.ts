@@ -27,11 +27,13 @@ const profileCompletionRequiredPaths = [
   '/learnAndEarn',
   '/certification',
   '/badgeOfHonour',
+  '/job/:path*',
 ];
 
 export default withAuth(
   async function middleware(req: any) {
     const { pathname, origin, searchParams } = req.nextUrl;
+
     const secret: any = process.env.NEXTAUTH_SECRET;
     let token = req.nextauth.token;
     const queryToken = searchParams.get('token');
@@ -85,6 +87,7 @@ export default withAuth(
         }
       }
     }
+
     // Allow access if none of the conditions are met (authenticated and verified)
     return NextResponse.next();
   },
@@ -116,5 +119,7 @@ export const config = {
     '/certification',
     '/badgeOfHonour',
     '/signup/signUpSuccess:path',
+    '/job/:path*',
+    '/job_posting/:path*',
   ],
 };

@@ -212,13 +212,14 @@ const individualSchema = new mongoose.Schema({
         required: true,
       },
       month: {
+        default: 0,
         type: Number,
-        validate: {
-          validator: (v: any) => {
-            return v >= 1 && v <= 12;
-          },
-          message: (props: any) => `${props.value} is not a valid month!`,
-        },
+        // validate: {
+        //   validator: (v: any) => {
+        //     return v >= 1 && v <= 12;
+        //   },
+        //   message: (props: any) => `${props.value} is not a valid month!`,
+        // },
       },
       reasonForLeaving: {
         type: String,

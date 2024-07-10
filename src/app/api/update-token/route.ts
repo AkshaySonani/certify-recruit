@@ -88,7 +88,7 @@ export const POST = async (req: NextRequest) => {
     await connect();
 
     // Update the user profile_count in the database
-    await User.findByIdAndUpdate(decodedToken?._id, { profile_count: 100 });
+    await User.findByIdAndUpdate(decodedToken?._id, { profile_count: count });
 
     const response = NextResponse.json({
       message: 'Profile count updated successfully',

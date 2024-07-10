@@ -11,36 +11,50 @@ import { API_CONSTANT } from '@/constant/ApiConstant';
 import React, { useEffect, useRef, useState } from 'react';
 import FinishExamDialog from '@/Components/exam/FinishExamDialog';
 import { EXAM_STATUS, QUESTION_STATUS, RENDER_OPTION } from '@/constant/Enum';
+import jwt from 'jsonwebtoken';
 
-const Page = () => {
+const Page = (data: any) => {
   const router = useRouter();
   const intervalRef = useRef<any>(null);
   const [secondsRemaining, setSecondsRemaining] = useState(30 * 60);
-  const [startTime, setStartTime] = usePersistState(Date.now(), 'startTime');
-  const [endTime, setEndTime] = usePersistState(30 * 60, 'endTime');
+  const [startTime, setStartTime] = usePersistState(
+    Date.now(),
+    'Exam:startTime',
+  );
+  const [endTime, setEndTime] = usePersistState(30 * 60, 'Exam:endTime');
   const [examStatus, setExamStatus] = usePersistState(
     EXAM_STATUS?.STARTED,
-    'Status',
+    'Exam:Status',
   );
   const [CurrentQuestion, setCurrentQuestion] = usePersistState(
     0,
-    'CurrentQuestion',
+    'Exam:CurrentQuestion',
   );
-  const [categories, setCategories] = usePersistState([], 'category');
-  const [answerSheet, setAnswerSheet] = usePersistState([], 'answerSheet');
+  const [categories, setCategories] = usePersistState([], 'Exam:category');
+  const [answerSheet, setAnswerSheet] = usePersistState([], 'Exam:answerSheet');
   const [finishExamModal, setFinishExamModal] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<any>('');
-  const [examId, setExamId] = usePersistState('', 'examId');
+  const [examId, setExamId] = usePersistState('', 'Exam:examId');
   const [results, setResults] = useState(undefined);
   const [questionSheet, setQuestionSheet] = usePersistState(
     [],
-    'questionSheet',
+    'Exam:questionSheet',
   );
   const secondsToDisplay = Math.floor(secondsRemaining % 60);
   const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60;
   const minutesToDisplay = Math.floor(secondsRemaining / 60);
   const hoursToDisplay = (minutesRemaining - minutesToDisplay) / 60;
   const twoDigits = (num: any) => String(num).padStart(2, '0');
+
+  const queryToken = data?.searchParams.token;
+  const decoded: any = jwt.decode(queryToken);
+  console.log(decoded);
+
+  useEffect(() => {
+    if (queryToken) {
+      setCategories(decoded?.categoryIds);
+    }
+  }, [queryToken]);
 
   useEffect(() => {
     if (startTime) {
@@ -78,7 +92,7 @@ const Page = () => {
   }, []);
 
   useEffect(() => {
-    if (categories?.length === 0 && results === undefined) {
+    if (categories?.length === 0 && results === undefined && !queryToken) {
       router.replace(ROUTE?.CERTIFICATION);
     }
   }, []);

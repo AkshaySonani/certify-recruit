@@ -64,16 +64,14 @@ const SignupForm = () => {
         redirect: false,
         role: context.currentRole,
       });
+
       if (!signUpResponse?.ok) {
         setLoading(false);
         toast.error(signUpResponse?.error);
       } else {
+        router.push(ROUTE?.SIGN_UP_SUCCESS);
         if (context?.currentRole === 'individual') {
-          router.push(ROUTE?.DASHBOARD);
-          setSuccessMsg(false);
           onNextUpdateProfileRole();
-        } else {
-          router.push(ROUTE?.SIGN_UP_SUCCESS);
         }
         setLoading(false);
         toast.success('User successfully register');

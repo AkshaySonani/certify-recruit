@@ -68,23 +68,6 @@ const Page = () => {
     }
   }, []);
 
-  // let percentage = 0;
-  // if (session?.user?.role === USER_ROLE?.EMPLOYEE) {
-  //   percentage =
-  //     context?.userProfileCount?.basic_details +
-  //     context?.userProfileCount?.company_details +
-  //     context?.userProfileCount?.kyc_details;
-  // } else {
-  //   percentage =
-  //     context?.userProfileCount?.career_details +
-  //     context?.userProfileCount?.education_details +
-  //     context?.userProfileCount?.personal_details +
-  //     context?.userProfileCount?.resume_details +
-  //     context?.userProfileCount?.skill_details +
-  //     context?.userProfileCount?.bank_details +
-  //     context?.userProfileCount?.summary_details;
-  // }
-
   const getProfileDetails = () => {
     setIsSpinner(true);
     API.get(API_CONSTANT?.PROFILE)
@@ -136,7 +119,7 @@ const Page = () => {
                       />
                     </div>
                     <p className="text-2xl font-bold text-meta-purple-1">
-                      {item?.count}
+                      {item?.count ?? 0}
                     </p>
                     <p className="text-base font-medium text-meta-light-blue-3">
                       {item.title}
@@ -146,16 +129,14 @@ const Page = () => {
                       width={61}
                       height={93}
                       src={'/dashboard/MaskGroup.svg'}
-                      className="absolute right-0 top-2"
+                      className="absolute right-0 top-2 hidden xl:block"
                     />
                   </div>
                 );
               })}
             </div>
           )}
-          {/* session?.user?.role === USER_ROLE?.EMPLOYEE ? (
-          profileCompletionCount?.employee || session?.user?.profile_count ) :
-          profileCompletionCount?.individual || */}
+
           {profileCompletionCount?.employee < 100 ||
           profileCompletionCount?.individual < 100 ||
           ((session?.user?.profile_count || currentProfileCount) < 100 &&

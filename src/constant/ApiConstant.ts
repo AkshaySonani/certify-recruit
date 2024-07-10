@@ -35,6 +35,7 @@ const API_CONSTANT = {
   UPDATE_LE_DETAILS: '/update-le-details',
   UPDATE_COM_USER_STATUS: '/update-com-user-details',
   LEARN_AND_EARN_QUESTION: '/learn-and-earn-question',
+  SENT_EXAM_LINK: '/sent-exam-link',
 };
 
 export { API_CONSTANT };

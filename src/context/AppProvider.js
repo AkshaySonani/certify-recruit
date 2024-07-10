@@ -1,15 +1,19 @@
-"use client";
-import { createContext, useState } from "react";
+'use client';
+import usePersistState from '@/hooks/usePersistState';
+import { useSession } from 'next-auth/react';
+import { createContext, useEffect, useState } from 'react';
 const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
+  const session = useSession();
   const [userData, setUserData] = useState({});
-  const [currentRole, setCurrentRole] = useState("");
+  const [currentRole, setCurrentRole] = useState('');
   const [userProfileCount, setUserProfileCount] = useState({});
   const [completedSections, setCompletedSections] = useState(new Set());
-  const [profileCompletionCount, setProfileCompletionCount] = useState({});
-
-  
+  const [profileCompletionCount, setProfileCompletionCount] = usePersistState(
+    {},
+    'profileCount',
+  );
 
   const valueToShare = {
     userData,
@@ -21,7 +25,7 @@ const AppProvider = ({ children }) => {
     setUserProfileCount,
     setCompletedSections,
     profileCompletionCount,
-    setProfileCompletionCount
+    setProfileCompletionCount,
   };
 
   return (

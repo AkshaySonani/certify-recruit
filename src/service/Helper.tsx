@@ -479,6 +479,7 @@ const updateProfileCount = (
   setProfileCompletionCount: any,
   completedSections: any,
   setCompletedSections: any,
+  profileCompletionCount: any,
 ) => {
   const employeeDetails = {
     basic_details: 30,

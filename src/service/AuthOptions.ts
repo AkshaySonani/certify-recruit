@@ -169,13 +169,13 @@ export const authOptions: AuthOptions = {
         token._id = user._id;
         token.role = user.role;
         token.email = user.email;
-        token.profile_count = 0;
+        token.profile_count = user?.profile_count ? user.profile_count : 0;
         token.phone = user.phone;
         token.status = user.status;
         token.isVerified = user.isVerified;
         token.profile_picture = user.profile_picture;
       } else if (!token.role && !token._id) {
-        token.profile_count = 0;
+        token.profile_count = user?.profile_count ? user.profile_count : 0;
         token._id = currentUser?._id;
         token.role = USER_ROLE?.INDIVIDUAL; // Default role if not set
         token.isVerified = currentUser.isVerified;
