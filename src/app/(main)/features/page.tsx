@@ -6,12 +6,12 @@ import ContactUs from '@/Components/home/ContactUs';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Feedback from '@/Components/home/Feedback';
-import { ROUTE, TEXT } from '@/service/Helper';
+import { ROUTE, TEXT, USER_ROLE } from '@/service/Helper';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 const Page = () => {
-  const { data: session } = useSession<any>();
+  const { data: session }: any = useSession<any>();
   const router = useRouter();
   useEffect(() => {
     AOS.init({ duration: 500 });
@@ -48,7 +48,7 @@ const Page = () => {
               title={TEXT?.START_NOW}
               handleClick={() => {
                 if (session?.user) {
-                  router?.push(ROUTE?.COMING_SOON);
+                  router?.push(ROUTE?.DASHBOARD);
                 } else {
                   router?.push(ROUTE?.LOGIN);
                 }
@@ -60,7 +60,7 @@ const Page = () => {
             <button
               onClick={() => {
                 if (session?.user) {
-                  router?.push(ROUTE?.COMING_SOON);
+                  router?.push(ROUTE?.DASHBOARD);
                 } else {
                   router?.push(ROUTE?.LOGIN);
                 }
@@ -128,7 +128,11 @@ const Page = () => {
                 type="button"
                 handleClick={() => {
                   if (session?.user) {
-                    router?.push(ROUTE?.COMING_SOON);
+                    if (session?.user?.role === USER_ROLE?.EMPLOYEE) {
+                      router?.push(ROUTE?.JOb_POST);
+                    } else {
+                      router?.push(ROUTE?.JOB);
+                    }
                   } else {
                     router?.push(ROUTE?.LOGIN);
                   }
@@ -192,7 +196,11 @@ const Page = () => {
                 type="button"
                 handleClick={() => {
                   if (session?.user) {
-                    router?.push(ROUTE?.COMING_SOON);
+                    if (session?.user?.role === USER_ROLE?.EMPLOYEE) {
+                      router?.push(ROUTE?.JOb_POST);
+                    } else {
+                      router?.push(ROUTE?.JOB);
+                    }
                   } else {
                     router?.push(ROUTE?.LOGIN);
                   }
@@ -256,7 +264,11 @@ const Page = () => {
                 type="button"
                 handleClick={() => {
                   if (session?.user) {
-                    router?.push(ROUTE?.COMING_SOON);
+                    if (session?.user?.role === USER_ROLE?.EMPLOYEE) {
+                      router?.push(ROUTE?.JOb_POST);
+                    } else {
+                      router?.push(ROUTE?.JOB);
+                    }
                   } else {
                     router?.push(ROUTE?.LOGIN);
                   }

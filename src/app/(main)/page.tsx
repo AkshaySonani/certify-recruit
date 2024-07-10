@@ -1,6 +1,6 @@
 'use client';
 import Button from '@/Components/Button';
-import { ROUTE } from '@/service/Helper';
+import { ROUTE, USER_ROLE } from '@/service/Helper';
 import { Icons } from '@/svg';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -17,7 +17,7 @@ export default function Home() {
   useEffect(() => {
     AOS.init({ duration: 500 });
   }, []);
-  const { data: session } = useSession<any>();
+  const { data: session }: any = useSession<any>();
   const router = useRouter();
   const [selected, setSelected] = useState(0);
   const feedbackArr = [
@@ -88,7 +88,11 @@ export default function Home() {
                     title={'Get Certification'}
                     handleClick={() => {
                       if (session?.user) {
-                        router?.push(ROUTE?.COMING_SOON);
+                        if (session?.user?.role === USER_ROLE?.INDIVIDUAL) {
+                          router?.push(ROUTE?.CERTIFICATION);
+                        } else {
+                          router?.push(ROUTE?.DASHBOARD);
+                        }
                       } else {
                         router?.push(ROUTE?.LOGIN);
                       }
@@ -105,7 +109,11 @@ export default function Home() {
                     title={'Apply Now'}
                     handleClick={() => {
                       if (session?.user) {
-                        router?.push(ROUTE?.COMING_SOON);
+                        if (session?.user?.role === USER_ROLE?.INDIVIDUAL) {
+                          router?.push(ROUTE?.JOB);
+                        } else {
+                          router?.push(ROUTE?.JOB);
+                        }
                       } else {
                         router?.push(ROUTE?.LOGIN);
                       }
@@ -146,7 +154,11 @@ export default function Home() {
                     title={'Get Certification'}
                     handleClick={() => {
                       if (session?.user) {
-                        router?.push(ROUTE?.COMING_SOON);
+                        if (session?.user?.role === USER_ROLE?.INDIVIDUAL) {
+                          router?.push(ROUTE?.CERTIFICATION);
+                        } else {
+                          router?.push(ROUTE?.DASHBOARD);
+                        }
                       } else {
                         router?.push(ROUTE?.LOGIN);
                       }
