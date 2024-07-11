@@ -40,6 +40,8 @@ const Page = (data: any) => {
     [],
     'Exam:questionSheet',
   );
+  const [focusCount, setFocusCount] = useState(0);
+  const focusOutCountRef = useRef(0);
   const secondsToDisplay = Math.floor(secondsRemaining % 60);
   const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60;
   const minutesToDisplay = Math.floor(secondsRemaining / 60);
@@ -90,6 +92,30 @@ const Page = (data: any) => {
       getQuestionSheet();
     }
   }, []);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        focusOutCountRef.current++;
+        setFocusCount(focusOutCountRef.current);
+        // Show alert message
+        alert('You have focused out of the window.');
+
+        // Redirect after 3 focus outs
+        if (focusOutCountRef.current === 3) {
+          handleFinishExam()
+          toast.error("You have finished exam")
+         // Replace with your redirect path
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [router]);
 
   useEffect(() => {
     if (categories?.length === 0 && results === undefined && !queryToken) {
