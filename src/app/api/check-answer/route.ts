@@ -19,7 +19,7 @@ export const POST = async (req: NextRequest) => {
     await connect();
     const { exam_id, answers } = await req.json();
 
-    if (!Array.isArray(answers) || answers.length === 0) {
+    if (!Array.isArray(answers)) {
       return NextResponse.json({
         status: 400,
         message: 'Answers must be a non-empty array',

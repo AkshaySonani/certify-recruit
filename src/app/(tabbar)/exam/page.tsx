@@ -12,6 +12,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import FinishExamDialog from '@/Components/exam/FinishExamDialog';
 import { EXAM_STATUS, QUESTION_STATUS, RENDER_OPTION } from '@/constant/Enum';
 import jwt from 'jsonwebtoken';
+import AlertUserInfoDialog from '@/Components/exam/AlertUserinfoDialog';
 
 const Page = (data: any) => {
   const router = useRouter();
@@ -35,22 +36,21 @@ const Page = (data: any) => {
   const [finishExamModal, setFinishExamModal] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<any>('');
   const [examId, setExamId] = usePersistState('', 'Exam:examId');
+  const [showAlertMsg, setShowAlertMsg] = useState(false);
   const [results, setResults] = useState(undefined);
   const [questionSheet, setQuestionSheet] = usePersistState(
     [],
     'Exam:questionSheet',
   );
-  const [focusCount, setFocusCount] = useState(0);
+  const [focusCount, setFocusCount] = usePersistState(0, 'Exam:focusCount');
   const focusOutCountRef = useRef(0);
   const secondsToDisplay = Math.floor(secondsRemaining % 60);
   const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60;
   const minutesToDisplay = Math.floor(secondsRemaining / 60);
   const hoursToDisplay = (minutesRemaining - minutesToDisplay) / 60;
   const twoDigits = (num: any) => String(num).padStart(2, '0');
-
   const queryToken = data?.searchParams.token;
   const decoded: any = jwt.decode(queryToken);
-  console.log(decoded);
 
   useEffect(() => {
     if (queryToken) {
@@ -70,7 +70,6 @@ const Page = (data: any) => {
     if (questionSheet?.length === 0) {
       clearStorage();
     }
-
     // Start interval to update timer
     intervalRef.current = setInterval(() => {
       setSecondsRemaining((prevTime: any) => {
@@ -89,33 +88,45 @@ const Page = (data: any) => {
 
   useEffect(() => {
     if (questionSheet?.length === 0) {
+      setShowAlertMsg(true);
       getQuestionSheet();
     }
   }, []);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') {
-        focusOutCountRef.current++;
-        setFocusCount(focusOutCountRef.current);
-        // Show alert message
-        alert('You have focused out of the window.');
-
-        // Redirect after 3 focus outs
-        if (focusOutCountRef.current === 3) {
-          handleFinishExam()
-          toast.error("You have finished exam")
-         // Replace with your redirect path
+      if (
+        typeof document !== 'undefined' &&
+        typeof window !== 'undefined' &&
+        document.visibilityState === 'hidden'
+      ) {
+        if (focusOutCountRef.current < 3 && focusCount < 3) {
+          setShowAlertMsg(true);
+          focusOutCountRef.current++;
+          setFocusCount(focusOutCountRef.current);
         }
       }
     };
 
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    if (typeof document !== 'undefined' && typeof window !== 'undefined') {
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+    }
 
     return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (typeof document !== 'undefined' && typeof window !== 'undefined') {
+        document.removeEventListener(
+          'visibilitychange',
+          handleVisibilityChange,
+        );
+      }
     };
-  }, [router]);
+  }, []);
+
+  useEffect(() => {
+    if (focusCount === 3) {
+      handleFinishExam();
+    }
+  }, [focusCount]);
 
   useEffect(() => {
     if (categories?.length === 0 && results === undefined && !queryToken) {
@@ -132,6 +143,7 @@ const Page = (data: any) => {
     });
     return a;
   };
+
   const updatedQuestions =
     answerSheet?.length !== 0
       ? compareArrays(questionSheet, answerSheet)
@@ -166,10 +178,10 @@ const Page = (data: any) => {
   const clearStorage = () => {
     localStorage.removeItem('Exam:startTime');
     localStorage.removeItem('Exam:endTime');
+    setFocusCount(0);
     setSelectedAnswer('');
     setExamStatus(EXAM_STATUS.STOPPED);
     setQuestionSheet([]);
-    // setCategories([]);
     setCurrentQuestion(0);
     setAnswerSheet([]);
     setExamId('');
@@ -203,9 +215,12 @@ const Page = (data: any) => {
       exam_id: examId,
       answers: answerSheet.map(({ _id, ans }: any) => ({ que_id: _id, ans })),
     };
+    console.log('obj', obj);
+
     API.post(API_CONSTANT?.CHECK_ANSWER, obj)
       .then((res: any) => {
         if (res?.data?.status === 200) {
+          setShowAlertMsg(false);
           setResults(res?.data?.data);
           setCategories([]);
           clearStorage();
@@ -590,6 +605,12 @@ const Page = (data: any) => {
       ) : (
         <ResultComp results={results} setResults={setResults} />
       )}
+      <AlertUserInfoDialog
+        isOpen={showAlertMsg}
+        setIsOpen={setShowAlertMsg}
+        focusCount={focusCount}
+        handleFinishExam={handleFinishExam}
+      />
     </>
   );
 };

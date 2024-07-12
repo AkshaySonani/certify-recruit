@@ -100,8 +100,8 @@ export default function Page() {
   const confirmMeeting = () => {
     setLoading(true);
     if (joinNow === true) {
-      setLoading(false);
       router?.push('/exam');
+      setLoading(false);
     } else {
       let obj = {
         email: session?.data?.user?.email,

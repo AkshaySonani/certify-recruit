@@ -4,14 +4,14 @@ import { encode, decode } from 'next-auth/jwt';
 const emailVerificationRequiredPaths = [
   // '/job',
   '/BGV',
-  '/exam',
+  // '/exam',
   '/quiz',
   '/users',
   '/earn_badge',
   '/search_CVs',
   // '/job_posting',
   '/learnAndEarn',
-  '/certification',
+  // '/certification',
   '/badgeOfHonour',
 ];
 const profileCompletionRequiredPaths = [
