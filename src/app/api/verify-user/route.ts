@@ -3,10 +3,15 @@ import jwt from 'jsonwebtoken';
 import User from '@/models/user';
 import { connect } from '@/db/mongodb';
 import { NextRequest, NextResponse } from 'next/server';
+import { encode } from 'next-auth/jwt';
 
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
+    const sessionCookie = process.env.NEXTAUTH_URL?.startsWith('https://')
+      ? '__Secure-next-auth.session-token'
+      : 'next-auth.session-token';
+
     const token = searchParams.get('token');
 
     if (!token) {
@@ -36,23 +41,18 @@ export async function GET(req: NextRequest) {
     user.isVerified = true;
     await user.save();
 
-    // Create a new token with the updated isVerified status
-    const newToken = jwt.sign(
-      { userId: user._id, isVerified: true },
-      process.env.JWT_SECRET!,
-      { expiresIn: '30d' }, // Adjust the token expiration as needed
-    );
+    const redirectUrl = `${process.env.NEXT_PUBLIC_BASE_URL}dashboard`;
 
-    const params = new URLSearchParams({
-      isVerified: 'true',
-      token: newToken, // Send the new token back to the client
-    }).toString();
+    const encodedToken = await encode({
+      token: { ...decoded, isVerified: true },
+      secret: process.env.JWT_SECRET!,
+    });
 
-    // const redirectUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/signup/signUpSuccess?${params}`;
+    const res = NextResponse.redirect(redirectUrl, { status: 301 });
+    res.cookies.set(sessionCookie, encodedToken);
+    console.log('token updated', encodedToken);
 
-    const redirectUrl = `${process.env.NEXT_PUBLIC_BASE_URL}dashboard?${params}`;
-
-    return NextResponse.redirect(redirectUrl);
+    return res;
   } catch (error) {
     console.error('Verification error:', error);
     return NextResponse.json({
