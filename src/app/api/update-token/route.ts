@@ -66,7 +66,9 @@ export const POST = async (req: NextRequest) => {
   try {
     const { count } = await req.json();
 
-    const token = req.cookies.get('next-auth.session-token')?.value;
+    const token =
+      req.cookies.get('next-auth.session-token')?.value ||
+      req.cookies.get('__Secure-next-auth.session-token')?.value;
 
     if (!token) {
       return NextResponse.json({
