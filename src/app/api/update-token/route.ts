@@ -51,12 +51,77 @@ import { decode, encode } from 'next-auth/jwt';
 import { authOptions } from '@/service/AuthOptions';
 import { NextRequest, NextResponse } from 'next/server';
 
+// const secret: any = process.env.NEXTAUTH_SECRET;
+
+// export const POST = async (req: NextRequest) => {
+//   const session: any = await getServerSession(authOptions);
+
+//   if (!session?.user?._id) {
+//     return NextResponse.json({
+//       message: 'Unauthorized',
+//       status: 401,
+//     });
+//   }
+
+//   try {
+//     const { count } = await req.json();
+
+//     const token =
+//       req.cookies.get('next-auth.session-token')?.value ||
+//       req.cookies.get('__Secure-next-auth.session-token')?.value;
+
+//     if (!token) {
+//       return NextResponse.json({
+//         message: 'Token not found',
+//         status: 401,
+//       });
+//     }
+
+//     let decodedToken = await decode({ token, secret });
+//     decodedToken = {
+//       ...decodedToken,
+//       profile_count: count,
+//       // profile_count: (decodedToken?.profile_count || 0) + count,
+//     };
+
+//     const encodedToken = await encode({ token: decodedToken, secret });
+
+//     // Connect to the database
+//     await connect();
+
+//     // Update the user profile_count in the database
+//     await User.findByIdAndUpdate(decodedToken?._id, { profile_count: count });
+
+//     const response = NextResponse.json({
+//       message: 'Profile count updated successfully',
+//       status: 200,
+//     });
+
+//     response.cookies.set('next-auth.session-token', encodedToken, {
+//       httpOnly: true,
+//       secure: true,
+//       path: '/',
+//     });
+
+//     return response;
+//   } catch (error: any) {
+//     return NextResponse.json(
+//       {
+//         message: 'An error occurred while updating profile count.',
+//         error: error.message,
+//       },
+//       { status: 500 },
+//     );
+//   }
+// };
+
 const secret: any = process.env.NEXTAUTH_SECRET;
 
 export const POST = async (req: NextRequest) => {
   const session: any = await getServerSession(authOptions);
 
   if (!session?.user?._id) {
+    console.error('Unauthorized: No session or user ID found');
     return NextResponse.json({
       message: 'Unauthorized',
       status: 401,
@@ -66,11 +131,16 @@ export const POST = async (req: NextRequest) => {
   try {
     const { count } = await req.json();
 
-    const token =
-      req.cookies.get('next-auth.session-token')?.value ||
-      req.cookies.get('__Secure-next-auth.session-token')?.value;
+    let tokenName = 'next-auth.session-token';
+    let token = req.cookies.get(tokenName)?.value;
 
     if (!token) {
+      tokenName = '__Secure-next-auth.session-token';
+      token = req.cookies.get(tokenName)?.value;
+    }
+
+    if (!token) {
+      console.error('Token not found in cookies');
       return NextResponse.json({
         message: 'Token not found',
         status: 401,
@@ -78,26 +148,29 @@ export const POST = async (req: NextRequest) => {
     }
 
     let decodedToken = await decode({ token, secret });
+    console.log('Decoded token:', decodedToken);
+
     decodedToken = {
       ...decodedToken,
       profile_count: count,
-      // profile_count: (decodedToken?.profile_count || 0) + count,
     };
 
     const encodedToken = await encode({ token: decodedToken, secret });
+    console.log('Encoded token:', encodedToken);
 
     // Connect to the database
     await connect();
 
     // Update the user profile_count in the database
     await User.findByIdAndUpdate(decodedToken?._id, { profile_count: count });
+    console.log('Profile count updated in the database');
 
     const response = NextResponse.json({
       message: 'Profile count updated successfully',
       status: 200,
     });
 
-    response.cookies.set('next-auth.session-token', encodedToken, {
+    response.cookies.set(tokenName, encodedToken, {
       httpOnly: true,
       secure: true,
       path: '/',
@@ -105,6 +178,7 @@ export const POST = async (req: NextRequest) => {
 
     return response;
   } catch (error: any) {
+    console.error('Error occurred:', error);
     return NextResponse.json(
       {
         message: 'An error occurred while updating profile count.',
