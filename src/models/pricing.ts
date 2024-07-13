@@ -23,6 +23,10 @@ const pricingSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
+  is_Active: {
+    type: Boolean,
+    required: false,
+  },
   max_posts: {
     type: Number,
     required: true,

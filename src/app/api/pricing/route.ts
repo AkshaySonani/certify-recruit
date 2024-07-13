@@ -66,6 +66,7 @@ export async function GET(req: NextResponse) {
     // for company user (that create job)
     try {
       const pricingData = await Pricing.find({
+        is_Active: true,
         plan_for: 'employee',
       });
 
@@ -93,6 +94,7 @@ export async function GET(req: NextResponse) {
     // for employee user ( user that find job )
     try {
       const pricingData = await Pricing.find({
+        is_Active: true,
         plan_for: 'individual',
       });
 

@@ -59,7 +59,6 @@ const Page = () => {
       session?.data?.user?._id + '-' + uuidv4().toString().slice(-6);
 
     const payload = {
-      planId: planId,
       amount: amount * 100,
       redirectMode: 'POST',
       merchantTransactionId: transactionid,
