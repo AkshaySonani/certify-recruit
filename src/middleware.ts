@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { withAuth } from 'next-auth/middleware';
 import { encode, decode } from 'next-auth/jwt';
+import { Varta } from 'next/font/google';
 const emailVerificationRequiredPaths = [
   // '/job',
   '/BGV',
@@ -43,14 +44,22 @@ export default withAuth(
       token = { ...token, isVerified: true };
       req.nextauth.token = token;
       const newToken = await encode({ token, secret });
+
+      console.log('newToken', newToken);
+
       const response = NextResponse.redirect(new URL('/dashboard', origin));
-      response.cookies.set('next-auth.session-token', newToken, {
+      const sessionCookie = process.env.NEXTAUTH_URL?.startsWith('https://')
+        ? '__Secure-next-auth.session-token'
+        : 'next-auth.session-token';
+      response.cookies.set(sessionCookie, newToken, {
         httpOnly: true,
         secure: true,
         path: '/',
       });
       return response;
     }
+
+    console.log('token', token);
 
     const isAuthPath = (path: string) => ['/login', '/signup'].includes(path);
     if (!token) {

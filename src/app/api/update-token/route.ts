@@ -131,13 +131,18 @@ export const POST = async (req: NextRequest) => {
   try {
     const { count } = await req.json();
 
-    let tokenName = 'next-auth.session-token';
-    let token = req.cookies.get(tokenName)?.value;
+    const sessionCookie = process.env.NEXTAUTH_URL?.startsWith('https://')
+      ? '__Secure-next-auth.session-token'
+      : 'next-auth.session-token';
+    let token = req.cookies.get(sessionCookie)?.value;
 
-    if (!token) {
-      tokenName = '__Secure-next-auth.session-token';
-      token = req.cookies.get(tokenName)?.value;
-    }
+    // let tokenName = 'next-auth.session-token';
+    // let token = req.cookies.get(tokenName)?.value;
+
+    // if (!token) {
+    //   tokenName = '__Secure-next-auth.session-token';
+    //   token = req.cookies.get(tokenName)?.value;
+    // }
 
     if (!token) {
       console.error('Token not found in cookies');
@@ -170,7 +175,7 @@ export const POST = async (req: NextRequest) => {
       status: 200,
     });
 
-    response.cookies.set(tokenName, encodedToken, {
+    response.cookies.set(sessionCookie, encodedToken, {
       httpOnly: true,
       secure: true,
       path: '/',
