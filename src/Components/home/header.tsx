@@ -61,8 +61,8 @@ const Header = () => {
               <div
                 className={`h-12 min-w-32 cursor-pointer rounded-lg border border-meta-light-blue-2 bg-meta-blue-1 py-3 text-meta-light-blue-3 transition delay-150 duration-300 ease-in-out will-change-auto hover:bg-hiring-btn-gradient`}
               >
-                <Link
-                  href={ROUTE?.LOGIN}
+                 <Link
+                  href={session?.user ? ROUTE?.DASHBOARD : ROUTE?.LOGIN}
                   className={`flex justify-center text-sm font-medium text-white`}
                 >
                   {session?.user ? TEXT?.DASHBOARD : TEXT?.LOG_IN}
