@@ -4,17 +4,18 @@ import { encode, decode } from 'next-auth/jwt';
 import jwt from 'jsonwebtoken';
 
 const emailVerificationRequiredPaths = [
+  '',
   // '/job',
-  '/BGV',
+  // '/BGV',
   // '/exam',
-  '/quiz',
-  '/users',
-  '/earn_badge',
-  '/search_CVs',
+  // '/quiz',
+  // '/users',
+  // '/earn_badge',
+  // '/search_CVs',
   // '/job_posting',
-  '/learnAndEarn',
+  // '/learnAndEarn',
   // '/certification',
-  '/badgeOfHonour',
+  // '/badgeOfHonour',
 ];
 const profileCompletionRequiredPaths = [
   '/job',

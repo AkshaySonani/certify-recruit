@@ -47,8 +47,6 @@ const config: Config = {
           'linear-gradient(270deg, #3751F2 0%, #2687F5 26.68%, #17B3F8 73.61%, #08E2FB 100%)',
         'certificate-border':
           'linear-gradient(to bottom, #FFFFFF 0%, #013BB7 50%, #07E2FA 100%)',
-        'website-title':
-          'linear-gradient(91.03deg, #013BB7 35.73%, #3650F1 83.65%)',
 
         // 'certificate-border':
         //   'linear-gradient(180deg, rgba(255, 255, 255, 0) 48.95%, #013BB7 76.96%, #07E2FA 100%)',
