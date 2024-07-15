@@ -9,6 +9,7 @@ import AppContext from '@/context/AppProvider';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { TEXT, updateProfileCount } from '@/service/Helper';
 import React, { useContext, useEffect, useState } from 'react';
+import SuccessModal from './SuccessModal';
 
 const UploadResumeTab = ({
   session,
