@@ -514,13 +514,13 @@ function JobPostingFormMain({ id }: any) {
                   {TEXT?.WHICH_OPTION_BEST_DESCRIBE_THIS_JOBS_LOCATION}
                 </p>
               </div>
-              <div className="w-full lg:w-1/2">
-                <div className="relative z-0 mt-2 w-full lg:mt-0">
+              <div className="relative w-full lg:w-1/2">
+                <div className=" z-0 mt-2 w-full lg:mt-0">
                   <label className="text-base font-medium text-meta-purple-1">
                     Country
                   </label>
                   <Menu as="div" className="relative  w-full">
-                    <Menu.Button className="relative z-20  flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-[9px] pl-5 pr-[11px] outline-none transition">
+                    <Menu.Button className="relative z-20  flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-[9px] pl-[14px] pr-[11px] outline-none transition">
                       {formik?.values?.country === null ? (
                         <p className="text-meta-gray-1">Select Country</p>
                       ) : (
@@ -587,7 +587,7 @@ function JobPostingFormMain({ id }: any) {
                       name={'state'}
                       setQuery={setStateQuery}
                       className=""
-                      placeholder="Search state"
+                      placeholder="Search State"
                       value={formik?.values?.state}
                       filterArr={states}
                       handleChange={(e: any) => {
@@ -611,7 +611,7 @@ function JobPostingFormMain({ id }: any) {
                       query={cityQuery}
                       setQuery={setCityQuery}
                       name={'city'}
-                      placeholder="Search city"
+                      placeholder="Search City"
                       handleChange={(e: any) => formik.setFieldValue('city', e)}
                     />
                     {formik.touched.city && formik.errors.city && (
