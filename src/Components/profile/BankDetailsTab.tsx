@@ -67,10 +67,9 @@ const BankDetailsTab = ({
           setIsSpinner(false);
           setActivePage(activePage);
           if (
-            profileCompletionCount?.individual=== 100 ||
+            profileCompletionCount?.individual === 100 ||
             session?.user?.profile_count === 100
           ) {
-           
             setOpenSuccessModal(true);
           }
           getUserDataApiCall();

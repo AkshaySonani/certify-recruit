@@ -60,7 +60,7 @@ const PersonalDetailsTab = ({
             session?.user?.profile_count < 100 &&
             handleNextClick('personal_details');
           if (
-            profileCompletionCount?.employee === 100 ||
+            profileCompletionCount?.individual === 100 ||
             session?.user?.profile_count === 100
           ) {
             setOpenSuccessModal(true);

@@ -69,7 +69,7 @@ const UploadResumeTab = ({
                 setLoading(false);
                 setFileName('');
                 if (
-                  profileCompletionCount?.employee === 100 ||
+                  profileCompletionCount?.individual === 100 ||
                   session?.user?.profile_count === 100
                 ) {
                   setOpenSuccessModal(true);
