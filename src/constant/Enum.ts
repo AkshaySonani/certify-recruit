@@ -54,7 +54,7 @@ const COMPANY_TYPE = [
   'Nidhi Companies',
 ];
 
-const COMPLETION_DATE = {
+const COMPLETION_DATE: any = {
   January: 0,
   February: 1,
   March: 2,

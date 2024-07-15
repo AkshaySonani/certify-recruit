@@ -15,6 +15,7 @@ import {
   updateProfileCount,
 } from '@/service/Helper';
 import { Fragment, useContext, useEffect, useState } from 'react';
+import SuccessModal from './SuccessModal';
 
 const CompanyDetailsTab = ({
   session,
@@ -41,6 +42,8 @@ const CompanyDetailsTab = ({
     setProfileCompletionCount,
     completedSections,
     setCompletedSections,
+    openSuccessModal,
+    setOpenSuccessModal,
   } = context;
 
   const handleNextClick = (section: any) => {
@@ -69,6 +72,13 @@ const CompanyDetailsTab = ({
             handleNextClick('company_detail');
           // context?.setUserProfileCount(res?.data?.data?.profile_count);
           getUserDataApiCall();
+          if (
+            profileCompletionCount?.employee === 100 ||
+            session?.user?.profile_count === 100
+          ) {
+            console.log('hello');
+            setOpenSuccessModal(true);
+          }
           setActivePage(activePage + 1);
           actions.setSubmitting(false);
           toast?.success(res?.data?.message || 'Successfully Update Profile');
@@ -447,6 +457,7 @@ const CompanyDetailsTab = ({
           {TEXT?.NEXT}
         </button>
       </div>
+      <SuccessModal open={openSuccessModal} setOpen={setOpenSuccessModal} />
     </form>
   );
 };

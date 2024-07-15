@@ -11,6 +11,7 @@ import { Menu, Transition } from '@headlessui/react';
 import { GENDER, PROFICIENCY } from '@/constant/Enum';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { TEXT, updateProfileCount } from '@/service/Helper';
+import SuccessModal from './SuccessModal';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -30,6 +31,8 @@ const PersonalDetailsTab = ({
     setProfileCompletionCount,
     completedSections,
     setCompletedSections,
+    openSuccessModal,
+    setOpenSuccessModal,
   } = context;
 
   const handleNextClick = (section: any) => {
@@ -56,7 +59,14 @@ const PersonalDetailsTab = ({
           session?.user?.profile_count !== 100 &&
             session?.user?.profile_count < 100 &&
             handleNextClick('personal_details');
+          if (
+            profileCompletionCount?.employee === 100 ||
+            session?.user?.profile_count === 100
+          ) {
+            setOpenSuccessModal(true);
+          }
           getUserDataApiCall();
+
           context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);
           setActivePage(activePage + 1);
@@ -329,6 +339,7 @@ const PersonalDetailsTab = ({
           btnClass="!w-36 !rounded-lg !bg-meta-blue-1 !py-2"
         />
       </div>
+      <SuccessModal open={openSuccessModal} setOpen={setOpenSuccessModal} />
     </form>
   );
 };

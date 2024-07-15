@@ -12,6 +12,7 @@ import MultipleSelectBox from '../MultipleSelectBox';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { useContext, useEffect, useState } from 'react';
 import { TEXT, updateProfileCount } from '@/service/Helper';
+import SuccessModal from './SuccessModal';
 
 const KeySkillTab = ({
   session,
@@ -30,6 +31,8 @@ const KeySkillTab = ({
     setProfileCompletionCount,
     completedSections,
     setCompletedSections,
+    openSuccessModal,
+    setOpenSuccessModal,
   } = context;
 
   const handleNextClick = (section: any) => {
@@ -56,6 +59,12 @@ const KeySkillTab = ({
           session?.user?.profile_count !== 100 &&
             session?.user?.profile_count < 100 &&
             handleNextClick('key_skills');
+          if (
+            profileCompletionCount?.individual === 100 ||
+            session?.user?.profile_count === 100
+          ) {
+            setOpenSuccessModal(true);
+          }
           getUserDataApiCall();
           actions.setSubmitting(false);
           setActivePage(activePage + 1);
@@ -210,6 +219,7 @@ const KeySkillTab = ({
           btnClass="!w-36 !rounded-lg !bg-meta-blue-1 !py-2"
         />
       </div>
+      <SuccessModal open={openSuccessModal} setOpen={setOpenSuccessModal} />
     </form>
   );
 };

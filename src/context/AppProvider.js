@@ -10,6 +10,7 @@ const AppProvider = ({ children }) => {
   const [currentRole, setCurrentRole] = useState('');
   const [userProfileCount, setUserProfileCount] = useState({});
   const [completedSections, setCompletedSections] = useState(new Set());
+  const [openSuccessModal, setOpenSuccessModal] = useState(false);
   const [profileCompletionCount, setProfileCompletionCount] = usePersistState(
     {},
     'profileCount',
@@ -26,6 +27,8 @@ const AppProvider = ({ children }) => {
     setCompletedSections,
     profileCompletionCount,
     setProfileCompletionCount,
+    openSuccessModal,
+    setOpenSuccessModal
   };
 
   return (

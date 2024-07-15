@@ -18,6 +18,7 @@ type formValues = {
   email: string;
   password: string;
 };
+
 const SignupForm = () => {
   const router = useRouter();
   const context = useContext(AppContext);
@@ -36,6 +37,13 @@ const SignupForm = () => {
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
         'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character',
       ),
+    phone: Yup.string()
+      .required('Phone number is required')
+      .matches(
+        /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
+        'invalid contact number',
+      ),
+    name: Yup.string().required('Name is required'),
   });
 
   const onNextUpdateProfileRole = async () => {
@@ -57,6 +65,8 @@ const SignupForm = () => {
   };
 
   const signUpWithEmailAndPassword = async (values: any) => {
+    console.log('values', values);
+
     setLoading(true);
     try {
       const signUpResponse = await signIn('signup', {
@@ -123,6 +133,8 @@ const SignupForm = () => {
     initialValues: {
       email: '',
       password: '',
+      phone: '',
+      name: '',
     },
     validationSchema,
     enableReinitialize: true,
@@ -186,7 +198,7 @@ const SignupForm = () => {
                     <div className="error">{formik.errors.email}</div>
                   )}
                 </div>
-                <div className="relative mb-5">
+                <div className="relative mb-3">
                   <input
                     value={formik?.values.password}
                     onChange={formik.handleChange}
@@ -217,6 +229,34 @@ const SignupForm = () => {
                   )}
                   {formik.touched.password && formik.errors.password && (
                     <div className="error">{formik.errors.password}</div>
+                  )}
+                </div>
+                <div className="mb-3">
+                  <input
+                    value={formik?.values?.name}
+                    // disabled={""}
+                    onChange={formik.handleChange}
+                    name="name"
+                    type="text"
+                    placeholder={'Name'}
+                    className="h-12 w-full rounded-xl border border-meta-light-blue-2 pl-4 focus:outline-meta-light-blue-1"
+                  />
+                  {formik.touched.name && formik.errors.name && (
+                    <div className="error">{formik.errors.name}</div>
+                  )}
+                </div>
+                <div className="mb-3">
+                  <input
+                    value={formik?.values?.phone}
+                    // disabled={""}
+                    onChange={formik.handleChange}
+                    name="phone"
+                    type="number"
+                    placeholder={'Phone Number'}
+                    className="h-12 w-full rounded-xl border border-meta-light-blue-2 pl-4 focus:outline-meta-light-blue-1"
+                  />
+                  {formik.touched.phone && formik.errors.phone && (
+                    <div className="error">{formik.errors.phone}</div>
                   )}
                 </div>
 

@@ -11,6 +11,7 @@ import {
   TEXT,
   updateProfileCount,
 } from '@/service/Helper';
+import SuccessModal from './SuccessModal';
 
 const KYCDetailsTab = ({
   session,
@@ -26,6 +27,8 @@ const KYCDetailsTab = ({
     setProfileCompletionCount,
     completedSections,
     setCompletedSections,
+    openSuccessModal,
+    setOpenSuccessModal,
   } = context;
 
   const handleNextClick = (section: any) => {
@@ -53,7 +56,13 @@ const KYCDetailsTab = ({
           session?.user?.profile_count !== 100 &&
             session?.user?.profile_count < 100 &&
             handleNextClick('KYC_compliance_detail');
-          // context?.setUserProfileCount(res?.data?.data?.profile_count);
+          if (
+            profileCompletionCount?.employee === 100 ||
+            session?.user?.profile_count === 100
+          ) {
+            console.log('hello');
+            setOpenSuccessModal(true);
+          }
           setActivePage(1);
           getUserDataApiCall();
           actions.setSubmitting(false);
@@ -134,6 +143,7 @@ const KYCDetailsTab = ({
           {TEXT?.SAVE}
         </button>
       </div>
+      <SuccessModal open={openSuccessModal} setOpen={setOpenSuccessModal} />
     </form>
   );
 };

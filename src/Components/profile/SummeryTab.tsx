@@ -9,6 +9,7 @@ import { API_CONSTANT } from '@/constant/ApiConstant';
 import { TEXT, updateProfileCount } from '@/service/Helper';
 import { Fragment, useContext, useEffect, useState } from 'react';
 import { UpdateTokenApi } from '@/service/api-helpers';
+import SuccessModal from './SuccessModal';
 
 const SummaryTab = ({
   session,
@@ -24,6 +25,8 @@ const SummaryTab = ({
     setProfileCompletionCount,
     completedSections,
     setCompletedSections,
+    openSuccessModal,
+    setOpenSuccessModal,
   } = context;
 
   const handleNextClick = (section: any) => {
@@ -33,7 +36,6 @@ const SummaryTab = ({
       setProfileCompletionCount,
       completedSections,
       setCompletedSections,
-      profileCompletionCount,
     );
   };
 
@@ -52,7 +54,12 @@ const SummaryTab = ({
           session?.user?.profile_count !== 100 &&
             session?.user?.profile_count < 100 &&
             handleNextClick('profile_summary');
-          // context?.setUserProfileCount(res?.data?.data?.profile_count);
+          if (
+            profileCompletionCount?.employee === 100 ||
+            session?.user?.profile_count === 100
+          ) {
+            setOpenSuccessModal(true);
+          }
           actions.setSubmitting(false);
           setActivePage(activePage + 1);
           toast?.success(res?.data?.message || 'Successfully Update Profile');
@@ -119,6 +126,7 @@ const SummaryTab = ({
           {TEXT?.SAVE}
         </button>
       </div> */}
+      <SuccessModal open={openSuccessModal} setOpen={setOpenSuccessModal} />
     </form>
   );
 };

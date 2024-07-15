@@ -14,6 +14,7 @@ import { Menu, Transition } from '@headlessui/react';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { TEXT, updateProfileCount } from '@/service/Helper';
 import { Fragment, useContext, useEffect, useState } from 'react';
+import SuccessModal from './SuccessModal';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -39,6 +40,8 @@ const CareerInfoTab = ({
     setProfileCompletionCount,
     completedSections,
     setCompletedSections,
+    openSuccessModal,
+    setOpenSuccessModal,
   } = context;
 
   const handleNextClick = (section: any) => {
@@ -65,6 +68,12 @@ const CareerInfoTab = ({
             handleNextClick('career_info');
           setIsSpinner(false);
           setActivePage(activePage + 1);
+          if (
+            profileCompletionCount?.individual === 100 ||
+            session?.user?.profile_count === 100
+          ) {
+            setOpenSuccessModal(true);
+          }
           getUserDataApiCall();
           context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);
@@ -537,6 +546,7 @@ const CareerInfoTab = ({
           {TEXT?.SAVE}
         </button>
       </div> */}
+      <SuccessModal open={openSuccessModal} setOpen={setOpenSuccessModal} />
     </form>
   );
 };

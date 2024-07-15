@@ -67,7 +67,12 @@ const UploadResumeTab = ({
                 handleNextClick('resume');
                 setLoading(false);
                 setFileName('');
-                // actions.setSubmitting(false);
+                if (
+                  profileCompletionCount?.employee === 100 ||
+                  session?.user?.profile_count === 100
+                ) {
+                  setOpenSuccessModal(true);
+                }
                 setActivePage(activePage + 1);
                 toast?.success(res?.data?.message);
               }
@@ -98,6 +103,8 @@ const UploadResumeTab = ({
     setProfileCompletionCount,
     completedSections,
     setCompletedSections,
+    openSuccessModal,
+    setOpenSuccessModal,
   } = context;
 
   const handleNextClick = (section: any) => {
@@ -274,6 +281,7 @@ const UploadResumeTab = ({
           {TEXT?.SAVE}
         </button>
       </div> */}
+      <SuccessModal open={openSuccessModal} setOpen={setOpenSuccessModal} />
     </form>
   );
 };

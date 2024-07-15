@@ -12,6 +12,7 @@ import { API_CONSTANT } from '@/constant/ApiConstant';
 import { Fragment, useContext, useState } from 'react';
 import { TEXT, updateProfileCount } from '@/service/Helper';
 import { COMPLETION_DATE, HIGH_EDUCATION } from '@/constant/Enum';
+import SuccessModal from './SuccessModal';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -33,6 +34,8 @@ const EducationTab = ({
     setProfileCompletionCount,
     completedSections,
     setCompletedSections,
+    openSuccessModal,
+    setOpenSuccessModal,
   } = context;
 
   const handleNextClick = (section: any) => {
@@ -68,6 +71,12 @@ const EducationTab = ({
           session?.user?.profile_count !== 100 &&
             session?.user?.profile_count < 100 &&
             handleNextClick('education');
+          if (
+            profileCompletionCount?.individual === 100 ||
+            session?.user?.profile_count === 100
+          ) {
+            setOpenSuccessModal(true);
+          }
           getUserDataApiCall();
           context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);
@@ -349,6 +358,7 @@ const EducationTab = ({
           btnClass="!w-36 !rounded-lg !bg-meta-blue-1 !py-2"
         />
       </div>
+      <SuccessModal open={openSuccessModal} setOpen={setOpenSuccessModal} />
     </form>
   );
 };

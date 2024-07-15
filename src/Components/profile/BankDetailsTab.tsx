@@ -13,6 +13,7 @@ import { useFormik, Field, FormikConsumer } from 'formik';
 import { TEXT, updateProfileCount } from '@/service/Helper';
 import { BANK_ACCOUNT_TYPE, EMP_TYPE_ARR } from '@/constant/Enum';
 import { Fragment, useContext, useEffect, useState } from 'react';
+import SuccessModal from './SuccessModal';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -33,6 +34,8 @@ const BankDetailsTab = ({
     setProfileCompletionCount,
     completedSections,
     setCompletedSections,
+    openSuccessModal,
+    setOpenSuccessModal,
   } = context;
 
   const handleNextClick = (section: any) => {
@@ -63,6 +66,13 @@ const BankDetailsTab = ({
             handleNextClick('bank_details');
           setIsSpinner(false);
           setActivePage(activePage);
+          if (
+            profileCompletionCount?.individual=== 100 ||
+            session?.user?.profile_count === 100
+          ) {
+           
+            setOpenSuccessModal(true);
+          }
           getUserDataApiCall();
           context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);
@@ -285,6 +295,7 @@ const BankDetailsTab = ({
           />
         )}
       </div>
+      <SuccessModal open={openSuccessModal} setOpen={setOpenSuccessModal} />
     </form>
   );
 };

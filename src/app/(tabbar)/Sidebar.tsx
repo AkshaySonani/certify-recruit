@@ -20,6 +20,7 @@ const Sidebar = () => {
 
   const [open, setOpen] = useState(true);
   const [percentage, setPercentage] = useState(0);
+  const [userDetails, setUserDetails] = useState<any>({});
 
   useEffect(() => {
     getProfileDetails();
@@ -45,6 +46,8 @@ const Sidebar = () => {
   const getProfileDetails = () => {
     API.get(API_CONSTANT?.PROFILE)
       .then((res: any) => {
+        setUserDetails(res?.data?.data);
+        console.log('res', res);
         if (
           res?.data?.extraData?.profile_count !== null &&
           res?.data?.extraData?.profile_count !== undefined &&
@@ -176,12 +179,20 @@ const Sidebar = () => {
                     alt="Icon"
                     width={39}
                     height={39}
-                    src={'/sidebarIcon/profile.svg'}
-                    className="rounded-xl border border-meta-blue-1 p-0.5"
+                    src={
+                      userDetails?.logo !== ''
+                        ? userDetails?.logo
+                        : '/profile/placeholder.jpg'
+                    }
+                    className="h-[40px] w-[42px] rounded-xl border border-meta-blue-1 p-0.5"
                   />
                 </div>
                 <div className={`${open ? 'hidden lg:block' : 'block'}`}>
-                  <div>Dori Doreau</div>
+                  <div>
+                    {userDetails?.user_name !== ''
+                      ? userDetails?.user_name
+                      : 'User Name'}
+                  </div>
                 </div>
               </div>
             </div>

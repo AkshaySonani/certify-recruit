@@ -1,11 +1,12 @@
 import * as Yup from 'yup';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useFormik } from 'formik';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
 import AppContext from '@/context/AppProvider';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { TEXT, updateProfileCount } from '@/service/Helper';
+import SuccessModal from './SuccessModal';
 
 const BasicDetails = ({
   session,
@@ -21,6 +22,8 @@ const BasicDetails = ({
     setProfileCompletionCount,
     completedSections,
     setCompletedSections,
+    openSuccessModal,
+    setOpenSuccessModal,
   } = context;
 
   const handleNextClick = (section: any) => {
@@ -48,9 +51,14 @@ const BasicDetails = ({
           session?.user?.profile_count !== 100 &&
             session?.user?.profile_count < 100 &&
             handleNextClick('basic_details');
-          // const profileCount = calculatePercentage(values, 33);
-          // context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);
+          if (
+            profileCompletionCount?.employee === 100 ||
+            session?.user?.profile_count === 100
+          ) {
+            console.log('hello');
+            setOpenSuccessModal(true);
+          }
           setActivePage(activePage + 1);
           toast?.success(res?.data?.message || 'Successfully Update Profile');
         }
@@ -161,6 +169,8 @@ const BasicDetails = ({
           {TEXT?.NEXT}
         </button>
       </div>
+
+      <SuccessModal open={openSuccessModal} setOpen={setOpenSuccessModal} />
     </form>
   );
 };
