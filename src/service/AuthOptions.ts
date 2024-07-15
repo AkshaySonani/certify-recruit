@@ -44,11 +44,12 @@ export const authOptions: AuthOptions = {
 
             // Create JWT
             const verifyToken = jwt.sign(
-              { userId: newUser._id },
+              { userId: newUser._id, isVerified: true },
               process.env.JWT_SECRET!,
             );
 
-            const verifyUrl = `${process.env.NEXT_PUBLIC_BASE_URL}api/verify-user?token=${verifyToken}`;
+            const verifyUrl = `${process.env.NEXT_PUBLIC_BASE_URL}dashboard?token=${verifyToken}`;
+            // const verifyUrl = `${process.env.NEXT_PUBLIC_BASE_URL}api/verify-user?token=${verifyToken}`;
 
             const mailOptions = {
               from: process.env.NEXT_PUBLIC_EMAIL,

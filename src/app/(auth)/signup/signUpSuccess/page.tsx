@@ -4,11 +4,49 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ROUTE, TEXT } from '@/service/Helper';
 import { useSession } from 'next-auth/react';
+import API from '@/service/ApiService';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import { toast } from 'react-toastify';
 
 const Page = (data: any) => {
   // const { data: session, update }: any = useSession();
   const router = useRouter();
   const [eye, setEye] = useState(false);
+
+  // console.log('data', data?.searchParams?.token);
+
+  // useEffect(() => {
+  //   if (data?.searchParams?.token) {
+  //     handleVerifyUser(data?.searchParams?.token);
+  //   }
+  // }, []);
+
+  // const handleVerifyUser = (values: any) => {
+  //   const obj = {
+  //     token: values,
+  //   };
+
+  //   console.log('obj', obj);
+
+  //   API.post(API_CONSTANT.VERIFY_USER, obj)
+  //     .then((res) => {
+  //       console.log('res----->', res?.data);
+  //       if (res?.data?.status === 200) {
+  //         toast.success(res?.data?.message);
+  //         router.push(ROUTE?.DASHBOARD);
+  //       } else {
+  //         toast.error(res?.data?.message);
+  //       }
+  //     })
+  //     .catch((err: any) => {
+  //       console.log('err', err);
+
+  //       toast.error(
+  //         err?.response?.data?.message ||
+  //           'Something want wrong please try again',
+  //       );
+  //     });
+  // };
 
   return (
     <div>

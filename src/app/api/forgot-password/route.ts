@@ -82,7 +82,7 @@ export async function POST(req: NextRequest) {
       expiresIn: '1h',
     });
 
-    const resetUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/resetpassword?token=${resetToken}`;
+    const resetUrl = `${process.env.NEXT_PUBLIC_BASE_URL}resetpassword?token=${resetToken}`;
 
     const mailOptions = {
       from: process.env.NEXT_PUBLIC_EMAIL,

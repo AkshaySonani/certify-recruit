@@ -6,14 +6,14 @@ import Spinner from '@/app/icons/Spinner';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import AppContext from '@/context/AppProvider';
-import { TEXT, USER_ROLE } from '@/service/Helper';
+import { ROUTE, TEXT, USER_ROLE } from '@/service/Helper';
 import { API_CONSTANT } from '@/constant/ApiConstant';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import EmployeeDashboard from '@/Components/dashboard/employee';
 import IndividualDashboard from '@/Components/dashboard/individual';
 import CompleteProfile from '@/Components/dashboard/completeProfile';
 
-const Page = () => {
+const Page = (data: any) => {
   const router = useRouter();
   const { data: session, update }: any = useSession<any>();
   const context = useContext(AppContext);
@@ -28,6 +28,42 @@ const Page = () => {
     hired: 0,
     allJobs: 0,
   });
+
+  const hasVerifiedUser = useRef(false);
+
+  useEffect(() => {
+    if (data !== undefined) {
+      if (data?.searchParams?.token && !hasVerifiedUser.current) {
+        handleVerifyUser(data?.searchParams?.token);
+        hasVerifiedUser.current = true;
+      }
+    }
+  }, [data?.searchParams?.token]);
+
+  const handleVerifyUser = (values: any) => {
+    const obj = {
+      token: values,
+    };
+
+    API.post(API_CONSTANT.VERIFY_USER, obj)
+      .then((res) => {
+        if (res?.data?.status === 200) {
+          toast.success(res?.data?.message);
+          router.push(ROUTE?.DASHBOARD);
+        } else {
+          if (res?.data?.status === 409) {
+            router.push(ROUTE?.DASHBOARD);
+          }
+          toast.error(res?.data?.message);
+        }
+      })
+      .catch((err: any) => {
+        toast.error(
+          err?.response?.data?.message ||
+            'Something want wrong please try again',
+        );
+      });
+  };
 
   useEffect(() => {
     getDashboardJob();

@@ -2,7 +2,7 @@
 import jwt from 'jsonwebtoken';
 import User from '@/models/user';
 import { connect } from '@/db/mongodb';
-import { encode } from 'next-auth/jwt';
+import { decode, encode } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
 
 // export async function GET(req: NextRequest) {
@@ -82,8 +82,8 @@ import { NextRequest, NextResponse } from 'next/server';
 //       });
 //     }
 
-//     const decoded: any = jwt.verify(token as string, process.env.JWT_SECRET!);
-//     const { userId } = decoded;
+// const decoded: any = jwt.verify(token as string, process.env.JWT_SECRET!);
+// const { userId } = decoded;
 
 //     await connect();
 
@@ -124,11 +124,10 @@ import { NextRequest, NextResponse } from 'next/server';
 // }
 
 // ---------------------> old code <-----------------------------
-
-export async function GET(req: NextRequest) {
+const secret: any = process.env.NEXTAUTH_SECRET;
+export async function POST(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
-    const token = searchParams.get('token');
+    const { token } = await req.json();
 
     if (!token) {
       return NextResponse.json({
@@ -137,35 +136,199 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    const decoded: any = jwt.verify(token as string, process.env.JWT_SECRET!);
-    const { userId } = decoded;
+    const queryToken: any = jwt.verify(
+      token as string,
+      process.env.JWT_SECRET!,
+    );
 
+    // Connect to the database
     await connect();
 
-    const user = await User.findById(userId);
+    // Update the user profile_count in the database
+    const user = await User.findByIdAndUpdate(queryToken?.userId, {
+      isVerified: true,
+    });
+
     if (!user) {
       return NextResponse.json({ status: 400, message: 'User not found.' });
     }
 
-    if (user.isVerified) {
+    if (user?.isVerified) {
       return NextResponse.json({
-        status: 400,
+        status: 409,
         message: 'User is already verified.',
+      });
+    } else {
+      const sessionCookie = process.env.NEXTAUTH_URL?.startsWith('https://')
+        ? '__Secure-next-auth.session-token'
+        : 'next-auth.session-token';
+      let currentToken = req.cookies.get(sessionCookie)?.value;
+
+      let decodedToken = await decode({ token: currentToken, secret });
+      console.log('Decoded token:', decodedToken);
+
+      decodedToken = {
+        ...decodedToken,
+        isVerified: true,
+      };
+
+      const encodedToken = await encode({ token: decodedToken, secret });
+      console.log('Encoded token:', encodedToken);
+
+      var response = NextResponse.json({
+        data: user,
+        status: 200,
+        message: 'User verified successfully',
+      });
+
+      response.cookies.set(sessionCookie, encodedToken, {
+        httpOnly: true,
+        secure: true,
+        path: '/',
       });
     }
 
-    user.isVerified = true;
-    await user.save();
-
-    const params = new URLSearchParams({ isVerified: 'true' }).toString();
-    const redirectUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard?${params}`;
-
-    return NextResponse.redirect(redirectUrl);
+    return response;
   } catch (error) {
-    console.error('Verification error:', error);
+    console.log('Verification error:', error);
     return NextResponse.json({
       status: 500,
-      message: 'Internal server error.',
+      message: 'Internal server error from backend.',
     });
   }
 }
+// export async function POST(req: NextRequest) {
+//   try {
+//     const { token } = await req.json();
+//     console.log('🚀 ~ POST ~ token:', token);
+
+//     const sessionCookie = process.env.NEXTAUTH_URL?.startsWith('https://')
+//       ? '__Secure-next-auth.session-token'
+//       : 'next-auth.session-token';
+
+// if (!token) {
+//   return NextResponse.json({
+//     status: 400,
+//     message: 'Invalid or missing token.',
+//   });
+// }
+
+//     const decoded: any = jwt.verify(token as string, process.env.JWT_SECRET!);
+//     console.log('🚀 ~ POST ~ decoded:', decoded);
+
+//     const { userId } = decoded;
+
+//     await connect();
+
+// const user = await User.findById(userId);
+
+// if (!user) {
+//   return NextResponse.json({ status: 400, message: 'User not found.' });
+// }
+
+// if (user.isVerified) {
+//   return NextResponse.json({
+//     status: 400,
+//     message: 'User is already verified.',
+//   });
+// }
+
+// user.isVerified = true;
+// await user.save();
+
+//     const response = NextResponse.json({
+//       data: user,
+//       status: 200,
+//       message: 'User verified successfully.',
+//     });
+
+//     const currentToken = response.cookies.get(sessionCookie);
+//     console.log('🚀 ~ POST ~ currentToken:', currentToken);
+
+//     const encodedToken = await encode({
+//       token: { ...currentToken, isVerified: true },
+//       secret: process.env.JWT_SECRET!,
+//     });
+
+//     response.cookies.set(sessionCookie, encodedToken, {
+//       httpOnly: true,
+//       secure: true,
+//       path: '/',
+//     });
+
+//     return NextResponse.json({
+//       data: user,
+//       status: 200,
+//       message: 'User verified successfully.',
+//     });
+
+//     // console.log(`updated user----->`, user);
+
+//     // const params = new URLSearchParams({ isVerified: 'true' }).toString();
+//     // const redirectUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard?${params}`;
+
+//     // console.log(`redirectUrl ---->`, redirectUrl);
+//     // const res = NextResponse.redirect(redirectUrl, { status: 301 });
+//     // return res;
+//   } catch (error) {
+//     console.log('Verification error:', error);
+//     return NextResponse.json({
+//       status: 500,
+//       message: 'Internal server error from backend.',
+//     });
+//   }
+// }
+
+// export async function GET(req: NextRequest) {
+//   try {
+//     const { searchParams } = new URL(req.url);
+//     console.log(`new URL(req.url)----->`, new URL(req.url));
+//     const token = searchParams.get('token');
+//     console.log(`token----->`, token);
+
+//     if (!token) {
+//       return NextResponse.json({
+//         status: 400,
+//         message: 'Invalid or missing token.',
+//       });
+//     }
+
+//     const decoded: any = jwt.verify(token as string, process.env.JWT_SECRET!);
+//     console.log(`decoded----->`, decoded);
+//     const { userId } = decoded;
+//     console.log(`userId----->`, userId);
+
+//     await connect();
+
+//     const user = await User.findById(userId);
+//     console.log(`user----->`, user);
+//     if (!user) {
+//       return NextResponse.json({ status: 400, message: 'User not found.' });
+//     }
+
+//     if (user.isVerified) {
+//       return NextResponse.json({
+//         status: 400,
+//         message: 'User is already verified.',
+//       });
+//     }
+
+//     user.isVerified = true;
+//     await user.save();
+
+//     console.log(`updated user----->`, user);
+
+//     const params = new URLSearchParams({ isVerified: 'true' }).toString();
+//     const redirectUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard?${params}`;
+
+//     console.log(`redirectUrl ---->`, redirectUrl);
+//     const res = NextResponse.redirect(redirectUrl, { status: 301 });
+//     return res;
+//   } catch (error) {
+//     console.log('Verification error:', error);
+//     return NextResponse.json({
+//       status: 500,
+//       message: 'Internal server error from backend.',
+//     });
+//   }
+// }

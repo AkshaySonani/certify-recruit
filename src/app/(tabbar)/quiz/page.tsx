@@ -132,8 +132,8 @@ const Page = () => {
   };
 
   const clearStorage = () => {
-    localStorage.removeItem('Exam:quiz:startTime');
-    localStorage.removeItem('Exam:quiz:endTime');
+    localStorage.removeItem('quiz:startTime');
+    localStorage.removeItem('quiz:endTime');
     setSelectedAnswer('');
     setExamStatus(EXAM_STATUS.STOPPED);
     setQuestionSheet([]);

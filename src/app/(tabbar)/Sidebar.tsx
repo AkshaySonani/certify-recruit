@@ -243,7 +243,7 @@ const Sidebar = () => {
                     <button
                       onClick={() => {
                         localStorage.removeItem('userRole');
-                        localStorage.removeItem('Exam:profileCount');
+                        localStorage.removeItem('profileCount');
                         signOut();
                       }}
                       className={`${
