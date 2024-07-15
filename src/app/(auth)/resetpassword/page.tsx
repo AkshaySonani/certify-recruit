@@ -11,9 +11,11 @@ import { useRouter } from 'next/navigation';
 import { ROUTE, TEXT } from '@/service/Helper';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { error } from 'console';
+import { useSession } from 'next-auth/react';
 
 const Page = (data: any) => {
   const router = useRouter();
+  const session: any = useSession();
   const [loading, setLoading] = useState(false);
   const [eye, setEye] = useState<Record<string, boolean>>({
     pass: false,
@@ -24,7 +26,8 @@ const Page = (data: any) => {
     setLoading(true);
     const obj = {
       newPassword: values?.newPass,
-      token: data?.searchParams?.token,
+      token: data?.searchParams?.token ? data?.searchParams?.token : null,
+      email: data?.searchParams?.token ? '' : session?.data?.user?.email,
     };
 
     API.post(API_CONSTANT.RESET_PASSWORD, obj)
@@ -32,7 +35,11 @@ const Page = (data: any) => {
         if (res?.data?.status === 200) {
           setLoading(false);
           toast.success(res?.data?.message);
-          router.push(ROUTE?.SUCCESSFUL_RESET_PASSWORD);
+          if (data?.searchParams?.token) {
+            router.push(ROUTE?.SUCCESSFUL_RESET_PASSWORD);
+          } else {
+            router.push(ROUTE?.DASHBOARD);
+          }
         }
       })
       .catch((err: any) => {
@@ -44,11 +51,11 @@ const Page = (data: any) => {
       });
   };
 
-  useEffect(() => {
-    if (data && !data?.searchParams?.token) {
-      router.push(ROUTE?.FORGOT_PASSWORD);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (data && !data?.searchParams?.token) {
+  //     router.push(ROUTE?.FORGOT_PASSWORD);
+  //   }
+  // }, []);
 
   const validationSchema = Yup.object().shape({
     newPass: Yup.string()
