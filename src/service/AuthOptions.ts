@@ -23,7 +23,7 @@ export const authOptions: AuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const { role, email, password }: any = credentials;
+        const { role, email, password, name, phone }: any = credentials;
 
         try {
           await connect();
@@ -65,10 +65,15 @@ export const authOptions: AuthOptions = {
             if (role === 'employee' && newUser) {
               await Company.create({
                 user_ref_id: newUser?._id,
+                phone: phone,
+                user_name: name,
+                company_name: name,
               });
             } else {
               await Individual.create({
                 user_ref_id: newUser?._id,
+                phone: phone,
+                user_name: name,
               });
             }
 

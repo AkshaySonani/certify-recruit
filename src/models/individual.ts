@@ -160,6 +160,12 @@ const individualSchema = new mongoose.Schema({
       message: (props: any) => `${props.value} is not a valid date!`,
     },
   },
+  phone: {
+    default: '', // Whenever we change this field to required remove this default option
+    type: String,
+    unique: false, // Whenever we change this field to required change unique false to true
+    required: false,
+  },
   languages: [
     {
       language: {
