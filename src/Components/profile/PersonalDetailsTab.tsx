@@ -4,7 +4,7 @@ import Button from '../Button';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
 import { useFormik, Field } from 'formik';
-import { Fragment, useContext } from 'react';
+import { Fragment, useContext, useState } from 'react';
 import AppContext from '@/context/AppProvider';
 import DatePicker from 'react-multi-date-picker';
 import { Menu, Transition } from '@headlessui/react';
@@ -26,6 +26,8 @@ const PersonalDetailsTab = ({
 }: any) => {
   const context = useContext(AppContext);
 
+  const [loading, setLoading] = useState(false);
+
   const {
     profileCompletionCount,
     setProfileCompletionCount,
@@ -42,10 +44,12 @@ const PersonalDetailsTab = ({
       setProfileCompletionCount,
       completedSections,
       setCompletedSections,
+      setOpenSuccessModal,
     );
   };
 
   const handleSubmit = async (values: any, actions: any) => {
+    setLoading(true);
     const obj = {
       ...values,
       // profile_count: {
@@ -56,6 +60,7 @@ const PersonalDetailsTab = ({
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
+          setLoading(false);
           session?.user?.profile_count !== 100 &&
             session?.user?.profile_count < 100 &&
             handleNextClick('personal_details');
@@ -74,6 +79,7 @@ const PersonalDetailsTab = ({
         }
       })
       .catch((error) => {
+        setLoading(false);
         toast.error(error || 'Something want wrong');
       });
   };
@@ -334,6 +340,7 @@ const PersonalDetailsTab = ({
       </div>
       <div className="mt-8 flex w-full justify-end">
         <Button
+          isLoading={loading}
           title={TEXT?.NEXT}
           titleClass="!text-base !text-white"
           btnClass="!w-36 !rounded-lg !bg-meta-blue-1 !py-2"

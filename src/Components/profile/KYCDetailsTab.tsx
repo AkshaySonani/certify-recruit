@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
 import { useFormik, Field } from 'formik';
@@ -12,6 +12,7 @@ import {
   updateProfileCount,
 } from '@/service/Helper';
 import SuccessModal from './SuccessModal';
+import Button from '../Button';
 
 const KYCDetailsTab = ({
   session,
@@ -21,6 +22,7 @@ const KYCDetailsTab = ({
   getUserDataApiCall,
 }: any) => {
   const context = useContext(AppContext);
+  const [loading, setLoading] = useState(false);
 
   const {
     profileCompletionCount,
@@ -38,10 +40,12 @@ const KYCDetailsTab = ({
       setProfileCompletionCount,
       completedSections,
       setCompletedSections,
+      setOpenSuccessModal,
     );
   };
 
   const handleSubmit = async (values: any, actions: any) => {
+    setLoading(true);
     let obj = {
       ...values,
       // profile_count: {
@@ -53,6 +57,7 @@ const KYCDetailsTab = ({
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
+          setLoading(false);
           session?.user?.profile_count !== 100 &&
             session?.user?.profile_count < 100 &&
             handleNextClick('KYC_compliance_detail');
@@ -60,7 +65,6 @@ const KYCDetailsTab = ({
             profileCompletionCount?.employee === 100 ||
             session?.user?.profile_count === 100
           ) {
-            console.log('hello');
             setOpenSuccessModal(true);
           }
           setActivePage(1);
@@ -70,6 +74,7 @@ const KYCDetailsTab = ({
         }
       })
       .catch((error) => {
+        setLoading(false);
         toast.error(error || 'Something want wrong');
       });
   };
@@ -135,13 +140,14 @@ const KYCDetailsTab = ({
           )}
         </div>
       </div>
+
       <div className="mt-8 flex w-full justify-end">
-        <button
-          type="submit"
-          className="w-36 rounded-lg bg-meta-blue-1 py-2 text-base text-white"
-        >
-          {TEXT?.SAVE}
-        </button>
+        <Button
+          title={TEXT?.SAVE}
+          isLoading={loading}
+          titleClass="!text-base !text-white"
+          btnClass="!w-36 !rounded-lg !bg-meta-blue-1 !py-2"
+        />
       </div>
       <SuccessModal open={openSuccessModal} setOpen={setOpenSuccessModal} />
     </form>

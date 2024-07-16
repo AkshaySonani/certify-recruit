@@ -47,7 +47,6 @@ const Sidebar = () => {
     API.get(API_CONSTANT?.PROFILE)
       .then((res: any) => {
         setUserDetails(res?.data?.data);
-        console.log('res', res);
         if (
           res?.data?.extraData?.profile_count !== null &&
           res?.data?.extraData?.profile_count !== undefined &&
@@ -189,9 +188,11 @@ const Sidebar = () => {
                 </div>
                 <div className={`${open ? 'hidden lg:block' : 'block'}`}>
                   <div>
-                    {userDetails?.user_name !== ''
-                      ? userDetails?.user_name
-                      : 'User Name'}
+                    {session?.data?.user?.role === USER_ROLE?.EMPLOYEE
+                      ? userDetails?.company_name
+                      : userDetails?.user_name !== ''
+                        ? userDetails?.user_name
+                        : 'User Name'}
                   </div>
                 </div>
               </div>

@@ -84,8 +84,6 @@ const EmployeeJob = () => {
     };
     API.post(API_CONSTANT?.JOB_SEARCH, obj)
       .then((res: any) => {
-        console.log(res?.data?.data);
-
         setIsSpinner(false);
         setJobList(res?.data?.data);
       })

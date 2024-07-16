@@ -7,6 +7,7 @@ import AppContext from '@/context/AppProvider';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { TEXT, updateProfileCount } from '@/service/Helper';
 import SuccessModal from './SuccessModal';
+import Button from '../Button';
 
 const BasicDetails = ({
   session,
@@ -16,6 +17,7 @@ const BasicDetails = ({
   getUserDataApiCall,
 }: any) => {
   const context = useContext(AppContext);
+  const [loading, setLoading] = useState(false);
 
   const {
     profileCompletionCount,
@@ -33,10 +35,12 @@ const BasicDetails = ({
       setProfileCompletionCount,
       completedSections,
       setCompletedSections,
+      setOpenSuccessModal,
     );
   };
 
   const handleSubmit = async (values: any, actions: any) => {
+    setLoading(true);
     let obj = {
       ...values,
       // profile_count: {
@@ -47,6 +51,7 @@ const BasicDetails = ({
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
+          setLoading(false);
           getUserDataApiCall();
           session?.user?.profile_count !== 100 &&
             session?.user?.profile_count < 100 &&
@@ -56,7 +61,6 @@ const BasicDetails = ({
             profileCompletionCount?.employee === 100 ||
             session?.user?.profile_count === 100
           ) {
-            console.log('hello');
             setOpenSuccessModal(true);
           }
           setActivePage(activePage + 1);
@@ -64,6 +68,7 @@ const BasicDetails = ({
         }
       })
       .catch((error) => {
+        setLoading(false);
         toast.error(error || 'Something want wrong');
       });
   };
@@ -162,12 +167,12 @@ const BasicDetails = ({
         </div>
       </div>
       <div className="mt-8 flex w-full justify-end">
-        <button
-          type="submit"
-          className="w-36 rounded-lg bg-meta-blue-1 py-2 text-base text-white"
-        >
-          {TEXT?.NEXT}
-        </button>
+        <Button
+          title={TEXT?.NEXT}
+          isLoading={loading}
+          titleClass="!text-base !text-white"
+          btnClass="!w-36 !rounded-lg !bg-meta-blue-1 !py-2"
+        />
       </div>
 
       <SuccessModal open={openSuccessModal} setOpen={setOpenSuccessModal} />

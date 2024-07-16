@@ -165,7 +165,6 @@ export async function POST(req: NextRequest) {
       let currentToken = req.cookies.get(sessionCookie)?.value;
 
       let decodedToken = await decode({ token: currentToken, secret });
-      console.log('Decoded token:', decodedToken);
 
       decodedToken = {
         ...decodedToken,
@@ -173,7 +172,6 @@ export async function POST(req: NextRequest) {
       };
 
       const encodedToken = await encode({ token: decodedToken, secret });
-      console.log('Encoded token:', encodedToken);
 
       var response = NextResponse.json({
         data: user,
@@ -190,7 +188,6 @@ export async function POST(req: NextRequest) {
 
     return response;
   } catch (error) {
-    console.log('Verification error:', error);
     return NextResponse.json({
       status: 500,
       message: 'Internal server error from backend.',

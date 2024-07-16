@@ -258,7 +258,7 @@ const MyProfile = () => {
                       {session?.data?.user?.role !== USER_ROLE?.EMPLOYEE
                         ? userDetails?.user_name
                           ? userDetails?.user_name
-                          : '-'
+                          : userDetails?.company_name
                         : userDetails?.company_name
                           ? userDetails?.company_name
                           : '-'}

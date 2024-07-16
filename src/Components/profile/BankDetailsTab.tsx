@@ -26,7 +26,6 @@ const BankDetailsTab = ({
   getUserDataApiCall,
 }: any) => {
   const context = useContext(AppContext);
-  const [cityQuery, setCityQuery] = useState('');
   const [isSpinner, setIsSpinner] = useState(false);
 
   const {
@@ -45,6 +44,7 @@ const BankDetailsTab = ({
       setProfileCompletionCount,
       completedSections,
       setCompletedSections,
+      setOpenSuccessModal,
     );
   };
 

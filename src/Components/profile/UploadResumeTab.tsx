@@ -115,6 +115,7 @@ const UploadResumeTab = ({
       setProfileCompletionCount,
       completedSections,
       setCompletedSections,
+      setOpenSuccessModal,
     );
   };
 

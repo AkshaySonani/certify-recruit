@@ -19,6 +19,7 @@ const SummaryTab = ({
   getUserDataApiCall,
 }: any) => {
   const context = useContext(AppContext);
+  const [loading, setLoading] = useState(false);
 
   const {
     profileCompletionCount,
@@ -36,10 +37,12 @@ const SummaryTab = ({
       setProfileCompletionCount,
       completedSections,
       setCompletedSections,
+      setOpenSuccessModal,
     );
   };
 
   const handleSubmit = async (values: any, actions: any) => {
+    setLoading(true);
     const obj = {
       ...values,
       // profile_count: {
@@ -50,6 +53,7 @@ const SummaryTab = ({
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
+          setLoading(false);
           getUserDataApiCall();
           session?.user?.profile_count !== 100 &&
             session?.user?.profile_count < 100 &&
@@ -66,6 +70,7 @@ const SummaryTab = ({
         }
       })
       .catch((error) => {
+        setLoading(false);
         toast.error(error || 'Something want wrong');
       });
   };
@@ -114,6 +119,7 @@ const SummaryTab = ({
       <div className="mt-8 flex w-full justify-end">
         <Button
           title={TEXT?.NEXT}
+          isLoading={loading}
           titleClass="!text-base !text-white"
           btnClass="!w-36 !rounded-lg !bg-meta-blue-1 !py-2"
         />

@@ -16,6 +16,7 @@ import {
 } from '@/service/Helper';
 import { Fragment, useContext, useEffect, useState } from 'react';
 import SuccessModal from './SuccessModal';
+import Button from '../Button';
 
 const CompanyDetailsTab = ({
   session,
@@ -29,6 +30,7 @@ const CompanyDetailsTab = ({
   const [cities, setCities] = useState([]);
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
+  const [loading, setLoading] = useState(false);
   const debouncedSearchCity = useDebounce(cityQuery);
   const debouncedSearchState = useDebounce(stateQuery);
   const context = useContext(AppContext);
@@ -53,10 +55,12 @@ const CompanyDetailsTab = ({
       setProfileCompletionCount,
       completedSections,
       setCompletedSections,
+      setOpenSuccessModal,
     );
   };
 
   const handleSubmit = async (values: any, actions: any) => {
+    setLoading(true);
     let obj = {
       ...values,
       // profile_count: {
@@ -67,6 +71,7 @@ const CompanyDetailsTab = ({
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
+          setLoading(false);
           session?.user?.profile_count !== 100 &&
             session?.user?.profile_count < 100 &&
             handleNextClick('company_detail');
@@ -76,7 +81,6 @@ const CompanyDetailsTab = ({
             profileCompletionCount?.employee === 100 ||
             session?.user?.profile_count === 100
           ) {
-            console.log('hello');
             setOpenSuccessModal(true);
           }
           setActivePage(activePage + 1);
@@ -85,6 +89,7 @@ const CompanyDetailsTab = ({
         }
       })
       .catch((error) => {
+        setLoading(false);
         toast.error(error || 'Something want wrong');
       });
   };
@@ -450,12 +455,12 @@ const CompanyDetailsTab = ({
       </div>
 
       <div className="mt-8 flex w-full justify-end">
-        <button
-          type="submit"
-          className="w-36 rounded-lg bg-meta-blue-1 py-2 text-base text-white"
-        >
-          {TEXT?.NEXT}
-        </button>
+        <Button
+          title={TEXT?.NEXT}
+          isLoading={loading}
+          titleClass="!text-base !text-white"
+          btnClass="!w-36 !rounded-lg !bg-meta-blue-1 !py-2"
+        />
       </div>
       <SuccessModal open={openSuccessModal} setOpen={setOpenSuccessModal} />
     </form>

@@ -215,7 +215,6 @@ const Page = (data: any) => {
       exam_id: examId,
       answers: answerSheet.map(({ _id, ans }: any) => ({ que_id: _id, ans })),
     };
-    console.log('obj', obj);
 
     API.post(API_CONSTANT?.CHECK_ANSWER, obj)
       .then((res: any) => {

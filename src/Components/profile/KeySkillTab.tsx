@@ -21,6 +21,7 @@ const KeySkillTab = ({
   activePage,
   getUserDataApiCall,
 }: any) => {
+  const [loading, setLoading] = useState(false);
   const [skillData, setSkillData] = useState([]);
   const [skillQuery, setSkillQuery] = useState('');
   const debouncedSearchSkill = useDebounce(skillQuery);
@@ -42,10 +43,12 @@ const KeySkillTab = ({
       setProfileCompletionCount,
       completedSections,
       setCompletedSections,
+      setOpenSuccessModal,
     );
   };
 
   const handleSubmit = async (values: any, actions: any) => {
+    setLoading(true);
     const obj = {
       skills: values?.skills.map((el: any) => el?._id),
       // profile_count: {
@@ -56,6 +59,7 @@ const KeySkillTab = ({
     API.post(API_CONSTANT?.PROFILE, obj)
       .then((res) => {
         if (res?.data?.status === 200) {
+          setLoading(false);
           session?.user?.profile_count !== 100 &&
             session?.user?.profile_count < 100 &&
             handleNextClick('key_skills');
@@ -73,6 +77,7 @@ const KeySkillTab = ({
         }
       })
       .catch((error) => {
+        setLoading(false);
         toast.error(error || 'Something want wrong');
       });
   };
@@ -215,6 +220,7 @@ const KeySkillTab = ({
       <div className="mt-8 flex w-full justify-end">
         <Button
           title={TEXT?.NEXT}
+          isLoading={loading}
           titleClass="!text-base !text-white"
           btnClass="!w-36 !rounded-lg !bg-meta-blue-1 !py-2"
         />

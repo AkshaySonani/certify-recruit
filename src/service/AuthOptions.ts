@@ -65,14 +65,13 @@ export const authOptions: AuthOptions = {
             if (role === 'employee' && newUser) {
               await Company.create({
                 user_ref_id: newUser?._id,
-                phone: phone,
-                user_name: name,
+                contact_number: phone,
                 company_name: name,
               });
             } else {
               await Individual.create({
                 user_ref_id: newUser?._id,
-                phone: phone,
+                contact_number: phone,
                 user_name: name,
               });
             }

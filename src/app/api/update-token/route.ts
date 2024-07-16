@@ -153,7 +153,6 @@ export const POST = async (req: NextRequest) => {
     }
 
     let decodedToken = await decode({ token, secret });
-    console.log('Decoded token:', decodedToken);
 
     decodedToken = {
       ...decodedToken,
@@ -161,14 +160,12 @@ export const POST = async (req: NextRequest) => {
     };
 
     const encodedToken = await encode({ token: decodedToken, secret });
-    console.log('Encoded token:', encodedToken);
 
     // Connect to the database
     await connect();
 
     // Update the user profile_count in the database
     await User.findByIdAndUpdate(decodedToken?._id, { profile_count: count });
-    console.log('Profile count updated in the database');
 
     const response = NextResponse.json({
       message: 'Profile count updated successfully',
@@ -183,7 +180,6 @@ export const POST = async (req: NextRequest) => {
 
     return response;
   } catch (error: any) {
-    console.error('Error occurred:', error);
     return NextResponse.json(
       {
         message: 'An error occurred while updating profile count.',

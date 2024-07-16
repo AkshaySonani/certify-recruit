@@ -57,8 +57,8 @@ const SuccessModal = ({ open, setOpen }: any) => {
                       width={123}
                       height={127}
                       alt="UploadLogo"
-                      src={'/profile/profileSuccess.svg'}
                       className="mx-auto cursor-pointer"
+                      src={'/profile/profileSuccess.png'}
                       onClick={() => router?.push(ROUTE?.DASHBOARD)}
                     />
                   </div>

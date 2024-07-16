@@ -479,6 +479,7 @@ const updateProfileCount = (
   setProfileCompletionCount: any,
   completedSections: any,
   setCompletedSections: any,
+  setOpenSuccessModal: any,
 ) => {
   const employeeDetails = {
     basic_details: 30,
@@ -508,6 +509,10 @@ const updateProfileCount = (
   if (details && details[section] && !completedSections.has(sectionKey)) {
     setProfileCompletionCount((prevCount: any) => {
       const newCount = (prevCount[role] || 0) + details[section];
+      if (newCount === 100) {
+        setOpenSuccessModal(true);
+      }
+
       return {
         ...prevCount,
         [role]: Math.min(newCount, 100), // Ensure count does not exceed 100
