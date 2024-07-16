@@ -145,7 +145,7 @@ export default function Home() {
                     alt="date"
                     width={310}
                     height={394}
-                    src={'/landing/certificate.png'}
+                    src={'/landing/certificatebanner.png'}
                   />
                 </motion.div>
                 <div className="absolute bottom-2 flex w-full justify-center">

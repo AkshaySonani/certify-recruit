@@ -2,9 +2,9 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { TEXT } from '@/service/Helper';
+import { ROUTE, TEXT } from '@/service/Helper';
 
-const Page = () => {
+const Page = (data: any) => {
   const router = useRouter();
   return (
     <div>
@@ -25,18 +25,27 @@ const Page = () => {
                 />
               </div>
               <p className="mb-2 text-center text-sm font-medium text-meta-light-blue-3">
-                {TEXT?.RESET_PASSWORD}
+                Congratulations! Your Password has been reset! You are ready to
+                roll again!
               </p>
-              <h3 className="mb-10 text-center text-2xl font-semibold text-meta-purple-1">
-                {TEXT?.SUCCESSFULLY}
+              <h3 className="mb-10 mt-3 text-center text-2xl font-semibold text-meta-purple-1">
+                Reset Successful
               </h3>
 
               <div className="flex items-center justify-center text-lg font-medium text-meta-light-blue-3">
                 <span
-                  onClick={() => router.push('/login')}
+                  onClick={() => {
+                    if (data?.searchParams?.new === '') {
+                      router.push(ROUTE?.DASHBOARD);
+                    } else {
+                      router.push('/login');
+                    }
+                  }}
                   className="mr-2 cursor-pointer text-meta-blue-2"
                 >
-                  {TEXT?.GO_TO_LOGIN}
+                  {data?.searchParams?.new == ''
+                    ? 'Go To Dashobard'
+                    : TEXT?.GO_TO_LOGIN}
                 </span>
                 <Image
                   width={17}

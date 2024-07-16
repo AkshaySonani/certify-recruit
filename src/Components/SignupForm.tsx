@@ -8,11 +8,11 @@ import { toast } from 'react-toastify';
 import API from '@/service/ApiService';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import SignupSuccess from './SignupSuccess';
 import AppContext from '@/context/AppProvider';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { EMAIlREGEX, ROUTE, TEXT, USER_ROLE } from '@/service/Helper';
+import SignupSuccessModal from './SignupSuccessModal';
 
 type formValues = {
   email: string;
@@ -24,7 +24,7 @@ const SignupForm = () => {
   const context = useContext(AppContext);
   const [eye, setEye] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [successMsg, setSuccessMsg] = useState(false);
+  const [successOpen, setSuccessOpen] = useState(false);
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -77,11 +77,12 @@ const SignupForm = () => {
         setLoading(false);
         toast.error(signUpResponse?.error);
       } else {
-        router.push(ROUTE?.SIGN_UP_SUCCESS);
+        setSuccessOpen(true);
         if (context?.currentRole === 'individual') {
           onNextUpdateProfileRole();
         }
         setLoading(false);
+
         toast.success('User successfully register');
       }
     } catch (error) {
@@ -89,43 +90,6 @@ const SignupForm = () => {
       toast.error('Error signing in with email and password. Try again later.');
     }
   };
-
-  // const handleSubmit = async (values: any) => {
-  //   try {
-  //     await signIn("credentials", {
-  //       ...values,
-  //       role: context.currentRole,
-  //       isLogin: false,
-  //       redirect: false,
-  //       // callbackUrl: "/dashboard",
-  //     }).then(() => router.push("/dashboard"));
-  //   } catch (error: any) {
-  //     console.log(error);
-  //     toast.error(error?.response?.data?.message || "Internal server error");
-  //   }
-  // };
-
-  // const handleSubmit = async (values: any) => {
-  //   try {
-  //     const res = await API.post(API_CONSTANT?.SIGN_UP, {
-  //       ...values,
-  //       role: context?.currentRole,
-  //     });
-  //     if (res.data) {
-  //       const res = await signIn("credentials", {
-  //         ...values,
-  //         redirect: false,
-  //       });
-  //       toast.success("User registration successfully");
-  //       setSuccessMsg(true);
-  //     } else {
-  //       console.log("User registration failed.");
-  //     }
-  //   } catch (err: any) {
-  //     console.log("Error during registration:", err);
-  //     toast.error(err.response.data.message);
-  //   }
-  // };
 
   const formik = useFormik({
     initialValues: {
@@ -284,6 +248,7 @@ const SignupForm = () => {
           </div>
         </form>
       </div>
+      <SignupSuccessModal isOpen={successOpen} setIsOpen={setSuccessOpen} />
     </div>
   );
 };

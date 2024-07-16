@@ -17,10 +17,10 @@ const IndividualComp = () => {
   const individualArr = [
     'US Recruitment',
     'Domestic Recruitment',
-    'Human Resource',
-    'Bench Sales',
-    'UK Recruitment',
-    'Canada Recruitment',
+    // 'Human Resource',
+    // 'Bench Sales',
+    // 'UK Recruitment',
+    // 'Canada Recruitment',
   ];
 
   const handleNextPageNavigation = () => {
@@ -47,7 +47,7 @@ const IndividualComp = () => {
           </div>
 
           <div className="w-full bg-[url('/_Compound.svg')]">
-            <div className="relative m-auto w-[80%] rounded-3xl border border-meta-light-blue-2 bg-white p-6 shadow-[0px_2px_10px_0px_#00000006]">
+            <div className="relative m-auto w-[80%] rounded-3xl border border-meta-light-blue-2 bg-white p-6 pb-14 shadow-[0px_2px_10px_0px_#00000006]">
               <div className="flex w-full justify-center gap-1">
                 <Image
                   alt="icon"

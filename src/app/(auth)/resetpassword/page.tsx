@@ -6,7 +6,6 @@ import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
 import React, { useEffect, useState } from 'react';
 import Button from '@/Components/Button';
-import Loading from '@/Components/Loading';
 import { useRouter } from 'next/navigation';
 import { ROUTE, TEXT } from '@/service/Helper';
 import { API_CONSTANT } from '@/constant/ApiConstant';
@@ -38,7 +37,7 @@ const Page = (data: any) => {
           if (data?.searchParams?.token) {
             router.push(ROUTE?.SUCCESSFUL_RESET_PASSWORD);
           } else {
-            router.push(ROUTE?.DASHBOARD);
+            router.push(`${ROUTE?.SUCCESSFUL_RESET_PASSWORD}?new`);
           }
         }
       })
