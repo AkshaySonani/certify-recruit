@@ -27,6 +27,8 @@ export default function Page() {
   const [joinNow, setJoinNow] = useState(true);
   const debouncedSearchSkill = useDebounce(skillQuery);
   const [loading, setLoading] = useState(false);
+  const [selectMainCategory, setSelectMainCategory] = useState('');
+
   const MultiboxStyle = {
     control: (base: any, state: any) => ({
       ...base,
@@ -130,67 +132,128 @@ export default function Page() {
           <p className="text-center text-[40px] font-semibold text-meta-blue-1">
             Choose categories
           </p>
-          <p className="m-auto mt-2 w-[80%] text-lg font-medium text-meta-light-blue-3">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type.
+          <p className="m-auto mt-2 w-[80%] text-center text-lg font-medium text-meta-light-blue-3">
+            Choose categories according to your expertise. You can select a
+            maximum of up to 3 categories.
           </p>
-          <div className="mt-5 flex w-full flex-col items-center justify-center  lg:w-1/2">
-            <div className="border-1 mt-5 flex w-full flex-wrap items-start rounded-xl border border-meta-light-blue-1 py-2 lg:mt-0">
-              <MultipleSelectBox
-                name="skills"
-                isMulti={true}
-                options={skillData}
-                style={MultiboxStyle}
-                placeholder="Search Categories"
-                value={allCategory}
-                onKeyDown={(e: any) => onSearchSkill(e)}
-                className="w-full !border-meta-light-blue-1"
-                handleChange={(option: any) => setAllCategory(option)}
-                components={{ Placeholder, DropdownIndicator }}
-              />
-            </div>
-          </div>
-          <div className="mt-5 flex w-full flex-wrap items-start justify-center gap-4 text-start sm:flex-nowrap">
-            {allCategory?.map((ele: any, i: any) => {
-              return (
-                <div
-                  onClick={() => setCategories([...categories, ele])}
-                  className={`${categories?.includes(ele) ? 'border border-meta-blue-1' : ''} flex w-1/4 items-center gap-2 rounded-xl  bg-meta-light-blue-1 px-3 py-5`}
-                >
-                  <Image
-                    alt="icon"
-                    width={16}
-                    height={20}
-                    src={'/Individual.svg'}
-                  />
-                  <div className="text-meta-blue-1">{ele?.label}</div>
+          {selectMainCategory === '' ? (
+            <div className="border-meta-light-blue m-auto mt-11 rounded-[26px] border bg-meta-light-blue-5 p-12 sm:w-[70%]">
+              <div className="mt-5 flex w-full flex-wrap   justify-center gap-5 text-start ">
+                {[
+                  'US Recruitment',
+                  'US Recruitment',
+                  'US Recruitment',
+                  'US Recruitment',
+                ]?.map((ele: any, i: any) => {
+                  return (
+                    <div
+                      onClick={() => setCategories([...categories, ele])}
+                      className={`${categories?.includes(ele) ? 'border border-meta-blue-1' : ''} flex w-[46%] items-center gap-2 rounded-xl  bg-meta-light-blue-1 px-3 py-5`}
+                    >
+                      <Image
+                        alt="icon"
+                        width={16}
+                        height={20}
+                        src={'/Individual.svg'}
+                      />
+                      <div className="text-meta-blue-1">{ele}</div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="mt-9">
+                <p className="text-center text-2xl font-normal text-meta-blue-1">
+                  Years of Experiance
+                </p>
+
+                <div className="mt-4 flex justify-center gap-3">
+                  <div className="w-48 rounded-xl bg-meta-light-blue-2 py-1 text-center text-xl text-meta-light-blue-3">
+                    0-3
+                  </div>
+                  <div className="w-48 rounded-xl bg-meta-light-blue-2 py-1 text-center text-xl text-meta-light-blue-3">
+                    0-3
+                  </div>
+                  <div className="w-48 rounded-xl bg-meta-light-blue-2 py-1 text-center text-xl text-meta-light-blue-3">
+                    0-3
+                  </div>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="mt-5 flex w-full flex-col items-center justify-center  lg:w-1/2">
+                <div className="border-1 mt-5 flex w-full flex-wrap items-start rounded-xl border border-meta-light-blue-1 py-2 lg:mt-0">
+                  <MultipleSelectBox
+                    name="skills"
+                    isMulti={true}
+                    options={skillData}
+                    style={MultiboxStyle}
+                    placeholder="Search Categories"
+                    value={allCategory}
+                    onKeyDown={(e: any) => onSearchSkill(e)}
+                    className="w-full !border-meta-light-blue-1"
+                    handleChange={(option: any) => setAllCategory(option)}
+                    components={{ Placeholder, DropdownIndicator }}
+                  />
+                </div>
+              </div>
+              <div className="mt-5 flex w-full flex-wrap items-start justify-center gap-4 text-start sm:flex-nowrap">
+                {allCategory?.map((ele: any, i: any) => {
+                  return (
+                    <div
+                      onClick={() => setCategories([...categories, ele])}
+                      className={`${categories?.includes(ele) ? 'border border-meta-blue-1' : ''} flex w-1/4 items-center gap-2 rounded-xl  bg-meta-light-blue-1 px-3 py-5`}
+                    >
+                      <Image
+                        alt="icon"
+                        width={16}
+                        height={20}
+                        src={'/Individual.svg'}
+                      />
+                      <div className="text-meta-blue-1">{ele?.label}</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          )}
         </div>
       </div>
-      <div className={`"w-full mt-20  flex  items-end justify-between`}>
-        <button
-          type="button"
-          onClick={() => router?.back()}
-          className="mb-8 h-12 min-w-full rounded-lg border-2 border-meta-light-blue-1 text-base font-medium text-meta-light-blue-3 sm:mb-8 sm:min-w-48"
-        >
-          {TEXT?.BACK}
-        </button>
-
-        <button
-          onClick={() => onContinue()}
-          className={`mb-8 h-12  min-w-48 rounded-lg border border-meta-light-blue-2 bg-meta-blue-1 py-3 text-meta-light-blue-3 transition delay-150 duration-300 ease-in-out will-change-auto hover:bg-hiring-btn-gradient`}
-        >
-          <span
-            className={`flex justify-center text-sm font-medium text-white`}
+      {selectMainCategory === '' ? (
+        <div className={`"w-full mt-20  flex  items-end justify-end`}>
+          <button
+            onClick={() => setSelectMainCategory('nrw')}
+            className={`mb-8 h-12  min-w-48 rounded-lg border border-meta-light-blue-2 bg-meta-blue-1 py-3 text-meta-light-blue-3 transition delay-150 duration-300 ease-in-out will-change-auto hover:bg-hiring-btn-gradient`}
           >
-            Continue
-          </span>
-        </button>
-      </div>
+            <span
+              className={`flex justify-center text-sm font-medium text-white`}
+            >
+              Continue
+            </span>
+          </button>
+        </div>
+      ) : (
+        <div className={`"w-full mt-20  flex  items-end justify-between`}>
+          <button
+            type="button"
+            onClick={() => router?.back()}
+            className="mb-8 h-12 min-w-full rounded-lg border-2 border-meta-light-blue-1 text-base font-medium text-meta-light-blue-3 sm:mb-8 sm:min-w-48"
+          >
+            {TEXT?.BACK}
+          </button>
+
+          <button
+            onClick={() => onContinue()}
+            className={`mb-8 h-12  min-w-48 rounded-lg border border-meta-light-blue-2 bg-meta-blue-1 py-3 text-meta-light-blue-3 transition delay-150 duration-300 ease-in-out will-change-auto hover:bg-hiring-btn-gradient`}
+          >
+            <span
+              className={`flex justify-center text-sm font-medium text-white`}
+            >
+              Continue
+            </span>
+          </button>
+        </div>
+      )}
       <Transition appear show={JoinConfirmModal} as={Fragment}>
         <Dialog
           as="div"

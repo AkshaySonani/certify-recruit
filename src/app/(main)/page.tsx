@@ -145,27 +145,25 @@ export default function Home() {
                     alt="date"
                     width={310}
                     height={394}
+                    src={'/landing/card.png'}
+                  />
+                  <Image
+                    alt="date"
+                    width={310}
+                    height={394}
+                    className="absolute top-0"
                     src={'/landing/certificatebanner.png'}
                   />
                 </motion.div>
-                <div className="absolute bottom-2 flex w-full justify-center">
-                  <Button
-                    type={'button'}
-                    title={'Get Certification'}
-                    handleClick={() => {
-                      if (session?.user) {
-                        if (session?.user?.role === USER_ROLE?.INDIVIDUAL) {
-                          router?.push(ROUTE?.CERTIFICATION);
-                        } else {
-                          router?.push(ROUTE?.DASHBOARD);
-                        }
-                      } else {
-                        router?.push(ROUTE?.LOGIN);
-                      }
-                    }}
-                    btnClass="w-max !my-3 !p-3 !h-auto !bg-meta-blue-1"
-                    titleClass="flex justify-center  text-base  font-medium text-white"
-                  />
+                <div className="absolute top-28 mt-12 flex w-full flex-col items-center justify-center">
+                  <p className="text-center text-4xl font-semibold text-white">
+                    Certified
+                  </p>
+                  <div className="mt-7  text-2xl font-semibold text-white">
+                    <p className="text-center">FEB 2024</p>
+                    <p className="text-center">TO</p>
+                    <p className="text-center">FEB 2025</p>
+                  </div>
                 </div>
               </div>
             </div>
