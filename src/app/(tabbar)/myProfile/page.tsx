@@ -209,7 +209,7 @@ const MyProfile = () => {
                     <Image
                       width={73}
                       height={73}
-                      alt="avatar"
+                      alt="userProfile"
                       src={
                         userDetails?.logo !== ''
                           ? userDetails?.logo
@@ -340,7 +340,12 @@ const MyProfile = () => {
               session={session?.data}
               userDetails={userDetails}
               getUserDataApiCall={() => getProfileDetails()}
-              percentage={session?.data?.user?.profile_count}
+              percentage={
+                session?.data?.user?.profile_count <
+                profileCompletionCount?.employee
+                  ? profileCompletionCount?.employee
+                  : session?.data?.user?.profile_count
+              }
               isEdit={isEdit}
             />
           ) : (
