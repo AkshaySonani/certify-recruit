@@ -175,7 +175,7 @@ const Sidebar = () => {
               <div className="flex items-center">
                 <div className={`${open ? 'px-0' : ''} px-2 sm:px-4`}>
                   <Image
-                    alt="Icon"
+                    alt="userProfile"
                     width={39}
                     height={39}
                     src={
