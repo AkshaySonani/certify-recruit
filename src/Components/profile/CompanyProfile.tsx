@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { TEXT } from '@/service/Helper';
 import KYCDetailsTab from './KYCDetailsTab';
 import BasicDetails from './BasicDetailsTab';
 import CompanyDetailsTab from './CompanyDetailsTab';
 import Image from 'next/image';
+import SuccessModal from './SuccessModal';
+import AppContext from '@/context/AppProvider';
 
 const TAB = [
   {
@@ -26,8 +28,9 @@ const CompanyProfile = ({
   percentage,
   isEdit,
 }: any) => {
+  const context = useContext(AppContext);
   const [activePage, setActivePage] = useState(TAB[0]?.id);
-
+  const { openSuccessModal, setOpenSuccessModal } = context;
   return (
     <>
       {percentage !== 100 || isEdit === true ? (
@@ -229,6 +232,8 @@ const CompanyProfile = ({
               </div>
             </div>
           )}
+
+          <SuccessModal open={openSuccessModal} setOpen={setOpenSuccessModal} />
         </div>
       )}
     </>
