@@ -3,21 +3,29 @@ import moment from 'moment';
 import { useRouter } from 'next/navigation';
 import ApplyJob from '../job/applyJob';
 import Image from 'next/image';
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { TEXT } from '@/service/Helper';
 import { Dialog, Transition } from '@headlessui/react';
 import Button from '../Button';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { LinkedinShareButton } from 'next-share';
+import { TwitterShareButton } from 'next-share';
+import API from '@/service/ApiService';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import { toast } from 'react-toastify';
 const IndividualDashboard = ({
   dashboardData,
   setDashBoardData,
   userDetails,
 }: any) => {
+  const TwitterUrl = 'https://twitter.com/intent/tweet?url=';
+  const LinkdinUrl = 'https://www.linkedin.com/sharing/share-offsite/?url=';
   const certificateRef = useRef<HTMLDivElement>(null);
   const [viewCertificate, setViewCertificate] = useState(false);
   const router = useRouter();
   const [jobApplyId, setJobApplyId] = useState('');
+  const [pdfUrl, setPdfUrl] = useState('');
   const _onJobApply = (id: any) => {
     const updatedItems = dashboardData.map((item: any) =>
       item?._id === id ? { ...item, applied: true } : item,
@@ -36,6 +44,38 @@ const IndividualDashboard = ({
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
       pdf.save('document.pdf');
+    }
+  };
+
+  const UploadFileOnBucket = async (NewFormData: any, link: any) => {
+    API.post(API_CONSTANT?.UPLOAD_FILE, NewFormData)
+      .then((res) => {
+        setPdfUrl(res?.data?.fileName);
+        window.open(`${link}${encodeURIComponent(res?.data?.fileName)}`);
+      })
+      .catch((error) => {
+        toast.error(error || 'Something want wrong');
+      });
+  };
+
+  const getUrl = async (link: any) => {
+    setViewCertificate(true);
+    if (pdfUrl === '') {
+      const element = certificateRef.current;
+      if (element) {
+        const canvas = await html2canvas(element);
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        const pdfBlob = pdf.output('blob');
+        const formData = new FormData();
+        formData.append('file', pdfBlob, 'certificate.pdf');
+        UploadFileOnBucket(formData, link);
+      }
+    } else {
+      window.open(`${link}${encodeURIComponent(pdfUrl)}`);
     }
   };
 
@@ -67,7 +107,10 @@ const IndividualDashboard = ({
                 <div className="mr-4 text-sm font-medium text-white">
                   {TEXT?.SHARE}
                 </div>
-                <div className="mr-4">
+                <div
+                  className="mr-4 cursor-pointer"
+                  onClick={() => setViewCertificate(true)}
+                >
                   <Image
                     width={30}
                     height={30}
@@ -75,7 +118,11 @@ const IndividualDashboard = ({
                     src={'/dashboard/linkedin.svg'}
                   />
                 </div>
-                <div className="mr-4">
+
+                <div
+                  className="mr-4 cursor-pointer"
+                  onClick={() => setViewCertificate(true)}
+                >
                   <Image
                     width={30}
                     height={30}
@@ -83,6 +130,7 @@ const IndividualDashboard = ({
                     src={'/dashboard/twitter.svg'}
                   />
                 </div>
+
                 <div>
                   <button
                     className="h-10 w-48 rounded-lg bg-meta-blue-2 text-white"
@@ -345,14 +393,49 @@ const IndividualDashboard = ({
                       </div>
                     </div>
                   </div>
-                  <div className="flex w-full items-center justify-center">
-                    <Button
-                      type={'button'}
-                      title={'Download PDF'}
-                      handleClick={downloadPdf}
-                      btnClass="w-max !my-3 !p-3 !h-auto !mb-0"
-                      titleClass="flex justify-center text-base font-medium text-white"
-                    />
+                  <div className="my-4 flex w-full items-center justify-center">
+                    <div className="ml-24 flex w-1/2 items-center justify-end">
+                      <Button
+                        type={'button'}
+                        title={'Download PDF'}
+                        handleClick={downloadPdf}
+                        btnClass="w-max !p-3 !h-auto !mb-0"
+                        titleClass="flex justify-center text-base font-medium text-white "
+                      />
+                    </div>
+                    <div className="flex w-1/2 items-center justify-end">
+                      <LinkedinShareButton
+                        url={pdfUrl} // URL to share (adjust as needed)
+                        title="Check out my certificate!" // Title of the LinkedIn post
+                        beforeOnClick={() => getUrl(LinkdinUrl)}
+                      >
+                        <div className="mr-4 flex h-[34px] w-[34px] items-center justify-center rounded-full bg-meta-blue-1 ">
+                          <Image
+                            width={30}
+                            height={30}
+                            alt="linkedin"
+                            className="m-auto"
+                            src={'/dashboard/linkedin.svg'}
+                          />
+                        </div>
+                      </LinkedinShareButton>
+                      <TwitterShareButton
+                        url={pdfUrl}
+                        // URL to share (adjust as needed)
+                        title="Check out my certificate!"
+                        beforeOnClick={() => getUrl(TwitterUrl)}
+                        // Title of the LinkedIn post
+                      >
+                        <div className="mr-4 flex h-[34px] w-[34px] items-center justify-center rounded-full bg-meta-blue-1 ">
+                          <Image
+                            width={30}
+                            height={30}
+                            alt="twitter"
+                            src={'/dashboard/twitter.svg'}
+                          />
+                        </div>
+                      </TwitterShareButton>
+                    </div>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
