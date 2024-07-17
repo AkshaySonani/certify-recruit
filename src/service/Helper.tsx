@@ -32,7 +32,8 @@ const ROUTE = {
   BGV_FULL_REPORT: '/BGV/fullReport',
   ACTIVE_JOB: '/dashboard/active_job',
   EMPLOYMENT_TYPE: '/job_posting/employment_Type',
-  CHOOSE_CATEGORY: '/certification/chooseCategories',
+
+  _CATEGORY: '/certification/chooseCategories',
   SUCCESSFUL_RESET_PASSWORD: '/resetpassword/success',
   SUCCESSFUL_FORGOT_PASSWORD: '/forgotPass/newPass/successful',
   FORGOT_PASSWORD: '/forgotpassword',
@@ -238,7 +239,7 @@ const TEXT = {
   WINNING_PRIZE_REDEEM_WITH_HOURS_AFTER_TEST_COMPLETE:
     'Winning Prize redeem with in 24 Hours after test complete',
   ONLY_WHEN_YOU_HAVE_CERTIFICATION_CAN_YOU_DO_LEARN_AND_EARN_USE:
-    'Only when you have the certification can you do learn and earn use.',
+    'You can only play Learn & Earn if you have completed your certification.',
   GO_TO_CERTIFICATION: 'Go to Certification',
   CERTIFYRECRUIT_STREAMLINES_YOUR_ENTIRE_RECRUITING_PROCESS:
     ' CertifyRecruit streamlines your entire recruiting process, so you can find the best people for your team, quickly and easily',
@@ -252,83 +253,23 @@ const USER_ROLE = {
 const SIDE_BAR_DATA: any = {
   admin: [],
   individual: [
-    {
-      path: 'dashboard',
-      title: 'Dashboard',
-      icon: Icons.Dashboard,
-    },
-    {
-      path: 'job',
-      title: 'Job',
-      icon: Icons.Job,
-    },
-    {
-      icon: Icons.Learn,
-      path: 'learnAndEarn',
-      title: 'Learn & Earn',
-    },
-    {
-      path: 'certification',
-      title: 'Certification',
-      icon: Icons.Certificate,
-    },
-    {
-      path: 'pricing',
-      title: 'Pricing',
-      icon: Icons.Pricing,
-    },
-    {
-      path: 'BGV',
-      title: 'BGV',
-      icon: Icons.Pricing,
-    },
+    { path: 'dashboard', title: 'Dashboard', icon: Icons.Dashboard },
+    { path: 'job', title: 'Job', icon: Icons.Job },
+    { icon: Icons.Learn, path: 'learnAndEarn', title: 'Learn & Earn' },
+    { path: 'certification', title: 'Certification', icon: Icons.Certificate },
+    { path: 'pricing', title: 'Pricing', icon: Icons.Pricing },
+    { path: 'BGV', title: 'BGV', icon: Icons.Pricing },
   ],
   employee: [
-    {
-      path: 'dashboard',
-      title: 'Dashboard',
-      icon: Icons.Dashboard,
-    },
-    {
-      path: 'job_posting',
-      title: 'Job Posting',
-      icon: Icons.Job,
-    },
-    {
-      path: 'job',
-      title: 'Job',
-      icon: Icons.Job,
-    },
-    {
-      path: 'users',
-      title: 'Users',
-      icon: Icons.Job,
-    },
-    {
-      icon: Icons.Job,
-      path: 'earn_badge',
-      title: 'Company info',
-    },
-    {
-      icon: Icons.Job,
-      path: 'search_CVs',
-      title: 'Search CVs',
-    },
-    {
-      icon: Icons.Job,
-      path: 'badgeOfHonour',
-      title: 'Badge of Honour',
-    },
-    {
-      path: 'pricing',
-      title: 'Pricing',
-      icon: Icons.Pricing,
-    },
-    {
-      path: 'BGV',
-      title: 'BGV',
-      icon: Icons.Pricing,
-    },
+    { path: 'dashboard', title: 'Dashboard', icon: Icons.Dashboard },
+    { path: 'job_posting', title: 'Job Posting', icon: Icons.Job },
+    { path: 'job', title: 'Job', icon: Icons.Job },
+    { path: 'users', title: 'Users', icon: Icons.Job },
+    { icon: Icons.Job, path: 'earn_badge', title: 'Company info' },
+    { icon: Icons.Job, path: 'search_CVs', title: 'Search CVs' },
+    { icon: Icons.Job, path: 'badgeOfHonour', title: 'Badge of Honour' },
+    { path: 'pricing', title: 'Pricing', icon: Icons.Pricing },
+    { path: 'BGV', title: 'BGV', icon: Icons.Pricing },
   ],
 };
 

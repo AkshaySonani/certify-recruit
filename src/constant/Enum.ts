@@ -1,4 +1,4 @@
-const PROFICIENCY = ['BEGINNER', 'PROFICIENT', 'EXPERT'];
+const PROFICIENCY = ['BEGINNER', 'INTERMEDIATE', 'PROFICIENT'];
 
 const EMP_TYPE_ARR = [
   'FULLTIME',
@@ -23,6 +23,7 @@ const HIGH_EDUCATION = [
   { label: '12th Pass', value: 'TWELVE_PASS' },
   { label: 'Diploma', value: 'DIPLOMA' },
   { label: 'Graduate', value: 'GRADUATE' },
+  { label: 'Post Graduate', value: 'POST_GRADUATE' },
 ];
 
 const CURRENT_LOCATION = ['USA', 'OUT_OF_USA'];

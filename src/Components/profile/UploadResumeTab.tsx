@@ -186,9 +186,9 @@ const UploadResumeTab = ({
               Resume Headline
             </label>
             <p className="mb-3 pt-1 text-sm font-medium text-meta-light-blue-3">
-              It is the first thing recruiters notice in your profile. Write
-              concisely what makes you unique and right person for the job you
-              are looking for.
+              This is the first thing recruiters notice in your profile.
+              Concisely write what makes you unique and the right person for the
+              job you are seeking.
             </p>
           </div>
         </div>

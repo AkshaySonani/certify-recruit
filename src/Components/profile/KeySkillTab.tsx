@@ -166,12 +166,13 @@ const KeySkillTab = ({
       <div className="mt-5 flex w-full gap-3 pl-9">
         <div className="w-full">
           <label className="text-base font-medium text-meta-purple-1">
-            Key skill
+            Add Your Key Skill/s
           </label>
           <p className="mb-3 pt-1 text-sm font-medium text-meta-light-blue-3">
-            Tell recruiters what you know or what you are known for e.g. Direct
-            Marketing, Oracle, Java etc. We will send you job recommendations
-            based on these skills. each skill is separated by a comma.
+            Tell recruiters what you know or what you are known for, e.g.,
+            Direct Marketing, Oracle, Java, etc. We will send you job
+            recommendations based on these skills. Each skill should be
+            separated by a comma.
           </p>
           <div className="mt-3 flex w-full flex-col items-start lg:mt-0 lg:w-1/2">
             <div className="border-1 mt-3 flex w-full flex-wrap items-start rounded-xl border border-meta-light-blue-1 py-2 lg:mt-0">

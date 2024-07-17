@@ -149,7 +149,7 @@ const Page = () => {
         </div>
       ) : (
         <div className="mb-10 mt-3 flex items-center justify-center text-base font-semibold text-meta-blue-2 underline">
-          <Link href="#">{TEXT?.ARTICLE_LINK}</Link>
+          {/* <Link href="#">{TEXT?.ARTICLE_LINK}</Link> */}
         </div>
       )}
 

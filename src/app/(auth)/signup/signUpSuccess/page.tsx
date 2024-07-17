@@ -69,10 +69,14 @@ const Page = (data: any) => {
               <h3 className="mb-4 text-center text-3xl font-bold text-meta-purple-1">
                 {TEXT?.THANK_YOU_FOR_SIGN_UP}
               </h3>
+
+              <h3 className="mb-4 text-center text-xl font-bold text-meta-purple-1">
+                You're almost done!
+              </h3>
+
               <p className="mb-4 text-center text-sm font-medium text-meta-light-blue-3">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s
+                Just Click on the Verification Link sent to your Email-ID and
+                are ready to Excel!
               </p>
 
               {/* <div className='flex justify-center items-center font-medium text-lg text-meta-light-blue-3'>

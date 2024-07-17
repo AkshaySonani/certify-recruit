@@ -66,12 +66,12 @@ const BankDetailsTab = ({
             handleNextClick('bank_details');
           setIsSpinner(false);
           setActivePage(activePage);
-          if (
-            profileCompletionCount?.individual === 100 ||
-            session?.user?.profile_count === 100
-          ) {
-            setOpenSuccessModal(true);
-          }
+          // if (
+          //   profileCompletionCount?.individual === 100 ||
+          //   session?.user?.profile_count === 100
+          // ) {
+          setOpenSuccessModal(true);
+          // }
           getUserDataApiCall();
           context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);

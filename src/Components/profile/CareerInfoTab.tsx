@@ -217,9 +217,7 @@ const CareerInfoTab = ({
             Career profile
           </label>
           <p className="mb-3 pt-1 text-sm font-medium text-meta-light-blue-3">
-            Tell recruiters what you know or what you are known for e.g. Direct
-            Marketing, Oracle, Java etc. We will send you job recommendations
-            based on these skills. each skill is separated by a comma.
+            Fill in your career details here:
           </p>
           <div className="mt-3 flex w-full items-center justify-center gap-2 lg:mt-0">
             {EXPERIENCE_TYPE?.map((list) => {
@@ -242,7 +240,7 @@ const CareerInfoTab = ({
           {active !== 1 && (
             <div className="mt-5 w-full">
               <label className="text-base font-medium text-meta-purple-1">
-                Total years of experience
+                Total Years of Experience:
               </label>
               {formik?.values?.total_experiences?.map(
                 (list: any, index: any) => {
@@ -501,7 +499,7 @@ const CareerInfoTab = ({
           <div>
             <div className="mt-5 w-full">
               <label className="text-base font-medium text-meta-purple-1">
-                Expected Salary
+                Expected Salary (per annum)
               </label>
               <input
                 value={formik?.values?.expected_salary_start_at}

@@ -97,9 +97,9 @@ const SummaryTab = ({
           </label>
           <p className="mb-3 pt-1 text-sm font-medium text-meta-light-blue-3">
             Your profile summary should mention the highlights of your career
-            and education, what your professional interests are, and what kind
-            of a career you are looking for. Write a meaningful summary of more
-            than 50 characters.
+            and education, your professional interests, and the type of career
+            you are seeking. Write a meaningful summary of at least 50
+            characters.
           </p>
           <textarea
             rows={4}

@@ -1,4 +1,4 @@
-const PROFICIENCY = ['BEGINNER', 'PROFICIENT', 'EXPERT'];
+const PROFICIENCY = ['BEGINNER', 'INTERMEDIATE', 'PROFICIENT'];
 
 const EMP_TYPE_ARR = [
   'FULLTIME',
@@ -23,6 +23,7 @@ const HIGH_EDUCATION = [
   { label: '12th Pass', value: 'TWELVE_PASS' },
   { label: 'Diploma', value: 'DIPLOMA' },
   { label: 'Graduate', value: 'GRADUATE' },
+  { label: 'Post Graduate', value: 'POST_GRADUATE' },
 ];
 
 const CURRENT_LOCATION = ['USA', 'OUT_OF_USA'];
@@ -77,11 +78,11 @@ const EXAM_STATUS = {
   STOPPED: 'Stopped',
 };
 
-const BGV_STATUS={
-  PENDING:'Pending',
-   VERIFIED:'Verified',
-   REJECTED: 'Rejected'
-}
+const BGV_STATUS = {
+  PENDING: 'Pending',
+  VERIFIED: 'Verified',
+  REJECTED: 'Rejected',
+};
 const QUESTION_STATUS = [
   { id: 1, status: 'Default', color: 'bg-meta-gray-2' }, //0
   { id: 2, status: 'Not Answered', color: 'bg-meta-brown-1' }, //1
@@ -95,7 +96,7 @@ const QUESTION_STATUS = [
 ];
 const WORKPLACE_TYPE = ['ONSITE', 'HYBRID', 'REMOTE'];
 
-const BANK_ACCOUNT_TYPE=['SAVINGS', 'CURRENT']
+const BANK_ACCOUNT_TYPE = ['SAVINGS', 'CURRENT'];
 export {
   RENDER_OPTION,
   PROFICIENCY,
@@ -111,5 +112,5 @@ export {
   EXAM_STATUS,
   WORKPLACE_TYPE,
   BANK_ACCOUNT_TYPE,
-  BGV_STATUS
+  BGV_STATUS,
 };

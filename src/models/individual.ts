@@ -82,7 +82,13 @@ const individualSchema = new mongoose.Schema({
   ],
   highest_education: {
     type: String,
-    enum: ['TEN_OR_BELOW', 'TWELVE_PASS', 'DIPLOMA', 'GRADUATE'],
+    enum: [
+      'TEN_OR_BELOW',
+      'TWELVE_PASS',
+      'DIPLOMA',
+      'GRADUATE',
+      'POST_GRADUATE',
+    ],
     required: false,
   },
   role: {
@@ -176,7 +182,7 @@ const individualSchema = new mongoose.Schema({
       proficiency: {
         type: String,
         required: true,
-        enum: ['BEGINNER', 'PROFICIENT', 'EXPERT'],
+        enum: ['BEGINNER', 'INTERMEDIATE', 'PROFICIENT'],
       },
     },
   ],

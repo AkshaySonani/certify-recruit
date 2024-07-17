@@ -54,9 +54,9 @@ export const authOptions: AuthOptions = {
             const mailOptions = {
               from: process.env.NEXT_PUBLIC_EMAIL,
               to: email,
-              subject: 'Verification mail',
-              text: `Please click the following link to verify your account: ${verifyUrl}`,
-              html: `<p>You requested a password reset. Please click the following link to verify your account:</p><a href="${verifyUrl}">${verifyUrl}</a>`,
+              subject: 'CertifyRecruit - Verification Mail',
+              // text: `Please click the following link to verify your account: ${verifyUrl}`,
+              html: `<p>You provided this email ID for signing up in the portal of CertifyRecruit - Complementing your Recruitment. Click on the link below to verify your email ID. :</p><a href="${verifyUrl}">${verifyUrl}</a> <br/> <p>If you did not request a sign-up, kindly ignore this mail.</p>`,
             };
 
             await transporter.sendMail(mailOptions);

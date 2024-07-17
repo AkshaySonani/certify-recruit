@@ -130,11 +130,10 @@ export default function Page() {
       <div className="container mx-auto">
         <div className="flex w-full flex-col items-center justify-center">
           <p className="text-center text-[40px] font-semibold text-meta-blue-1">
-            Choose categories
+            Choose Your Preferred Category
           </p>
           <p className="m-auto mt-2 w-[80%] text-center text-lg font-medium text-meta-light-blue-3">
-            Choose categories according to your expertise. You can select a
-            maximum of up to 3 categories.
+            Your Assessment will be done based on your preferred Category
           </p>
           {selectMainCategory === '' ? (
             <div className="border-meta-light-blue m-auto mt-11 rounded-[26px] border bg-meta-light-blue-5 p-12 sm:w-[70%]">
@@ -293,7 +292,7 @@ export default function Page() {
                         htmlFor={'joinLater'}
                         className={`flex cursor-pointer select-none items-center justify-between `}
                       >
-                        <p className="pl-3 capitalize">Join Latter</p>
+                        <p className="pl-3 capitalize">Join Later</p>
                         <input
                           type="checkbox"
                           id={'joinLater'}
