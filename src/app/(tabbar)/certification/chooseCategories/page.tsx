@@ -166,14 +166,14 @@ export default function Page() {
                 </p>
 
                 <div className="mt-4 flex justify-center gap-3">
-                  <div className="w-48 rounded-xl bg-meta-light-blue-2 py-1 text-center text-xl text-meta-light-blue-3">
+                  <div className="w-48 cursor-pointer rounded-xl bg-meta-light-blue-2 py-1 text-center text-xl text-meta-light-blue-3">
                     0-3
                   </div>
-                  <div className="w-48 rounded-xl bg-meta-light-blue-2 py-1 text-center text-xl text-meta-light-blue-3">
-                    0-3
+                  <div className="w-48 cursor-pointer rounded-xl bg-meta-light-blue-2 py-1 text-center text-xl text-meta-light-blue-3">
+                    4-8
                   </div>
-                  <div className="w-48 rounded-xl bg-meta-light-blue-2 py-1 text-center text-xl text-meta-light-blue-3">
-                    0-3
+                  <div className="w-48 cursor-pointer rounded-xl bg-meta-light-blue-2 py-1 text-center text-xl text-meta-light-blue-3">
+                    9-12+
                   </div>
                 </div>
               </div>
@@ -219,7 +219,7 @@ export default function Page() {
         </div>
       </div>
       {selectMainCategory === '' ? (
-        <div className={`"w-full mt-20  flex  items-end justify-end`}>
+        <div className={`mt-20 flex  w-full  items-end justify-end`}>
           <button
             onClick={() => setSelectMainCategory('nrw')}
             className={`mb-8 h-12  min-w-48 rounded-lg border border-meta-light-blue-2 bg-meta-blue-1 py-3 text-meta-light-blue-3 transition delay-150 duration-300 ease-in-out will-change-auto hover:bg-hiring-btn-gradient`}
@@ -235,7 +235,10 @@ export default function Page() {
         <div className={`"w-full mt-20  flex  items-end justify-between`}>
           <button
             type="button"
-            onClick={() => router?.back()}
+            onClick={() => {
+              setSelectMainCategory('');
+              // router?.back()
+            }}
             className="mb-8 h-12 min-w-full rounded-lg border-2 border-meta-light-blue-1 text-base font-medium text-meta-light-blue-3 sm:mb-8 sm:min-w-48"
           >
             {TEXT?.BACK}

@@ -15,8 +15,8 @@ const IndividualComp = () => {
   const [currentRole, setCurrentRole] = useState('');
 
   const individualArr = [
-    'US Recruitment',
-    'Domestic Recruitment',
+    'Recruitment',
+    'Human Resource',
     // 'Human Resource',
     // 'Bench Sales',
     // 'UK Recruitment',

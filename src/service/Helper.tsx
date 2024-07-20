@@ -32,8 +32,8 @@ const ROUTE = {
   BGV_FULL_REPORT: '/BGV/fullReport',
   ACTIVE_JOB: '/dashboard/active_job',
   EMPLOYMENT_TYPE: '/job_posting/employment_Type',
-
   _CATEGORY: '/certification/chooseCategories',
+  CHOOSE_CATEGORY: '/certification/chooseCategories',
   SUCCESSFUL_RESET_PASSWORD: '/resetpassword/success',
   SUCCESSFUL_FORGOT_PASSWORD: '/forgotPass/newPass/successful',
   FORGOT_PASSWORD: '/forgotpassword',
