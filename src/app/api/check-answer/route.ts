@@ -66,6 +66,19 @@ export const POST = async (req: NextRequest) => {
           message: 'Certificate not found or update failed',
         });
       }
+
+      // Remove certificates with result: 0 or without end_time, excluding the specific exam_id
+      await Individual.updateOne(
+        { user_ref_id: session.user._id },
+        {
+          $pull: {
+            certificates: {
+              _id: { $ne: exam_id },
+              $or: [{ result: 0 }, { end_time: { $exists: false } }],
+            },
+          },
+        },
+      );
     } else {
       await Individual.findOneAndUpdate(
         {

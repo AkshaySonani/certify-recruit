@@ -1,6 +1,7 @@
 const API_CONSTANT = {
   JOB: '/job',
   LOGIN: '/signin',
+  FIELDS: '/fields',
   CITIES: '/cities',
   DEGREE: '/degree',
   STATES: '/states',
@@ -24,6 +25,7 @@ const API_CONSTANT = {
   UPDATE_TOKEN: '/update-token',
   DELETE_RESUME: '/delete-resume',
   DASHBOARD_JOB: '/dashboard-job',
+  GET_SUBCATEGORYS: '/subcategory',
   SEND_EXAM_LINK: '/send-exam-link',
   QUIZ_RESULTS: '/le-today-results',
   RESET_PASSWORD: '/reset-password',

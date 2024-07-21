@@ -1,4 +1,5 @@
 'use client';
+import Spinner from '@/app/icons/Spinner';
 import Button from '@/Components/Button';
 import MultipleSelectBox from '@/Components/MultipleSelectBox';
 import { API_CONSTANT } from '@/constant/ApiConstant';
@@ -18,16 +19,20 @@ import { toast } from 'react-toastify';
 export default function Page() {
   const router = useRouter();
   const session: any = useSession();
-  const [categories, setCategories] = usePersistState([], 'Exam:category');
-  const [examStatus] = usePersistState(EXAM_STATUS?.STOPPED, 'Exam:Status');
+  const [joinNow, setJoinNow] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [skillData, setSkillData] = useState([]);
   const [skillQuery, setSkillQuery] = useState('');
-  const [JoinConfirmModal, setJoinConfirmModal] = useState(false);
-  const [allCategory, setAllCategory] = useState<any>([]);
-  const [joinNow, setJoinNow] = useState(true);
   const debouncedSearchSkill = useDebounce(skillQuery);
-  const [loading, setLoading] = useState(false);
+  const [mainFields, setMainFields] = useState<any>([]);
+  const [userDetails, setUserDetails] = useState<any>({});
+  const [allCategory, setAllCategory] = useState<any>([]);
+  const [selectedExperince, setSelectedExperince] = useState('');
+  const [allowSubcategory, setAllowSubCategory] = useState(false);
+  const [JoinConfirmModal, setJoinConfirmModal] = useState(false);
   const [selectMainCategory, setSelectMainCategory] = useState('');
+  const [categories, setCategories] = usePersistState([], 'Exam:category');
+  const [examStatus] = usePersistState(EXAM_STATUS?.STOPPED, 'Exam:Status');
 
   const MultiboxStyle = {
     control: (base: any, state: any) => ({
@@ -41,6 +46,82 @@ export default function Page() {
         border: state.isFocused ? 0 : 0,
       },
     }),
+  };
+
+  useEffect(() => {
+    const experience = userDetails?.total_experiences?.reduce(
+      (acc: any, exp: any) => {
+        acc.years += exp?.years;
+        acc.months += exp?.months;
+        return acc;
+      },
+      { years: 0, months: 0 },
+    );
+
+    const totalMonths = experience?.years * 12 + experience?.months;
+
+    if (totalMonths >= 0 && totalMonths <= 3) {
+      setSelectedExperince('0-3');
+    } else if (totalMonths >= 4 && totalMonths <= 8) {
+      setSelectedExperince('4-8');
+    } else if (totalMonths >= 9) {
+      setSelectedExperince('9-12+');
+    } else {
+      setSelectedExperince('0-3');
+    }
+  }, [userDetails]);
+
+  useEffect(() => {
+    getProfileDetails();
+  }, []);
+
+  const getProfileDetails = () => {
+    API.get(API_CONSTANT?.PROFILE)
+      .then((res: any) => {
+        setUserDetails(res?.data?.data);
+      })
+      .catch((error: any) => {
+        toast.error(
+          error?.response?.data?.message ||
+            error?.message ||
+            'Internal server error',
+        );
+      });
+  };
+
+  useEffect(() => {
+    getMainFeilds();
+  }, []);
+
+  const getMainFeilds = () => {
+    API.get(API_CONSTANT?.FIELDS)
+      .then((res: any) => {
+        setMainFields(res?.data?.data);
+      })
+      .catch((error: any) => {
+        toast.error(
+          error?.response?.data?.message ||
+            error?.message ||
+            'Internal server error',
+        );
+      });
+  };
+
+  const getSubCategorys = () => {
+    setLoading(true);
+    API.post(API_CONSTANT?.GET_SUBCATEGORYS, { category: selectMainCategory })
+      .then((res: any) => {
+        setAllCategory(res?.data?.data);
+        setLoading(false);
+      })
+      .catch((error: any) => {
+        setLoading(false);
+        toast.error(
+          error?.response?.data?.message ||
+            error?.message ||
+            'Internal server error',
+        );
+      });
   };
 
   useEffect(() => {
@@ -135,19 +216,19 @@ export default function Page() {
           <p className="m-auto mt-2 w-[80%] text-center text-lg font-medium text-meta-light-blue-3">
             Your Assessment will be done based on your preferred Category
           </p>
-          {selectMainCategory === '' ? (
+          {!allowSubcategory ? (
             <div className="border-meta-light-blue m-auto mt-11 rounded-[26px] border bg-meta-light-blue-5 p-12 sm:w-[70%]">
               <div className="mt-5 flex w-full flex-wrap   justify-center gap-5 text-start ">
                 {[
                   'US Recruitment',
-                  'US Recruitment',
-                  'US Recruitment',
-                  'US Recruitment',
+                  'Domestic Recruitment',
+                  'Canada Recruitment',
+                  'UK Recruitment',
                 ]?.map((ele: any, i: any) => {
                   return (
                     <div
-                      onClick={() => setCategories([...categories, ele])}
-                      className={`${categories?.includes(ele) ? 'border border-meta-blue-1' : ''} flex w-[46%] items-center gap-2 rounded-xl  bg-meta-light-blue-1 px-3 py-5`}
+                      onClick={() => setSelectMainCategory(ele)}
+                      className={`${selectMainCategory?.includes(ele) ? 'border-meta-blue-1' : 'border-meta-light-blue-1'} flex w-[46%] cursor-pointer items-center gap-2 rounded-xl border bg-meta-light-blue-1 px-3 py-5`}
                     >
                       <Image
                         alt="icon"
@@ -166,21 +247,21 @@ export default function Page() {
                 </p>
 
                 <div className="mt-4 flex justify-center gap-3">
-                  <div className="w-48 cursor-pointer rounded-xl bg-meta-light-blue-2 py-1 text-center text-xl text-meta-light-blue-3">
-                    0-3
-                  </div>
-                  <div className="w-48 cursor-pointer rounded-xl bg-meta-light-blue-2 py-1 text-center text-xl text-meta-light-blue-3">
-                    4-8
-                  </div>
-                  <div className="w-48 cursor-pointer rounded-xl bg-meta-light-blue-2 py-1 text-center text-xl text-meta-light-blue-3">
-                    9-12+
-                  </div>
+                  {['0-3', '4-8', '9-12+']?.map((ele) => {
+                    return (
+                      <div
+                        className={`${selectedExperince?.includes(ele) ? 'border-meta-blue-1' : 'border-meta-light-blue-2'} w-48 cursor-pointer rounded-xl border bg-meta-light-blue-2 py-1 text-center text-xl text-meta-light-blue-3`}
+                      >
+                        {ele}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
           ) : (
             <>
-              <div className="mt-5 flex w-full flex-col items-center justify-center  lg:w-1/2">
+              {/* <div className="mt-5 flex w-full flex-col items-center justify-center  lg:w-1/2">
                 <div className="border-1 mt-5 flex w-full flex-wrap items-start rounded-xl border border-meta-light-blue-1 py-2 lg:mt-0">
                   <MultipleSelectBox
                     name="skills"
@@ -195,9 +276,11 @@ export default function Page() {
                     components={{ Placeholder, DropdownIndicator }}
                   />
                 </div>
-              </div>
-              <div className="mt-5 flex w-full flex-wrap items-start justify-center gap-4 text-start sm:flex-nowrap">
+              </div> */}
+              {/* <div className="mt-5 flex w-full flex-wrap items-start justify-center gap-4 text-start sm:flex-nowrap">
                 {allCategory?.map((ele: any, i: any) => {
+                  console.log('ele', ele);
+
                   return (
                     <div
                       onClick={() => setCategories([...categories, ele])}
@@ -209,19 +292,78 @@ export default function Page() {
                         height={20}
                         src={'/Individual.svg'}
                       />
-                      <div className="text-meta-blue-1">{ele?.label}</div>
+                      <div className="text-meta-blue-1">{ele?.subcategory}</div>
                     </div>
                   );
                 })}
+              </div> */}
+              <div className="mt-5 flex w-full flex-wrap items-start justify-center gap-4 text-start">
+                {allCategory?.length === 0 && loading ? (
+                  <div className="flex h-full items-center justify-center">
+                    <Spinner
+                      width="32px"
+                      height="32px"
+                      color="#3751F2"
+                      className="spinner"
+                    />
+                  </div>
+                ) : allCategory?.length === 0 ? (
+                  <div className="flex h-full items-center justify-center">
+                    No Data Availbale
+                  </div>
+                ) : (
+                  <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                    {allCategory?.map((ele: any, i: any) => {
+                      const isAlreadySelected: any = categories.some(
+                        (category: any) => category._id === ele._id,
+                      );
+
+                      return (
+                        <div
+                          key={i}
+                          onClick={() => {
+                            if (isAlreadySelected) {
+                              setCategories(
+                                categories.filter(
+                                  (category: any) => category._id !== ele._id,
+                                ),
+                              );
+                            } else {
+                              setCategories([...categories, ele]);
+                            }
+                          }}
+                          className={`${categories?.includes(ele) ? 'border-meta-blue-1' : 'border-meta-light-blue-1'} flex cursor-pointer items-center gap-2 rounded-xl border bg-meta-light-blue-1 px-3 py-5`}
+                        >
+                          <Image
+                            alt="icon"
+                            width={16}
+                            height={20}
+                            src={'/Individual.svg'}
+                          />
+                          <div className="text-meta-blue-1">
+                            {ele?.subcategory}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </>
           )}
         </div>
       </div>
-      {selectMainCategory === '' ? (
+      {!allowSubcategory ? (
         <div className={`mt-20 flex  w-full  items-end justify-end`}>
           <button
-            onClick={() => setSelectMainCategory('nrw')}
+            onClick={() => {
+              if (selectMainCategory === '') {
+                toast.error('Select Category');
+              } else {
+                getSubCategorys();
+                setAllowSubCategory(true);
+              }
+            }}
             className={`mb-8 h-12  min-w-48 rounded-lg border border-meta-light-blue-2 bg-meta-blue-1 py-3 text-meta-light-blue-3 transition delay-150 duration-300 ease-in-out will-change-auto hover:bg-hiring-btn-gradient`}
           >
             <span
@@ -232,11 +374,12 @@ export default function Page() {
           </button>
         </div>
       ) : (
-        <div className={`"w-full mt-20  flex  items-end justify-between`}>
+        <div className={`mt-20 flex  w-full  items-end justify-between`}>
           <button
             type="button"
             onClick={() => {
-              setSelectMainCategory('');
+              setAllowSubCategory(false);
+
               // router?.back()
             }}
             className="mb-8 h-12 min-w-full rounded-lg border-2 border-meta-light-blue-1 text-base font-medium text-meta-light-blue-3 sm:mb-8 sm:min-w-48"

@@ -224,9 +224,13 @@ const Page = (data: any) => {
           setCategories([]);
           clearStorage();
         }
+
+        if (res?.data?.status === 404) {
+          toast.error(res?.data?.message);
+        }
       })
       .catch((error: any) => {
-        toast.error(error || 'Something want wrong');
+        toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
 

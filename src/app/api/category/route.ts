@@ -28,8 +28,9 @@ export const POST = async (req: NextRequest) => {
 // export const POST = async (req: NextRequest) => {
 //   try {
 //     await connect();
-//     const { category, subcategory } = await req.json();
+//     const { field, category, subcategory } = await req.json();
 //     const cat = await Category.create({
+//       field,
 //       category,
 //       subcategory,
 //     });

@@ -588,3 +588,39 @@ export const POST = async (req: NextRequest) => {
 //     );
 //   }
 // };
+
+// ---------------------- FOR CREATE NEW QUESTIONS ----------------------
+// export const POST = async (req: NextRequest) => {
+//   const session: any = await getServerSession(authOptions);
+//   if (!session?.user?._id) {
+//     return NextResponse.json({
+//       message: 'Unauthorized',
+//       status: 401,
+//     });
+//   }
+
+//   try {
+//     await connect();
+//     let { question, ans, category_id, option } = await req.json();
+
+//     const results = await Question.create({
+//       question,
+//       ans,
+//       category_id,
+//       option,
+//     });
+
+//     return NextResponse.json({
+//       status: 200,
+//       data: results,
+//     });
+//   } catch (error: any) {
+//     return NextResponse.json(
+//       {
+//         message: 'An error occurred while creating questions.',
+//         error: error.message,
+//       },
+//       { status: 500 },
+//     );
+//   }
+// };

@@ -1,0 +1,62 @@
+'use server';
+import { Fields } from '@/models';
+import { connect } from '@/db/mongodb';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/service/AuthOptions';
+import { NextRequest, NextResponse } from 'next/server';
+
+export const POST = async (req: NextRequest) => {
+  const session: any = await getServerSession(authOptions);
+  if (!session?.user?._id) {
+    return NextResponse.json({
+      message: 'Unauthorized',
+      status: 401,
+    });
+  }
+  try {
+    await connect();
+    const { field_name } = await req.json();
+    const newField = await Fields.create({
+      field_name,
+    });
+    return NextResponse.json({
+      status: 200,
+      data: newField,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: 'An error occurred while creating fields.',
+        error: error,
+      },
+      { status: 500 },
+    );
+  }
+};
+
+export const GET = async (req: NextRequest) => {
+  const session: any = await getServerSession(authOptions);
+  if (!session?.user?._id) {
+    return NextResponse.json({
+      message: 'Unauthorized',
+      status: 401,
+    });
+  }
+  try {
+    await connect();
+    let results = await Fields.find({});
+
+    return NextResponse.json({
+      status: 200,
+      data: results,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: 'An error occurred while fetching Fields.',
+        error: error,
+      },
+      { status: 500 },
+    );
+  }
+};

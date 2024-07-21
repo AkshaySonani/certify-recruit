@@ -1,6 +1,7 @@
 export * from './job';
 export * from './user';
 export * from './exam';
+export * from './fields';
 export * from './bedges';
 export * from './cities';
 export * from './states';
