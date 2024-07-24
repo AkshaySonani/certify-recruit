@@ -25,6 +25,26 @@ export const POST = async (req: NextRequest) => {
   }
 };
 
+export const GET = async (req: NextRequest) => {
+  try {
+    await connect();
+    let results = await Category.find({});
+
+    return NextResponse.json({
+      status: 200,
+      data: results,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: 'An error occurred while fetching category.',
+        error: error,
+      },
+      { status: 500 },
+    );
+  }
+};
+
 // export const POST = async (req: NextRequest) => {
 //   try {
 //     await connect();

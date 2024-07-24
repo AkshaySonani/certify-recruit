@@ -112,6 +112,25 @@ const KeySkillTab = ({
     formik?.setFieldValue('skills', arr);
   };
 
+  useEffect(() => {
+    getAllCategoryApi();
+  }, []);
+
+  const getAllCategoryApi = () => {
+    API.get(API_CONSTANT?.CATEGORY)
+      .then((res) => {
+        let skiilArr = res?.data?.data?.map((list: any) => ({
+          _id: list?._id,
+          label: list?.subcategory,
+          value: list?.subcategory,
+        }));
+        setSkillData(skiilArr);
+      })
+      .catch((error) => {
+        toast.error(error?.response?.data?.message || 'Internal server error');
+      });
+  };
+
   const searchSkillApi = (searchText: any) => {
     API.post(API_CONSTANT?.CATEGORY, { searchText })
       .then((res) => {

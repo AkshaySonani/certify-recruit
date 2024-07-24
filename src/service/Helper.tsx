@@ -258,7 +258,7 @@ const SIDE_BAR_DATA: any = {
     { icon: Icons.Learn, path: 'learnAndEarn', title: 'Learn & Earn' },
     { path: 'certification', title: 'Certification', icon: Icons.Certificate },
     { path: 'pricing', title: 'Pricing', icon: Icons.Pricing },
-    { path: 'BGV', title: 'BGV', icon: Icons.Pricing },
+    { path: 'BGV', title: 'BGV', icon: Icons.Bgv },
   ],
   employee: [
     { path: 'dashboard', title: 'Dashboard', icon: Icons.Dashboard },
@@ -266,10 +266,10 @@ const SIDE_BAR_DATA: any = {
     { path: 'job', title: 'Job', icon: Icons.Job },
     // { path: 'users', title: 'Users', icon: Icons.Job },
     // { icon: Icons.Job, path: 'earn_badge', title: 'Company info' },
-    { icon: Icons.Job, path: 'search_CVs', title: 'Search CVs' },
+    { path: 'search_CVs', title: 'Search CVs', icon: Icons.Job },
     // { icon: Icons.Job, path: 'badgeOfHonour', title: 'Badge of Honour' },
     { path: 'pricing', title: 'Pricing', icon: Icons.Pricing },
-    { path: 'BGV', title: 'BGV', icon: Icons.Pricing },
+    { path: 'BGV', title: 'BGV', icon: Icons.Bgv },
   ],
 };
 
