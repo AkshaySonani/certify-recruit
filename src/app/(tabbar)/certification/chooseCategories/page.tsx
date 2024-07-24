@@ -173,8 +173,8 @@ export default function Page() {
   };
 
   const onContinue = () => {
-    if (categories?.length === 0) {
-      toast.error('Select at least one category');
+    if (categories.length < 6) {
+      toast.error('You must select at least 6 categories');
     } else {
       setJoinConfirmModal(true);
     }

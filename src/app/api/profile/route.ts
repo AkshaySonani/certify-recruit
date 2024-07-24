@@ -46,6 +46,21 @@ export const POST = async (req: NextRequest) => {
 
       let reqData: any = {};
 
+      // Check if PAN number is unique
+      if (pan_number) {
+        const existingPanUser = await Company.findOne({ pan_number });
+        if (
+          existingPanUser &&
+          existingPanUser.user_ref_id.toString() !== session.user._id
+        ) {
+          return NextResponse.json({
+            status: 400,
+            message: 'PAN number already exists. It must be unique.',
+          });
+        }
+        reqData.pan_number = pan_number;
+      }
+
       logo && (reqData.logo = logo);
       city && (reqData.city = city);
       role && (reqData.role = role);
@@ -157,6 +172,21 @@ export const POST = async (req: NextRequest) => {
       } = await req.json();
 
       let reqData: any = {};
+
+      // Check if PAN number is unique
+      if (pan_card_number) {
+        const existingPanUser = await Individual.findOne({ pan_card_number });
+        if (
+          existingPanUser &&
+          existingPanUser.user_ref_id.toString() !== session.user._id
+        ) {
+          return NextResponse.json({
+            status: 400,
+            message: 'PAN number already exists. It must be unique.',
+          });
+        }
+        reqData.pan_card_number = pan_card_number;
+      }
 
       role && (reqData.role = role);
       logo && (reqData.logo = logo);

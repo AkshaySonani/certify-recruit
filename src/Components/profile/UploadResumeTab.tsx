@@ -8,7 +8,7 @@ import { useDropzone } from 'react-dropzone';
 import AppContext from '@/context/AppProvider';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { TEXT, updateProfileCount } from '@/service/Helper';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import SuccessModal from './SuccessModal';
 
 const UploadResumeTab = ({
@@ -18,6 +18,7 @@ const UploadResumeTab = ({
   activePage,
   getUserDataApiCall,
 }: any) => {
+  const inputRef: any = useRef(null);
   const context = useContext(AppContext);
   const [files, setFiles] = useState([]);
   const [fileName, setFileName] = useState('');
@@ -29,7 +30,7 @@ const UploadResumeTab = ({
     },
     onDrop: (acceptedFiles: any) => {
       setFiles(acceptedFiles);
-      setFileName(acceptedFiles[0]?.name?.split('.')[0]);
+      // setFileName(acceptedFiles[0]?.name?.split('.')[0]);
       // UploadFileOnBucket(acceptedFiles[0]);
     },
   });
@@ -177,6 +178,13 @@ const UploadResumeTab = ({
       });
   };
 
+  const handleBlur = () => {
+    if (!fileName.trim()) {
+      toast.error('Resume title is required.');
+      inputRef.current.focus();
+    }
+  };
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="pl-9">
@@ -196,10 +204,12 @@ const UploadResumeTab = ({
           <div>
             <input
               type="text"
+              ref={inputRef}
               value={fileName}
               autoFocus={true}
-              name="website_url"
-              placeholder="Enter file name"
+              name="Resume title"
+              onBlur={handleBlur}
+              placeholder="Enter resume title"
               onChange={(e) => setFileName(e?.target?.value)}
               className="w-full rounded-lg border border-meta-light-blue-1 p-3  focus:border-meta-light-blue-1 focus:outline-none"
             />

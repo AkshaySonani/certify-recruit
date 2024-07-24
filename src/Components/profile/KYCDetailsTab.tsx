@@ -71,6 +71,9 @@ const KYCDetailsTab = ({
           getUserDataApiCall();
           actions.setSubmitting(false);
           toast?.success(res?.data?.message || 'Successfully Update Profile');
+        } else if (res?.data?.status === 400) {
+          setLoading(false);
+          toast.error(res?.data?.message);
         }
       })
       .catch((error) => {
