@@ -178,186 +178,74 @@ const IndividualJob = () => {
             </div>
 
             <div className="mt-5 flex w-full gap-3 overflow-x-scroll">
-              <div className="w-96 min-w-96 rounded-xl bg-meta-gray-2 p-2">
-                <div className="flex justify-between">
-                  <div>
-                    <div className="flex items-center">
-                      <p className="text-lg font-semibold text-meta-purple-1">
-                        Human Resource
-                      </p>
-                      <p className="ml-1 text-lg font-semibold text-meta-purple-1">
-                        - Fresher
-                      </p>
-                      <p className="ml-2 mt-1 text-sm font-bold text-meta-light-blue-3">
-                        30 min ago
-                      </p>
+              {jobList?.slice(0, 3).map((list: any, index: any) => {
+                return (
+                  <div className="mb-3 w-96 min-w-96 rounded-xl bg-meta-gray-2 p-2">
+                    <div className="flex justify-between">
+                      <div>
+                        <div className="flex items-center">
+                          <p className="text-lg font-semibold text-meta-purple-1">
+                            {list?.title}
+                          </p>
+                          <p className="ml-1 text-lg font-semibold text-meta-purple-1">
+                            - Fresher
+                          </p>
+                          <p className="ml-2 mt-1 text-sm font-bold text-meta-light-blue-3">
+                            {moment(list?.createdAt).fromNow()}
+                          </p>
+                        </div>
+                        <div className="flex items-center">
+                          <p className="text-sm font-bold text-meta-light-blue-3">
+                            {list?.company_name}
+                          </p>
+                          <p className="mx-1 text-sm font-bold text-meta-light-blue-3">
+                            - {list?.city[0]?.name},
+                            {list?.state[0]?.name ?? 'Gujarat'}
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex items-center">
-                      <p className="text-sm font-bold text-meta-light-blue-3">
-                        Coding infotech
-                      </p>
-                      <p className="mx-1 text-sm font-bold text-meta-light-blue-3">
-                        - Surat, Gujarat.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-5 flex flex-wrap items-center gap-3">
-                  <div className="flex items-center gap-2">
-                    <Image
-                      alt="date"
-                      width={15}
-                      height={15}
-                      src={'/job/moneybag.svg'}
-                    />
-                    <p className="text-sm font-bold text-meta-blue-1">
-                      ₹12k/month - ₹30k/month
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Image
-                      alt="date"
-                      width={15}
-                      height={15}
-                      src={'/job/timepicker.svg'}
-                    />
-                    <p className="text-sm font-bold text-meta-blue-1">
-                      Full-time
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Image
-                      alt="date"
-                      width={15}
-                      height={15}
-                      src={'/job/datepicker.svg'}
-                    />
-                    <p className="text-sm font-bold text-meta-blue-1">
-                      Full-time
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="w-96 min-w-96 rounded-xl bg-meta-gray-2  p-2">
-                <div className="flex justify-between">
-                  <div>
-                    <div className="flex items-center">
-                      <p className="text-lg font-semibold text-meta-purple-1">
-                        Human Resource
-                      </p>
-                      <p className="ml-1 text-lg font-semibold text-meta-purple-1">
-                        - Fresher
-                      </p>
-                      <p className="ml-2 mt-1 text-sm font-bold text-meta-light-blue-3">
-                        30 min ago
-                      </p>
-                    </div>
-                    <div className="flex items-center">
-                      <p className="text-sm font-bold text-meta-light-blue-3">
-                        Coding infotech
-                      </p>
-                      <p className="mx-1 text-sm font-bold text-meta-light-blue-3">
-                        - Surat, Gujarat.
-                      </p>
+                    <div className="mt-5 flex flex-wrap items-center gap-3">
+                      <div className="flex items-center gap-2">
+                        <Image
+                          alt="date"
+                          width={15}
+                          height={15}
+                          src={'/job/moneybag.svg'}
+                        />
+                        <p className="text-sm font-bold text-meta-blue-1">
+                          {list?.salary_started ?? 0}/{' '}
+                          {list?.salary_pay === 'MONTHLY' ? 'month' : 'hour'} -{' '}
+                          {list?.salary_upto ?? 0}/
+                          {list?.salary_pay === 'MONTHLY' ? 'month' : 'hour'}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Image
+                          alt="date"
+                          width={15}
+                          height={15}
+                          src={'/job/timepicker.svg'}
+                        />
+                        <p className="text-sm font-bold text-meta-blue-1">
+                          {list?.job_types[0]}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Image
+                          alt="date"
+                          width={15}
+                          height={15}
+                          src={'/job/datepicker.svg'}
+                        />
+                        <p className="text-sm font-bold text-meta-blue-1">
+                          {list?.working_schedule[0]}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="mt-5 flex flex-wrap items-center gap-3">
-                  <div className="flex items-center gap-2">
-                    <Image
-                      alt="date"
-                      width={15}
-                      height={15}
-                      src={'/job/moneybag.svg'}
-                    />
-                    <p className="text-sm font-bold text-meta-blue-1">
-                      ₹12k/month - ₹30k/month
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Image
-                      alt="date"
-                      width={15}
-                      height={15}
-                      src={'/job/timepicker.svg'}
-                    />
-                    <p className="text-sm font-bold text-meta-blue-1">
-                      Full-time
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Image
-                      alt="date"
-                      width={15}
-                      height={15}
-                      src={'/job/datepicker.svg'}
-                    />
-                    <p className="text-sm font-bold text-meta-blue-1">
-                      Full-time
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="w-96 min-w-96 rounded-xl bg-meta-gray-2  p-2">
-                <div className="flex justify-between">
-                  <div>
-                    <div className="flex items-center">
-                      <p className="text-lg font-semibold text-meta-purple-1">
-                        Human Resource
-                      </p>
-                      <p className="ml-1 text-lg font-semibold text-meta-purple-1">
-                        - Fresher
-                      </p>
-                      <p className="ml-2 mt-1 text-sm font-bold text-meta-light-blue-3">
-                        30 min ago
-                      </p>
-                    </div>
-                    <div className="flex items-center">
-                      <p className="text-sm font-bold text-meta-light-blue-3">
-                        Coding infotech
-                      </p>
-                      <p className="mx-1 text-sm font-bold text-meta-light-blue-3">
-                        - Surat, Gujarat.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-5 flex flex-wrap items-center gap-3">
-                  <div className="flex items-center gap-2">
-                    <Image
-                      alt="date"
-                      width={15}
-                      height={15}
-                      src={'/job/moneybag.svg'}
-                    />
-                    <p className="text-sm font-bold text-meta-blue-1">
-                      ₹12k/month - ₹30k/month
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Image
-                      alt="date"
-                      width={15}
-                      height={15}
-                      src={'/job/timepicker.svg'}
-                    />
-                    <p className="text-sm font-bold text-meta-blue-1">
-                      Full-time
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Image
-                      alt="date"
-                      width={15}
-                      height={15}
-                      src={'/job/datepicker.svg'}
-                    />
-                    <p className="text-sm font-bold text-meta-blue-1">
-                      Full-time
-                    </p>
-                  </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
             <div className="mt-5">
               {isSpinner ? (

@@ -121,6 +121,12 @@ const UploadResumeTab = ({
   };
 
   const handleSubmit = async (values: any, actions: any) => {
+    if (!fileName.trim()) {
+      toast.error('Resume title is required.');
+      inputRef.current.focus();
+      return;
+    }
+
     if (fileName && files?.length !== 0) {
       UploadFileOnBucket(files);
     } else {
@@ -178,12 +184,12 @@ const UploadResumeTab = ({
       });
   };
 
-  const handleBlur = () => {
-    if (!fileName.trim()) {
-      toast.error('Resume title is required.');
-      inputRef.current.focus();
-    }
-  };
+  // const handleBlur = () => {
+  //   if (!fileName.trim()) {
+  //     toast.error('Resume title is required.');
+  //     inputRef.current.focus();
+  //   }
+  // };
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -208,11 +214,22 @@ const UploadResumeTab = ({
               value={fileName}
               autoFocus={true}
               name="Resume title"
-              onBlur={handleBlur}
+              // onBlur={handleBlur}
               placeholder="Enter resume title"
               onChange={(e) => setFileName(e?.target?.value)}
               className="w-full rounded-lg border border-meta-light-blue-1 p-3  focus:border-meta-light-blue-1 focus:outline-none"
             />
+            {/* <input
+              type="text"
+              ref={inputRef}
+              value={fileName}
+              autoFocus={true}
+              name="Resume title"
+              onBlur={handleBlur}
+              placeholder="Enter resume title"
+              onChange={(e) => setFileName(e?.target?.value)}
+              className="w-full rounded-lg border border-meta-light-blue-1 p-3  focus:border-meta-light-blue-1 focus:outline-none"
+            />  */}
           </div>
           <div className="mt-3 flex w-full cursor-pointer items-center justify-center rounded-lg border-[2px] border-dashed border-meta-light-blue-1 p-8">
             <section className="text-center text-lg">

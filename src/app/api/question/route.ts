@@ -128,6 +128,8 @@ export const POST = async (req: NextRequest) => {
   }
 };
 
+// --------------------------------------------------------------------------------------------------------
+
 // export const POST = async (req: NextRequest) => {
 //   const session: any = await getServerSession(authOptions);
 //   if (!session?.user?._id) {

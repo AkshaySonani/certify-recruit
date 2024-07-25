@@ -7,7 +7,7 @@ import EmployeeJob from '@/Components/job/employee_job';
 import IndividualJob from '@/Components/job/individual_job';
 
 const Page = () => {
-  const session = useSession();
+  const session: any = useSession();
 
   return (
     <div>

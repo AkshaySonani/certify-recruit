@@ -61,13 +61,15 @@ export const POST = async (req: NextRequest) => {
       );
 
       if (!updatedUser) {
+        console.error(
+          'Certificate not found or update failed for passing case',
+        );
         return NextResponse.json({
           status: 404,
           message: 'Certificate not found or update failed',
         });
       }
 
-      // Remove certificates with result: 0 or without end_time, excluding the specific exam_id
       await Individual.updateOne(
         { user_ref_id: session.user._id },
         {
@@ -80,15 +82,96 @@ export const POST = async (req: NextRequest) => {
         },
       );
     } else {
-      await Individual.findOneAndUpdate(
+      const updatedUser = await Individual.findOneAndUpdate(
         {
           'certificates._id': exam_id,
           user_ref_id: session.user._id,
         },
-        { $pull: { certificates: { _id: exam_id } } },
+        {
+          $set: {
+            'certificates.$.result': correctAnswersCount,
+            'certificates.$.end_time': new Date(Date.now()),
+          },
+        },
         { new: true },
       );
+
+      if (!updatedUser) {
+        console.error(
+          'Certificate not found or update failed for failing case',
+        );
+        return NextResponse.json({
+          status: 404,
+          message: 'Certificate not found or update failed',
+        });
+      }
+
+      await Individual.updateOne(
+        { user_ref_id: session.user._id },
+        {
+          $pull: { certificates: { _id: exam_id } },
+        },
+      );
+
+      await Individual.updateOne(
+        { user_ref_id: session.user._id },
+        {
+          $pull: {
+            certificates: {
+              _id: { $ne: exam_id },
+              $or: [{ result: 0 }, { end_time: { $exists: false } }],
+            },
+          },
+        },
+      );
     }
+
+    // if (pass) {
+    //   const updatedUser = await Individual.findOneAndUpdate(
+    //     {
+    //       'certificates._id': exam_id,
+    //       user_ref_id: session.user._id,
+    //     },
+    //     {
+    //       $set: {
+    //         'certificates.$.result': correctAnswersCount,
+    //         'certificates.$.end_time': new Date(Date.now()),
+    //       },
+    //     },
+    //     { new: true },
+    //   );
+
+    //   if (!updatedUser) {
+    //     return NextResponse.json({
+    //       status: 404,
+    //       message: 'Certificate not found or update failed',
+    //     });
+    //   }
+
+    //   console.log('updatedUser', updatedUser);
+
+    //   // Remove certificates with result: 0 or without end_time, excluding the specific exam_id
+    //   await Individual.updateOne(
+    //     { user_ref_id: session.user._id },
+    //     {
+    //       $pull: {
+    //         certificates: {
+    //           _id: { $ne: exam_id },
+    //           $or: [{ result: 0 }, { end_time: { $exists: false } }],
+    //         },
+    //       },
+    //     },
+    //   );
+    // } else {
+    //   await Individual.findOneAndUpdate(
+    //     {
+    //       'certificates._id': exam_id,
+    //       user_ref_id: session.user._id,
+    //     },
+    //     { $pull: { certificates: { _id: exam_id } } },
+    //     { new: true },
+    //   );
+    // }
 
     return NextResponse.json({
       status: 200,

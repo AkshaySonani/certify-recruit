@@ -86,7 +86,9 @@ const PersonalDetailsTab = ({
 
   const validationSchema = Yup.object().shape({
     gender: Yup.string().required(`Gender is required.`),
-    date_of_birth: Yup.string().required(`Date of birth is required.`),
+    date_of_birth: Yup.date()
+      .required(`Date of birth is required.`)
+      .max(new Date(), 'Date of birth cannot be in the future'),
     languages: Yup.array().of(
       Yup.object().shape({
         language: Yup.object().nonNullable('Language is required'),
@@ -162,8 +164,10 @@ const PersonalDetailsTab = ({
           <div className="w-full">
             <DatePicker
               format="YYYY-MM-DD"
-              containerStyle={{ width: '100%' }}
+              maxDate={new Date()}
               onOpenPickNewDate={false}
+              containerStyle={{ width: '100%' }}
+              placeholder="Select date of birth"
               value={formik?.values?.date_of_birth}
               onChange={(date: any) => {
                 formik.setFieldValue(
@@ -171,7 +175,6 @@ const PersonalDetailsTab = ({
                   date?.format('YYYY-MM-DD'),
                 );
               }}
-              placeholder="Select date of birth"
               style={{
                 height: 48,
                 width: '100%',

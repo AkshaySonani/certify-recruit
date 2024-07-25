@@ -495,7 +495,7 @@ const Page = (data: any) => {
                         className={`flex h-8 w-8 items-center justify-center rounded-[4px]  text-center  ${list?.status?.color} 
                         ${list?.status?.status == 'Default' ? 'text-meta-purple-1' : 'text-white'}  `}
                       >
-                        <p>{`${i > 10 ? '0' : ''} ${i + 1} `}</p>
+                        <p>{`${i < 10 ? '0' : ''}${i + 1} `}</p>
                       </div>
                     );
                   })}
