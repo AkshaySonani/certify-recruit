@@ -159,9 +159,6 @@ const IndividualDashboard = ({
                     <p className="whitespace-pre-wrap break-all text-lg font-semibold text-meta-purple-1">
                       {list?.title}
                     </p>
-                    <p className="ml-1 whitespace-nowrap text-lg font-semibold text-meta-purple-1">
-                      - Fresher
-                    </p>
                     <p className="mx-2 mt-1 whitespace-nowrap text-sm font-bold text-meta-light-blue-3">
                       {moment(list?.createdAt).fromNow()}
                     </p>

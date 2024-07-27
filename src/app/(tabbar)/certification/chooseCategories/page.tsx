@@ -24,7 +24,6 @@ export default function Page() {
   const [skillData, setSkillData] = useState([]);
   const [skillQuery, setSkillQuery] = useState('');
   const debouncedSearchSkill = useDebounce(skillQuery);
-  const [mainFields, setMainFields] = useState<any>([]);
   const [userDetails, setUserDetails] = useState<any>({});
   const [allCategory, setAllCategory] = useState<any>([]);
   const [selectedExperince, setSelectedExperince] = useState('');
@@ -79,24 +78,6 @@ export default function Page() {
     API.get(API_CONSTANT?.PROFILE)
       .then((res: any) => {
         setUserDetails(res?.data?.data);
-      })
-      .catch((error: any) => {
-        toast.error(
-          error?.response?.data?.message ||
-            error?.message ||
-            'Internal server error',
-        );
-      });
-  };
-
-  useEffect(() => {
-    getMainFeilds();
-  }, []);
-
-  const getMainFeilds = () => {
-    API.get(API_CONSTANT?.FIELDS)
-      .then((res: any) => {
-        setMainFields(res?.data?.data);
       })
       .catch((error: any) => {
         toast.error(

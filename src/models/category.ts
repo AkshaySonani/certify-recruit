@@ -1,11 +1,10 @@
-import { createModal } from '@/service/Helper';
 import mongoose from 'mongoose';
+import { createModal } from '@/service/Helper';
 
 const categorySchema = new mongoose.Schema({
   field: {
     type: String,
     select: true,
-    ref: 'Fields',
     required: true,
   },
   category: {

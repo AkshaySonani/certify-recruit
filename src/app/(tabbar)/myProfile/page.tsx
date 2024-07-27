@@ -154,6 +154,8 @@ const MyProfile = () => {
       });
   };
 
+  console.log('userDetails', userDetails?.city?.name);
+
   return (
     <Suspense>
       <Loading loading={loading} />
@@ -278,11 +280,15 @@ const MyProfile = () => {
                           src={'/location.svg'}
                         />
                         <p className="text-xs text-meta-light-blue-3">
-                          {userDetails?.current_location
-                            ? userDetails?.current_location === 'OUT_OF_USA'
-                              ? TEXT?.OUT_SIDE_USA
-                              : TEXT?.USA
-                            : '-'}
+                          {session?.data?.user?.role === USER_ROLE?.EMPLOYEE
+                            ? userDetails?.city?.name
+                              ? userDetails?.city?.name
+                              : '-'
+                            : userDetails?.current_location
+                              ? userDetails?.current_location === 'OUT_OF_USA'
+                                ? TEXT?.OUT_SIDE_USA
+                                : TEXT?.USA
+                              : '-'}
                         </p>
                       </div>
                       <div className="flex items-center gap-2">

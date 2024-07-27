@@ -167,7 +167,7 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
           </p>
         </div>
         <div className="mt-3 flex w-full flex-col items-center lg:mt-0 lg:w-1/2">
-          <div className="mb-3 flex w-full items-center justify-between">
+          {/* <div className="mb-3 flex w-full items-center justify-between">
             <div className="min-w-54 relative mr-3 w-full cursor-pointer rounded-xl border border-meta-light-blue-1">
               <input
                 id="hour"
@@ -224,13 +224,14 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
                 <p>{TEXT?.HOURLY}</p>
               </label>
             </div>
-          </div>
+          </div> */}
 
           <div className="w-full">
             <label className="text-base font-medium text-meta-purple-1">
-              {formik?.values?.salary_pay === 'MONTHLY'
+              {/* {formik?.values?.salary_pay === 'MONTHLY'
                 ? TEXT?.CTC
-                : TEXT?.HOURLY_RATE}
+                : TEXT?.HOURLY_RATE} */}
+              {TEXT?.CTC}
             </label>
             <input
               type="number"
@@ -262,7 +263,7 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
       </div>
       <div className="my-6 border border-meta-light-blue-1" />
 
-      <div className="flex w-full flex-wrap items-start justify-between lg:flex-nowrap">
+      {/* <div className="flex w-full flex-wrap items-start justify-between lg:flex-nowrap">
         <div className="w-full text-start lg:mr-5">
           <p className="text-xl font-semibold text-meta-purple-1 sm:text-2xl">
             {TEXT?.INTERVIEW_TIME}
@@ -341,7 +342,7 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

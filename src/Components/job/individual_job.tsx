@@ -187,9 +187,6 @@ const IndividualJob = () => {
                           <p className="text-lg font-semibold text-meta-purple-1">
                             {list?.title}
                           </p>
-                          <p className="ml-1 text-lg font-semibold text-meta-purple-1">
-                            - Fresher
-                          </p>
                           <p className="ml-2 mt-1 text-sm font-bold text-meta-light-blue-3">
                             {moment(list?.createdAt).fromNow()}
                           </p>
@@ -198,8 +195,8 @@ const IndividualJob = () => {
                           <p className="text-sm font-bold text-meta-light-blue-3">
                             {list?.company_name}
                           </p>
-                          <p className="mx-1 text-sm font-bold text-meta-light-blue-3">
-                            - {list?.city[0]?.name},
+                          <p className="mx-1 overflow-hidden text-ellipsis whitespace-nowrap text-sm font-bold text-meta-light-blue-3">
+                            - {list?.city[0]?.name},{' '}
                             {list?.state[0]?.name ?? 'Gujarat'}
                           </p>
                         </div>
@@ -271,9 +268,6 @@ const IndividualJob = () => {
                           <div className="flex items-center">
                             <p className="text-lg font-semibold text-meta-purple-1">
                               {list?.title}
-                            </p>
-                            <p className="ml-1 text-lg font-semibold text-meta-purple-1">
-                              - Fresher
                             </p>
                             <p className="ml-2 mt-1 text-sm font-bold text-meta-light-blue-3">
                               {moment(list?.createdAt).fromNow()}

@@ -46,15 +46,15 @@ const PreviewDialog = ({ isOpen, setIsOpen, formik }: any) => {
 
                   <div className="flex ">
                     <div className="w-1/2 pb-[14px] pl-4 pt-[18px]">
-                      <div>
+                      {/* <div>
                         <div className="text-sm font-medium text-meta-purple-1">
                           {formik?.values?.is_hiring_manager ? 'Yes' : 'No'}
                         </div>
                         <p className="text-meta-gray-7 text-base font-normal">
                           {TEXT?.ARE_YOU_HIRING_MANAGER}
                         </p>
-                      </div>
-                      <div className="pt-5">
+                      </div> */}
+                      <div>
                         <div className="text-sm font-medium text-meta-purple-1">
                           {formik?.values?.title !== ''
                             ? formik?.values?.title
@@ -66,7 +66,7 @@ const PreviewDialog = ({ isOpen, setIsOpen, formik }: any) => {
                       </div>
                     </div>
                     <div className="pb-[14px] pl-4 pt-[18px]">
-                      <div className="">
+                      {/* <div className="">
                         <div className="text-sm font-medium text-meta-purple-1">
                           {formik?.values?.company_name !== ''
                             ? formik?.values?.company_name
@@ -75,8 +75,8 @@ const PreviewDialog = ({ isOpen, setIsOpen, formik }: any) => {
                         <p className="text-meta-gray-7 text-base font-normal">
                           {TEXT?.YOUR_COMPANY_NAME}
                         </p>
-                      </div>
-                      <div className="pt-5">
+                      </div> */}
+                      <div>
                         <div className="flex flex-wrap gap-1 text-sm font-medium text-meta-purple-1">
                           {formik?.values?.workplace?.length > 0
                             ? formik?.values?.workplace?.map(
@@ -199,7 +199,7 @@ const PreviewDialog = ({ isOpen, setIsOpen, formik }: any) => {
                             : '-'}
                         </div>
                         <p className="text-meta-gray-7 text-base font-normal">
-                          {TEXT?.HOURLY_RATE}
+                          {TEXT?.CTC}
                         </p>
                       </div>
                       <div className="pt-5">
@@ -229,7 +229,7 @@ const PreviewDialog = ({ isOpen, setIsOpen, formik }: any) => {
                         </p>
                       </div>
                     </div>
-                    <div className="w-1/2 pb-[14px] pl-4 pt-[18px]">
+                    {/* <div className="w-1/2 pb-[14px] pl-4 pt-[18px]">
                       <div>
                         <div className="text-sm font-medium text-meta-purple-1">
                           {formik?.values?.salary_pay}
@@ -246,7 +246,7 @@ const PreviewDialog = ({ isOpen, setIsOpen, formik }: any) => {
                           Hiring Candidate
                         </p>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </Dialog.Panel>

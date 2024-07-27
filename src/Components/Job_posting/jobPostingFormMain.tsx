@@ -33,11 +33,26 @@ function JobPostingFormMain({ id }: any) {
   const [isSpinner, setIsSpinner] = useState(false);
   const debouncedSearchCity = useDebounce(cityQuery);
   const debouncedSearchState = useDebounce(stateQuery);
+  const [userDetails, setUserDetails] = useState<any>({});
   const session = useSession() as any;
 
   function classNames(...classes: any) {
     return classes.filter(Boolean).join('');
   }
+
+  useEffect(() => {
+    getProfileDetails();
+  }, []);
+
+  const getProfileDetails = () => {
+    API.get(API_CONSTANT?.PROFILE)
+      .then((res) => {
+        setUserDetails(res?.data?.data);
+      })
+      .catch((error) => {
+        toast.error(error?.response?.data?.error);
+      });
+  };
 
   const getJobApi = () => {
     if (id) {
@@ -82,9 +97,9 @@ function JobPostingFormMain({ id }: any) {
                 res?.data?.message || 'Successfully your job is posting',
               );
             }
+            router.push(ROUTE?.DASHBOARD);
           }
           setIsSpinner(false);
-          router.push(ROUTE?.DASHBOARD);
           actions.setSubmitting(false);
         })
         .catch((error) => {
@@ -100,7 +115,7 @@ function JobPostingFormMain({ id }: any) {
 
   const validationSchema = [
     Yup.object().shape({
-      company_name: Yup.string().required('Company is required.'),
+      // company_name: Yup.string().required('Company is required.'),
       title: Yup.string().required('Job title is required.'),
       workplace: Yup.array().min(1, `select at least one workplace type`),
       city: Yup.object()
@@ -137,7 +152,7 @@ function JobPostingFormMain({ id }: any) {
       is_hiring_manager: jobDetails?.is_hiring_manager ?? false,
       title: jobDetails?.title ?? '',
       company_id: session?.data?.user._id,
-      company_name: jobDetails?.company_name ?? '',
+      company_name: jobDetails?.company_name ?? userDetails?.company_name,
       description: jobDetails?.description ?? '',
       workplace: jobDetails?.workplace ?? [],
       job_types: jobDetails?.job_types ?? [],
@@ -291,7 +306,7 @@ function JobPostingFormMain({ id }: any) {
       <form onSubmit={formik.handleSubmit}>
         {nextPage === 1 ? (
           <div>
-            <div className="flex w-full flex-wrap items-center justify-between lg:flex-nowrap">
+            {/* <div className="flex w-full flex-wrap items-center justify-between lg:flex-nowrap">
               <div className="w-full text-start lg:mr-5 lg:w-1/2">
                 <p className="text-xl font-semibold text-meta-purple-1 sm:text-2xl">
                   {TEXT?.ARE_YOU_HIRING_MANAGER}
@@ -341,53 +356,11 @@ function JobPostingFormMain({ id }: any) {
                   />
                   <p>No</p>
                 </label>
-                {/* <label
-                  htmlFor="Yes"
-                  className="flex w-1/2 cursor-pointer items-center gap-2 rounded-lg border border-meta-light-blue-1 p-3 hover:bg-meta-light-blue-2"
-                >
-                  <input
-                    id="Yes"
-                    type="radio"
-                    radioGroup="Salary"
-                    name="is_hiring_manager"
-                    value={String(formik?.values?.is_hiring_manager)}
-                    checked={formik?.values?.is_hiring_manager ? true : false}
-                    onChange={(e) => {
-                      formik.setFieldValue(
-                        'is_hiring_manager',
-                        e?.target?.checked === true,
-                      );
-                    }}
-                    className=""
-                  />
-                  <p>{'Yes'}</p>
-                </label>
-                <label
-                  htmlFor="No"
-                  className="flex w-1/2 cursor-pointer items-center gap-2 rounded-lg border border-meta-light-blue-1 p-3 hover:bg-meta-light-blue-2"
-                >
-                  <input
-                    id="No"
-                    name="is_hiring_manager"
-                    type="radio"
-                    radioGroup="Salary"
-                    value={String(formik?.values?.is_hiring_manager)}
-                    checked={formik?.values?.is_hiring_manager ? false : true}
-                    className=""
-                    onChange={(e) => {
-                      formik.setFieldValue(
-                        'is_hiring_manager',
-                        e?.target?.checked === false,
-                      );
-                    }}
-                  />
-                  <p>{'No'}</p>
-                </label> */}
               </div>
             </div>
-            <div className="my-6 border border-meta-light-blue-1" />
+            <div className="my-6 border border-meta-light-blue-1" /> */}
 
-            <div className="flex w-full flex-wrap items-center justify-between lg:flex-nowrap">
+            {/* <div className="flex w-full flex-wrap items-center justify-between lg:flex-nowrap">
               <div className="w-full text-start lg:mr-5 lg:w-1/2">
                 <p className="text-xl font-semibold text-meta-purple-1 sm:text-2xl">
                   {TEXT?.COMPANY} <span className="text-red-600">*</span>
@@ -410,7 +383,7 @@ function JobPostingFormMain({ id }: any) {
                 )}
               </div>
             </div>
-            <div className="my-6 border border-meta-light-blue-1" />
+            <div className="my-6 border border-meta-light-blue-1" /> */}
 
             <div className="flex w-full flex-wrap items-center justify-between lg:flex-nowrap">
               <div className="w-full text-start lg:mr-5 lg:w-1/2">
@@ -515,12 +488,12 @@ function JobPostingFormMain({ id }: any) {
                 </p>
               </div>
               <div className="relative w-full lg:w-1/2">
-                <div className=" z-0 mt-2 w-full lg:mt-0">
+                <div className="z-0 mt-2 w-full lg:mt-0">
                   <label className="text-base font-medium text-meta-purple-1">
                     Country
                   </label>
-                  <Menu as="div" className="relative  w-full">
-                    <Menu.Button className="relative z-20  flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-[9px] pl-[14px] pr-[11px] outline-none transition">
+                  <Menu as="div" className="relative w-full">
+                    <Menu.Button className="relative z-20 flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-[9px] pl-[14px] pr-[11px] outline-none transition">
                       {formik?.values?.country === null ? (
                         <p className="text-meta-gray-1">Select Country</p>
                       ) : (

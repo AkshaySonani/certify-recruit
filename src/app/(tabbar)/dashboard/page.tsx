@@ -6,12 +6,12 @@ import Spinner from '@/app/icons/Spinner';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import AppContext from '@/context/AppProvider';
-import { ROUTE, TEXT, USER_ROLE } from '@/service/Helper';
 import { API_CONSTANT } from '@/constant/ApiConstant';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { ROUTE, TEXT, USER_ROLE } from '@/service/Helper';
 import EmployeeDashboard from '@/Components/dashboard/employee';
 import IndividualDashboard from '@/Components/dashboard/individual';
 import CompleteProfile from '@/Components/dashboard/completeProfile';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
 const Page = (data: any) => {
   const router = useRouter();
@@ -124,6 +124,19 @@ const Page = (data: any) => {
       });
   };
 
+  const handleNavigate = (val: any) => {
+    if (val?.title === 'Candidates Hired') {
+      router.push(ROUTE?.CANDIDATES_HIRED);
+    } else if (val?.title === 'Active Jobs') {
+      router.push(ROUTE?.JOB_ACTIVE);
+      console.log('navigate to Active Jobs');
+    } else if (val?.title === 'Total Jobs') {
+      router.push(ROUTE?.JOB);
+    } else {
+      router.push(ROUTE?.ACTIVE_JOBS);
+    }
+  };
+
   return (
     <div>
       <div className="mb-4 text-2xl font-semibold text-meta-purple-1">
@@ -145,7 +158,10 @@ const Page = (data: any) => {
             <div className="mt-4 flex gap-4">
               {menu?.map((item: any) => {
                 return (
-                  <div className="relative w-1/4 cursor-pointer rounded-2xl border border-meta-light-blue-1 p-5">
+                  <div
+                    onClick={() => handleNavigate(item)}
+                    className="relative w-1/4 cursor-pointer rounded-2xl border border-meta-light-blue-1 p-5"
+                  >
                     <div className="mb-2 flex h-9 w-9 items-center justify-center rounded-lg bg-meta-light-blue-1">
                       <Image
                         alt="Icon"

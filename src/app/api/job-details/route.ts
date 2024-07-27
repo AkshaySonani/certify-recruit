@@ -46,9 +46,9 @@ export const POST = async (req: NextRequest) => {
       // Lookup user information
       {
         $lookup: {
-          from: 'users',
+          from: 'individuals',
           localField: 'applicants.user_id',
-          foreignField: '_id',
+          foreignField: 'user_ref_id',
           as: 'user_info',
         },
       },

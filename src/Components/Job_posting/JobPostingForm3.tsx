@@ -41,6 +41,32 @@ const JobPostingForm3 = ({ formik }: { formik: any }) => {
     formik?.setFieldValue('skills', arr);
   };
 
+  useEffect(() => {
+    getSubCategorys();
+  }, []);
+
+  const getSubCategorys = () => {
+    API.get(API_CONSTANT?.GET_SUBCATEGORYS)
+      .then((res: any) => {
+        console.log('res?.data', res?.data);
+        let skiilArr = res?.data?.data?.map((list: any) => {
+          return {
+            _id: list?._id,
+            label: list?.subcategory,
+            value: list?.subcategory,
+          };
+        });
+        setSkillData(skiilArr);
+      })
+      .catch((error: any) => {
+        toast.error(
+          error?.response?.data?.message ||
+            error?.message ||
+            'Internal server error',
+        );
+      });
+  };
+
   const searchSkillApi = (search: any) => {
     let obj = {
       searchText: search,
@@ -183,7 +209,7 @@ const JobPostingForm3 = ({ formik }: { formik: any }) => {
       </div>
       <div className="my-6 border border-meta-light-blue-1" />
 
-      <div className="flex w-full flex-wrap items-center justify-between lg:flex-nowrap">
+      {/* <div className="flex w-full flex-wrap items-center justify-between lg:flex-nowrap">
         <div className="w-full text-start lg:mr-5 lg:w-1/2">
           <p className="text-xl font-semibold text-meta-purple-1 sm:text-2xl">
             {TEXT?.HIRING_MULTIPLE_CANDIDATES}
@@ -198,13 +224,13 @@ const JobPostingForm3 = ({ formik }: { formik: any }) => {
               type="button"
               className="w-1/3 px-3"
               disabled={!hireMultiple}
-              onClick={handleIncrement}
+              onClick={handleDecrement}
             >
               <Image
                 width={25}
                 height={25}
                 alt="Preview"
-                src={'/job/Plus.svg'}
+                src={'/job/Minus.svg'}
               />
             </button>
             <div className="flex w-2/3 items-center justify-center border-x-2 border-x-meta-light-blue-1 text-base font-medium text-meta-light-blue-3">
@@ -214,13 +240,13 @@ const JobPostingForm3 = ({ formik }: { formik: any }) => {
               type="button"
               className="w-1/3 px-3"
               disabled={!hireMultiple}
-              onClick={handleDecrement}
+              onClick={handleIncrement}
             >
               <Image
                 width={25}
                 height={25}
                 alt="Preview"
-                src={'/job/Minus.svg'}
+                src={'/job/Plus.svg'}
               />
             </button>
           </div>
@@ -246,7 +272,7 @@ const JobPostingForm3 = ({ formik }: { formik: any }) => {
           </div>
         </div>
       </div>
-      <div className="my-6 border border-meta-light-blue-1" />
+      <div className="my-6 border border-meta-light-blue-1" /> */}
     </div>
   );
 };

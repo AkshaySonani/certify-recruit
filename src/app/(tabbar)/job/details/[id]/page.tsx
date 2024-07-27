@@ -54,9 +54,6 @@ export default function Page({ params }: { params: { id: string } }) {
                   <p className="text-lg font-semibold text-meta-purple-1">
                     {jobDetails?.title}
                   </p>
-                  <p className="ml-1 text-lg font-semibold text-meta-purple-1">
-                    - Fresher
-                  </p>
                   <p className="ml-2  text-sm font-bold text-meta-light-blue-3">
                     {moment(jobDetails?.createdAt).fromNow()}
                   </p>

@@ -109,77 +109,126 @@ export const GET = async (req: NextResponse) => {
     });
   }
 
+  const { searchParams } = new URL(req.url);
+  const status = searchParams.get('status') || 'ACTIVE';
+
   try {
     await connect();
     let results;
     if (session?.user?.role === 'employee') {
-      results = await Job.aggregate([
-        {
-          $match: {
-            company_id: new mongoose.Types.ObjectId(session?.user?._id),
-          },
-        },
-        {
-          $match: {
-            status: 'ACTIVE',
-          },
-        },
-        {
-          $lookup: {
-            from: 'jobapplications',
-            localField: '_id',
-            foreignField: 'job_id',
-            as: 'applicants',
-          },
-        },
-        {
-          $lookup: {
-            from: 'states',
-            localField: 'state',
-            foreignField: '_id',
-            as: 'state_info',
-          },
-        },
-        {
-          $lookup: {
-            from: 'countries',
-            localField: 'country',
-            foreignField: '_id',
-            as: 'country_info',
-          },
-        },
-        {
-          $lookup: {
-            from: 'cities',
-            localField: 'city',
-            foreignField: '_id',
-            as: 'city_info',
-          },
-        },
-        {
-          $addFields: {
-            city: {
-              _id: { $arrayElemAt: ['$city_info._id', 0] },
-              name: { $arrayElemAt: ['$city_info.name', 0] },
-            },
-            state: {
-              _id: { $arrayElemAt: ['$state_info._id', 0] },
-              name: { $arrayElemAt: ['$state_info.name', 0] },
-            },
-            country: {
-              _id: { $arrayElemAt: ['$country_info._id', 0] },
-              name: { $arrayElemAt: ['$country_info.name', 0] },
+      if (status === 'hired') {
+        const aggregateHiredCandidates = [
+          {
+            $match: {
+              company_id: new mongoose.Types.ObjectId(session?.user?._id),
             },
           },
-        },
-        {
-          $project: {
-            city_info: 0,
-            state_info: 0,
-            country_info: 0,
+          {
+            $lookup: {
+              from: 'jobapplications',
+              localField: '_id',
+              foreignField: 'job_id',
+              as: 'applicants',
+            },
           },
-        },
-      ]);
+          {
+            $unwind: '$applicants',
+          },
+          {
+            $lookup: {
+              from: 'individuals',
+              localField: 'applicants.user_id',
+              foreignField: 'user_ref_id',
+              as: 'user_info',
+            },
+          },
+          {
+            $unwind: '$user_info',
+          },
+          {
+            $group: {
+              _id: '$_id',
+              jobDetails: { $first: '$$ROOT' },
+              hiredCandidates: { $push: '$user_info' },
+            },
+          },
+          {
+            $project: {
+              'jobDetails.applicants': 0,
+              'jobDetails.user_info': 0,
+            },
+          },
+        ];
+        results = await Job.aggregate(aggregateHiredCandidates);
+      } else {
+        results = await Job.aggregate([
+          {
+            $match: {
+              company_id: new mongoose.Types.ObjectId(session?.user?._id),
+            },
+          },
+          {
+            $match: {
+              status: status,
+            },
+          },
+          {
+            $lookup: {
+              from: 'jobapplications',
+              localField: '_id',
+              foreignField: 'job_id',
+              as: 'applicants',
+            },
+          },
+          {
+            $lookup: {
+              from: 'states',
+              localField: 'state',
+              foreignField: '_id',
+              as: 'state_info',
+            },
+          },
+          {
+            $lookup: {
+              from: 'countries',
+              localField: 'country',
+              foreignField: '_id',
+              as: 'country_info',
+            },
+          },
+          {
+            $lookup: {
+              from: 'cities',
+              localField: 'city',
+              foreignField: '_id',
+              as: 'city_info',
+            },
+          },
+          {
+            $addFields: {
+              city: {
+                _id: { $arrayElemAt: ['$city_info._id', 0] },
+                name: { $arrayElemAt: ['$city_info.name', 0] },
+              },
+              state: {
+                _id: { $arrayElemAt: ['$state_info._id', 0] },
+                name: { $arrayElemAt: ['$state_info.name', 0] },
+              },
+              country: {
+                _id: { $arrayElemAt: ['$country_info._id', 0] },
+                name: { $arrayElemAt: ['$country_info.name', 0] },
+              },
+            },
+          },
+          {
+            $project: {
+              city_info: 0,
+              state_info: 0,
+              country_info: 0,
+            },
+          },
+        ]);
+      }
 
       return NextResponse.json({
         status: 200,

@@ -1,73 +1,46 @@
 'use client';
-import { API_CONSTANT } from '@/constant/ApiConstant';
-import { JOB_STATUS } from '@/constant/Enum';
-import API from '@/service/ApiService';
-import { ROUTE, TEXT } from '@/service/Helper';
-import { Menu, Transition } from '@headlessui/react';
 import moment from 'moment';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { Fragment, useState } from 'react';
+import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
-const actionMenuItems = ['Edit', 'Delete', 'View JobDetails'];
+import { ROUTE } from '@/service/Helper';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { Menu, Transition } from '@headlessui/react';
+import { API_CONSTANT } from '@/constant/ApiConstant';
 
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ');
-}
-const EmployeeDashboard = ({
-  dashboardData,
-  setDashBoardData,
-  getDashboardJob,
-}: any) => {
+export function Page({ params }: { params: { id: string } }) {
   const router = useRouter();
 
-  const updateStatusApi = (val: any, id: any) => {
-    const updatedItems = dashboardData.map((item: any) =>
-      item?._id === id ? { ...item, status: val } : item,
-    );
-    setDashBoardData(updatedItems);
-    const data = {
-      status: val,
-      job_id: id,
-    };
-    API.post(API_CONSTANT.JOB, data)
-      .then((res) => {
-        toast?.success('Job updated successfully');
+  const [jobLists, setJobLists] = useState([]);
+
+  useEffect(() => {
+    getJobsLists();
+  }, []);
+
+  const getJobsLists = () => {
+    API.get(`${API_CONSTANT?.JOB}?status=PENDING`)
+      .then((res: any) => {
+        setJobLists(res?.data?.data);
       })
       .catch((error) => {
-        toast.error(error?.response?.data?.message || 'Internal server error');
+        toast.error(error?.response?.data?.error);
       });
-  };
-
-  const handleAction = (action: any, job: any) => {
-    if (action === 'Edit') {
-      router.push(`${ROUTE?.JOb_POST}/${job._id}`);
-    } else if (action === 'Delete') {
-      const obj: any = {
-        job_id: job._id,
-      };
-      API.post(API_CONSTANT.JOB_DELETE, obj)
-        .then((res: any) => {
-          getDashboardJob();
-          toast?.success('Job delete successfully');
-        })
-        .catch((error) => {
-          toast.error(
-            error?.response?.data?.message || 'Internal server error',
-          );
-        });
-    } else {
-      router.push(`${ROUTE?.JOb_DETAILS}/${job._id}`);
-    }
   };
 
   return (
     <div>
-      <div className="mt-8 text-xl font-semibold text-meta-purple-1">
-        {TEXT?.RECENTLY_JOB_POST}
+      <div className="flex items-center text-2xl font-semibold text-meta-purple-1">
+        <div
+          className="cursor-pointer"
+          onClick={() => router?.push(ROUTE?.DASHBOARD)}
+        >
+          <Image src={'/BackArrow.svg'} alt="date" width={20} height={20} />
+        </div>
+        <p className="ml-2">Pending Jobs</p>
       </div>
-      {dashboardData?.length !== 0 ? (
-        dashboardData?.map((list: any) => {
+      {jobLists?.length !== 0 ? (
+        jobLists?.map((list: any) => {
           return (
             <div className="mt-5">
               <div className="rounded-2xl bg-meta-gray-2 p-5">
@@ -88,7 +61,7 @@ const EmployeeDashboard = ({
                     </div>
                   </div>
 
-                  <div className="flex items-start">
+                  {/* <div className="flex items-start">
                     <Menu as="div" className="relative w-44">
                       <Menu.Button className="relative  flex w-full appearance-none items-center justify-between rounded-lg border border-meta-light-blue-1 py-2 pl-5 pr-[11px] outline-none transition">
                         <p className="font-me capitalize text-meta-purple-1">
@@ -183,7 +156,7 @@ const EmployeeDashboard = ({
                         </Menu.Items>
                       </Transition>
                     </Menu>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="mt-8 flex gap-4">
                   <div
@@ -274,5 +247,6 @@ const EmployeeDashboard = ({
       )}
     </div>
   );
-};
-export default EmployeeDashboard;
+}
+
+export default Page;

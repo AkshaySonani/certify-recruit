@@ -286,9 +286,6 @@ export default function Home() {
                       <p className="text-lg font-semibold text-meta-purple-1">
                         Human Resource
                       </p>
-                      <p className="ml-1 text-lg font-semibold text-meta-purple-1">
-                        - Fresher
-                      </p>
                       <p className="ml-2 mt-1 text-sm font-bold text-meta-light-blue-3">
                         30 min ago
                       </p>
@@ -346,9 +343,6 @@ export default function Home() {
                       <p className="text-lg font-semibold text-meta-purple-1">
                         Human Resource
                       </p>
-                      <p className="ml-1 text-lg font-semibold text-meta-purple-1">
-                        - Fresher
-                      </p>
                       <p className="ml-2 mt-1 text-sm font-bold text-meta-light-blue-3">
                         30 min ago
                       </p>
@@ -405,9 +399,6 @@ export default function Home() {
                     <div className="flex items-center">
                       <p className="text-lg font-semibold text-meta-purple-1">
                         Human Resource
-                      </p>
-                      <p className="ml-1 text-lg font-semibold text-meta-purple-1">
-                        - Fresher
                       </p>
                       <p className="ml-2 mt-1 text-sm font-bold text-meta-light-blue-3">
                         30 min ago
