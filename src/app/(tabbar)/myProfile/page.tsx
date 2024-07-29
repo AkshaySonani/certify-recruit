@@ -17,6 +17,7 @@ import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import { Icons } from '@/svg';
 import { useDropzone } from 'react-dropzone';
 import Loading from '@/Components/Loading';
+import Button from '@/Components/Button';
 
 const MyProfile = () => {
   const router = useRouter();
@@ -24,11 +25,13 @@ const MyProfile = () => {
   const context = useContext(AppContext);
   const [isOpen, setIsOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [degreeList, setDegreeList] = useState([]);
   const [collegeList, setCollegeList] = useState([]);
   const [languageList, setLanguageList] = useState([]);
+  const [currentPlan, setCurrentPlan] = useState<any>([]);
   const [userDetails, setUserDetails] = useState<any>({});
-  const [loading, setLoading] = useState(false);
+  const [allowNextScreen, setAllowNextScreen] = useState(false);
 
   const { profileCompletionCount } = context;
 
@@ -108,6 +111,13 @@ const MyProfile = () => {
   };
 
   useEffect(() => {
+    if (userDetails) {
+      getPlanList();
+    }
+  }, [userDetails]);
+
+  useEffect(() => {
+    getPlanList();
     getDegreeList();
     getCollegeList();
     getLanguageList();
@@ -154,7 +164,20 @@ const MyProfile = () => {
       });
   };
 
-  console.log('userDetails', userDetails?.city?.name);
+  const getPlanList = () => {
+    API.get(API_CONSTANT?.PRICING)
+      .then((res) => {
+        setCurrentPlan(
+          res?.data?.data?.filter(
+            (x: any) =>
+              x?._id === userDetails?.user_ref_id?.subscription?.plan_id,
+          ),
+        );
+      })
+      .catch((error) => {
+        toast.error(error?.response?.data?.error);
+      });
+  };
 
   return (
     <Suspense>
@@ -341,29 +364,121 @@ const MyProfile = () => {
             </div>
           )}
 
-          {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
-            <CompanyProfile
-              session={session?.data}
-              userDetails={userDetails}
-              getUserDataApiCall={() => getProfileDetails()}
-              percentage={
-                session?.data?.user?.profile_count <
-                profileCompletionCount?.employee
-                  ? profileCompletionCount?.employee
-                  : session?.data?.user?.profile_count
-              }
-              isEdit={isEdit}
-            />
-          ) : (
-            <IndividualProfile
-              degreeList={degreeList}
-              session={session?.data}
-              userDetails={userDetails}
-              collegeList={collegeList}
-              languageList={languageList}
-              getUserDataApiCall={() => getProfileDetails()}
-            />
+          {/* Show active plan data on the pricing page */}
+          {!allowNextScreen && (
+            <div>
+              {currentPlan?.length !== 0 &&
+              (userDetails?.user_ref_id?.subscription ||
+                userDetails?.user_ref_id?.subscription?.plan_id) ? (
+                <div className="mt-4 rounded-2xl bg-meta-light-blue-2 p-10">
+                  <h2 className="mb-3 text-2xl font-bold text-gray-800">
+                    Active plan - {currentPlan?.[0]?.plan_name}
+                  </h2>
+
+                  <p className="mb-2 text-gray-600">
+                    <strong>Type:</strong> {currentPlan?.[0]?.plan_type}
+                  </p>
+                  <p className="mb-4 text-gray-600">
+                    <strong>Status:</strong>{' '}
+                    {currentPlan?.[0]?.is_Active ? 'Active' : 'Inactive'}
+                  </p>
+
+                  <div className="mb-4 text-gray-600">
+                    <p>
+                      <strong>You can post:</strong>{' '}
+                      {currentPlan?.[0]?.max_posts} Jobs
+                    </p>
+                    <p>
+                      <strong>You can search:</strong> Upto{' '}
+                      {currentPlan?.[0]?.max_searches} Applicants
+                    </p>
+                    <p>
+                      <strong>Badge of Honour:</strong> Not included
+                    </p>
+                    <p>
+                      <strong>You can search:</strong> Upto{' '}
+                      {currentPlan?.[0]?.max_BGV_searches} BGV
+                    </p>
+                    <p>
+                      <strong>You can have:</strong> Upto{' '}
+                      {currentPlan?.[0]?.max_applicant} Applicants allowed
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="mt-4 flex flex-col items-center justify-center rounded-2xl bg-meta-light-blue-2 p-10">
+                  <h2 className="text-xl font-semibold text-meta-purple-1">
+                    You Don't have any active plan
+                  </h2>
+                  <p
+                    onClick={() =>
+                      (!userDetails?.user_ref_id?.subscription ||
+                        !userDetails?.user_ref_id?.subscription?.plan_id) &&
+                      router.push(ROUTE?.PRICING)
+                    }
+                    className={`${
+                      !userDetails?.user_ref_id?.subscription ||
+                      !userDetails?.user_ref_id?.subscription?.plan_id
+                        ? 'cursor-pointer'
+                        : 'cursor-not-allowed'
+                    } mt-2 text-sm font-medium text-meta-blue-2 md:text-base`}
+                  >
+                    {TEXT?.GO_TO_PRICING}
+                    <span className="ml-2 text-sm font-bold md:text-base">
+                      &#8594;
+                    </span>
+                  </p>
+                </div>
+              )}
+            </div>
           )}
+
+          {!allowNextScreen && (
+            <div className="mt-8 flex w-full justify-end">
+              <Button
+                type="button"
+                title={TEXT?.NEXT}
+                titleClass="!text-base !text-white"
+                handleClick={() => {
+                  console.log('clicing...');
+
+                  setAllowNextScreen(true);
+                }}
+                btnClass={`${
+                  userDetails?.user_ref_id?.subscription ||
+                  userDetails?.user_ref_id?.subscription?.plan_id
+                    ? '!cursor-pointer'
+                    : '!cursor-not-allowed'
+                } !w-36 !rounded-lg !bg-meta-blue-1 !py-2`}
+              />
+            </div>
+          )}
+
+          {session?.data?.user?.role === USER_ROLE?.EMPLOYEE
+            ? allowNextScreen === true && (
+                <CompanyProfile
+                  session={session?.data}
+                  userDetails={userDetails}
+                  getUserDataApiCall={() => getProfileDetails()}
+                  percentage={
+                    session?.data?.user?.profile_count <
+                    profileCompletionCount?.employee
+                      ? profileCompletionCount?.employee
+                      : session?.data?.user?.profile_count
+                  }
+                  isEdit={isEdit}
+                />
+              )
+            : allowNextScreen === true && (
+                <IndividualProfile
+                  degreeList={degreeList}
+                  session={session?.data}
+                  userDetails={userDetails}
+                  collegeList={collegeList}
+                  languageList={languageList}
+                  getUserDataApiCall={() => getProfileDetails()}
+                />
+              )}
         </div>
       )}
     </Suspense>

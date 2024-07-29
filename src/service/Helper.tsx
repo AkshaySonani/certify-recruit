@@ -158,6 +158,7 @@ const TEXT = {
   BUSINESS_PLAN: 'Business Plan',
   DATE_UPLOADED: 'Date Uploaded',
   GO_TO_PROFILE: 'Go to profile',
+  GO_TO_PRICING: 'Go to pricing',
   LEARN_AND_EARN: 'Learn & Earn',
   WORKPLACE_TYPE: 'Workplace type',
   RESET_PASSWORD: 'Reset Password',

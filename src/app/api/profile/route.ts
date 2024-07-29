@@ -300,7 +300,8 @@ export const GET = async (req: NextRequest) => {
       })
         .populate({ path: 'city' })
         .populate({ path: 'state' })
-        .populate({ path: 'country' });
+        .populate({ path: 'country' })
+        .populate({ path: 'user_ref_id' });
 
       if (!employeeData) {
         return NextResponse.json({
@@ -335,6 +336,7 @@ export const GET = async (req: NextRequest) => {
       })
         .populate({ path: 'degree' })
         .populate({ path: 'skills' })
+        .populate({ path: 'user_ref_id' })
         .populate({ path: 'languages.language' })
         .populate({ path: 'college_school_name' })
         .populate({ path: 'total_experiences.location' });

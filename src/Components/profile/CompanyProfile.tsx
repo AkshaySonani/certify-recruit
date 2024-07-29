@@ -100,10 +100,7 @@ const CompanyProfile = ({
           </div>
           <div className="mt-20 flex w-full flex-col items-center justify-center">
             <p className="text-xl font-medium text-meta-purple-1">
-              {userDetails?.user_name}
-            </p>
-            <p className="pt-1 text-xl font-medium text-meta-purple-1">
-              {userDetails?.company_name}
+              {userDetails?.company_name ? userDetails?.company_name : '-'}
             </p>
             <div className="mt-1 flex gap-2">
               <Image width={16} height={16} alt="MainLogo" src={'/mail.svg'} />
