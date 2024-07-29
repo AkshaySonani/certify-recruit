@@ -195,7 +195,7 @@ const JobPostingForm3 = ({ formik }: { formik: any }) => {
               form={formik}
               isMulti={true}
               style={SkillMenuStyle}
-              className="border-1 w-full border-meta-light-blue-1 "
+              className="border-1 w-full border-meta-light-blue-1"
               placeholder="Add"
               options={skillData}
               value={formik?.values?.skills}
