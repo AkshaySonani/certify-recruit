@@ -443,10 +443,10 @@ export const POST = async (req: NextRequest) => {
       plan_name,
       plan_type,
       max_posts,
-      createdAt: planCreatedAt,
+      // createdAt: planCreatedAt,
     } = subscription.plan_id;
     const planExpirationDate = calculateExpirationDate(
-      planCreatedAt,
+      subscription?.createdAt,
       plan_type,
     );
 
