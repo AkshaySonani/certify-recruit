@@ -71,7 +71,7 @@ const IndividualComp = () => {
               <div className="m-1 mt-8 flex  w-full flex-wrap gap-5">
                 {individualArr?.map((list) => {
                   return (
-                    <div className="flex w-[48%] items-center justify-between rounded-xl border border-meta-light-blue-1 px-3 py-3">
+                    <label className="flex w-[48%] items-center justify-between rounded-xl border border-meta-light-blue-1 px-3 py-3">
                       <div className="flex gap-3 ">
                         <Image
                           alt="icon"
@@ -79,12 +79,9 @@ const IndividualComp = () => {
                           height={20}
                           src={'/Individual.svg'}
                         />
-                        <label
-                          htmlFor={list}
-                          className="cursor-pointer text-sm font-medium text-meta-light-blue-3"
-                        >
+                        <p className="cursor-pointer text-sm font-medium text-meta-light-blue-3">
                           {list}
-                        </label>
+                        </p>
                       </div>
                       <input
                         id={list}
@@ -97,7 +94,7 @@ const IndividualComp = () => {
                         }}
                         className="h-5 w-5 border-meta-light-blue-1 bg-meta-blue-1 text-meta-blue-1"
                       />
-                    </div>
+                    </label>
                   );
                 })}
               </div>

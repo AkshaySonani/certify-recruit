@@ -1,12 +1,9 @@
 'use client';
 import axios from 'axios';
-import Link from 'next/link';
-import Image from 'next/image';
 import { v4 as uuidv4 } from 'uuid';
 import sha256 from 'crypto-js/sha256';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
-import Button from '@/Components/Button';
 import Spinner from '@/app/icons/Spinner';
 import { Switch } from '@headlessui/react';
 import { useRouter } from 'next/navigation';
@@ -14,6 +11,7 @@ import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import { TEXT, USER_ROLE } from '@/service/Helper';
 import { API_CONSTANT } from '@/constant/ApiConstant';
+import PriceCard from '@/Components/PriceCard';
 
 var FIRST_PLAN: any;
 var SECOND_PLAN: any;
@@ -25,12 +23,14 @@ const Page = () => {
 
   const [enabled, setEnabled] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [userDetails, setUserDetails] = useState({});
   const [yearlyList, setYearlyList] = useState<any>([]);
   const [monthlyList, setMonthlyList] = useState<any>([]);
   const [subscriptionPlan, setSubscriptionPlan] = useState<any>([]);
 
   useEffect(() => {
     getSubscriptionPlans();
+    getProfileDetails();
   }, []);
 
   const getSubscriptionPlans = () => {
@@ -52,6 +52,12 @@ const Page = () => {
         setLoading(false);
         toast.error(error?.response?.data?.error);
       });
+  };
+
+  const getProfileDetails = () => {
+    API.get(API_CONSTANT?.PROFILE)
+      .then((res) => setUserDetails(res?.data?.data))
+      .catch((error) => toast.error(error?.response?.data?.error));
   };
 
   const makePayment = async (amount: any, planId: string) => {
@@ -154,209 +160,24 @@ const Page = () => {
       )}
 
       <div className="flex flex-wrap items-end justify-center gap-6">
-        <div className="flex h-auto min-h-[520px] w-[320px] min-w-64 max-w-96 flex-col justify-between rounded-3xl bg-meta-gray-2 pb-10">
-          {FIRST_PLAN?.[0]?.is_popular && (
-            <div className="rounded-t-3xl bg-meta-purple-1 py-2 text-center text-base font-medium text-white">
-              {TEXT?.MOST_POPULAR}
-            </div>
-          )}
-          <div className="px-8">
-            <div className="pt-11 text-center text-base font-medium text-meta-purple-1">
-              {FIRST_PLAN?.[0]?.plan_name}
-            </div>
-
-            <div className="my-5 flex items-end justify-center">
-              <div className="text-4xl font-medium text-meta-purple-1">
-                ₹{FIRST_PLAN?.[0]?.plan_pricing}
-              </div>
-              {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
-                <div className="mb-1 text-xs font-medium text-meta-light-blue-3">
-                  {TEXT?.Month}
-                </div>
-              ) : (
-                ''
-              )}
-            </div>
-
-            {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
-              ''
-            ) : (
-              <div className="my-4 text-center text-lg font-normal text-meta-purple-1">
-                {TEXT?.PAY_55_AND_PLAY_ONCE}
-              </div>
-            )}
-
-            {FIRST_PLAN?.[0]?.additional_features?.map(
-              (ele: any, index: any) => (
-                <div
-                  key={index}
-                  className="mb-3 flex items-center justify-start"
-                >
-                  <div>
-                    <Image
-                      alt="Icon"
-                      width={20}
-                      height={20}
-                      className="min-h-5 min-w-5"
-                      src={'/pricing/rightTick.svg'}
-                    />
-                  </div>
-                  <div className="pl-4 text-sm font-normal text-meta-purple-1">
-                    {ele}
-                  </div>
-                </div>
-              ),
-            )}
-          </div>
-
-          <div className="px-8">
-            <Button
-              title={TEXT?.GET_STARTED}
-              btnClass="h-12 w-full !mb-0"
-              handleClick={() =>
-                makePayment(FIRST_PLAN?.[0]?.plan_pricing, FIRST_PLAN?.[0]?._id)
-              }
-              titleClass="flex justify-center text-sm font-medium text-white"
-            />
-          </div>
-        </div>
-
-        <div className="flex h-auto min-h-[520px] w-[320px] min-w-64 max-w-96 flex-col justify-between rounded-3xl bg-meta-gray-2 pb-10">
-          {SECOND_PLAN?.[0]?.is_popular && (
-            <div className="rounded-t-3xl bg-meta-purple-1 py-2 text-center text-base font-medium text-white">
-              {TEXT?.MOST_POPULAR}
-            </div>
-          )}
-          <div className="px-8">
-            <div className="pt-11 text-center text-base font-medium text-meta-purple-1">
-              {SECOND_PLAN?.[0]?.plan_name}
-            </div>
-
-            <div className="my-6 flex items-end justify-center">
-              <div className="text-4xl font-medium text-meta-purple-1">
-                ₹{SECOND_PLAN?.[0]?.plan_pricing}
-              </div>
-              {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
-                <div className="mb-1 text-xs font-medium text-meta-light-blue-3">
-                  {TEXT?.Month}
-                </div>
-              ) : (
-                ''
-              )}
-            </div>
-
-            {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
-              ''
-            ) : (
-              <div className="my-4 max-w-64 text-center text-lg font-normal text-meta-purple-1">
-                {TEXT?.PAY_750_AND_PLAY_ONCE}
-              </div>
-            )}
-
-            {SECOND_PLAN?.[0]?.additional_features?.map(
-              (ele: any, index: any) => (
-                <div
-                  key={index}
-                  className="mb-3 flex items-center justify-start"
-                >
-                  <div>
-                    <Image
-                      alt="Icon"
-                      width={20}
-                      height={20}
-                      className="min-h-5 min-w-5"
-                      src={'/pricing/rightTick.svg'}
-                    />
-                  </div>
-                  <div className="pl-4 text-sm font-normal text-meta-purple-1">
-                    {ele}
-                  </div>
-                </div>
-              ),
-            )}
-          </div>
-
-          <div className="px-8">
-            <Button
-              title={TEXT?.GET_STARTED}
-              btnClass="h-12 w-full !mt-2 !mb-0"
-              handleClick={() =>
-                makePayment(
-                  SECOND_PLAN?.[0]?.plan_pricing,
-                  SECOND_PLAN?.[0]?._id,
-                )
-              }
-              titleClass="flex justify-center text-sm font-medium text-white"
-            />
-          </div>
-        </div>
-
-        <div className="flex h-auto min-h-[520px] w-[320px] min-w-64 max-w-96 flex-col justify-between rounded-3xl bg-meta-gray-2 pb-10">
-          {THIRD_PLAN?.[0]?.is_popular && (
-            <div className="rounded-t-3xl bg-meta-purple-1 py-2 text-center text-base font-medium text-white">
-              {TEXT?.MOST_POPULAR}
-            </div>
-          )}
-          <div className="px-8">
-            <div className="pt-11 text-center text-base font-medium text-meta-purple-1">
-              {THIRD_PLAN?.[0]?.plan_name}
-            </div>
-
-            <div className="my-6 flex items-end justify-center">
-              <div className="text-4xl font-medium text-meta-purple-1">
-                ₹{THIRD_PLAN?.[0]?.plan_pricing}
-              </div>
-              {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
-                <div className="mb-1 text-xs font-medium text-meta-light-blue-3">
-                  {TEXT?.Month}
-                </div>
-              ) : (
-                ''
-              )}
-            </div>
-
-            {session?.data?.user?.role === USER_ROLE?.EMPLOYEE ? (
-              ''
-            ) : (
-              <div className="my-4 text-center text-lg font-normal text-meta-purple-1">
-                {TEXT?.PAY_1470_AND_PLAY_ONCE}
-              </div>
-            )}
-
-            {THIRD_PLAN?.[0]?.additional_features?.map(
-              (ele: any, index: any) => (
-                <div
-                  key={index}
-                  className="mb-3 flex items-center justify-start"
-                >
-                  <div>
-                    <Image
-                      alt="Icon"
-                      width={20}
-                      height={20}
-                      className="min-h-5 min-w-5"
-                      src={'/pricing/rightTick.svg'}
-                    />
-                  </div>
-                  <div className="pl-4 text-sm font-normal text-meta-purple-1">
-                    {ele}
-                  </div>
-                </div>
-              ),
-            )}
-          </div>
-
-          <div className="px-8">
-            <Button
-              title={TEXT?.GET_STARTED}
-              btnClass="h-12 w-full !mb-0"
-              handleClick={() =>
-                makePayment(THIRD_PLAN?.[0]?.plan_pricing, THIRD_PLAN?.[0]?._id)
-              }
-              titleClass="flex justify-center text-sm font-medium text-white"
-            />
-          </div>
-        </div>
+        <PriceCard
+          makePayment={makePayment}
+          userDetails={userDetails}
+          plan={FIRST_PLAN?.[0] || {}}
+          title={TEXT?.PAY_55_AND_PLAY_ONCE}
+        />
+        <PriceCard
+          makePayment={makePayment}
+          userDetails={userDetails}
+          plan={SECOND_PLAN?.[0] || {}}
+          title={TEXT?.PAY_750_AND_PLAY_ONCE}
+        />
+        <PriceCard
+          makePayment={makePayment}
+          userDetails={userDetails}
+          plan={THIRD_PLAN?.[0] || {}}
+          title={TEXT?.PAY_1470_AND_PLAY_ONCE}
+        />
       </div>
     </section>
   );

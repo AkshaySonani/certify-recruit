@@ -208,7 +208,10 @@ export default function Page() {
                 ]?.map((ele: any, i: any) => {
                   return (
                     <div
-                      onClick={() => setSelectMainCategory(ele)}
+                      onClick={() => {
+                        setCategories([]);
+                        setSelectMainCategory(ele);
+                      }}
                       className={`${selectMainCategory?.includes(ele) ? 'border-meta-blue-1' : 'border-meta-light-blue-1'} flex w-[46%] cursor-pointer items-center gap-2 rounded-xl border bg-meta-light-blue-1 px-3 py-5`}
                     >
                       <Image
@@ -309,7 +312,7 @@ export default function Page() {
                                   (category: any) => category._id !== ele._id,
                                 ),
                               );
-                            } else {
+                            } else if (categories.length < 6) {
                               setCategories([...categories, ele]);
                             }
                           }}

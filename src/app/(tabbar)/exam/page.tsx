@@ -38,6 +38,7 @@ const Page = (data: any) => {
   const [examId, setExamId] = usePersistState('', 'Exam:examId');
   const [showAlertMsg, setShowAlertMsg] = useState(false);
   const [results, setResults] = useState(undefined);
+  const [loading, setLoading] = useState(false);
   const [questionSheet, setQuestionSheet] = usePersistState(
     [],
     'Exam:questionSheet',
@@ -215,7 +216,7 @@ const Page = (data: any) => {
       exam_id: examId,
       answers: answerSheet.map(({ _id, ans }: any) => ({ que_id: _id, ans })),
     };
-
+    setLoading(true);
     API.post(API_CONSTANT?.CHECK_ANSWER, obj)
       .then((res: any) => {
         if (res?.data?.status === 200) {
@@ -231,7 +232,8 @@ const Page = (data: any) => {
       })
       .catch((error: any) => {
         toast.error(error?.response?.data?.message || 'Internal server error');
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   const handleBackToExam = () => {
@@ -489,16 +491,15 @@ const Page = (data: any) => {
                   })}
                 </div>
                 <div className="mt-5 flex flex-wrap items-center gap-4">
-                  {updatedQuestions.map((list: any, i: any) => {
-                    return (
-                      <div
-                        className={`flex h-8 w-8 items-center justify-center rounded-[4px]  text-center  ${list?.status?.color} 
+                  {updatedQuestions.map((list: any, i: any) => (
+                    <div
+                      onClick={() => setCurrentQuestion(i)}
+                      className={`flex h-8 w-8 cursor-pointer items-center justify-center  rounded-[4px] text-center ${list?.status?.color} 
                         ${list?.status?.status == 'Default' ? 'text-meta-purple-1' : 'text-white'}  `}
-                      >
-                        <p>{`${i < 10 ? '0' : ''}${i + 1} `}</p>
-                      </div>
-                    );
-                  })}
+                    >
+                      <p>{`${i + 1}`.padStart(2, '0')}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -582,9 +583,8 @@ const Page = (data: any) => {
                 </button>
               </div>
               <button
-                onClick={() => {
-                  handleNext();
-                }}
+                disabled={finishExamModal}
+                onClick={() => handleNext()}
                 className={`mb-8 h-12  min-w-48 rounded-lg border border-meta-light-blue-2 bg-meta-blue-1 py-3 text-meta-light-blue-3 transition delay-150 duration-300 ease-in-out will-change-auto hover:bg-hiring-btn-gradient`}
               >
                 <span
@@ -609,6 +609,7 @@ const Page = (data: any) => {
         <ResultComp results={results} setResults={setResults} />
       )}
       <AlertUserInfoDialog
+        loading={loading}
         isOpen={showAlertMsg}
         setIsOpen={setShowAlertMsg}
         focusCount={focusCount}

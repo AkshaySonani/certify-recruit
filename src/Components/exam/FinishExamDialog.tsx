@@ -5,6 +5,7 @@ import Button from '../Button';
 
 const FinishExamDialog = ({
   isOpen,
+  loading,
   setIsOpen,
   allAnswer,
   handleFinishExam,
@@ -43,6 +44,7 @@ const FinishExamDialog = ({
                     <div className="mt-5 flex  w-full  items-center justify-between gap-4">
                       <button
                         type="button"
+                        disabled={loading}
                         onClick={() => handleFinishExam()}
                         className=" h-[37px] w-1/2  rounded-lg border border-meta-light-blue-1 text-base font-medium text-meta-light-blue-3 "
                       >
@@ -76,6 +78,7 @@ const FinishExamDialog = ({
                       </button>
                       <Button
                         title={'Finish'}
+                        disabled={loading}
                         btnClass="!h-[37px] !mb-0 !w-1/2"
                         handleClick={() => handleFinishExam()}
                       />
