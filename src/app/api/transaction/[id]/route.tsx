@@ -47,7 +47,7 @@ export async function POST(req: NextResponse) {
     });
 
     await Transaction.create({
-      action: 'DEPOSIT',
+      payment_for: 'subscription',
       status: 'COMPLETE',
       receiver_id: userId,
       amount: response.data.data.amount,
@@ -68,6 +68,20 @@ export async function POST(req: NextResponse) {
       { status: 301 },
     );
   } else {
+    const userId = response.data.data.merchantTransactionId.substring(
+      0,
+      response.data.data.merchantTransactionId.length - 7,
+    );
+    await User.findByIdAndUpdate(
+      userId,
+      {
+        'subscription.createdAt': null,
+        'subscription.updatedAt': null,
+        'subscription.plan_id': null,
+      },
+      { new: true },
+    );
+
     return NextResponse.redirect(
       `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`,
       { status: 301 },

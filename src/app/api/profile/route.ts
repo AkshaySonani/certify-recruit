@@ -296,7 +296,7 @@ export const GET = async (req: NextRequest) => {
     // for company user (that create job)
     try {
       const employeeData = await Company.findOne({
-        user_ref_id: userDetails?._id,
+        user_ref_id: session?.user?._id,
       })
         .populate({ path: 'city' })
         .populate({ path: 'state' })
@@ -332,7 +332,7 @@ export const GET = async (req: NextRequest) => {
     // for employee user ( user that find job )
     try {
       const companyData = await Individual.findOne({
-        user_ref_id: userDetails?._id,
+        user_ref_id: session?.user?._id,
       })
         .populate({ path: 'degree' })
         .populate({ path: 'skills' })

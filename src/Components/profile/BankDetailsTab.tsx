@@ -76,6 +76,11 @@ const BankDetailsTab = ({
           context?.setUserProfileCount(res?.data?.data?.profile_count);
           actions.setSubmitting(false);
           toast?.success(res?.data?.message || 'Successfully Update Profile');
+        } else {
+          if (res?.data?.status === 400) {
+            setIsSpinner(false);
+            toast?.error(res?.data?.message || 'Successfully Update Profile');
+          }
         }
       })
       .catch((error) => {

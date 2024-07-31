@@ -437,13 +437,9 @@ const MyProfile = () => {
             <div className="mt-8 flex w-full justify-end">
               <Button
                 type="button"
-                title={TEXT?.NEXT}
+                title={TEXT?.EDIT_PROFILE}
                 titleClass="!text-base !text-white"
-                handleClick={() => {
-                  console.log('clicing...');
-
-                  setAllowNextScreen(true);
-                }}
+                handleClick={() => setAllowNextScreen(true)}
                 btnClass={`${
                   userDetails?.user_ref_id?.subscription ||
                   userDetails?.user_ref_id?.subscription?.plan_id
