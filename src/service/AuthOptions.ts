@@ -9,6 +9,7 @@ import Individual from '@/models/individual';
 import { transporter } from '@/config/nodemailer';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { verifyLinkMailTemplate } from '@/constant/email';
 
 var currentUser: any;
 export const authOptions: AuthOptions = {
@@ -49,14 +50,12 @@ export const authOptions: AuthOptions = {
             );
 
             const verifyUrl = `${process.env.NEXT_PUBLIC_BASE_URL}dashboard?token=${verifyToken}`;
-            // const verifyUrl = `${process.env.NEXT_PUBLIC_BASE_URL}api/verify-user?token=${verifyToken}`;
 
             const mailOptions = {
               from: process.env.NEXT_PUBLIC_EMAIL,
               to: email,
               subject: 'CertifyRecruit - Verification Mail',
-              // text: `Please click the following link to verify your account: ${verifyUrl}`,
-              html: `<p>You provided this email ID for signing up in the portal of CertifyRecruit - Complementing your Recruitment. Click on the link below to verify your email ID. :</p><a href="${verifyUrl}">${verifyUrl}</a> <br/> <p>If you did not request a sign-up, kindly ignore this mail.</p>`,
+              html: verifyLinkMailTemplate({ verifyUrl }),
             };
 
             await transporter.sendMail(mailOptions);

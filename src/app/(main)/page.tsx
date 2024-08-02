@@ -160,9 +160,9 @@ export default function Home() {
                     Certified
                   </p>
                   <div className="mt-7  text-2xl font-semibold text-white">
-                    <p className="text-center">FEB 2024</p>
+                    <p className="text-center">2024</p>
                     <p className="text-center">TO</p>
-                    <p className="text-center">FEB 2025</p>
+                    <p className="text-center">2025</p>
                   </div>
                 </div>
               </div>
