@@ -13,6 +13,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { EMAIlREGEX, ROUTE, TEXT, USER_ROLE } from '@/service/Helper';
 import SignupSuccessModal from './SignupSuccessModal';
+import { PhoneInput } from 'react-international-phone';
+import 'react-international-phone/style.css';
 
 type formValues = {
   email: string;
@@ -150,26 +152,29 @@ const SignupForm = () => {
                 <div className="mb-3">
                   <input
                     value={formik?.values?.name}
-                    // disabled={""}
                     onChange={formik.handleChange}
                     name="name"
                     type="text"
                     placeholder={'Name'}
-                    className="h-12 w-full rounded-xl border border-meta-light-blue-2 pl-4 focus:outline-meta-light-blue-1"
+                    className="h-12 w-full rounded-xl border border-meta-light-blue-2 pl-4 focus:outline-meta-light-blue-1 "
                   />
                   {formik.touched.name && formik.errors.name && (
                     <div className="error">{formik.errors.name}</div>
                   )}
                 </div>
                 <div className="mb-3">
-                  <input
+                  <PhoneInput
+                    className="gap-4"
+                    defaultCountry="in"
+                    placeholder="Phone Number"
                     value={formik?.values?.phone}
-                    // disabled={""}
-                    onChange={formik.handleChange}
-                    name="phone"
-                    type="number"
-                    placeholder={'Phone Number'}
-                    className="h-12 w-full rounded-xl border border-meta-light-blue-2 pl-4 focus:outline-meta-light-blue-1"
+                    inputClassName="!h-12 w-full flex grow !border-meta-light-blue-2 !focus:outline-meta-light-blue-1 !rounded-xl !text-sm"
+                    onChange={(value) =>
+                      formik.handleChange({ target: { value, name: 'phone' } })
+                    }
+                    countrySelectorStyleProps={{
+                      buttonStyle: { width: 64, height: 48, borderRadius: 12 },
+                    }}
                   />
                   {formik.touched.phone && formik.errors.phone && (
                     <div className="error">{formik.errors.phone}</div>
@@ -179,7 +184,6 @@ const SignupForm = () => {
                 <div className="mb-3">
                   <input
                     value={formik?.values?.email}
-                    // disabled={""}
                     onChange={formik.handleChange}
                     name="email"
                     type="text"

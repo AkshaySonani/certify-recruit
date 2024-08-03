@@ -21,7 +21,7 @@ export async function POST(req: NextResponse) {
 
   const options = {
     method: 'GET',
-    url: `https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/status/${merchantId}/${transactionId}`,
+    url: `${process.env.NEXT_PUBLIC_PHONE_PE_URL}${process.env.NEXT_PUBLIC_PHONE_PE_ENDPOINT}/status/${merchantId}/${transactionId}`,
     headers: {
       accept: 'application/json',
       'Content-Type': 'application/json',

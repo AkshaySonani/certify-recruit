@@ -77,13 +77,16 @@ const Page = () => {
     const dataBase64 = Buffer.from(JSON.stringify(payload)).toString('base64');
 
     const fullURL =
-      dataBase64 + '/pg/v1/pay' + process.env.NEXT_PUBLIC_SALT_KEY;
+      dataBase64 +
+      process.env.NEXT_PUBLIC_PHONE_PE_ENDPOINT +
+      process.env.NEXT_PUBLIC_SALT_KEY;
 
     const checksum =
       sha256(fullURL) + '###' + process.env.NEXT_PUBLIC_SALT_INDEX;
 
     const response = await axios.post(
-      'https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay',
+      process.env.NEXT_PUBLIC_PHONE_PE_URL! +
+        process.env.NEXT_PUBLIC_PHONE_PE_ENDPOINT,
       { request: dataBase64 },
       {
         headers: {

@@ -21,7 +21,7 @@ const SelectRoleComp = () => {
         </div>
         <div className="bg-[url('/_Compound.svg')]">
           <div className="mt-10 flex justify-center gap-2">
-            <div className="flex w-2/4 justify-between">
+            <div className="flex w-2/4 justify-between gap-4">
               <div
                 onClick={() => {
                   setEmployee(true);

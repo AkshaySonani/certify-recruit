@@ -417,7 +417,7 @@ export default function Page() {
                         />
                       </label>
                     </div>
-                    <div className="mt-5 w-full rounded-lg border border-meta-light-blue-1 p-3">
+                    {/* <div className="mt-5 w-full rounded-lg border border-meta-light-blue-1 p-3">
                       <label
                         htmlFor={'joinLater'}
                         className={`flex cursor-pointer select-none items-center justify-between `}
@@ -431,7 +431,7 @@ export default function Page() {
                           onChange={() => setJoinNow(false)}
                         />
                       </label>
-                    </div>
+                    </div> */}
                     <div className="mt-5 flex h-full items-center">
                       <Button
                         title={TEXT?.DONE}

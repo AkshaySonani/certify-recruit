@@ -19,9 +19,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ToastContainer />
-
         <AuthProvider session={session}>
-          {' '}
           <AppProvider>{children} </AppProvider>
         </AuthProvider>
       </body>

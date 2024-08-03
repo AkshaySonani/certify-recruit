@@ -32,6 +32,7 @@ const profileCompletionRequiredPaths = [
   '/badgeOfHonour',
   '/job/:path*',
 ];
+const adminPaths = ['/add-exam-details'];
 
 export default withAuth(
   async function middleware(req: any) {
@@ -95,6 +96,12 @@ export default withAuth(
           return NextResponse.redirect(`${origin}/dashboard`);
         }
       }
+      if (adminPaths.includes(pathname) && token?.role !== 'admin') {
+        return NextResponse.redirect(new URL('/', origin));
+      }
+      if (pathname === '/dashboard' && token?.role === 'admin') {
+        return NextResponse.redirect(new URL(adminPaths[0], origin));
+      }
     }
 
     // Allow access if none of the conditions are met (authenticated and verified)
@@ -130,6 +137,9 @@ export const config = {
     '/signup/signUpSuccess:path',
     '/job/:path*',
     '/job_posting/:path*',
+
+    // admin
+    '/add-exam-details',
   ],
 };
 

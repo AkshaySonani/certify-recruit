@@ -62,3 +62,28 @@ export const GET = async (req: NextRequest) => {
     );
   }
 };
+
+export const PATCH = async (req: NextRequest) => {
+  try {
+    const session: any = await getServerSession(authOptions);
+    console.log('🚀 ~ PATCH ~ session:', session);
+
+    if (session?.user?.role !== 'admin') {
+      return NextResponse.json({ message: 'Unauthorized', status: 401 });
+    }
+
+    const { field, category, subcategory } = await req.json();
+
+    await connect();
+    const results = await Category.insertMany([
+      { field, category, subcategory },
+    ]);
+
+    return NextResponse.json({ status: 200, data: results });
+  } catch (error) {
+    return NextResponse.json(
+      { error: error, message: 'An error occurred while fetching categorys.' },
+      { status: 500 },
+    );
+  }
+};

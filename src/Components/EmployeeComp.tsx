@@ -13,7 +13,8 @@ const EmployeeComp = () => {
   const [showDemoLink, setShowDemoLink] = useState(false);
   return (
     <div>
-      {showForms ? (
+      {/* FIXME */}
+      {!showForms ? (
         <SignupForm />
       ) : showDemoLink ? (
         <DemoLinkComp setShowDemoLink={setShowDemoLink} />
