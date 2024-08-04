@@ -1,7 +1,5 @@
 'use client';
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
-import sha256 from 'crypto-js/sha256';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
 import Spinner from '@/app/icons/Spinner';
@@ -60,45 +58,10 @@ const Page = () => {
       .catch((error) => toast.error(error?.response?.data?.error));
   };
 
-  const makePayment = async (amount: any, planId: string) => {
-    const transactionid =
-      session?.data?.user?._id + '-' + uuidv4().toString().slice(-6);
-
-    const payload = {
-      amount: amount * 100,
-      redirectMode: 'POST',
-      merchantTransactionId: transactionid,
-      paymentInstrument: { type: 'PAY_PAGE' },
-      merchantId: process.env.NEXT_PUBLIC_MERCHANT_ID,
-      redirectUrl: `${process.env.NEXT_PUBLIC_BASE_URL}api/transaction/${transactionid}`,
-      callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}api/transaction/${transactionid}`,
-    };
-
-    const dataBase64 = Buffer.from(JSON.stringify(payload)).toString('base64');
-
-    const fullURL =
-      dataBase64 +
-      process.env.NEXT_PUBLIC_PHONE_PE_ENDPOINT +
-      process.env.NEXT_PUBLIC_SALT_KEY;
-
-    const checksum =
-      sha256(fullURL) + '###' + process.env.NEXT_PUBLIC_SALT_INDEX;
-
-    const response = await axios.post(
-      process.env.NEXT_PUBLIC_PHONE_PE_URL! +
-        process.env.NEXT_PUBLIC_PHONE_PE_ENDPOINT,
-      { request: dataBase64 },
-      {
-        headers: {
-          accept: 'application/json',
-          'Content-Type': 'application/json',
-          'X-VERIFY': checksum,
-        },
-      },
-    );
-
-    const redirect = response.data.data.instrumentResponse.redirectInfo.url;
-    router.replace(redirect);
+  const makePayment = async (id: string) => {
+    API.post('init-payment', { id })
+      .then(({ data }) => router.replace(data.url))
+      .catch((e) => toast.error('Internal server error'));
   };
 
   const ARR_LISTS =

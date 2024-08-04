@@ -75,7 +75,7 @@ function PriceCard({ plan, makePayment, title, userDetails }: any) {
             if (userDetails?.user_ref_id?.subscription?.plan_id) {
               toast.error('You already have a subscription');
             } else {
-              makePayment(plan?.plan_pricing, plan?._id);
+              makePayment(plan?._id);
             }
           }}
         />
