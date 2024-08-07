@@ -8,6 +8,8 @@ import { API_CONSTANT } from '@/constant/ApiConstant';
 import { TEXT, updateProfileCount } from '@/service/Helper';
 import SuccessModal from './SuccessModal';
 import Button from '../Button';
+import { PhoneInput } from 'react-international-phone';
+import 'react-international-phone/style.css';
 
 const BasicDetails = ({
   session,
@@ -153,12 +155,23 @@ const BasicDetails = ({
           <label className="text-base font-medium text-meta-purple-1">
             {TEXT?.PHONE_NUMBER}
           </label>
+
+          <PhoneInput
+            className="gap-4"
+            defaultCountry="in"
+            placeholder="Contact number"
+            value={formik?.values?.contact_number}
+            inputClassName="!h-12 w-full flex grow !border-meta-light-blue-2 !focus:outline-meta-light-blue-1 !rounded-xl !text-sm"
+            onChange={(value) =>
+              formik.handleChange({ target: { value, name: 'contact_number' } })
+            }
+            countrySelectorStyleProps={{
+              buttonStyle: { width: 64, height: 48, borderRadius: 12 },
+            }}
+          />
           <input
             type="number"
             onChange={formik.handleChange}
-            value={formik?.values?.contact_number}
-            name="contact_number"
-            placeholder="Contact number"
             className="mt-2 w-full rounded-lg border border-meta-light-blue-1 p-3 focus:border-meta-light-blue-3"
           />
           {formik.touched.contact_number && formik.errors.contact_number && (

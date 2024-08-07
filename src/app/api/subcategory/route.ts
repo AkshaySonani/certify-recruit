@@ -8,10 +8,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export const POST = async (req: NextRequest) => {
   const session: any = await getServerSession(authOptions);
   if (!session?.user?._id) {
-    return NextResponse.json({
-      message: 'Unauthorized',
-      status: 401,
-    });
+    return NextResponse.json({ message: 'Unauthorized', status: 401 });
   }
 
   try {

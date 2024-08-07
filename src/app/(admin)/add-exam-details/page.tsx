@@ -1,11 +1,14 @@
 'use client';
-import { useFormik } from 'formik';
-import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import * as XLSX from 'xlsx';
-import CreatableSelect from 'react-select/creatable';
+import { useFormik } from 'formik';
 import API from '@/service/ApiService';
+import React, { useEffect, useState } from 'react';
+import CreatableSelect from 'react-select/creatable';
 import { API_CONSTANT } from '@/constant/ApiConstant';
+import Button from '@/Components/Button';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const questionFiled = [
   'question',
@@ -16,137 +19,180 @@ const questionFiled = [
   'answer',
 ];
 
+const FiledSelect = ({ value, options, onChange, error, placeholder }) => (
+  <div className="mb-4 flex-1">
+    <CreatableSelect
+      value={value}
+      options={options}
+      onChange={onChange}
+      placeholder={placeholder}
+    />
+    {error && <div className="error">{error}</div>}
+  </div>
+);
+
 const AdminPage = () => {
   const [data, setData] = useState([]);
-  const [selectedData, setselectedData] = useState({
-    field: { label: '', value: '' },
-    category: { label: '', value: '' },
-    subcategory: { label: '', value: '' },
+  const [list, setList] = useState<any[]>([]);
+  const [questionList, setQuestionList] = useState([]);
+
+  const validationSchema = Yup.object().shape({
+    field: Yup.object().shape({
+      value: Yup.string().required('field is required.'),
+    }),
+    category: Yup.object().shape({
+      value: Yup.string().required('category is required.'),
+    }),
+    subcategory: Yup.object().shape({
+      value: Yup.string().required('subcategory is required.'),
+    }),
   });
 
-  const [list, setList] = useState<any[]>([]);
-
-  //   const [categories, setCategories] = useState([]);
-
-  //   const [selectedCategory, setSelectedCategory] = useState(null);
+  const { handleSubmit, setFieldValue, resetForm, values, errors } = useFormik({
+    validationSchema,
+    enableReinitialize: true,
+    initialValues: {
+      field: { label: '', value: '' },
+      category: { label: '', value: '' },
+      subcategory: { label: '', value: '' },
+    },
+    onSubmit: (val) =>
+      !val?.subcategory?.__isNew__ && addExamQuestion(val.subcategory.value),
+  });
 
   useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = () => {
     API.get(API_CONSTANT?.GET_SUBCATEGORYS).then(({ data }) => {
       setData(data.data);
     });
-  }, []);
-
-  const insertCatogory = () => {
-    API.patch(API_CONSTANT?.GET_SUBCATEGORYS)
-      .then((res: any) => {
-        // setUserDetails(res?.data?.data);
-      })
-      .catch((error) => {
-        // toast.error(error?.response?.data?.error);
-      });
   };
 
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    console.log('🚀 ~ handleFileUpload ~ file:', file);
+  useEffect(() => {
+    if (values.subcategory.value && !values.subcategory?.__isNew__) {
+      API.get(`/add-exam-questions?category_id=${values.subcategory.value}`)
+        .then(({ data }) => {
+          setQuestionList(
+            data.data.map((e: any) => ({
+              answer: e.ans,
+              question: e.question,
+              option1: e.option[0],
+              option2: e.option[1],
+              option3: e.option[2],
+              option4: e.option[3],
+            })),
+          );
+        })
+        .catch((e) => toast.error('Error while fetching questions'));
+    }
+  }, [values?.subcategory?.value]);
+
+  const addExamQuestion = (category_id: string) => {
+    API.post('/add-exam-questions', {
+      data: list.map((e) => ({
+        category_id,
+        ans: e.answer,
+        question: e.question,
+        option: [e['option1'], e['option2'], e['option3'], e['option4']],
+      })),
+    })
+      .then((res) => {
+        setList([]);
+        toast.success(res.data.message);
+      })
+      .catch((e) => toast.error('Error while adding questions'));
+  };
+
+  const addCategory = () => {
+    API.post(API_CONSTANT?.ADD_CATEGORY, {
+      field: values.field.value,
+      category: values.category.value,
+      subcategory: values.subcategory.value,
+    })
+      .then((res) => {
+        getData();
+        resetForm();
+        toast.success(res.data.message);
+      })
+      .catch((e) => toast.error('Error while adding category'));
+  };
+
+  const handleFileUpload = ({ target }: any) => {
+    const file = target.files[0];
     const reader = new FileReader();
     reader.onload = (e) => {
-      const data = new Uint8Array(e.target.result);
+      const data = new Uint8Array(e?.target?.result as any);
       const workbook = XLSX.read(data, { type: 'array' });
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
       const json = XLSX.utils.sheet_to_json(worksheet);
-      console.log('🚀 ~ handleFileUpload ~ json:', json);
       setList(json);
     };
     reader.readAsArrayBuffer(file);
   };
 
-  const handleCategoryChange = (newValue) => {
-    // setSelectedCategory(newValue);
-  };
-
-  const handleCategoryCreate = (inputValue) => {
-    // const newCategory = { value: inputValue, label: inputValue };
-    // setCategories([...categories, newCategory]);
-    // setSelectedCategory(newCategory);
-  };
-
-  const validationSchema = Yup.object().shape({
-    field: Yup.string().required('field is required.'),
-    category: Yup.string().required('field is required.'),
-    subcategory: Yup.string().required('field is required.'),
-  });
-
-  const formik = useFormik({
-    validationSchema,
-    enableReinitialize: true,
-    initialValues: { field: '', category: '', subcategory: '' },
-    onSubmit: (val) => {
-      console.log('🚀 ~ AdminPage ~ val:', val);
-    },
-  });
-
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
-      <div className="w-11/12  max-w-screen-xl rounded-xl bg-white p-6 shadow-md">
-        <h2 className="mb-4 text-2xl font-bold">Upload Excel Sheet</h2>
-        <input
-          type="file"
-          accept=".xlsx, .xls"
-          onChange={handleFileUpload}
-          className="mb-4 rounded border border-gray-300 p-2"
-        />
+      <form
+        onSubmit={handleSubmit}
+        className="w-11/12  max-w-screen-xl rounded-xl bg-white p-6 shadow-md"
+      >
+        <h2 className="mb-4 text-2xl font-bold">Add Question List</h2>
+        {values?.subcategory?.value && (
+          <input
+            type="file"
+            accept=".xlsx, .xls"
+            onChange={handleFileUpload}
+            className="mb-4 rounded border border-gray-300 p-1"
+          />
+        )}
         <div className="flex gap-5">
-          <CreatableSelect
-            className="mb-4 flex-1"
-            value={selectedData.field}
-            placeholder="Select or create a field"
-            onChange={(field) => setselectedData((e) => ({ ...e, field }))}
+          <FiledSelect
+            value={values.field}
+            error={errors.field?.value}
+            placeholder="Select a field"
+            onChange={(val) => setFieldValue('field', val)}
             options={[...new Set(data?.map((e: any) => e?.field))]?.map(
-              (e) => ({
-                value: e,
-                label: e,
-              }),
+              (e) => ({ value: e, label: e }),
             )}
           />
-          <CreatableSelect
-            className="mb-4 flex-1"
-            value={selectedData.category}
-            placeholder="Select or create a category"
+          <FiledSelect
+            value={values.category}
+            error={errors.category?.value}
+            placeholder="Select a category"
+            onChange={(val) => setFieldValue('category', val)}
             options={[
               ...new Set(
                 data
-                  ?.filter((e) => e?.field === selectedData?.field?.value)
+                  ?.filter((e) => e?.field === values?.field?.value)
                   ?.map((e: any) => e?.category),
               ),
             ].map((e) => ({ value: e, label: e }))}
-            onChange={(category) =>
-              setselectedData((e) => ({ ...e, category }))
-            }
           />
-          <CreatableSelect
-            className="mb-4 flex-1"
-            value={selectedData.subcategory}
-            placeholder="Select or create a category"
-            options={[
-              ...new Set(
-                data
-                  ?.filter((e) => e?.category === selectedData?.category?.value)
-                  ?.map((e: any) => e?.subcategory),
-              ),
-            ].map((e) => ({ value: e, label: e }))}
-            onChange={(subcategory) =>
-              setselectedData((e) => ({ ...e, subcategory }))
-            }
+          <FiledSelect
+            value={values.subcategory}
+            error={errors.subcategory?.value}
+            placeholder="Select a subcategory"
+            onChange={(val) => setFieldValue('subcategory', val)}
+            options={data
+              ?.filter((e: any) => e?.category === values?.category?.value)
+              ?.map((e: any) => ({ label: e?.subcategory, value: e?._id }))}
           />
+
+          {values.subcategory?.__isNew__ && (
+            <div className="flex grow">
+              <Button title={'Add Category'} handleClick={addCategory} />
+            </div>
+          )}
         </div>
 
         <div className="overflow-auto">
           <table className="min-w-full border bg-white">
             <thead>
               <tr>
-                {list.length > 0 &&
+                {(list.length ? list : questionList).length > 0 &&
                   questionFiled.map((key) => (
                     <th key={key} className="border px-4 py-2">
                       {key}
@@ -155,7 +201,7 @@ const AdminPage = () => {
               </tr>
             </thead>
             <tbody>
-              {list.map((row, index) => (
+              {(list.length ? list : questionList).map((row, index) => (
                 <tr key={index}>
                   {questionFiled.map((cell, idx) => (
                     <td key={idx} className="border px-4 py-2">
@@ -167,8 +213,10 @@ const AdminPage = () => {
             </tbody>
           </table>
         </div>
-        <button>Submit</button>
-      </div>
+        <div className="mt-4 w-48">
+          {!!list.length && <Button title={'Create'} />}
+        </div>
+      </form>
 
       {/* <form
         // onSubmit={formik.handleSubmit}

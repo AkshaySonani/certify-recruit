@@ -360,7 +360,6 @@ const individualSchema = new mongoose.Schema({
   },
   pan_card_number: {
     type: String,
-    unique: true,
     required: false,
     validate: {
       validator: (v: any) => {

@@ -39,6 +39,7 @@ const API_CONSTANT = {
   LEARN_AND_EARN_QUESTION: '/learn-and-earn-question',
   SENT_EXAM_LINK: '/sent-exam-link',
   VERIFY_USER: '/verify-user',
+  ADD_CATEGORY: '/add-category',
 };
 
 export { API_CONSTANT };

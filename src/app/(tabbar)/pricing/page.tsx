@@ -1,5 +1,4 @@
 'use client';
-import axios from 'axios';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
 import Spinner from '@/app/icons/Spinner';

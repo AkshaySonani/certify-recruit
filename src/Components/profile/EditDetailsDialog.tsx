@@ -8,6 +8,8 @@ import { CURRENT_LOCATION } from '@/constant/Enum';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
+import { PhoneInput } from 'react-international-phone';
+import 'react-international-phone/style.css';
 
 const EditDetailsDialog = ({
   isOpen,
@@ -169,14 +171,27 @@ const EditDetailsDialog = ({
                         </div>
                         <div className="mt-3 w-full">
                           <label>{TEXT?.PHONE_NUMBER}</label>
-                          <input
-                            type="number"
-                            value={formik?.values?.contact_number}
-                            name="contact_number"
-                            onChange={formik?.handleChange}
-                            placeholder={TEXT?.PHONE_NUMBER}
-                            className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
-                          />
+                          <div className="mt-1 ">
+                            <PhoneInput
+                              className="gap-4"
+                              defaultCountry="in"
+                              placeholder={TEXT?.PHONE_NUMBER}
+                              value={formik?.values?.contact_number}
+                              inputClassName="!focus:border-meta-light-blue-3 flex !h-12 w-full grow !rounded-lg border border-meta-light-blue-1 px-5 py-3 !text-sm  font-medium"
+                              onChange={(value) =>
+                                formik.handleChange({
+                                  target: { value, name: 'contact_number' },
+                                })
+                              }
+                              countrySelectorStyleProps={{
+                                buttonStyle: {
+                                  width: 82,
+                                  height: 48,
+                                  borderRadius: 8,
+                                },
+                              }}
+                            />
+                          </div>
                           {formik.touched.contact_number &&
                             formik.errors.contact_number && (
                               <div className="error">
