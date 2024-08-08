@@ -54,6 +54,7 @@ const MyProfile = () => {
     setLoading(true);
     const NewFormData = new FormData();
     NewFormData.append('file', file[0]);
+    NewFormData.append('location', 'user_image');
     API.post(API_CONSTANT?.UPLOAD_FILE, NewFormData)
       .then((res) => {
         if (res?.data?.success) {

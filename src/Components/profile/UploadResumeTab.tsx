@@ -43,6 +43,7 @@ const UploadResumeTab = ({
     setLoading(true);
     const NewFormData = new FormData();
     NewFormData.append('file', file[0]);
+    NewFormData.append('location', 'resume');
     API.post(API_CONSTANT?.UPLOAD_FILE, NewFormData)
       .then((res) => {
         if (res?.data?.success) {

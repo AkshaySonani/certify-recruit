@@ -72,6 +72,7 @@ const IndividualDashboard = ({
         const pdfBlob = pdf.output('blob');
         const formData = new FormData();
         formData.append('file', pdfBlob, 'certificate.pdf');
+        formData.append('location', 'certificate');
         UploadFileOnBucket(formData, link);
       }
     } else {

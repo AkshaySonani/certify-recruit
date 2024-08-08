@@ -61,6 +61,7 @@ const ApplyJob = ({ jobApplyId, setJobApplyId }: any) => {
   const UploadFileOnBucket = async (file: any) => {
     const NewFormData = new FormData();
     NewFormData.append('file', file?.ele);
+    NewFormData.append('location', 'jobs');
     API.post(API_CONSTANT?.UPLOAD_FILE, NewFormData)
       .then((res) => {
         if (res?.data?.success) {
