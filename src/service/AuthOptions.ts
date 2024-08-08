@@ -152,6 +152,7 @@ export const authOptions: AuthOptions = {
 
           await Individual.create({
             user_ref_id: newUser?._id,
+            user_name: name,
           });
           currentUser = newUser;
           const res = await newUser.save();

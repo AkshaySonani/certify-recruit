@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TEXT } from '@/service/Helper';
 import { useRouter } from 'next/navigation';
 import SignupForm from '@/Components/SignupForm';
@@ -14,14 +14,15 @@ const IndividualComp = () => {
   const [showForms, setShowForms] = useState(false);
   const [currentRole, setCurrentRole] = useState('');
 
-  const individualArr = [
-    'Recruitment',
-    'Human Resource',
-    // 'Human Resource',
-    // 'Bench Sales',
-    // 'UK Recruitment',
-    // 'Canada Recruitment',
-  ];
+  const [individualArr, setIndividualArr] = useState([]);
+
+  useEffect(() => {
+    API.get(API_CONSTANT.CATEGORY)
+      .then(({ data }) =>
+        setIndividualArr(Array.from(new Set(data?.data.map((e) => e.field)))),
+      )
+      .catch((e) => console.log('🚀 ~ API.get ~ e:', e));
+  }, []);
 
   const handleNextPageNavigation = () => {
     if (currentRole) {

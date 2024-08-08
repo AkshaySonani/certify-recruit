@@ -13,14 +13,11 @@ export const POST = async (req: NextRequest) => {
 
   try {
     await connect();
-    const { category } = await req.json();
+    const { category, field } = await req.json();
+    //FIXME
+    const results = await Category.find(category ? { category } : { field });
 
-    const results = await Category.find({ category });
-
-    return NextResponse.json({
-      status: 200,
-      data: results,
-    });
+    return NextResponse.json({ status: 200, data: results });
   } catch (error) {
     return NextResponse.json(
       {
@@ -35,20 +32,14 @@ export const POST = async (req: NextRequest) => {
 export const GET = async (req: NextRequest) => {
   const session: any = await getServerSession(authOptions);
   if (!session?.user?._id) {
-    return NextResponse.json({
-      message: 'Unauthorized',
-      status: 401,
-    });
+    return NextResponse.json({ message: 'Unauthorized', status: 401 });
   }
 
   try {
     await connect();
     const results = await Category.find({});
 
-    return NextResponse.json({
-      status: 200,
-      data: results,
-    });
+    return NextResponse.json({ status: 200, data: results });
   } catch (error) {
     return NextResponse.json(
       {

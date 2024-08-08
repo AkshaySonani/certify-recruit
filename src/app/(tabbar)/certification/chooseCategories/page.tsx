@@ -30,6 +30,7 @@ export default function Page() {
   const [allowSubcategory, setAllowSubCategory] = useState(false);
   const [JoinConfirmModal, setJoinConfirmModal] = useState(false);
   const [selectMainCategory, setSelectMainCategory] = useState('');
+  const [category, setCategory] = useState([]);
   const [categories, setCategories] = usePersistState([], 'Exam:category');
   const [examStatus] = usePersistState(EXAM_STATUS?.STOPPED, 'Exam:Status');
 
@@ -72,13 +73,28 @@ export default function Page() {
 
   useEffect(() => {
     getProfileDetails();
-  }, []);
+    userDetails.role && getCategorys();
+  }, [userDetails]);
 
   const getProfileDetails = () => {
     API.get(API_CONSTANT?.PROFILE)
       .then((res: any) => {
         setUserDetails(res?.data?.data);
       })
+      .catch((error: any) => {
+        toast.error(
+          error?.response?.data?.message ||
+            error?.message ||
+            'Internal server error',
+        );
+      });
+  };
+
+  const getCategorys = () => {
+    API.get(API_CONSTANT?.GET_SUBCATEGORYS, { field: userDetails?.role })
+      .then(({ data }) =>
+        setCategory(Array.from(new Set(data?.data?.map((e) => e.category)))),
+      )
       .catch((error: any) => {
         toast.error(
           error?.response?.data?.message ||
@@ -200,14 +216,10 @@ export default function Page() {
           {!allowSubcategory ? (
             <div className="border-meta-light-blue m-auto mt-11 rounded-[26px] border bg-meta-light-blue-5 p-12 sm:w-[70%]">
               <div className="mt-5 flex w-full flex-wrap   justify-center gap-5 text-start ">
-                {[
-                  'US Recruitment',
-                  'Domestic Recruitment',
-                  'Canada Recruitment',
-                  'UK Recruitment',
-                ]?.map((ele: any, i: any) => {
+                {category?.map((ele: any, i: any) => {
                   return (
                     <div
+                      key={ele}
                       onClick={() => {
                         setCategories([]);
                         setSelectMainCategory(ele);
