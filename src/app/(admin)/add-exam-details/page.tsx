@@ -8,7 +8,8 @@ import CreatableSelect from 'react-select/creatable';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import Button from '@/Components/Button';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import { signOut } from 'next-auth/react';
+import { TEXT } from '@/service/Helper';
 
 const questionFiled = [
   'question',
@@ -135,6 +136,17 @@ const AdminPage = () => {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
+      <button
+        onClick={() => {
+          localStorage.removeItem('userRole');
+          localStorage.removeItem('profileCount');
+          signOut();
+        }}
+        className={`fixed right-4 top-4 w-32`}
+      >
+        <Button title={TEXT?.LOG_OUT} />
+      </button>
+
       <form
         onSubmit={handleSubmit}
         className="w-11/12  max-w-screen-xl rounded-xl bg-white p-6 shadow-md"
