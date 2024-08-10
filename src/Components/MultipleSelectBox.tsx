@@ -10,7 +10,7 @@ export const MultipleSelectBox = ({
   options,
   isMulti = false,
   className,
-  onKeyDown,
+  onKeyDown = () => {},
   placeholder,
   components,
   handleChange,

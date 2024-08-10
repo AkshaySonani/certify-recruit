@@ -94,14 +94,6 @@ const individualSchema = new mongoose.Schema({
   role: {
     type: String,
     required: false,
-    enum: [
-      'US Recruitment',
-      'Domestic Recruitment',
-      'Human Resource',
-      'Bench Sales',
-      'UK Recruitment',
-      'Canada Recruitment',
-    ],
   },
   college_school_name: {
     type: mongoose.Schema.Types.ObjectId,

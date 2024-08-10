@@ -496,22 +496,29 @@ const Page = () => {
                   </td>
 
                   <td className="px-6 py-4 text-gray-500">
-                    <div className="flex justify-end">
+                    <div className="flex justify-center">
                       <Link
                         href={item?.resume?.[0]?.file_url ?? ''}
                         target="_blank"
                       >
                         <div className="cursor-pointer">
-                          <Image
+                          {/* <Image
                             alt="Icon"
                             width={21}
                             height={21}
                             className="mx-4"
                             src={'/sidebarIcon/jobPosting.svg'}
+                          /> */}
+                          <Image
+                            alt="Icon"
+                            width={21}
+                            height={21}
+                            className="mx-4"
+                            src={'/dashboard/download.svg'}
                           />
                         </div>
                       </Link>
-                      <div
+                      {/* <div
                         className="cursor-pointer"
                         onClick={() =>
                           downLoadResume(item?.user_cv?.[0]?.file_url)
@@ -524,7 +531,7 @@ const Page = () => {
                           className="mx-4"
                           src={'/dashboard/download.svg'}
                         />
-                      </div>
+                      </div> */}
                     </div>
                   </td>
                 </tr>

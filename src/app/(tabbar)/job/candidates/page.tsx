@@ -101,7 +101,7 @@ export function Page({ params }: { params: { id: string } }) {
               <th className="w-1/12 px-6">
                 <span className="flex rounded-lg bg-meta-light-blue-2 p-2 text-base font-medium text-meta-light-blue-3">
                   <div>{TEXT?.DOWNLOADS}</div>
-                  <div className="ml-5">{TEXT?.FIVE_INTO_FIVE}</div>
+                  {/* <div className="ml-5">{TEXT?.FIVE_INTO_FIVE}</div> */}
                 </span>
               </th>
             </tr>
@@ -202,22 +202,29 @@ export function Page({ params }: { params: { id: string } }) {
                     </td>
                     <td className="px-6 py-4 text-gray-500">
                       {item?.resume?.length !== 0 ? (
-                        <div className="flex justify-end">
+                        <div className="flex justify-center">
                           <Link
                             href={item?.resume?.[0]?.file_url}
                             target="_blank"
                           >
                             <div className="cursor-pointer">
-                              <Image
+                              {/* <Image
                                 alt="Icon"
                                 width={21}
                                 height={21}
                                 className="mx-4"
                                 src={'/sidebarIcon/jobPosting.svg'}
+                              /> */}
+                              <Image
+                                alt="Icon"
+                                width={21}
+                                height={21}
+                                className="mx-4"
+                                src={'/dashboard/download.svg'}
                               />
                             </div>
                           </Link>
-                          <div
+                          {/* <div
                             className="cursor-pointer"
                             onClick={() =>
                               downLoadResume(item?.user_cv?.[0]?.file_url)
@@ -230,7 +237,7 @@ export function Page({ params }: { params: { id: string } }) {
                               className="mx-4"
                               src={'/dashboard/download.svg'}
                             />
-                          </div>
+                          </div> */}
                         </div>
                       ) : (
                         <div className="flex justify-end">-</div>

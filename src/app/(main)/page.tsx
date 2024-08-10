@@ -12,14 +12,19 @@ import { useEffect, useState } from 'react';
 import Services from '@/Components/home/Services';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import API from '@/service/ApiService';
+import { API_CONSTANT } from '@/constant/ApiConstant';
+import moment from 'moment';
 
 export default function Home() {
-  useEffect(() => {
-    AOS.init({ duration: 500 });
-  }, []);
   const { data: session }: any = useSession<any>();
+  const [jobs, setJobs] = useState([]);
   const router = useRouter();
   const [selected, setSelected] = useState(0);
+  useEffect(() => {
+    AOS.init({ duration: 500 });
+    API.get(API_CONSTANT.JOB).then(({ data }) => setJobs(data.data));
+  }, []);
   const feedbackArr = [
     {
       profile: '/landing/indianGirl1.png',
@@ -246,286 +251,176 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="mx-auto h-full px-4 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
-          <div className="mt-16">
-            <div className="flex  justify-between">
-              <div data-aos="fade-right" data-aos-easing="ease-in-sine">
-                <p className="text-lg font-semibold text-meta-light-blue-3">
-                  TOP JOB
-                </p>
-                <p className="pt-1 text-4xl font-semibold text-meta-blue-1">
-                  Top Openings
-                </p>
-              </div>
-              <div className="">
-                <Button
-                  type={'button'}
-                  title={'Apply Now'}
-                  handleClick={() => {
-                    if (session?.user) {
-                      router?.push(ROUTE?.COMING_SOON);
-                    } else {
-                      router?.push(ROUTE?.LOGIN);
-                    }
-                  }}
-                  btnClass="w-max !my-3 !p-3 !h-auto !bg-meta-blue-1"
-                  titleClass="flex justify-center w-[110px] text-base  font-medium text-white"
-                />
-              </div>
-            </div>
-            <div className="pt-[20px] text-lg font-medium text-meta-light-blue-3">
-              CertifyRecruit wants to give you the best opportunities; after
-              all, your hard work deserves the best.
-            </div>
-
-            <div className="mt-12 flex w-full gap-3 overflow-auto ">
-              <div className="w-96 min-w-96 rounded-xl bg-meta-gray-2 p-2">
-                <div className="flex justify-between">
-                  <div>
-                    <div className="flex items-center">
-                      <p className="text-lg font-semibold text-meta-purple-1">
-                        Human Resource
-                      </p>
-                      <p className="ml-2 mt-1 text-sm font-bold text-meta-light-blue-3">
-                        30 min ago
-                      </p>
-                    </div>
-                    <div className="flex items-center">
-                      <p className="text-sm font-bold text-meta-light-blue-3">
-                        Coding infotech
-                      </p>
-                      <p className="mx-1 text-sm font-bold text-meta-light-blue-3">
-                        - Surat, Gujarat.
-                      </p>
-                    </div>
-                  </div>
+        {jobs?.length && (
+          <div className="mx-auto h-full px-4 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-2xl lg:px-8">
+            <div className="mt-16">
+              <div className="flex  justify-between">
+                <div data-aos="fade-right" data-aos-easing="ease-in-sine">
+                  <p className="text-lg font-semibold text-meta-light-blue-3">
+                    TOP JOB
+                  </p>
+                  <p className="pt-1 text-4xl font-semibold text-meta-blue-1">
+                    Top Openings
+                  </p>
                 </div>
-                <div className="mt-5 flex flex-wrap items-center gap-3">
-                  <div className="flex items-center gap-2">
-                    <Image
-                      alt="date"
-                      width={15}
-                      height={15}
-                      src={'/job/moneybag.svg'}
-                    />
-                    <p className="text-sm font-bold text-meta-blue-1">
-                      ₹12k/month - ₹30k/month
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Image
-                      alt="date"
-                      width={15}
-                      height={15}
-                      src={'/job/timepicker.svg'}
-                    />
-                    <p className="text-sm font-bold text-meta-blue-1">
-                      Full-time
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Image
-                      alt="date"
-                      width={15}
-                      height={15}
-                      src={'/job/datepicker.svg'}
-                    />
-                    <p className="text-sm font-bold text-meta-blue-1">
-                      Full-time
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="w-96 min-w-96 rounded-xl bg-meta-gray-2  p-2">
-                <div className="flex justify-between">
-                  <div>
-                    <div className="flex items-center">
-                      <p className="text-lg font-semibold text-meta-purple-1">
-                        Human Resource
-                      </p>
-                      <p className="ml-2 mt-1 text-sm font-bold text-meta-light-blue-3">
-                        30 min ago
-                      </p>
-                    </div>
-                    <div className="flex items-center">
-                      <p className="text-sm font-bold text-meta-light-blue-3">
-                        Coding infotech
-                      </p>
-                      <p className="mx-1 text-sm font-bold text-meta-light-blue-3">
-                        - Surat, Gujarat.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-5 flex flex-wrap items-center gap-3">
-                  <div className="flex items-center gap-2">
-                    <Image
-                      alt="date"
-                      width={15}
-                      height={15}
-                      src={'/job/moneybag.svg'}
-                    />
-                    <p className="text-sm font-bold text-meta-blue-1">
-                      ₹12k/month - ₹30k/month
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Image
-                      alt="date"
-                      width={15}
-                      height={15}
-                      src={'/job/timepicker.svg'}
-                    />
-                    <p className="text-sm font-bold text-meta-blue-1">
-                      Monday to Friday
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Image
-                      alt="date"
-                      width={15}
-                      height={15}
-                      src={'/job/datepicker.svg'}
-                    />
-                    <p className="text-sm font-bold text-meta-blue-1">
-                      Monday to Friday
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="w-96 min-w-96 rounded-xl bg-meta-gray-2  p-2">
-                <div className="flex justify-between">
-                  <div>
-                    <div className="flex items-center">
-                      <p className="text-lg font-semibold text-meta-purple-1">
-                        Human Resource
-                      </p>
-                      <p className="ml-2 mt-1 text-sm font-bold text-meta-light-blue-3">
-                        30 min ago
-                      </p>
-                    </div>
-                    <div className="flex items-center">
-                      <p className="text-sm font-bold text-meta-light-blue-3">
-                        Coding infotech
-                      </p>
-                      <p className="mx-1 text-sm font-bold text-meta-light-blue-3">
-                        - Surat, Gujarat.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-5 flex flex-wrap items-center gap-3">
-                  <div className="flex items-center gap-2">
-                    <Image
-                      alt="date"
-                      width={15}
-                      height={15}
-                      src={'/job/moneybag.svg'}
-                    />
-                    <p className="text-sm font-bold text-meta-blue-1">
-                      ₹12k/month - ₹30k/month
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Image
-                      alt="date"
-                      width={15}
-                      height={15}
-                      src={'/job/timepicker.svg'}
-                    />
-                    <p className="text-sm font-bold text-meta-blue-1">
-                      Monday to Friday
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Image
-                      alt="date"
-                      width={15}
-                      height={15}
-                      src={'/job/datepicker.svg'}
-                    />
-                    <p className="text-sm font-bold text-meta-blue-1">
-                      Full-time
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* {About Section} */}
-          <div className="mt-28">
-            <div className="flex flex-col-reverse justify-center md:flex-row md:justify-between">
-              <div data-aos="zoom-out-right" data-aos-easing="ease-in-sine">
-                <p className="text-lg font-semibold text-meta-light-blue-3">
-                  ABOUT US
-                </p>
-                <p className="max-w-[642px] pt-2 text-4xl font-semibold text-meta-blue-1">
-                  CertifyRecruit - Complementing Your Recruitment Skills
-                </p>
-                <p className="max-w-[612px] pt-5 text-lg font-medium text-meta-light-blue-3">
-                  Our online platform is made to change how people and companies
-                  handle recruiting. Our goal is to help individuals boost their
-                  recruiting abilities and assist employers in finding the best
-                  talent. At CertifyRecruit, we believe that becoming great at
-                  recruiting is a journey we can help you with.
-                </p>
-                <div className="mt-10">
+                <div className="">
                   <Button
                     type={'button'}
-                    title={'Learn more'}
-                    handleClick={() => router?.push('/aboutUs')}
+                    title={'Apply Now'}
+                    handleClick={() => router?.push(ROUTE?.LOGIN)}
                     btnClass="w-max !my-3 !p-3 !h-auto !bg-meta-blue-1"
                     titleClass="flex justify-center w-[110px] text-base  font-medium text-white"
                   />
                 </div>
               </div>
-              <div data-aos="fade-down">
-                <Image
-                  alt="date"
-                  width={525}
-                  height={486}
-                  src={'/landing/Profilebanner.png'}
-                />
+              <div className="pt-[20px] text-lg font-medium text-meta-light-blue-3">
+                CertifyRecruit wants to give you the best opportunities; after
+                all, your hard work deserves the best.
+              </div>
+
+              <div className="mt-12 flex w-full gap-3 overflow-auto ">
+                {jobs?.map((list: any) => {
+                  return (
+                    <div className="mb-3 w-96 min-w-96 rounded-xl bg-meta-gray-2 p-2">
+                      <div className="flex justify-between">
+                        <div>
+                          <div className="flex items-center">
+                            <p className="text-lg font-semibold text-meta-purple-1">
+                              {list?.title}
+                            </p>
+                            <p className="ml-2 mt-1 text-sm font-bold text-meta-light-blue-3">
+                              {moment(list?.createdAt).fromNow()}
+                            </p>
+                          </div>
+                          <div className="flex items-center">
+                            <p className="text-sm font-bold text-meta-light-blue-3">
+                              {list?.company_name}
+                            </p>
+                            <p className="mx-1 overflow-hidden text-ellipsis whitespace-nowrap text-sm font-bold text-meta-light-blue-3">
+                              - {list?.city[0]?.name}, {list?.state[0]?.name}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="mt-5 flex flex-wrap items-center gap-3">
+                        <div className="flex items-center gap-2">
+                          <Image
+                            alt="date"
+                            width={15}
+                            height={15}
+                            src={'/job/moneybag.svg'}
+                          />
+                          <p className="text-sm font-bold text-meta-blue-1">
+                            {list?.salary_started ?? 0}/{' '}
+                            {list?.salary_pay === 'MONTHLY' ? 'month' : 'hour'}{' '}
+                            - {list?.salary_upto ?? 0}/
+                            {list?.salary_pay === 'MONTHLY' ? 'month' : 'hour'}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Image
+                            alt="date"
+                            width={15}
+                            height={15}
+                            src={'/job/timepicker.svg'}
+                          />
+                          <p className="text-sm font-bold text-meta-blue-1">
+                            {list?.job_types[0]}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Image
+                            alt="date"
+                            width={15}
+                            height={15}
+                            src={'/job/datepicker.svg'}
+                          />
+                          <p className="text-sm font-bold text-meta-blue-1">
+                            {list?.working_schedule[0]}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
-          </div>
-          {/* {connecting Section} */}
-          <div
-            className="mt-12 rounded-[28px] bg-meta-gray-2 md:mt-36"
-            data-aos="flip-down"
-          >
-            <div className="flex justify-between px-3  pb-2 lg:px-[50px]">
-              <div>
-                <p className="lg:px:0 w-full pr-6 pt-[50px] text-2xl font-bold text-meta-blue-1 sm:text-4xl lg:max-w-[578px]">
-                  Connecting Talents, Simplifying Recruitment
-                </p>
-                <p className="mt-[17px] max-w-[320px] px-6 pb-[20px] text-xl font-bold text-meta-light-blue-3 lg:px-0 lg:text-3xl">
-                  Reach Out To Us Today
-                </p>
-              </div>
-              <div className="self-end">
-                <Button
-                  type={'button'}
-                  title={session?.user ? 'Join' : 'Register Now'}
-                  handleClick={() => {
-                    if (session?.user) {
-                      router?.push(ROUTE?.DASHBOARD);
-                    } else {
-                      router?.push(ROUTE?.SIGN_UP);
-                    }
-                  }}
-                  btnClass="w-max !my-3 !p-3 !h-auto !bg-meta-blue-1"
-                  titleClass="flex justify-center w-[110px] text-base  font-medium text-white"
-                />
+
+            {/* {About Section} */}
+            <div className="mt-28">
+              <div className="flex flex-col-reverse justify-center md:flex-row md:justify-between">
+                <div data-aos="zoom-out-right" data-aos-easing="ease-in-sine">
+                  <p className="text-lg font-semibold text-meta-light-blue-3">
+                    ABOUT US
+                  </p>
+                  <p className="max-w-[642px] pt-2 text-4xl font-semibold text-meta-blue-1">
+                    CertifyRecruit - Complementing Your Recruitment Skills
+                  </p>
+                  <p className="max-w-[612px] pt-5 text-lg font-medium text-meta-light-blue-3">
+                    Our online platform is made to change how people and
+                    companies handle recruiting. Our goal is to help individuals
+                    boost their recruiting abilities and assist employers in
+                    finding the best talent. At CertifyRecruit, we believe that
+                    becoming great at recruiting is a journey we can help you
+                    with.
+                  </p>
+                  <div className="mt-10">
+                    <Button
+                      type={'button'}
+                      title={'Learn more'}
+                      handleClick={() => router?.push('/aboutUs')}
+                      btnClass="w-max !my-3 !p-3 !h-auto !bg-meta-blue-1"
+                      titleClass="flex justify-center w-[110px] text-base  font-medium text-white"
+                    />
+                  </div>
+                </div>
+                <div data-aos="fade-down">
+                  <Image
+                    alt="date"
+                    width={525}
+                    height={486}
+                    src={'/landing/Profilebanner.png'}
+                  />
+                </div>
               </div>
             </div>
+            {/* {connecting Section} */}
+            <div
+              className="mt-12 rounded-[28px] bg-meta-gray-2 md:mt-36"
+              data-aos="flip-down"
+            >
+              <div className="flex justify-between px-3  pb-2 lg:px-[50px]">
+                <div>
+                  <p className="lg:px:0 w-full pr-6 pt-[50px] text-2xl font-bold text-meta-blue-1 sm:text-4xl lg:max-w-[578px]">
+                    Connecting Talents, Simplifying Recruitment
+                  </p>
+                  <p className="mt-[17px] max-w-[320px] px-6 pb-[20px] text-xl font-bold text-meta-light-blue-3 lg:px-0 lg:text-3xl">
+                    Reach Out To Us Today
+                  </p>
+                </div>
+                <div className="self-end">
+                  <Button
+                    type={'button'}
+                    title={session?.user ? 'Join' : 'Register Now'}
+                    handleClick={() => {
+                      if (session?.user) {
+                        router?.push(ROUTE?.DASHBOARD);
+                      } else {
+                        router?.push(ROUTE?.SIGN_UP);
+                      }
+                    }}
+                    btnClass="w-max !my-3 !p-3 !h-auto !bg-meta-blue-1"
+                    titleClass="flex justify-center w-[110px] text-base  font-medium text-white"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <Services />
+
+            {/* {Feedback} */}
           </div>
-
-          <Services />
-
-          {/* {Feedback} */}
-        </div>
+        )}
         <div className="mt-16 bg-meta-gray-2 px-4  py-[75px] md:px-24 lg:px-8">
           <Carousel
             autoPlay={false}

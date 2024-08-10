@@ -45,11 +45,15 @@ export const POST = async (req: NextRequest) => {
     const correctPercentage = (correctAnswersCount / totalQuestions) * 100;
     const pass = correctPercentage >= 70;
 
-    User.findByIdAndUpdate(session.user._id, {
-      $set: { 'subscription.$.attempt': 0 },
-    });
+    const userData = await User.findById(session.user._id);
 
     if (pass) {
+      await User.findByIdAndUpdate(
+        session.user._id,
+        { $set: { 'subscription.attempt': 0 } },
+        { new: true },
+      );
+
       const updatedUser = await Individual.findOneAndUpdate(
         {
           'certificates._id': exam_id,
@@ -86,6 +90,19 @@ export const POST = async (req: NextRequest) => {
         },
       );
     } else {
+      await User.findByIdAndUpdate(
+        session.user._id,
+        {
+          $set: {
+            'subscription.attempt':
+              userData.subscription.attempt === 2
+                ? 0
+                : userData.subscription.attempt + 1,
+          },
+        },
+        { new: true },
+      );
+
       const updatedUser = await Individual.findOneAndUpdate(
         {
           'certificates._id': exam_id,

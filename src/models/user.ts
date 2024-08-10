@@ -71,6 +71,7 @@ const userSchema = new mongoose.Schema({
       ref: 'Pricing',
       default: null,
     },
+    attempt: { type: Number, default: 0 },
     createdAt: { type: Date, default: null },
     updatedAt: { type: Date, default: null },
   },

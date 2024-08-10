@@ -160,20 +160,17 @@ const BasicDetails = ({
             className="gap-4"
             defaultCountry="in"
             placeholder="Contact number"
-            value={formik?.values?.contact_number}
-            inputClassName="!h-12 w-full flex grow !border-meta-light-blue-2 !focus:outline-meta-light-blue-1 !rounded-xl !text-sm"
+            value={String(formik?.values?.contact_number)}
+            inputClassName="!h-12 w-full flex grow !border-meta-light-blue-1 !focus:border-meta-light-blue-3 !focus:outline-meta-light-blue-3 !rounded-lg !text-sm w-full "
             onChange={(value) =>
               formik.handleChange({ target: { value, name: 'contact_number' } })
             }
             countrySelectorStyleProps={{
-              buttonStyle: { width: 64, height: 48, borderRadius: 12 },
+              buttonStyle: { width: 64, height: 48, borderRadius: 8 },
             }}
+            style={{ marginTop: '8px' }}
           />
-          <input
-            type="number"
-            onChange={formik.handleChange}
-            className="mt-2 w-full rounded-lg border border-meta-light-blue-1 p-3 focus:border-meta-light-blue-3"
-          />
+
           {formik.touched.contact_number && formik.errors.contact_number && (
             <div className="error">{formik.errors.contact_number}</div>
           )}

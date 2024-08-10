@@ -284,21 +284,24 @@ const IndividualJob = () => {
                           </div>
                         </div>
                         <div className="flex gap-2">
-                          <button className="rounded-lg border border-meta-light-blue-1 bg-white p-3 ">
+                          {/* <button className="rounded-lg border border-meta-light-blue-1 bg-white p-3 ">
                             <Image
                               alt="date"
                               width={18}
                               height={18}
                               src={'/job/bookmark.svg'}
                             />
-                          </button>
+                          </button> */}
                           <button
                             disabled={list?.applied}
                             onClick={(e) => {
                               e?.stopPropagation();
                               _onJobApply(list?._id);
                             }}
-                            className="flex items-center justify-center rounded-lg border border-meta-light-blue-1 bg-white p-3 px-[10px]"
+                            className={
+                              'flex items-center justify-center rounded-lg border border-meta-light-blue-1 bg-white p-3 px-[10px] ' +
+                              (list?.applied && 'bg-green-300')
+                            }
                           >
                             <p className="text-sm font-bold text-meta-purple-1">
                               {list?.applied ? 'Applied' : 'Apply Now'}

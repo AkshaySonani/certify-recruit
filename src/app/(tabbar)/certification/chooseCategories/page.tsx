@@ -125,7 +125,11 @@ export default function Page() {
     if (categories.length < 6) {
       toast.error('You must select at least 6 categories');
     } else {
-      if (userDetails?.user_ref_id?.subscription.attempt) {
+      console.log(
+        '🚀 ~ onContinue ~ userDetails?.user_ref_id?.subscription.attempt:',
+        userDetails?.user_ref_id?.subscription,
+      );
+      if (userDetails?.user_ref_id?.subscription?.attempt) {
         setJoinConfirmModal(true);
       } else {
         API.post('init-payment', { id: '66b7837ddc6e205e628b45cf' })

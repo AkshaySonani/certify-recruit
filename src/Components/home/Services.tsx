@@ -12,7 +12,8 @@ const ServiceARR = [
     title: 'Individual Certification',
     optionText: '',
     content: 'Certification based on your skills.',
-    btnText: 'Contact Us',
+    btnText: 'Get Certificate',
+    route: '/certification',
   },
   {
     id: 2,
@@ -22,13 +23,15 @@ const ServiceARR = [
       'As exciting as it sounds, your knowledge and wit can earn you money! If you re better than the rest, you earn the most!',
     btnText: 'Coming Soon',
     disable: true,
+    route: '/learnAndEarn',
   },
   {
     id: 3,
     title: 'Apply for a Job',
     optionText: '',
     content: 'Better opportunities might be awaiting you. Apply today!',
-    btnText: 'Contact Us',
+    btnText: 'Apply Job',
+    route: '/job',
   },
   {
     id: 4,
@@ -37,6 +40,7 @@ const ServiceARR = [
     content:
       'A badge that can enhance your brand reputation in the corporate industry.',
     btnText: 'Coming Soon',
+    route: '/badgeOfHonour',
     disable: true,
   },
   {
@@ -45,7 +49,8 @@ const ServiceARR = [
     optionText: '',
     content:
       'Where knowledge earns you rankings that earn you brownie points. You can negotiate more from your employers when you achieve top rankings by competing with others.',
-    btnText: 'Contact Us',
+    btnText: 'Certification',
+    route: '/certification',
   },
   {
     id: 6,
@@ -53,6 +58,7 @@ const ServiceARR = [
     optionText: '',
     content: 'Discover the ideal candidate for your precise requirements.',
     btnText: 'Coming Soon',
+    route: '/contactUs',
     disable: true,
   },
 ];
@@ -101,7 +107,7 @@ const Services = () => {
                         type={'button'}
                         title={list.btnText}
                         disabled={list?.disable}
-                        handleClick={() => router?.push('/contactUs')}
+                        handleClick={() => router?.push(list.route)}
                         btnClass="w-max !my-3 !p-3 !h-auto !bg-meta-blue-1 !mb-0"
                         titleClass="flex justify-center w-[110px] text-base  font-medium text-white"
                       />

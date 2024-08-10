@@ -107,8 +107,8 @@ const Page = () => {
                 Address
               </p>
               <p className="px-[55px] text-center text-base font-medium text-meta-light-blue-3">
-                413, Tulsi Arcade, Near Sudama Chowk, Digital Valley (Mota
-                Varachha), Surat.
+                201, Platinum Hub, near Central Bank, Near Tulsidham Char Rasta,
+                Manjit Nagar, GIDC Industrial Area, Manjalpur, Vadodara, Gujarat
               </p>
             </div>
             <div

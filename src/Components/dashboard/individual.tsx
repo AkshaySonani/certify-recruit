@@ -65,9 +65,9 @@ const IndividualDashboard = ({
       if (element) {
         const canvas = await html2canvas(element);
         const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdf = new jsPDF('p', 'px');
         const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+        const pdfHeight = canvas.height;
         pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
         const pdfBlob = pdf.output('blob');
         const formData = new FormData();
@@ -91,7 +91,7 @@ const IndividualDashboard = ({
           </div>
           <div className="flex justify-end">
             <div
-              className="mb-2.5 text-sm font-medium text-white underline underline-offset-2"
+              className="mb-2.5 cursor-pointer text-sm font-medium text-white underline underline-offset-2"
               onClick={() => setViewCertificate(true)}
             >
               {TEXT?.VIEW_CERTIFICATE}
@@ -175,21 +175,24 @@ const IndividualDashboard = ({
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <button className="h-max w-max min-w-11 rounded-lg border border-meta-light-blue-1 bg-white p-3">
+                  {/* <button className="h-max w-max min-w-11 rounded-lg border border-meta-light-blue-1 bg-white p-3">
                     <Image
                       alt="date"
                       width={18}
                       height={18}
                       src={'/job/bookmark.svg'}
                     />
-                  </button>
+                  </button> */}
                   <button
                     disabled={list?.applied}
                     onClick={(e) => {
                       e?.stopPropagation();
                       _onJobApply(list?._id);
                     }}
-                    className="flex h-max w-max items-center justify-center rounded-lg border border-meta-light-blue-1 bg-white p-3 px-[10px]"
+                    className={
+                      'flex h-max w-max items-center justify-center rounded-lg border border-meta-light-blue-1 bg-white p-3 px-[10px] ' +
+                      (list?.applied && 'bg-green-300')
+                    }
                   >
                     <p className="text-sm font-bold text-meta-purple-1">
                       {list?.applied ? 'Applied' : 'Apply Now'}
@@ -278,19 +281,21 @@ const IndividualDashboard = ({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-5xl transform overflow-hidden rounded-2xl bg-white p-10  text-left align-middle shadow-[0_3px_10px_rgb(0,0,0,0.2)] transition-all">
+                <Dialog.Panel className="w-[1320px] transform overflow-hidden rounded-2xl bg-white p-10  text-left align-middle shadow-[0_3px_10px_rgb(0,0,0,0.2)] transition-all">
                   <div
                     ref={certificateRef}
-                    style={{
-                      minHeight: '100vh',
-                      background:
-                        'linear-gradient(180deg, rgba(255, 255, 255, 0) 48.95%, #013BB7 76.96%, #07E2FA 100%)',
-                    }}
-                    className="relative p-px"
+                    style={
+                      {
+                        // minHeight: '100vh',
+                        // background:
+                        //   'linear-gradient(180deg, rgba(255, 255, 255, 0) 48.95%, #013BB7 76.96%, #07E2FA 100%)',
+                      }
+                    }
+                    className="relative bg-[url('/certificate.png')] bg-center bg-no-repeat p-px "
                   >
-                    <div className="flex min-h-screen items-center justify-center bg-white">
-                      <div className="mx-auto max-w-screen-lg rounded-lg ">
-                        <div className=" text-center">
+                    <div className="flex  items-center justify-center ">
+                      <div className="mx-auto mt-[450px] max-w-screen-lg rounded-lg">
+                        {/* <div className=" text-center">
                           <div className="flex justify-center">
                             <Image
                               width={334}
@@ -306,23 +311,23 @@ const IndividualDashboard = ({
                           <p className="text-base font-bold text-black">
                             OF HR RECRUITMENT ASSESSMENT
                           </p>
-                        </div>
+                        </div> */}
                         <div className="mb-4 flex justify-center">
-                          <Image
+                          {/* <Image
                             width={200}
                             height={195}
                             alt="certificate"
                             className="mx-auto mb-4 w-32"
                             src={'/certificate/certificate_logo.svg'}
-                          />
+                          /> */}
                           {/* <div className="rounded-full bg-blue-500 px-4 py-2 text-white">
                 <p className="text-lg font-bold">2024 Certification</p>
               </div> */}
                         </div>
                         <div className="mb-6 px-8 text-center">
-                          <p className="text-xl font-bold text-meta-blue-4">
+                          {/* <p className="text-xl font-bold text-meta-blue-4">
                             PROUDLY PRESENTED TO
-                          </p>
+                          </p> */}
                           <h2 className="text-2xl font-bold text-meta-blue-1">
                             {userDetails?.user_name}
                           </h2>

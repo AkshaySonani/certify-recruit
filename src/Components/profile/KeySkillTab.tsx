@@ -5,7 +5,6 @@ import API from '@/service/ApiService';
 import { toast } from 'react-toastify';
 import { useFormik, Field } from 'formik';
 import { components } from 'react-select';
-import useDebounce from '@/hooks/useDebounce';
 import AppContext from '@/context/AppProvider';
 import 'react-datepicker/dist/react-datepicker.css';
 import MultipleSelectBox from '../MultipleSelectBox';
@@ -23,8 +22,8 @@ const KeySkillTab = ({
 }: any) => {
   const [loading, setLoading] = useState(false);
   const [skillData, setSkillData] = useState([]);
-  const [skillQuery, setSkillQuery] = useState('');
-  const debouncedSearchSkill = useDebounce(skillQuery);
+  const [data, setData] = useState([]);
+  const [field, setField] = useState([]);
   const context = useContext(AppContext);
 
   const {
@@ -49,14 +48,10 @@ const KeySkillTab = ({
 
   const handleSubmit = async (values: any, actions: any) => {
     setLoading(true);
-    const obj = {
+    API.post(API_CONSTANT?.PROFILE, {
+      role: values.field.value,
       skills: values?.skills.map((el: any) => el?._id),
-      // profile_count: {
-      //   ...context?.userProfileCount,
-      //   skill_details: 14,
-      // },
-    };
-    API.post(API_CONSTANT?.PROFILE, obj)
+    })
       .then((res) => {
         if (res?.data?.status === 200) {
           setLoading(false);
@@ -83,6 +78,9 @@ const KeySkillTab = ({
   };
 
   const validationSchema = Yup.object().shape({
+    field: Yup.object().shape({
+      value: Yup.string().required('Field is required'),
+    }),
     skills: Yup.array()
       .min(1, `select at least one skill`)
       .max(10, 'select maximum 10 skills'),
@@ -90,14 +88,13 @@ const KeySkillTab = ({
 
   const formik: any = useFormik({
     initialValues: {
+      field: { label: userDetails?.role || '', value: userDetails?.role || '' },
       skills: userDetails?.skills
-        ? userDetails?.skills?.map((list: any) => {
-            return {
-              _id: list?._id,
-              label: list?.subcategory,
-              value: list?.subcategory,
-            };
-          })
+        ? userDetails?.skills?.map((list: any) => ({
+            _id: list?._id,
+            label: list?.subcategory,
+            value: list?.subcategory,
+          }))
         : [],
     },
     enableReinitialize: true,
@@ -106,51 +103,39 @@ const KeySkillTab = ({
   });
 
   const handleClose = (list: any) => {
-    const arr = formik?.values?.skills.filter((el: any) => {
-      return el !== list;
-    });
+    const arr = formik?.values?.skills.filter((el: any) => el !== list);
     formik?.setFieldValue('skills', arr);
   };
 
+  console.log('🚀 ~ formik:', formik.errors);
   useEffect(() => {
     getAllCategoryApi();
   }, []);
 
+  useEffect(() => {
+    setSkillData(
+      data
+        ?.filter((e: any) => e.field === formik.values?.field?.value)
+        ?.map((list: any) => ({
+          _id: list?._id,
+          label: list?.subcategory,
+          value: list?.subcategory,
+        })) as any,
+    );
+  }, [formik.values?.field?.value, data]);
+
   const getAllCategoryApi = () => {
     API.get(API_CONSTANT?.CATEGORY)
       .then((res) => {
-        let skiilArr = res?.data?.data?.map((list: any) => ({
-          _id: list?._id,
-          label: list?.subcategory,
-          value: list?.subcategory,
-        }));
-        setSkillData(skiilArr);
+        setData(res?.data?.data);
+        setField([
+          ...new Set(res?.data?.data?.map((e: any) => e?.field)),
+        ] as any);
       })
       .catch((error) => {
         toast.error(error?.response?.data?.message || 'Internal server error');
       });
   };
-
-  const searchSkillApi = (searchText: any) => {
-    API.post(API_CONSTANT?.CATEGORY, { searchText })
-      .then((res) => {
-        let skiilArr = res?.data?.data?.map((list: any) => ({
-          _id: list?._id,
-          label: list?.subcategory,
-          value: list?.subcategory,
-        }));
-        setSkillData(skiilArr);
-      })
-      .catch((error) => {
-        toast.error(error?.response?.data?.message || 'Internal server error');
-      });
-  };
-
-  useEffect(() => {
-    if (debouncedSearchSkill) {
-      searchSkillApi(debouncedSearchSkill);
-    }
-  }, [debouncedSearchSkill]);
 
   const Placeholder = (props: any) => {
     return <components.Placeholder {...props} />;
@@ -184,15 +169,52 @@ const KeySkillTab = ({
     <form onSubmit={formik.handleSubmit}>
       <div className="mt-5 flex w-full gap-3 pl-9">
         <div className="w-full">
-          <label className="text-base font-medium text-meta-purple-1">
-            Key Skill
+          <label className="mb-8 text-base font-medium text-meta-purple-1">
+            Filed
           </label>
+
           <p className="mb-3 pt-1 text-sm font-medium text-meta-light-blue-3">
             Tell recruiters what you know or what you are known for, e.g.,
             Direct Marketing, Oracle, Java, etc. We will send you job
             recommendations based on these skills. Each skill should be
             separated by a comma.
           </p>
+
+          <div className="mt-3 flex w-full flex-col items-start lg:mt-0 lg:w-1/2">
+            <div className="border-1 mt-3 flex w-full flex-wrap items-start rounded-xl border border-meta-light-blue-1 py-2 lg:mt-0">
+              <MultipleSelectBox
+                name="field"
+                form={formik}
+                isMulti={false}
+                style={MultiboxStyle}
+                placeholder="Add your field"
+                value={formik?.values?.field}
+                className="w-full !border-meta-light-blue-1"
+                components={{ Placeholder, DropdownIndicator }}
+                options={field.map((e) => ({ label: e, value: e }))}
+              />
+            </div>
+            {formik.touched.field?.value && formik.errors.field?.value && (
+              <div className="error">{formik.errors.field?.value}</div>
+            )}
+            <div className="mt-4 flex flex-wrap items-start justify-start text-start sm:flex-nowrap">
+              {formik?.values?.field?.value && (
+                <div className="mb-2 mr-3 flex w-max items-center rounded-lg border-2 border-meta-light-blue-1 px-2 py-2">
+                  <p className="whitespace-nowrap text-sm font-medium text-meta-light-blue-3">
+                    {formik?.values?.field?.value}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="mt-5 flex w-full gap-3 pl-9">
+        <div className="w-full">
+          <label className="mb-8 text-base font-medium text-meta-purple-1">
+            Key Skill
+          </label>
+
           <div className="mt-3 flex w-full flex-col items-start lg:mt-0 lg:w-1/2">
             <div className="border-1 mt-3 flex w-full flex-wrap items-start rounded-xl border border-meta-light-blue-1 py-2 lg:mt-0">
               <MultipleSelectBox
@@ -203,7 +225,6 @@ const KeySkillTab = ({
                 style={MultiboxStyle}
                 placeholder="Add your Skill"
                 value={formik?.values?.skills}
-                onKeyDown={(e: any) => setSkillQuery(e)}
                 className="w-full !border-meta-light-blue-1"
                 components={{ Placeholder, DropdownIndicator }}
               />
@@ -237,6 +258,7 @@ const KeySkillTab = ({
           </div>
         </div>
       </div>
+
       <div className="mt-8 flex w-full justify-end">
         <Button
           title={TEXT?.NEXT}
