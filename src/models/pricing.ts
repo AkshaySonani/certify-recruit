@@ -5,7 +5,7 @@ const pricingSchema = new mongoose.Schema({
   plan_type: {
     type: String,
     required: true,
-    enum: ['Play once', '50 Days', 'Monthly', 'Yearly'],
+    enum: ['Play once', '50 Days', 'Monthly', 'Yearly', 'One Time'],
   },
   plan_name: {
     type: String,

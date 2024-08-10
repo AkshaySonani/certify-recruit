@@ -3,14 +3,14 @@ import * as Yup from 'yup';
 import Image from 'next/image';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import Button from '@/Components/Button';
 import Loading from '@/Components/Loading';
 import { useRouter } from 'next/navigation';
 import { EMAIlREGEX, ROUTE, TEXT } from '@/service/Helper';
 
-const Page = () => {
+const Page = ({ searchParams }: any) => {
   const router = useRouter();
 
   const [eye, setEye] = useState(false);
@@ -52,6 +52,12 @@ const Page = () => {
       );
     }
   };
+
+  useEffect(() => {
+    if (searchParams.error) {
+      toast.error(searchParams.error);
+    }
+  }, [searchParams.error]);
 
   // const handleSubmit = async (values: any) => {
   //   try {

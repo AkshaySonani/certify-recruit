@@ -1,7 +1,7 @@
 'use client';
-import React, { Fragment, useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
-import { ROUTE, TEXT } from '@/service/Helper';
+import { ROUTE } from '@/service/Helper';
 import { Icons } from '@/svg';
 import Image from 'next/image';
 import Button from '@/Components/Button';
@@ -80,16 +80,14 @@ const Page = () => {
       <div className="mt-5">
         <p className="text-xl font-bold text-meta-purple-1">Instructions</p>
         <ul className="">
-          {InstructionsArr?.map((list: any) => {
-            return (
-              <div className="mt-2 flex items-center gap-4">
-                <div className="h-2 w-2 rounded-full bg-meta-light-blue-3"></div>
-                <li className="text-lg font-medium text-meta-light-blue-3">
-                  {list}
-                </li>
-              </div>
-            );
-          })}
+          {InstructionsArr?.map((list: any) => (
+            <div className="mt-2 flex items-center gap-4">
+              <div className="h-2 w-2 rounded-full bg-meta-light-blue-3"></div>
+              <li className="text-lg font-medium text-meta-light-blue-3">
+                {list}
+              </li>
+            </div>
+          ))}
         </ul>
       </div>
       <div className="mt-5">

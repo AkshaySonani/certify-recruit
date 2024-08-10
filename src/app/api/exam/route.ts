@@ -26,10 +26,7 @@ function generateQuestions(categoryId: any, count: any) {
 export const POST = async (req: NextRequest) => {
   const session = await getServerSession(authOptions);
   if (!session?.user?._id) {
-    return NextResponse.json({
-      message: 'Unauthorized',
-      status: 401,
-    });
+    return NextResponse.json({ status: 401, message: 'Unauthorized' });
   }
 
   try {

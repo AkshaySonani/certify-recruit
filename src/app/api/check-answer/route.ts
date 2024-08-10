@@ -2,7 +2,7 @@
 import mongoose from 'mongoose';
 import { connect } from '@/db/mongodb';
 import { getServerSession } from 'next-auth';
-import { Individual, Question } from '@/models';
+import { Individual, Question, User } from '@/models';
 import { authOptions } from '@/service/AuthOptions';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -44,6 +44,10 @@ export const POST = async (req: NextRequest) => {
     const totalQuestions = answers.length;
     const correctPercentage = (correctAnswersCount / totalQuestions) * 100;
     const pass = correctPercentage >= 70;
+
+    User.findByIdAndUpdate(session.user._id, {
+      $set: { 'subscription.$.attempt': 0 },
+    });
 
     if (pass) {
       const updatedUser = await Individual.findOneAndUpdate(
@@ -176,10 +180,10 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json({
       status: 200,
       data: {
-        correctAnswersCount,
+        pass,
         totalQuestions,
         correctPercentage,
-        pass,
+        correctAnswersCount,
       },
       message: pass ? 'Congratulations' : 'Better luck next time',
     });

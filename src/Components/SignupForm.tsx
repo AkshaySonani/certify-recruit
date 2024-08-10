@@ -16,11 +16,6 @@ import SignupSuccessModal from './SignupSuccessModal';
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
 
-type formValues = {
-  email: string;
-  password: string;
-};
-
 const SignupForm = () => {
   const router = useRouter();
   const context = useContext(AppContext);
@@ -122,31 +117,34 @@ const SignupForm = () => {
                 <p className="mb-10 text-center text-sm font-medium text-meta-light-blue-3">
                   {TEXT?.YOUR_NEW_JOURNEY_BEGINS_NOW}
                 </p>
-                {context?.currentRole === 'individual' && (
-                  <button
-                    type="button"
-                    onClick={() => signIn('google')}
-                    className="mb-8 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-white text-xl font-semibold text-meta-light-blue-3 hover:bg-meta-gray-2"
-                  >
-                    <span className="flex items-center justify-center">
-                      <Image
-                        width={20}
-                        height={20}
-                        alt="Google-icon"
-                        src={'/login/GoogleIcon.svg'}
-                      />
-                      <span className="ml-5 text-sm font-medium text-meta-blue-1">
-                        {TEXT?.SIGN_UP_WITH_GOOGLE}
+                {/* FIXME : hide google login from sign up for now because role not found  */}
+                {context?.currentRole === 'false' && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => signIn('google')}
+                      className="mb-8 h-12 w-full rounded-xl border border-meta-light-blue-2 bg-white text-xl font-semibold text-meta-light-blue-3 hover:bg-meta-gray-2"
+                    >
+                      <span className="flex items-center justify-center">
+                        <Image
+                          width={20}
+                          height={20}
+                          alt="Google-icon"
+                          src={'/login/GoogleIcon.svg'}
+                        />
+                        <span className="ml-5 text-sm font-medium text-meta-blue-1">
+                          {TEXT?.SIGN_UP_WITH_GOOGLE}
+                        </span>
                       </span>
-                    </span>
-                  </button>
-                )}
-                {context?.currentRole === 'individual' && (
-                  <div className="mb-8 flex items-center justify-center">
-                    <div className="w-14 border-b border-meta-light-blue-2" />
-                    <span className="mx-2 text-xs font-normal">{TEXT?.OR}</span>
-                    <div className="w-14 border-b border-meta-light-blue-2" />
-                  </div>
+                    </button>
+                    <div className="mb-8 flex items-center justify-center">
+                      <div className="w-14 border-b border-meta-light-blue-2" />
+                      <span className="mx-2 text-xs font-normal">
+                        {TEXT?.OR}
+                      </span>
+                      <div className="w-14 border-b border-meta-light-blue-2" />
+                    </div>
+                  </>
                 )}
 
                 <div className="mb-3">

@@ -135,34 +135,31 @@ export const authOptions: AuthOptions = {
 
       if (account.provider === 'google') {
         try {
-          const { name, email } = user;
           await connect();
           const existingUser = await User.findOne({ email: user.email });
 
-          if (existingUser) {
-            currentUser = existingUser;
-            return true;
+          if (!existingUser) {
+            return '/login?error="user not found"';
           }
-          const newUser = await User.create({
-            email: email,
-            password: null,
-            isVerified: true,
-            role: USER_ROLE?.INDIVIDUAL,
-          });
+          // const newUser = await User.create({
+          //   email: email,
+          //   password: null,
+          //   isVerified: true,
+          //   role: USER_ROLE?.INDIVIDUAL,
+          // });
 
-          await Individual.create({
-            user_ref_id: newUser?._id,
-            user_name: name,
-          });
-          currentUser = newUser;
-          const res = await newUser.save();
-          if (res.status === 200 || res.status === 201) {
-            return newUser;
-          }
+          // await Individual.create({
+          //   user_ref_id: newUser?._id,
+          //   user_name: name,
+          // });
+          // currentUser = newUser;
+          // const res = await newUser.save();
+          // if (res.status === 200 || res.status === 201) {
+          //   return newUser;
+          // }
         } catch (err) {
           throw new Error(`Error: ${err}`);
         }
-        return true;
       }
     },
     // token, trigger, session

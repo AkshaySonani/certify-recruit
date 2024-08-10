@@ -1,10 +1,8 @@
 'use client';
 import Spinner from '@/app/icons/Spinner';
 import Button from '@/Components/Button';
-import MultipleSelectBox from '@/Components/MultipleSelectBox';
 import { API_CONSTANT } from '@/constant/ApiConstant';
 import { EXAM_STATUS } from '@/constant/Enum';
-import useDebounce from '@/hooks/useDebounce';
 import usePersistState from '@/hooks/usePersistState';
 import API from '@/service/ApiService';
 import { ROUTE, TEXT } from '@/service/Helper';
@@ -21,9 +19,6 @@ export default function Page() {
   const session: any = useSession();
   const [joinNow, setJoinNow] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [skillData, setSkillData] = useState([]);
-  const [skillQuery, setSkillQuery] = useState('');
-  const debouncedSearchSkill = useDebounce(skillQuery);
   const [userDetails, setUserDetails] = useState<any>({});
   const [allCategory, setAllCategory] = useState<any>([]);
   const [selectedExperince, setSelectedExperince] = useState('');
@@ -33,20 +28,6 @@ export default function Page() {
   const [category, setCategory] = useState([]);
   const [categories, setCategories] = usePersistState([], 'Exam:category');
   const [examStatus] = usePersistState(EXAM_STATUS?.STOPPED, 'Exam:Status');
-
-  const MultiboxStyle = {
-    control: (base: any, state: any) => ({
-      ...base,
-      border: state.isFocused ? 1 : 1,
-      boxShadow: state.isFocused ? 0 : 0,
-      paddingRight: '2px',
-      paddingTop: '0px',
-      paddingBottom: '0px',
-      '&:hover': {
-        border: state.isFocused ? 0 : 0,
-      },
-    }),
-  };
 
   useEffect(() => {
     const experience = userDetails?.total_experiences?.reduce(
@@ -73,14 +54,15 @@ export default function Page() {
 
   useEffect(() => {
     getProfileDetails();
+  }, []);
+
+  useEffect(() => {
     userDetails.role && getCategorys();
-  }, [userDetails]);
+  }, [userDetails.role]);
 
   const getProfileDetails = () => {
     API.get(API_CONSTANT?.PROFILE)
-      .then((res: any) => {
-        setUserDetails(res?.data?.data);
-      })
+      .then((res: any) => setUserDetails(res?.data?.data))
       .catch((error: any) => {
         toast.error(
           error?.response?.data?.message ||
@@ -127,36 +109,6 @@ export default function Page() {
     }
   }, []);
 
-  const searchSkillApi = (search: any) => {
-    let obj = {
-      searchText: search,
-    };
-    API.post(API_CONSTANT?.CATEGORY, obj)
-      .then((res) => {
-        let skiilArr = res?.data?.data?.map((list: any) => {
-          return {
-            _id: list?._id,
-            label: list?.subcategory,
-            value: list?.subcategory,
-          };
-        });
-        setSkillData(skiilArr);
-      })
-      .catch((error) => {
-        toast.error(error?.response?.data?.message || 'Internal server error');
-      });
-  };
-
-  const onSearchSkill = (search: any) => {
-    setSkillQuery(search);
-  };
-
-  useEffect(() => {
-    if (debouncedSearchSkill !== '') {
-      searchSkillApi(debouncedSearchSkill);
-    }
-  }, [debouncedSearchSkill]);
-
   const Placeholder = (props: any) => {
     return <components.Placeholder {...props} />;
   };
@@ -173,7 +125,13 @@ export default function Page() {
     if (categories.length < 6) {
       toast.error('You must select at least 6 categories');
     } else {
-      setJoinConfirmModal(true);
+      if (userDetails?.user_ref_id?.subscription.attempt) {
+        setJoinConfirmModal(true);
+      } else {
+        API.post('init-payment', { id: '66b7837ddc6e205e628b45cf' })
+          .then(({ data }) => router.replace(data.url))
+          .catch((e) => toast.error('Internal server error'));
+      }
     }
   };
 
@@ -183,11 +141,10 @@ export default function Page() {
       router?.push('/exam');
       setLoading(false);
     } else {
-      let obj = {
-        email: session?.data?.user?.email,
+      API.post(API_CONSTANT?.SEND_EXAM_LINK, {
         categoryIds: categories,
-      };
-      API.post(API_CONSTANT?.SEND_EXAM_LINK, obj)
+        email: session?.data?.user?.email,
+      })
         .then((res) => {
           setJoinConfirmModal(false);
           toast.success(res?.data?.message);
@@ -216,26 +173,24 @@ export default function Page() {
           {!allowSubcategory ? (
             <div className="border-meta-light-blue m-auto mt-11 rounded-[26px] border bg-meta-light-blue-5 p-12 sm:w-[70%]">
               <div className="mt-5 flex w-full flex-wrap   justify-center gap-5 text-start ">
-                {category?.map((ele: any, i: any) => {
-                  return (
-                    <div
-                      key={ele}
-                      onClick={() => {
-                        setCategories([]);
-                        setSelectMainCategory(ele);
-                      }}
-                      className={`${selectMainCategory?.includes(ele) ? 'border-meta-blue-1' : 'border-meta-light-blue-1'} flex w-[46%] cursor-pointer items-center gap-2 rounded-xl border bg-meta-light-blue-1 px-3 py-5`}
-                    >
-                      <Image
-                        alt="icon"
-                        width={16}
-                        height={20}
-                        src={'/Individual.svg'}
-                      />
-                      <div className="text-meta-blue-1">{ele}</div>
-                    </div>
-                  );
-                })}
+                {category?.map((ele: any, i: any) => (
+                  <div
+                    key={ele}
+                    onClick={() => {
+                      setCategories([]);
+                      setSelectMainCategory(ele);
+                    }}
+                    className={`${selectMainCategory?.includes(ele) ? 'border-meta-blue-1' : 'border-meta-light-blue-1'} flex w-[46%] cursor-pointer items-center gap-2 rounded-xl border bg-meta-light-blue-1 px-3 py-5`}
+                  >
+                    <Image
+                      alt="icon"
+                      width={16}
+                      height={20}
+                      src={'/Individual.svg'}
+                    />
+                    <div className="text-meta-blue-1">{ele}</div>
+                  </div>
+                ))}
               </div>
               <div className="mt-9">
                 <p className="text-center text-2xl font-normal text-meta-blue-1">
@@ -243,36 +198,18 @@ export default function Page() {
                 </p>
 
                 <div className="mt-4 flex justify-center gap-3">
-                  {['0-3', '4-8', '9-12+']?.map((ele) => {
-                    return (
-                      <div
-                        className={`${selectedExperince?.includes(ele) ? 'border-meta-blue-1' : 'border-meta-light-blue-2'} w-48 cursor-pointer rounded-xl border bg-meta-light-blue-2 py-1 text-center text-xl text-meta-light-blue-3`}
-                      >
-                        {ele}
-                      </div>
-                    );
-                  })}
+                  {['0-3', '4-8', '9-12+']?.map((ele) => (
+                    <div
+                      className={`${selectedExperince?.includes(ele) ? 'border-meta-blue-1' : 'border-meta-light-blue-2'} w-48 cursor-pointer rounded-xl border bg-meta-light-blue-2 py-1 text-center text-xl text-meta-light-blue-3`}
+                    >
+                      {ele}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           ) : (
             <>
-              {/* <div className="mt-5 flex w-full flex-col items-center justify-center  lg:w-1/2">
-                <div className="border-1 mt-5 flex w-full flex-wrap items-start rounded-xl border border-meta-light-blue-1 py-2 lg:mt-0">
-                  <MultipleSelectBox
-                    name="skills"
-                    isMulti={true}
-                    options={skillData}
-                    style={MultiboxStyle}
-                    placeholder="Search Categories"
-                    value={allCategory}
-                    onKeyDown={(e: any) => onSearchSkill(e)}
-                    className="w-full !border-meta-light-blue-1"
-                    handleChange={(option: any) => setAllCategory(option)}
-                    components={{ Placeholder, DropdownIndicator }}
-                  />
-                </div>
-              </div> */}
               {/* <div className="mt-5 flex w-full flex-wrap items-start justify-center gap-4 text-start sm:flex-nowrap">
                 {allCategory?.map((ele: any, i: any) => {
                   console.log('ele', ele);
@@ -373,11 +310,7 @@ export default function Page() {
         <div className={`mt-20 flex  w-full  items-end justify-between`}>
           <button
             type="button"
-            onClick={() => {
-              setAllowSubCategory(false);
-
-              // router?.back()
-            }}
+            onClick={() => setAllowSubCategory(false)}
             className="mb-8 h-12 min-w-full rounded-lg border-2 border-meta-light-blue-1 text-base font-medium text-meta-light-blue-3 sm:mb-8 sm:min-w-48"
           >
             {TEXT?.BACK}

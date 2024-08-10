@@ -342,10 +342,7 @@ export const GET = async (req: NextRequest) => {
         .populate({ path: 'total_experiences.location' });
 
       if (!companyData) {
-        return NextResponse.json({
-          status: 404,
-          message: 'User not found!',
-        });
+        return NextResponse.json({ status: 404, message: 'User not found!' });
       }
 
       return NextResponse.json({

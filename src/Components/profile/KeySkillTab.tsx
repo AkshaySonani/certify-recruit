@@ -185,7 +185,7 @@ const KeySkillTab = ({
       <div className="mt-5 flex w-full gap-3 pl-9">
         <div className="w-full">
           <label className="text-base font-medium text-meta-purple-1">
-            Add Your Key Skill/s
+            Key Skill
           </label>
           <p className="mb-3 pt-1 text-sm font-medium text-meta-light-blue-3">
             Tell recruiters what you know or what you are known for, e.g.,

@@ -26,9 +26,9 @@ export async function POST(req: NextRequest) {
     const examUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/exam?token=${examToken}`;
 
     const mailOptions = {
-      from: process.env.NEXT_PUBLIC_EMAIL,
       to: email,
       subject: 'Your Exam Link',
+      from: process.env.NEXT_PUBLIC_EMAIL,
       text: `Please click the following link to take your exam: ${examUrl}`,
       html: `<p>Please click the following link to take your exam:</p><a href="${examUrl}">${examUrl}</a>`,
     };

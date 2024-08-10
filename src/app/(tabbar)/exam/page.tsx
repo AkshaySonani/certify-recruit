@@ -1,6 +1,7 @@
 'use client';
 import moment from 'moment';
 import Image from 'next/image';
+import jwt from 'jsonwebtoken';
 import { toast } from 'react-toastify';
 import API from '@/service/ApiService';
 import { useRouter } from 'next/navigation';
@@ -11,7 +12,6 @@ import { API_CONSTANT } from '@/constant/ApiConstant';
 import React, { useEffect, useRef, useState } from 'react';
 import FinishExamDialog from '@/Components/exam/FinishExamDialog';
 import { EXAM_STATUS, QUESTION_STATUS, RENDER_OPTION } from '@/constant/Enum';
-import jwt from 'jsonwebtoken';
 import AlertUserInfoDialog from '@/Components/exam/AlertUserinfoDialog';
 
 const Page = (data: any) => {
@@ -151,19 +151,16 @@ const Page = (data: any) => {
       : questionSheet;
 
   const getQuestionSheet = () => {
-    const obj = {
+    API.post(API_CONSTANT?.QUESTION, {
       categoryIds: categories?.map((el: any) => el?._id),
-    };
-    API.post(API_CONSTANT?.QUESTION, obj)
+    })
       .then((res: any) => {
         if (res?.data?.status === 200) {
           setExamId(res?.data?.exam_id);
-          let questionArr = res?.data?.data?.map((list: any) => {
-            return {
-              ...list,
-              status: QUESTION_STATUS[0],
-            };
-          });
+          let questionArr = res?.data?.data?.map((list: any) => ({
+            ...list,
+            status: QUESTION_STATUS[0],
+          }));
           setQuestionSheet(questionArr);
           setExamStatus(EXAM_STATUS?.STARTED);
           const newStartTime = Date.now();
@@ -171,9 +168,7 @@ const Page = (data: any) => {
           setEndTime(30 * 60);
         }
       })
-      .catch((error) => {
-        toast.error(error || 'Something want wrong');
-      });
+      .catch((error) => toast.error(error || 'Something want wrong'));
   };
 
   const clearStorage = () => {
