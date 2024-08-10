@@ -33,13 +33,13 @@ export default function Page() {
     const experience = userDetails?.total_experiences?.reduce(
       (acc: any, exp: any) => {
         acc.years += exp?.years;
-        acc.months += exp?.months;
+        acc.month += exp?.month;
         return acc;
       },
-      { years: 0, months: 0 },
+      { years: 0, month: 0 },
     );
 
-    const totalMonths = experience?.years * 12 + experience?.months;
+    const totalMonths = (experience?.years * 12 + experience?.month) / 12;
 
     if (totalMonths >= 0 && totalMonths <= 3) {
       setSelectedExperince('0-3');
@@ -198,7 +198,7 @@ export default function Page() {
               </div>
               <div className="mt-9">
                 <p className="text-center text-2xl font-normal text-meta-blue-1">
-                  Years of Experiance
+                  Years of Experience
                 </p>
 
                 <div className="mt-4 flex justify-center gap-3">

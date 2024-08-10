@@ -23,7 +23,9 @@ export default function Home() {
   const [selected, setSelected] = useState(0);
   useEffect(() => {
     AOS.init({ duration: 500 });
-    API.get(API_CONSTANT.JOB).then(({ data }) => setJobs(data.data));
+    API.get(API_CONSTANT.JOB).then(({ data }) =>
+      setJobs(Array.isArray(data?.data) ? data?.data?.slice(0, 10) : []),
+    );
   }, []);
   const feedbackArr = [
     {

@@ -102,12 +102,9 @@ import { calculateExpirationDate } from '@/service/Helper';
 
 export const GET = async (req: NextResponse) => {
   const session: any = await getServerSession(authOptions);
-  if (!session?.user?._id) {
-    return NextResponse.json({
-      message: 'Unauthorized',
-      status: 401,
-    });
-  }
+  // if (!session?.user?._id) {
+  //   return NextResponse.json({ status: 401, message: 'Unauthorized' });
+  // }
 
   const { searchParams } = new URL(req.url);
   const status = searchParams.get('status') || 'ACTIVE';
