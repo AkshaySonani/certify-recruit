@@ -96,8 +96,7 @@ const individualSchema = new mongoose.Schema({
     required: false,
   },
   college_school_name: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Collages',
+    type: mongoose.Schema.Types.String,
     required: false,
   },
   degree: {

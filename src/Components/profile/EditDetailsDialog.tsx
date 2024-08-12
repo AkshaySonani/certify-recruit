@@ -176,7 +176,7 @@ const EditDetailsDialog = ({
                               className="gap-4"
                               defaultCountry="in"
                               placeholder={TEXT?.PHONE_NUMBER}
-                              value={formik?.values?.contact_number}
+                              value={String(formik?.values?.contact_number)}
                               inputClassName="!focus:border-meta-light-blue-3 flex !h-12 w-full grow !rounded-lg border border-meta-light-blue-1 px-5 py-3 !text-sm  font-medium"
                               onChange={(value) =>
                                 formik.handleChange({

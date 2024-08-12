@@ -35,6 +35,12 @@ const MyProfile = () => {
 
   const { profileCompletionCount } = context;
 
+  const profileCompletionPer =
+    session?.data?.user?.role === USER_ROLE?.EMPLOYEE
+      ? profileCompletionCount?.employee || session?.data?.user?.profile_count
+      : profileCompletionCount?.individual ||
+        session?.data?.user?.profile_count;
+
   const { getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
     accept: {
@@ -246,13 +252,7 @@ const MyProfile = () => {
 
                     <CircularProgressbar
                       className="h-max w-max"
-                      value={
-                        session?.data?.user?.role === USER_ROLE?.EMPLOYEE
-                          ? profileCompletionCount?.employee ||
-                            session?.data?.user?.profile_count
-                          : profileCompletionCount?.individual ||
-                            session?.data?.user?.profile_count
-                      }
+                      value={profileCompletionPer}
                       styles={buildStyles({
                         pathColor: '#34A853',
                         strokeLinecap: 'butt',
@@ -269,25 +269,16 @@ const MyProfile = () => {
                   </div>
                   <div className="w-full text-center">
                     <p className="mt-1 text-base font-normal text-meta-green-1">
-                      {session?.data?.user?.role === USER_ROLE?.EMPLOYEE
-                        ? profileCompletionCount?.employee ||
-                          session?.data?.user?.profile_count
-                        : profileCompletionCount?.individual ||
-                          session?.data?.user?.profile_count}
-                      %
+                      {profileCompletionPer}%
                     </p>
                   </div>
                 </div>
                 <div className="flex w-full gap-8">
                   <div className="w-11/12">
                     <p className="text-xl font-semibold capitalize text-meta-purple-1">
-                      {session?.data?.user?.role !== USER_ROLE?.EMPLOYEE
+                      {(session?.data?.user?.role !== USER_ROLE?.EMPLOYEE
                         ? userDetails?.user_name
-                          ? userDetails?.user_name
-                          : userDetails?.company_name
-                        : userDetails?.company_name
-                          ? userDetails?.company_name
-                          : '-'}
+                        : userDetails?.company_name) || '-'}
                     </p>
                     <p className="text-sm font-medium capitalize text-meta-light-blue-3">
                       {session?.data?.user?.role === USER_ROLE?.EMPLOYEE &&
@@ -323,9 +314,7 @@ const MyProfile = () => {
                           src={'/call.svg'}
                         />
                         <p className="text-xs text-meta-light-blue-3">
-                          {userDetails?.contact_number
-                            ? userDetails?.contact_number
-                            : '-'}
+                          {userDetails?.contact_number || '-'}
                         </p>
                       </div>
                     </div>
@@ -366,7 +355,7 @@ const MyProfile = () => {
           )}
 
           {/* Show active plan data on the pricing page */}
-          {!allowNextScreen && (
+          {!allowNextScreen && profileCompletionPer === 100 && (
             <div>
               {currentPlan?.length !== 0 &&
               (userDetails?.user_ref_id?.subscription ||

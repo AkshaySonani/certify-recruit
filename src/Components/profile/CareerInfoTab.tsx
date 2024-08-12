@@ -15,6 +15,7 @@ import { API_CONSTANT } from '@/constant/ApiConstant';
 import { TEXT, updateProfileCount } from '@/service/Helper';
 import { Fragment, useContext, useEffect, useState } from 'react';
 import SuccessModal from './SuccessModal';
+import { Switch } from '@headlessui/react';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -96,6 +97,7 @@ const CareerInfoTab = ({
         ? Yup.array()
         : Yup.array().of(
             Yup.object().shape({
+              isCurrent: Yup.boolean(),
               companyName: Yup.string().required('Company name is required'),
               company_role: Yup.string().required('Role is required'),
               location: Yup.object().nonNullable('location is required'),
@@ -108,9 +110,12 @@ const CareerInfoTab = ({
                 .required('Month is required')
                 .min(0, 'Month cannot be negative')
                 .max(11, 'Month cannot be greater than 11'),
-              reason_for_leaving: Yup.string().required(
-                'Reason of leaving is required',
-              ),
+              reason_for_leaving: Yup.string().when('isCurrent', {
+                is: (v: boolean) => v,
+                then: () => Yup.string().optional(),
+                otherwise: () =>
+                  Yup.string().required('Reason of leaving is required'),
+              }),
             }),
           ),
   });
@@ -143,6 +148,7 @@ const CareerInfoTab = ({
           ? userDetails?.total_experiences
           : [
               {
+                isCurrent: false,
                 years: 0,
                 month: 0,
                 location: null,
@@ -194,6 +200,7 @@ const CareerInfoTab = ({
     formik?.setFieldValue('total_experiences', [
       ...formik?.values?.total_experiences,
       {
+        isCurrent: false,
         companyName: '',
         company_role: '',
         location: null,
@@ -447,17 +454,51 @@ const CareerInfoTab = ({
                           </div>
                         </div>
                         <div className="mt-[10px] w-full">
-                          <label className="text-base font-medium text-meta-purple-1">
-                            Reason for leaving
-                          </label>
-                          <input
-                            type="text"
-                            onChange={(event) => handleFormChange(index, event)}
-                            value={list?.reason_for_leaving}
-                            name="reason_for_leaving"
-                            placeholder="Type here"
-                            className="p-3focus:border-meta-light-blue-3 mt-2 w-full rounded-2xl border border-meta-light-blue-1 p-3 focus:outline-meta-light-blue-1"
-                          />
+                          <div className="flex items-center justify-between">
+                            <label className="text-base font-medium text-meta-purple-1">
+                              Job is currently running
+                            </label>
+                            <Switch
+                              checked={list.isCurrent}
+                              onChange={(value) =>
+                                handleFormChange(index, {
+                                  target: { name: 'isCurrent', value },
+                                })
+                              }
+                              className={`${
+                                list.isCurrent ? 'bg-blue-600' : 'bg-gray-200'
+                              } relative inline-flex h-6 w-11 items-center rounded-full`}
+                            >
+                              <span className="sr-only">
+                                Enable notifications
+                              </span>
+                              <span
+                                className={`${
+                                  list.isCurrent
+                                    ? 'translate-x-6'
+                                    : 'translate-x-1'
+                                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                              />
+                            </Switch>
+                          </div>
+                          {!list.isCurrent && (
+                            <>
+                              <hr className="my-2" />
+                              <label className="text-base font-medium text-meta-purple-1">
+                                Reason for leaving
+                              </label>
+                              <input
+                                type="text"
+                                onChange={(event) =>
+                                  handleFormChange(index, event)
+                                }
+                                value={list?.reason_for_leaving}
+                                name="reason_for_leaving"
+                                placeholder="Type here"
+                                className="p-3focus:border-meta-light-blue-3 mt-2 w-full rounded-2xl border border-meta-light-blue-1 p-3 focus:outline-meta-light-blue-1"
+                              />
+                            </>
+                          )}
                           {formik?.touched?.total_experiences?.[index]
                             ?.reason_for_leaving &&
                             formik.errors.total_experiences?.[index]
@@ -502,10 +543,15 @@ const CareerInfoTab = ({
                 Expected Salary (per annum)
               </label>
               <input
-                value={formik?.values?.expected_salary_start_at}
+                value={Number(
+                  formik?.values?.expected_salary_start_at.replace(/,/gim, ''),
+                )?.toLocaleString()}
                 name="expected_salary_start_at"
-                onChange={formik.handleChange}
-                type="number"
+                onChange={({ target: { value, name } }) =>
+                  formik.handleChange({
+                    target: { value: value.replace(/\D/g, ''), name },
+                  })
+                }
                 placeholder="Expected salary"
                 className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
               />

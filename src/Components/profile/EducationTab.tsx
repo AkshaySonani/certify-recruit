@@ -13,6 +13,7 @@ import { Fragment, useContext, useState } from 'react';
 import { TEXT, updateProfileCount } from '@/service/Helper';
 import { COMPLETION_DATE, HIGH_EDUCATION } from '@/constant/Enum';
 import SuccessModal from './SuccessModal';
+import CreatableSelect from 'react-select/creatable';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -96,7 +97,7 @@ const EducationTab = ({
   };
 
   const validationSchema = Yup.object().shape({
-    college_school_name: Yup.object().nonNullable(`College name is required.`),
+    college_school_name: Yup.string().required(`College name is required.`),
     highest_education: Yup.string()
       .required(`Please select highest education`)
       .typeError('You must specify a number'),
@@ -105,7 +106,6 @@ const EducationTab = ({
       then: () => Yup.object().nonNullable(`Degree is required.`),
       otherwise: () => Yup.string().notRequired().nullable(),
     }),
-
     completion_date: Yup.object().shape({
       year: Yup.string().required('Year is required'),
       month: Yup.string().required('Month is required'),
@@ -164,7 +164,44 @@ const EducationTab = ({
           )}
 
         <div className="mt-[10px] w-full">
-          <Menu as="div" className="relative w-full">
+          <label className="text-base font-medium text-meta-purple-1">
+            School / College name
+          </label>
+          {console.log(
+            '🚀 ~ collegeList:',
+            formik?.values?.college_school_name,
+          )}
+          {/* <CreatableSelect
+            // value={{
+            //   label: formik?.values?.college_school_name || '',
+            //   value: formik?.values?.college_school_name || '',
+            // }}
+            // options={collegeList?.map(({ name }) => ({
+            //   value: 'name',
+            //   label: 'name',
+            // }))}
+            options={[{ options: [{}], label: 'test' }]}
+            /> */}
+          <CreatableSelect
+            isClearable
+            onCreateOption={(val) =>
+              formik.setFieldValue('college_school_name', val)
+            }
+            onChange={({ value }) =>
+              formik.setFieldValue('college_school_name', value)
+            }
+            placeholder="Select or add an School / College name..."
+            value={{
+              value: formik?.values?.college_school_name,
+              label: formik?.values?.college_school_name,
+            }}
+            options={
+              collegeList?.map(({ name }) => ({ value: name, label: name })) ||
+              []
+            }
+            className="mt-2"
+          />
+          {/* <Menu as="div" className="relative w-full">
             <label className="text-base font-medium text-meta-purple-1">
               School / College name
             </label>
@@ -216,11 +253,11 @@ const EducationTab = ({
                 </div>
               </Menu.Items>
             </Transition>
-            {formik.touched.college_school_name &&
-              formik.errors.college_school_name && (
-                <div className="error">{formik.errors.college_school_name}</div>
-              )}
-          </Menu>
+          </Menu> */}
+          {formik.touched.college_school_name &&
+            formik.errors.college_school_name && (
+              <div className="error">{formik.errors.college_school_name}</div>
+            )}
         </div>
         {formik?.values?.highest_education === 'GRADUATE' && (
           <div className="mt-5 flex ">

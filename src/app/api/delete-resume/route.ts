@@ -6,19 +6,16 @@ import { authOptions } from '@/service/AuthOptions';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const POST = async (req: NextRequest) => {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?._id) {
-    return NextResponse.json({
-      message: 'Unauthorized',
-      status: 401,
-    });
-  }
-
-  await connect();
-
-  const { resumeId } = await req.json();
-
   try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user?._id) {
+      return NextResponse.json({ status: 401, message: 'Unauthorized' });
+    }
+
+    await connect();
+
+    const { resumeId } = await req.json();
+
     if (!resumeId) {
       return NextResponse.json({
         status: 400,
@@ -43,8 +40,12 @@ export const POST = async (req: NextRequest) => {
       (resume: any) => resume._id.toString() !== resumeId,
     );
 
+    console.log('🚀 ~ POST ~ totalExperience:', totalExperience);
+
     // Save the updated document
     await totalExperience.save();
+
+    console.log('🚀 ~ POST ~ await totalExperience:', totalExperience);
 
     return NextResponse.json({
       status: 200,

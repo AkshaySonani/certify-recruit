@@ -56,14 +56,12 @@ const UploadResumeTab = ({
             },
           ]);
 
-          const obj = {
-            file_name: fileName,
-            file_url: res?.data?.fileName,
-            file_id: Date.now() + 1000 * 50,
-          };
-
           API.post(API_CONSTANT?.PROFILE, {
-            resume: obj,
+            resume: {
+              file_name: fileName,
+              file_url: res?.data?.fileName,
+              file_id: Date.now() + 1000 * 50,
+            },
           })
             .then((res) => {
               if (res?.data?.status === 200) {
@@ -96,9 +94,7 @@ const UploadResumeTab = ({
           setFileName('');
         }
       })
-      .catch((error) => {
-        toast.error(error || 'Something want wrong');
-      });
+      .catch((error) => toast.error(error || 'Something want wrong'));
   };
 
   const {
@@ -123,7 +119,7 @@ const UploadResumeTab = ({
 
   const handleSubmit = async (values: any, actions: any) => {
     if (!fileName.trim()) {
-      toast.error('Resume title is required.');
+      toast.error('Job title is required.');
       inputRef.current.focus();
       return;
     }
@@ -162,27 +158,20 @@ const UploadResumeTab = ({
   };
 
   const formik: any = useFormik({
-    initialValues: {
-      resume: userDetails?.resume ?? [],
-    },
+    initialValues: { resume: userDetails?.resume ?? [] },
     enableReinitialize: true,
     onSubmit: handleSubmit,
   });
 
   const removeFile = (fileToRemove: any) => {
-    let obj: any = {
-      resumeId: fileToRemove?._id,
-    };
-    API.post(API_CONSTANT?.DELETE_RESUME, obj)
+    API.post(API_CONSTANT?.DELETE_RESUME, { resumeId: fileToRemove?._id })
       .then((res) => {
         if (res?.data?.status === 200) {
           toast?.success(res?.data?.message);
           getUserDataApiCall();
         }
       })
-      .catch((error) => {
-        toast?.error(error);
-      });
+      .catch((error) => toast?.error(error));
   };
 
   // const handleBlur = () => {
@@ -216,7 +205,7 @@ const UploadResumeTab = ({
               autoFocus={true}
               name="Resume title"
               // onBlur={handleBlur}
-              placeholder="Enter resume title"
+              placeholder="Enter job title"
               onChange={(e) => setFileName(e?.target?.value)}
               className="w-full rounded-lg border border-meta-light-blue-1 p-3  focus:border-meta-light-blue-1 focus:outline-none"
             />
