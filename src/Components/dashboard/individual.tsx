@@ -248,12 +248,8 @@ const IndividualDashboard = ({
                   </p>
                 </div>
               </div>
-              <div className="mt-5 text-sm text-meta-light-blue-3">
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: list?.description,
-                  }}
-                ></div>
+              <div className="mt-2 overflow-hidden text-ellipsis whitespace-nowrap text-sm text-meta-light-blue-3">
+                {list?.description?.replace(/<\/?[^>]+>/gim, '')}
               </div>
             </div>
           );

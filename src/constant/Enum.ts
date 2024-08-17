@@ -11,7 +11,7 @@ const EMP_TYPE_ARR = [
 
 const GENDER = ['MALE', 'FEMALE', 'OTHER'];
 
-const RENDER_OPTION: any = [
+const RENDER_OPTION = [
   { 0: 'A). ' },
   { 1: 'B). ' },
   { 2: 'C). ' },
@@ -55,7 +55,7 @@ const COMPANY_TYPE = [
   'Nidhi Companies',
 ];
 
-const COMPLETION_DATE: any = {
+const COMPLETION_DATE = {
   January: 0,
   February: 1,
   March: 2,
@@ -97,7 +97,47 @@ const QUESTION_STATUS = [
 const WORKPLACE_TYPE = ['ONSITE', 'HYBRID', 'REMOTE'];
 
 const BANK_ACCOUNT_TYPE = ['SAVINGS', 'CURRENT'];
+
+const NO_TO_WORD = {
+  ones: [
+    'Zero',
+    'One',
+    'Two',
+    'Three',
+    'Four',
+    'Five',
+    'Six',
+    'Seven',
+    'Eight',
+    'Nine',
+  ],
+  teens: [
+    'Eleven',
+    'Twelve',
+    'Thirteen',
+    'Fourteen',
+    'Fifteen',
+    'Sixteen',
+    'Seventeen',
+    'Eighteen',
+    'Nineteen',
+  ],
+  tens: [
+    'Ten',
+    'Twenty',
+    'Thirty',
+    'Forty',
+    'Fifty',
+    'Sixty',
+    'Seventy',
+    'Eighty',
+    'Ninety',
+  ],
+  thousands: ['', 'Thousand', 'Million', 'Billion', 'Trillion'],
+};
+
 export {
+  NO_TO_WORD,
   RENDER_OPTION,
   PROFICIENCY,
   EMP_TYPE_ARR,

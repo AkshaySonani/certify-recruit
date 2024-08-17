@@ -140,6 +140,7 @@ function JobPostingFormMain({ id }: any) {
         `Select at least one working schedule`,
       ),
       job_types: Yup.array().min(1, `Select at least one job type`),
+      hourly_rate: Yup.number().min(1000, 'CTC atleast one thousand rate'),
     }),
     Yup.object().shape({
       // city: Yup.array().min(1,"City is required."),
@@ -157,7 +158,7 @@ function JobPostingFormMain({ id }: any) {
       workplace: jobDetails?.workplace ?? [],
       job_types: jobDetails?.job_types ?? [],
       salary_pay: jobDetails?.salary_pay ?? 'HOURLY',
-      hourly_rate: jobDetails?.hourly_rate ?? null,
+      hourly_rate: String(jobDetails?.hourly_rate || ''),
       salary_negotiable: jobDetails?.salary_negotiable ?? false,
       vacancy: jobDetails?.vacancy ?? 1,
       working_schedule: jobDetails?.working_schedule

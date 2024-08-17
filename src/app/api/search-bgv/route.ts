@@ -7,15 +7,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { calculateExpirationDate } from '@/service/Helper';
 
 export const POST = async (req: NextRequest) => {
-  const session: any = await getServerSession(authOptions);
-  if (!session?.user?._id) {
-    return NextResponse.json({
-      message: 'Unauthorized',
-      status: 401,
-    });
-  }
-
   try {
+    const session: any = await getServerSession(authOptions);
+    if (!session?.user?._id) {
+      return NextResponse.json({ status: 401, message: 'Unauthorized' });
+    }
+
     await connect();
     const { email } = await req.json();
 
@@ -25,34 +22,17 @@ export const POST = async (req: NextRequest) => {
       _id: session?.user?._id,
     }).populate('subscription.plan_id');
 
-    let companyData = await Company.findOne({
-      user_ref_id: currentUser?._id,
-    });
-
-    if (!user) {
-      // increase search count
-      companyData.bgv_search_count += 1;
-      await companyData.save();
-      return NextResponse.json({
-        status: 404,
-        message: 'User does not exist',
-      });
-    }
+    let companyData = await Company.findOne({ user_ref_id: currentUser?._id });
 
     // Check if user has a subscription
     const subscription = currentUser?.subscription;
-    if (!subscription || !subscription?.plan_id) {
-      return NextResponse.json({
-        status: 403,
-        message:
-          'No active subscription plan found. Please subscribe to a plan to continue search bgv.',
-      });
-    }
-
-    // Check if the subscription has expired
     const { plan_type, createdAt, max_BGV_searches } = subscription?.plan_id;
     const planExpirationDate = calculateExpirationDate(createdAt, plan_type);
-    if (new Date() > planExpirationDate) {
+    if (
+      !subscription ||
+      !subscription?.plan_id ||
+      new Date() > planExpirationDate
+    ) {
       return NextResponse.json({
         status: 403,
         message:
@@ -70,22 +50,22 @@ export const POST = async (req: NextRequest) => {
       });
     }
 
+    // increase search count
+    await Company.findOneAndUpdate(
+      { user_ref_id: currentUser?._id },
+      { bgv_search_count: (companyData.bgv_search_count += 1) },
+    );
+
+    if (!user) {
+      return NextResponse.json({ status: 404, message: 'User does not exist' });
+    }
+
     let results = await Individual.findOne({ user_ref_id: user?._id });
 
-    // increase search count
-    companyData.bgv_search_count += 1;
-    await companyData.save();
-
-    return NextResponse.json({
-      status: 200,
-      data: results,
-    });
+    return NextResponse.json({ status: 200, data: results });
   } catch (error) {
     return NextResponse.json(
-      {
-        message: 'An error occurred while searching bgv.',
-        error: error,
-      },
+      { error: error, message: 'An error occurred while searching bgv.' },
       { status: 500 },
     );
   }

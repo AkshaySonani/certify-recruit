@@ -2,6 +2,7 @@ import { Icons } from '@/svg';
 import bcrypt from 'bcryptjs';
 import mongoose from 'mongoose';
 import CryptoJS from 'crypto-js';
+import { NO_TO_WORD } from '@/constant/Enum';
 
 const EMAIlREGEX =
   /^[a-zA-Z0-9]+([._-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-]?[a-zA-Z0-9]+)*\.[a-zA-Z]{2,}$/g;
@@ -262,7 +263,7 @@ const SIDE_BAR_DATA: any = {
     // { icon: Icons.Learn, path: 'learnAndEarn', title: 'Learn & Earn' },
     { path: 'certification', title: 'Certification', icon: Icons.Certificate },
     { path: 'pricing', title: 'Pricing', icon: Icons.Pricing },
-    // { path: 'BGV', title: 'BGV', icon: Icons.Bgv },
+    { path: 'BGV', title: 'BGV', icon: Icons.Bgv },
   ],
   employee: [
     { path: 'dashboard', title: 'Dashboard', icon: Icons.Dashboard },
@@ -273,7 +274,7 @@ const SIDE_BAR_DATA: any = {
     // { path: 'search_CVs', title: 'Search CVs', icon: Icons.Job },
     // { icon: Icons.Job, path: 'badgeOfHonour', title: 'Badge of Honour' },
     { path: 'pricing', title: 'Pricing', icon: Icons.Pricing },
-    // { path: 'BGV', title: 'BGV', icon: Icons.Bgv },
+    { path: 'BGV', title: 'BGV', icon: Icons.Bgv },
   ],
 };
 
@@ -467,6 +468,40 @@ const updateProfileCount = (
   }
 };
 
+function numberToWords(num: number) {
+  if (num === 0) return 'Zero';
+  function convertHundreds(num: number) {
+    let word = '';
+    if (num > 99) {
+      word += `${NO_TO_WORD.ones[Math.floor(num / 100)]} Hundred `;
+      num %= 100;
+    }
+    if (num > 10 && num < 20) {
+      word += `${NO_TO_WORD?.teens[num - 11]} `;
+    } else if (num >= 20) {
+      word += `${NO_TO_WORD?.tens[Math.floor(num / 10) - 1]} `;
+      if (num % 10 > 0) {
+        word += `${NO_TO_WORD?.ones[num % 10]} `;
+      }
+    } else if (num > 0) {
+      word += `${NO_TO_WORD?.ones[num]} `;
+    }
+    return word;
+  }
+  let word = num < 0 ? 'Minus ' : '';
+  let i = 0;
+  num = Math.abs(num);
+
+  while (num > 0) {
+    if (num % 1000 !== 0) {
+      word = `${convertHundreds(num % 1000) + NO_TO_WORD?.thousands[i]} ${word}`;
+    }
+    num = Math.floor(num / 1000);
+    i++;
+  }
+  return word.trim();
+}
+
 export {
   TEXT,
   ROUTE,
@@ -474,6 +509,7 @@ export {
   EMAIlREGEX,
   shuffleData,
   createModal,
+  numberToWords,
   SIDE_BAR_DATA,
   EMP_BASIC_PLAN,
   EMP_BUSINESS_PLAN,

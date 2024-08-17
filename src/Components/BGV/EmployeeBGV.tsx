@@ -18,14 +18,11 @@ const EmployeeBGV = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSearch = () => {
-    setLoading(true);
     if (email == '') {
       toast.error('Please enter emailAddress');
     } else {
-      const obj = {
-        email: email,
-      };
-      API.post(API_CONSTANT?.SEARCH_BGV, obj)
+      setLoading(true);
+      API.post(API_CONSTANT?.SEARCH_BGV, { email })
         .then((res) => {
           setLoading(false);
           if (res?.data?.status === 404) {
@@ -56,10 +53,7 @@ const EmployeeBGV = () => {
   };
 
   const sendUserLink = () => {
-    const obj = {
-      email: email,
-    };
-    API.post(API_CONSTANT?.SEND_INVITATION, obj)
+    API.post(API_CONSTANT?.SEND_INVITATION, { email })
       .then((res) => {
         if (res?.data) {
           setSentSuccess(true);
@@ -103,11 +97,9 @@ const EmployeeBGV = () => {
             <input
               type="email"
               value={email}
-              onChange={(e: any) => {
-                setEmail(e?.target?.value);
-              }}
               placeholder="Search user"
-              className={` rounded-full  px-4 py-2 text-white outline-none ${userNotExist ? 'bg-meta-red-2' : 'bg-meta-blue-1'}`}
+              onChange={(e: any) => setEmail(e?.target?.value)}
+              className={` rounded-full px-4 py-2 text-white placeholder-slate-200 outline-none ${userNotExist ? 'bg-meta-red-2' : 'bg-meta-blue-1'}`}
             />
             <button
               onClick={() => handleSearch()}
@@ -124,7 +116,6 @@ const EmployeeBGV = () => {
                 </div>
               ) : (
                 <>
-                  {' '}
                   <Image
                     alt="search"
                     width={11}

@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
-import { TEXT } from '@/service/Helper';
+import { TEXT, numberToWords } from '@/service/Helper';
 import { useRouter } from 'next/navigation';
 import { EMP_TYPE_ARR } from '@/constant/Enum';
 import MultipleSelectBox from '../MultipleSelectBox';
@@ -234,12 +234,25 @@ const JobPostingForm2 = ({ formik }: { formik: any }) => {
               {TEXT?.CTC}
             </label>
             <input
-              type="number"
               name="hourly_rate"
-              onChange={formik.handleChange}
-              value={formik?.values?.hourly_rate}
+              maxLength={12}
+              value={Number(
+                formik?.values?.hourly_rate?.replace(/,/gim, ''),
+              )?.toLocaleString()}
+              onChange={({ target: { value, name } }) =>
+                formik.handleChange({
+                  target: { value: value.replace(/\D/g, ''), name },
+                })
+              }
               className="mt-1 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:outline-meta-light-blue-1"
             />
+            <div className="mt-1 text-sm">
+              {numberToWords(
+                Number(
+                  String(formik?.values?.hourly_rate)?.replace(/,/gim, ''),
+                ),
+              )}
+            </div>
             <div className="my-4 border border-meta-light-blue-1" />
 
             <div className="mr-3 w-full sm:w-1/2">

@@ -12,7 +12,7 @@ import AppContext from '@/context/AppProvider';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Menu, Transition } from '@headlessui/react';
 import { API_CONSTANT } from '@/constant/ApiConstant';
-import { TEXT, updateProfileCount } from '@/service/Helper';
+import { TEXT, numberToWords, updateProfileCount } from '@/service/Helper';
 import { Fragment, useContext, useEffect, useState } from 'react';
 import SuccessModal from './SuccessModal';
 import { Switch } from '@headlessui/react';
@@ -142,7 +142,9 @@ const CareerInfoTab = ({
   const formik: any = useFormik({
     initialValues: {
       is_fresher: isFresher,
-      expected_salary_start_at: userDetails?.expected_salary_start_at ?? '',
+      expected_salary_start_at: String(
+        userDetails?.expected_salary_start_at || '',
+      ),
       total_experiences:
         userDetails?.total_experiences?.length !== 0
           ? userDetails?.total_experiences
@@ -544,7 +546,7 @@ const CareerInfoTab = ({
               </label>
               <input
                 value={Number(
-                  formik?.values?.expected_salary_start_at.replace(/,/gim, ''),
+                  formik?.values?.expected_salary_start_at?.replace(/,/gim, ''),
                 )?.toLocaleString()}
                 name="expected_salary_start_at"
                 onChange={({ target: { value, name } }) =>
@@ -552,9 +554,21 @@ const CareerInfoTab = ({
                     target: { value: value.replace(/\D/g, ''), name },
                   })
                 }
+                maxLength={12}
                 placeholder="Expected salary"
                 className="mt-2 w-full rounded-lg border border-meta-light-blue-1 px-5 py-3 focus:border-meta-light-blue-3 focus:outline-meta-light-blue-1"
               />
+              <div className="mt-1 text-sm">
+                {numberToWords(
+                  Number(
+                    formik?.values?.expected_salary_start_at?.replace(
+                      /,/gim,
+                      '',
+                    ),
+                  ),
+                )}
+              </div>
+
               {formik.touched.expected_salary_start_at &&
                 formik.errors.expected_salary_start_at && (
                   <div className="error">
