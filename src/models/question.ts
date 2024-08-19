@@ -11,6 +11,10 @@ const questionSchema = new mongoose.Schema({
     select: false,
     required: true,
   },
+  level: {
+    type: String,
+    required: true,
+  },
   category_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category',

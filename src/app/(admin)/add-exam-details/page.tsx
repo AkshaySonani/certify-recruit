@@ -11,23 +11,11 @@ import { toast } from 'react-toastify';
 import { signOut } from 'next-auth/react';
 import { TEXT } from '@/service/Helper';
 
-const questionFiled = [
-  'question',
-  'option1',
-  'option2',
-  'option3',
-  'option4',
-  'answer',
-];
+const questionFiled = ['question', 'option1', 'option2', 'option3', 'option4', 'answer', 'level'];
 
 const FiledSelect = ({ value, options, onChange, error, placeholder }) => (
   <div className="mb-4 flex-1">
-    <CreatableSelect
-      value={value}
-      options={options}
-      onChange={onChange}
-      placeholder={placeholder}
-    />
+    <CreatableSelect value={value} options={options} onChange={onChange} placeholder={placeholder} />
     {error && <div className="error">{error}</div>}
   </div>
 );
@@ -57,8 +45,7 @@ const AdminPage = () => {
       category: { label: '', value: '' },
       subcategory: { label: '', value: '' },
     },
-    onSubmit: (val) =>
-      !val?.subcategory?.__isNew__ && addExamQuestion(val.subcategory.value),
+    onSubmit: (val) => !val?.subcategory?.__isNew__ && addExamQuestion(val.subcategory.value),
   });
 
   useEffect(() => {
@@ -78,6 +65,7 @@ const AdminPage = () => {
           setQuestionList(
             data.data.map((e: any) => ({
               answer: e.ans,
+              level: e.level,
               question: e.question,
               option1: e.option[0],
               option2: e.option[1],
@@ -95,6 +83,7 @@ const AdminPage = () => {
       data: list.map((e) => ({
         category_id,
         ans: e.answer,
+        level: e.level,
         question: e.question,
         option: [e['option1'], e['option2'], e['option3'], e['option4']],
       })),
@@ -147,10 +136,7 @@ const AdminPage = () => {
         <Button title={TEXT?.LOG_OUT} />
       </button>
 
-      <form
-        onSubmit={handleSubmit}
-        className="w-11/12  max-w-screen-xl rounded-xl bg-white p-6 shadow-md"
-      >
+      <form onSubmit={handleSubmit} className="w-11/12  max-w-screen-xl rounded-xl bg-white p-6 shadow-md">
         <h2 className="mb-4 text-2xl font-bold">Add Question List</h2>
         {values?.subcategory?.value && (
           <input
@@ -166,9 +152,7 @@ const AdminPage = () => {
             error={errors.field?.value}
             placeholder="Select a field"
             onChange={(val) => setFieldValue('field', val)}
-            options={[...new Set(data?.map((e: any) => e?.field))]?.map(
-              (e) => ({ value: e, label: e }),
-            )}
+            options={[...new Set(data?.map((e: any) => e?.field))]?.map((e) => ({ value: e, label: e }))}
           />
           <FiledSelect
             value={values.category}
@@ -176,11 +160,7 @@ const AdminPage = () => {
             placeholder="Select a category"
             onChange={(val) => setFieldValue('category', val)}
             options={[
-              ...new Set(
-                data
-                  ?.filter((e) => e?.field === values?.field?.value)
-                  ?.map((e: any) => e?.category),
-              ),
+              ...new Set(data?.filter((e) => e?.field === values?.field?.value)?.map((e: any) => e?.category)),
             ].map((e) => ({ value: e, label: e }))}
           />
           <FiledSelect
@@ -225,9 +205,7 @@ const AdminPage = () => {
             </tbody>
           </table>
         </div>
-        <div className="mt-4 w-48">
-          {!!list.length && <Button title={'Create'} />}
-        </div>
+        <div className="mt-4 w-48">{!!list.length && <Button title={'Create'} />}</div>
       </form>
 
       {/* <form
